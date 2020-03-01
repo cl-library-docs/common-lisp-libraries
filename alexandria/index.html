@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Alexandria Manual - draft version - lisp.readthedocs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Alexandria Manual - draft version";
+    var mkdocs_page_input_path = "alexandria.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> lisp.readthedocs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Alexandria Manual - draft version</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#alexandria">Alexandria</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#1-hash-tables">1. Hash Tables</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-gethash">ensure-gethash</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#copy-hash-table">copy-hash-table</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#maphash-keys">maphash-keys</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#maphash-values">maphash-values</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hash-table-keys">hash-table-keys</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hash-table-values">hash-table-values</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hash-table-alist">hash-table-alist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hash-table-plist">hash-table-plist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#alist-hash-table">alist-hash-table</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#plist-hash-table">plist-hash-table</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#2-data-and-control-flow">2.  Data and Control Flow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#define-constant">define-constant</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#destructuring-case">destructuring-case</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-functionf">ensure-functionf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multiple-value-prog2">multiple-value-prog2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#named-lambda">named-lambda</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nth-value-or">nth-value-or</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#if-let">if-let</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#when-let">when-let</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#switch">switch</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cswitch">cswitch</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#eswitch">eswitch</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#whichever">whichever</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#xor">xor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#disjoin">disjoin</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#conjoin">conjoin</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compose">compose</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multiple-value-compose">multiple-value-compose</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#curry">curry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rcurry">rcurry</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#3-conses">3. Conses</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#proper-list">proper-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#circular-list">circular-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#appendf">appendf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nconcf">nconcf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remove-from-plistf">remove-from-plistf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#delete-from-plistf">delete-from-plistf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reversef">reversef</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nreversef">nreversef</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unionf">unionf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nunionf">nunionf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#doplist">doplist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#circular-list-p">circular-list-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#circular-tree-p">circular-tree-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#proper-list-p">proper-list-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#alist-plist">alist-plist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#plist-alist">plist-alist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#circular-list_1">circular-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-circular-list">make-circular-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-car">ensure-car</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-cons">ensure-cons</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-list">ensure-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#flatten">flatten</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lastcar">lastcar</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setf">(setf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#proper-list-length">proper-list-length</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mappend">mappend</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-product">map-product</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remove-from-plist">remove-from-plist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#delete-from-plist">delete-from-plist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#set-equal">set-equal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setp">setp</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#4-sequences">4. Sequences</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#proper-sequence">proper-sequence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deletef">deletef</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#removef">removef</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rotate">rotate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#shuffle">shuffle</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#random-elt">random-elt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#emptyp">emptyp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sequence-of-length-p">sequence-of-length-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#length">length=</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#copy-sequence">copy-sequence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#first-elt">first-elt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setf-first-elt">(setf first-elt)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#last-elt">last-elt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setf-last-elt">(setf last-elt)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#starts-with">starts-with</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#starts-with-subseq">starts-with-subseq</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ends-with">ends-with</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ends-with-subseq">ends-with-subseq</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-combinations">map-combinations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-derangements">map-derangements</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-permutations">map-permutations</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#5-io">5. IO</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#read-file-into-string">read-file-into-string</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#6-macro-writing">6. Macro Writing</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#once-only">once-only</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-gensyms">with-gensyms</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-unique-names">with-unique-names</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#featurep">featurep</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parse-body">parse-body</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parse-ordinary-lambda-list">parse-ordinary-lambda-list</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#7-symbols">7. Symbols</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-symbol">ensure-symbol</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#format-symbol">format-symbol</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-keyword">make-keyword</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-gensym">make-gensym</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-gensym-list">make-gensym-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#symbolicate">symbolicate</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#8-arrays">8. Arrays</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#array-index">array-index</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#copy-array">copy-array</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#9-types">9. Types</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#string-designator">string-designator</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#coercef">coercef</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#of-type">of-type</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#type">type=</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#10-numbers">10. Numbers</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#maxf">maxf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#minf">minf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#binomial-coefficient">binomial-coefficient</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#count-permutations">count-permutations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clamp">clamp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lerp">lerp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#factorial">factorial</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#subfactorial">subfactorial</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gaussian-random">gaussian-random</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#iota">iota</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-iota">map-iota</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mean">mean</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#median">median</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#variance">variance</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-deviation">standard-deviation</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">lisp.readthedocs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Defacto libraries &raquo;</li>
+        
+      
+    
+    <li>Alexandria Manual - draft version</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="alexandria-manual-draft-version">Alexandria Manual - draft version</h1>
+<p><em>(This documentation is copied from <a href="https://common-lisp.net/project/alexandria/draft/alexandria.html">here</a> on 01 March, 2020.)</em></p>
+<h2 id="alexandria">Alexandria</h2>
+<p>Alexandria software and associated documentation are in the public
+domain:</p>
+<p>Authors dedicate this work to public domain, for the benefit of the
+public at large and to the detriment of the authors' heirs and
+successors. Authors intends this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights under
+copyright law, whether vested or contingent, in the work. Authors
+understands that such relinquishment of all rights includes the
+relinquishment of all rights to enforce (by lawsuit or otherwise)
+those copyrights in the work.</p>
+<p>Authors recognize that, once placed in the public domain, the work may
+be freely reproduced, distributed, transmitted, used, modified, built
+upon, or otherwise exploited by anyone for any purpose, commercial or
+non-commercial, and in any way, including by methods that have not yet
+been invented or conceived.</p>
+<p>In those legislations where public domain dedications are not recognized
+or possible, Alexandria is distributed under the following terms and
+conditions:</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<hr />
+<h2 id="1-hash-tables">1. Hash Tables</h2>
+<h3 id="ensure-gethash">ensure-gethash</h3>
+<pre><code class="lisp">Macro: (ensure-gethash key hash-table &amp;optional default)
+</code></pre>
+
+<p>Like <code>gethash</code>, but if <code>key</code> is not found
+in the <code>hash-table</code> saves the <code>default</code> under key before returning it.
+Secondary return value is true if key was already in the table.</p>
+<h3 id="copy-hash-table">copy-hash-table</h3>
+<pre><code class="lisp">Function: (copy-hash-table table &amp;key key test size rehash-size rehash-threshold)
+</code></pre>
+
+<p>Returns a copy of hash table <code>table</code>, with
+the same keys and values as the <code>table</code>. The copy has the same
+properties as the original, unless overridden by the keyword
+arguments.</p>
+<p>Before each of the original values is set into the new hash-table,
+<code>key</code> is invoked on the value. As <code>key</code> defaults to <code>cl:identity</code>, a
+shallow copy is returned by default.</p>
+<h3 id="maphash-keys">maphash-keys</h3>
+<pre><code class="lisp">Function: (maphash-keys function table)
+</code></pre>
+
+<p>Like <code>maphash</code>, but calls <code>function</code> with
+each key in the hash table <code>table</code>.</p>
+<h3 id="maphash-values">maphash-values</h3>
+<pre><code class="lisp">Function: (maphash-values function table)
+</code></pre>
+
+<p>Like <code>maphash</code>, but calls <code>function</code> with
+each value in the hash table <code>table</code>.</p>
+<h3 id="hash-table-keys">hash-table-keys</h3>
+<pre><code class="lisp">Function: (hash-table-keys table)
+</code></pre>
+
+<p>Returns a list containing the keys of
+hash table <code>table</code>.</p>
+<h3 id="hash-table-values">hash-table-values</h3>
+<pre><code class="lisp">Function: (hash-table-values table)
+</code></pre>
+
+<p>Returns a list containing the values of
+hash table <code>table</code>.</p>
+<h3 id="hash-table-alist">hash-table-alist</h3>
+<pre><code class="lisp">Function: (hash-table-alist table)
+</code></pre>
+
+<p>Returns an association list containing
+the keys and values of hash table <code>table</code>.</p>
+<h3 id="hash-table-plist">hash-table-plist</h3>
+<pre><code class="lisp">Function: (hash-table-plist table)
+</code></pre>
+
+<p>Returns a property list containing the
+keys and values of hash table <code>table</code>.</p>
+<h3 id="alist-hash-table">alist-hash-table</h3>
+<pre><code class="lisp">Function: (alist-hash-table alist &amp;rest hash-table-initargs)
+</code></pre>
+
+<p>Returns a hash table containing the keys
+and values of the association list <code>alist</code>. Hash table is initialized
+using the <code>hash-table-initargs</code>.</p>
+<h3 id="plist-hash-table">plist-hash-table</h3>
+<pre><code class="lisp">Function: (plist-hash-table plist &amp;rest hash-table-initargs)
+</code></pre>
+
+<p>Returns a hash table containing the keys
+and values of the property list <code>plist</code>. Hash table is initialized
+using the <code>hash-table-initargs</code>.</p>
+<hr />
+<h2 id="2-data-and-control-flow">2.  Data and Control Flow</h2>
+<h3 id="define-constant">define-constant</h3>
+<pre><code class="lisp">Macro: (define-constant name initial-value &amp;key test documentation)
+</code></pre>
+
+<p>Ensures that the global variable named by
+<code>name</code> is a constant with a value that is equal under <code>test</code> to the
+result of evaluating <code>initial-value</code>. <code>test</code> is a /function
+designator/ that defaults to <code>eql</code>. If <code>documentation</code> is given, it
+becomes the documentation string of the constant.</p>
+<p>Signals an error if <code>name</code> is already a bound non-constant variable.</p>
+<p>Signals an error if <code>name</code> is already a constant variable whose value
+is not equal under <code>test</code> to result of evaluating <code>initial-value</code>.</p>
+<h3 id="destructuring-case">destructuring-case</h3>
+<pre><code class="lisp">Macro: (destructuring-case keyform &amp;body clauses)
+</code></pre>
+
+<p><code>destructuring-case</code>, <code>-ccase</code>, and
+<code>-ecase</code> are a combination of <code>case</code> and <code>destructuring-bind</code>.
+<code>keyform</code> must evaluate to a <code>cons</code>.</p>
+<p>Clauses are of the form:</p>
+<pre><code class="lisp">            ((CASE-KEYS . DESTRUCTURING-LAMBDA-LIST) FORM*)
+
+</code></pre>
+
+<p>The clause whose <code>case-keys</code> matches <code>car</code> of <code>key</code>, as if by <code>case</code>,
+<code>ccase</code>, or <code>ecase</code>, is selected, and FORMs are then executed with
+<code>cdr</code> of <code>key</code> is destructured and bound by the
+<code>destructuring-lambda-list</code>.</p>
+<p>Example:</p>
+<pre><code class="lisp">           (defun dcase (x)
+             (destructuring-case x
+               ((:foo a b)
+                (format nil &quot;foo: ~S, ~S&quot; a b))
+               ((:bar &amp;key a b)
+                (format nil &quot;bar, ~S, ~S&quot; a b))
+               (((:alt1 :alt2) a)
+                (format nil &quot;alt: ~S&quot; a))
+               ((t &amp;rest rest)
+                (format nil &quot;unknown: ~S&quot; rest))))
+
+</code></pre>
+
+<pre><code class="lisp">            (dcase (list :foo 1 2))        ; =&quot;foo: 1, 2&quot;
+            (dcase (list :bar :a 1 :b 2))  ; =&quot;bar: 1, 2&quot;
+            (dcase (list :alt1 1))         ; =&quot;alt: 1&quot;
+            (dcase (list :alt2 2))         ; =&quot;alt: 2&quot;
+            (dcase (list :quux 1 2 3))     ; =&quot;unknown: 1, 2, 3&quot;
+
+</code></pre>
+
+<pre><code class="lisp">           (defun decase (x)
+             (destructuring-case x
+               ((:foo a b)
+                (format nil &quot;foo: ~S, ~S&quot; a b))
+               ((:bar &amp;key a b)
+                (format nil &quot;bar, ~S, ~S&quot; a b))
+               (((:alt1 :alt2) a)
+                (format nil &quot;alt: ~S&quot; a))))
+
+</code></pre>
+
+<pre><code class="lisp">            (decase (list :foo 1 2))        ; =&quot;foo: 1, 2&quot;
+            (decase (list :bar :a 1 :b 2))  ; =&quot;bar: 1, 2&quot;
+            (decase (list :alt1 1))         ; =&quot;alt: 1&quot;
+            (decase (list :alt2 2))         ; =&quot;alt: 2&quot;
+            (decase (list :quux 1 2 3))     ; =| error
+
+</code></pre>
+
+<h3 id="ensure-functionf">ensure-functionf</h3>
+<pre><code class="lisp">Macro: (ensure-functionf &amp;rest places)
+</code></pre>
+
+<p>Multiple-place modify macro for
+<code>ensure-function:</code> ensures that each of <code>places</code> contains a function.</p>
+<h3 id="multiple-value-prog2">multiple-value-prog2</h3>
+<pre><code class="lisp">Macro: (multiple-value-prog2 first-form second-form &amp;body forms)
+</code></pre>
+
+<p>Evaluates <code>first-form</code>, then
+<code>second-form</code>, and then <code>forms</code>. Yields as its value all the value
+returned by <code>second-form</code>.</p>
+<h3 id="named-lambda">named-lambda</h3>
+<pre><code class="lisp">Macro: (named-lambda name lambda-list &amp;body body)
+</code></pre>
+
+<p>Expands into a lambda-expression within
+whose <code>body</code> <code>name</code> denotes the corresponding function.</p>
+<h3 id="nth-value-or">nth-value-or</h3>
+<pre><code class="lisp">Macro: (nth-value-or nth-value &amp;body forms)
+</code></pre>
+
+<p>Evaluates <code>form</code> arguments one at a time,
+until the <code>nth-value</code> returned by one of the forms is true. It then
+returns all the values returned by evaluating that form. If none of
+the forms return a true nth value, this form returns <code>nil</code>.</p>
+<h3 id="if-let">if-let</h3>
+<pre><code class="lisp">Macro: (if-let bindings &amp;body (then-form &amp;optional else-form))
+</code></pre>
+
+<p>Creates new variable bindings, and conditionally
+executes either <code>then-form</code> or <code>else-form</code>. <code>else-form</code> defaults to
+<code>nil</code>.</p>
+<p><code>bindings</code> must be either single binding of the form:</p>
+<pre><code class="lisp">           (variable initial-form)
+
+</code></pre>
+
+<p>or a list of bindings of the form:</p>
+<pre><code class="lisp">           ((variable-1 initial-form-1)
+            (variable-2 initial-form-2)
+            ...
+            (variable-n initial-form-n))
+
+</code></pre>
+
+<p>All initial-forms are executed sequentially in the specified order.
+Then all the variables are bound to the corresponding values.</p>
+<p>If all variables were bound to true values, the <code>then-form</code> is
+executed with the bindings in effect, otherwise the <code>else-form</code> is
+executed with the bindings in effect.</p>
+<h3 id="when-let">when-let</h3>
+<pre><code class="lisp">Macro: (when-let bindings &amp;body forms)
+</code></pre>
+
+<p>Creates new variable bindings, and conditionally
+executes <code>forms</code>.</p>
+<p><code>bindings</code> must be either single binding of the form:</p>
+<pre><code class="lisp">           (variable initial-form)
+
+</code></pre>
+
+<p>or a list of bindings of the form:</p>
+<pre><code class="lisp">           ((variable-1 initial-form-1)
+            (variable-2 initial-form-2)
+            ...
+            (variable-n initial-form-n))
+
+</code></pre>
+
+<p>All initial-forms are executed sequentially in the specified order.
+Then all the variables are bound to the corresponding values.</p>
+<p>If all variables were bound to true values, then <code>forms</code> are executed
+as an implicit <code>progn</code>.</p>
+<pre><code class="lisp">Macro: (when-let* bindings &amp;body forms)
+</code></pre>
+
+<p>Creates new variable bindings, and
+conditionally executes <code>forms</code>.</p>
+<p><code>bindings</code> must be either single binding of the form:</p>
+<pre><code class="lisp">           (variable initial-form)
+
+</code></pre>
+
+<p>or a list of bindings of the form:</p>
+<pre><code class="lisp">           ((variable-1 initial-form-1)
+            (variable-2 initial-form-2)
+            ...
+            (variable-n initial-form-n))
+
+</code></pre>
+
+<p>Each initial-form is executed in turn, and the variable bound to the
+corresponding value. Initial-form expressions can refer to variables
+previously bound by the <code>when-let*</code>.</p>
+<p>Execution of <code>when-let*</code> stops immediately if any initial-form
+evaluates to <code>nil</code>. If all initial-forms evaluate to true, then
+<code>forms</code> are executed as an implicit <code>progn</code>.</p>
+<h3 id="switch">switch</h3>
+<pre><code class="lisp">Macro: (switch whole (object &amp;key test key) &amp;body clauses)
+</code></pre>
+
+<p>Evaluates first matching clause, returning its
+values, or evaluates and returns the values of <code>default</code> if no keys
+match.</p>
+<h3 id="cswitch">cswitch</h3>
+<pre><code class="lisp">Macro: (cswitch whole (object &amp;key test key) &amp;body clauses)
+</code></pre>
+
+<p>Like <code>switch</code>, but signals a continuable error if
+no key matches.</p>
+<h3 id="eswitch">eswitch</h3>
+<pre><code class="lisp">Macro: (eswitch whole (object &amp;key test key) &amp;body clauses)
+</code></pre>
+
+<p>Like <code>switch</code>, but signals an error if no key
+matches.</p>
+<h3 id="whichever">whichever</h3>
+<pre><code class="lisp">Macro: (whichever &amp;rest possibilities env)
+</code></pre>
+
+<p>Evaluates exactly one of <code>possibilities</code>,
+chosen at random.</p>
+<h3 id="xor">xor</h3>
+<pre><code class="lisp">Macro: (xor &amp;rest datums)
+</code></pre>
+
+<p>Evaluates its arguments one at a time, from left to
+right. If more then one argument evaluates to a true value no further
+<code>datums</code> are evaluated, and <code>nil</code> is returned as both primary and
+secondary value. If exactly one argument evaluates to true, its value
+is returned as the primary value after all the arguments have been
+evaluated, and <code>t</code> is returned as the secondary value. If no arguments
+evaluate to true <code>nil</code> is retuned as primary, and <code>t</code> as secondary
+value.</p>
+<h3 id="disjoin">disjoin</h3>
+<pre><code class="lisp">Function: (disjoin predicate &amp;rest more-predicates)
+</code></pre>
+
+<p>Returns a function that applies each of
+<code>predicate</code> and <code>more-predicate</code> functions in turn to its arguments,
+returning the primary value of the first predicate that returns true,
+without calling the remaining predicates. If none of the predicates
+returns true, <code>nil</code> is returned.</p>
+<h3 id="conjoin">conjoin</h3>
+<pre><code class="lisp">Function: (conjoin predicate &amp;rest more-predicates)
+</code></pre>
+
+<p>Returns a function that applies each of
+<code>predicate</code> and <code>more-predicate</code> functions in turn to its arguments,
+returning <code>nil</code> if any of the predicates returns false, without
+calling the remaining predicates. If none of the predicates returns
+false, returns the primary value of the last predicate.</p>
+<h3 id="compose">compose</h3>
+<pre><code class="lisp">Function: (compose function &amp;rest more-functions)
+</code></pre>
+
+<p>Returns a function composed of <code>function</code> and
+<code>more-functions</code> that applies its arguments to to each in turn,
+starting from the rightmost of <code>more-functions</code>, and then calling the
+next one with the primary value of the last.</p>
+<pre><code class="lisp">Function: (ensure-function function-designator)
+</code></pre>
+
+<p>Returns the function designated by
+<code>function-designator:</code> if <code>function-designator</code> is a function, it is
+returned, otherwise it must be a function name and its <code>fdefinition</code>
+is returned.</p>
+<h3 id="multiple-value-compose">multiple-value-compose</h3>
+<pre><code class="lisp">Function: (multiple-value-compose function &amp;rest more-functions)
+</code></pre>
+
+<p>Returns a function composed of
+<code>function</code> and <code>more-functions</code> that applies its arguments to each in
+turn, starting from the rightmost of <code>more-functions</code>, and then
+calling the next one with all the return values of the last.</p>
+<h3 id="curry">curry</h3>
+<pre><code class="lisp">Function: (curry function &amp;rest arguments)
+</code></pre>
+
+<p>Returns a function that applies <code>arguments</code> and the
+arguments it is called with to <code>function</code>.</p>
+<h3 id="rcurry">rcurry</h3>
+<pre><code class="lisp">Function: (rcurry function &amp;rest arguments)
+</code></pre>
+
+<p>Returns a function that applies the arguments it
+is called with and <code>arguments</code> to <code>function</code>.</p>
+<hr />
+<h2 id="3-conses">3. Conses</h2>
+<h3 id="proper-list">proper-list</h3>
+<p>Type designator for proper lists. Implemented
+as a <code>satisfies</code> type, hence not recommended for performance intensive
+use. Main usefullness as a type designator of the expected type in a
+<code>type-error</code>.</p>
+<h3 id="circular-list">circular-list</h3>
+<p>Type designator for circular lists.
+Implemented as a <code>satisfies</code> type, so not recommended for performance
+intensive use. Main usefullness as the expected-type designator of a
+<code>type-error</code>.</p>
+<h3 id="appendf">appendf</h3>
+<pre><code class="lisp">Macro: (appendf place &amp;rest lists env)
+</code></pre>
+
+<p>Modify-macro for <code>append</code>. Appends <code>lists</code> to the
+place designated by the first argument.</p>
+<h3 id="nconcf">nconcf</h3>
+<pre><code class="lisp">Macro: (nconcf place &amp;rest lists env)
+</code></pre>
+
+<p>Modify-macro for <code>nconc</code>. Concatenates <code>lists</code> to
+place designated by the first argument.</p>
+<h3 id="remove-from-plistf">remove-from-plistf</h3>
+<pre><code class="lisp">Macro: (remove-from-plistf place &amp;rest keys env)
+</code></pre>
+
+<p>Modify macro for <code>remove-from-plist</code>.</p>
+<h3 id="delete-from-plistf">delete-from-plistf</h3>
+<pre><code class="lisp">Macro: (delete-from-plistf place &amp;rest keys env)
+</code></pre>
+
+<p>Modify macro for <code>delete-from-plist</code>.</p>
+<h3 id="reversef">reversef</h3>
+<pre><code class="lisp">Macro: (reversef place env)
+</code></pre>
+
+<p>Modify-macro for <code>reverse</code>. Copies and reverses
+the list stored in the given place and saves back the result into the
+place.</p>
+<h3 id="nreversef">nreversef</h3>
+<pre><code class="lisp">Macro: (nreversef place env)
+</code></pre>
+
+<p>Modify-macro for <code>nreverse</code>. Reverses the list
+stored in the given place by destructively modifying it and saves back
+the result into the place.</p>
+<h3 id="unionf">unionf</h3>
+<pre><code class="lisp">Macro: (unionf place list &amp;rest args env)
+</code></pre>
+
+<p>Modify-macro for <code>union</code>. Saves the union of
+<code>list</code> and the contents of the place designated by the first argument
+to the designated place.</p>
+<h3 id="nunionf">nunionf</h3>
+<pre><code class="lisp">Macro: (nunionf place list &amp;rest args env)
+</code></pre>
+
+<p>Modify-macro for <code>nunion</code>. Saves the union of
+<code>list</code> and the contents of the place designated by the first argument
+to the designated place. May modify either argument.</p>
+<h3 id="doplist">doplist</h3>
+<pre><code class="lisp">Macro: (doplist (key val plist &amp;optional values) &amp;body body)
+</code></pre>
+
+<p>Iterates over elements of <code>plist</code>. <code>body</code> can be
+preceded by declarations, and is like a <code>tagbody</code>. <code>return</code> may be
+used to terminate the iteration early. If <code>return</code> is not used,
+returns <code>values</code>.</p>
+<h3 id="circular-list-p">circular-list-p</h3>
+<pre><code class="lisp">Function: (circular-list-p object)
+</code></pre>
+
+<p>Returns true if <code>object</code> is a circular
+list, <code>nil</code> otherwise.</p>
+<h3 id="circular-tree-p">circular-tree-p</h3>
+<pre><code class="lisp">Function: (circular-tree-p object)
+</code></pre>
+
+<p>Returns true if <code>object</code> is a circular
+tree, <code>nil</code> otherwise.</p>
+<h3 id="proper-list-p">proper-list-p</h3>
+<pre><code class="lisp">Function: (proper-list-p object)
+</code></pre>
+
+<p>Returns true if <code>object</code> is a proper list.</p>
+<h3 id="alist-plist">alist-plist</h3>
+<pre><code class="lisp">Function: (alist-plist alist)
+</code></pre>
+
+<p>Returns a property list containing the same
+keys and values as the association list <code>alist</code> in the same order.</p>
+<h3 id="plist-alist">plist-alist</h3>
+<pre><code class="lisp">Function: (plist-alist plist)
+</code></pre>
+
+<p>Returns an association list containing the
+same keys and values as the property list <code>plist</code> in the same order.</p>
+<h3 id="circular-list_1">circular-list</h3>
+<pre><code class="lisp">Function: (circular-list &amp;rest elements)
+</code></pre>
+
+<p>Creates a circular list of <code>elements</code>.</p>
+<h3 id="make-circular-list">make-circular-list</h3>
+<pre><code class="lisp">Function: (make-circular-list length &amp;key initial-element)
+</code></pre>
+
+<p>Creates a circular list of <code>length</code>
+with the given <code>initial-element</code>.</p>
+<h3 id="ensure-car">ensure-car</h3>
+<pre><code class="lisp">Function: (ensure-car thing)
+</code></pre>
+
+<p>If <code>thing</code> is a <code>cons</code>, its <code>car</code> is
+returned. Otherwise <code>thing</code> is returned.</p>
+<h3 id="ensure-cons">ensure-cons</h3>
+<pre><code class="lisp">Function: (ensure-cons cons)
+</code></pre>
+
+<p>If <code>cons</code> is a cons, it is returned.
+Otherwise returns a fresh cons with <code>cons</code> in the car, and <code>nil</code> in
+the cdr.</p>
+<h3 id="ensure-list">ensure-list</h3>
+<pre><code class="lisp">Function: (ensure-list list)
+</code></pre>
+
+<p>If <code>list</code> is a list, it is returned.
+Otherwise returns the list designated by <code>list</code>.</p>
+<h3 id="flatten">flatten</h3>
+<pre><code class="lisp">Function: (flatten tree)
+</code></pre>
+
+<p>Traverses the tree in order, collecting non-null
+leaves into a list.</p>
+<h3 id="lastcar">lastcar</h3>
+<pre><code class="lisp">Function: (lastcar list)
+</code></pre>
+
+<p>Returns the last element of <code>list</code>. Signals a
+type-error if <code>list</code> is not a proper list.</p>
+<h3 id="setf">(setf</h3>
+<pre><code class="lisp">Function: ((setf lastcar))
+</code></pre>
+
+<p>Sets the last element of
+<code>list</code>. Signals a type-error if <code>list</code> is not a proper list.</p>
+<h3 id="proper-list-length">proper-list-length</h3>
+<pre><code class="lisp">Function: (proper-list-length list)
+</code></pre>
+
+<p>Returns length of <code>list</code>, signalling
+an error if it is not a proper list.</p>
+<h3 id="mappend">mappend</h3>
+<pre><code class="lisp">Function: (mappend function &amp;rest lists)
+</code></pre>
+
+<p>Applies <code>function</code> to respective element(s) of
+each <code>list</code>, appending all the all the result list to a single list.
+<code>function</code> must return a list.</p>
+<h3 id="map-product">map-product</h3>
+<pre><code class="lisp">Function: (map-product function list &amp;rest more-lists)
+</code></pre>
+
+<p>Returns a list containing the results of
+calling <code>function</code> with one argument from <code>list</code>, and one from each of
+<code>more-lists</code> for each combination of arguments. In other words,
+returns the product of <code>list</code> and <code>more-lists</code> using <code>function</code>.</p>
+<p>Example:</p>
+<pre><code class="lisp">           (map-product 'list '(1 2) '(3 4) '(5 6))
+            =((1 3 5) (1 3 6) (1 4 5) (1 4 6)
+                (2 3 5) (2 3 6) (2 4 5) (2 4 6))
+
+</code></pre>
+
+<h3 id="remove-from-plist">remove-from-plist</h3>
+<pre><code class="lisp">Function: (remove-from-plist plist &amp;rest keys)
+</code></pre>
+
+<p>Returns a propery-list with same keys
+and values as <code>plist</code>, except that keys in the list designated by
+<code>keys</code> and values corresponding to them are removed. The returned
+property-list may share structure with the <code>plist</code>, but <code>plist</code> is not
+destructively modified. Keys are compared using <code>eq</code>.</p>
+<h3 id="delete-from-plist">delete-from-plist</h3>
+<pre><code class="lisp">Function: (delete-from-plist plist &amp;rest keys)
+</code></pre>
+
+<p>Just like <code>remove-from-plist</code>, but
+this version may destructively modify the provided plist.</p>
+<h3 id="set-equal">set-equal</h3>
+<pre><code class="lisp">Function: (set-equal list1 list2 &amp;key test key)
+</code></pre>
+
+<p>Returns true if every element of <code>list1</code>
+matches some element of <code>list2</code> and every element of <code>list2</code> matches
+some element of <code>list1</code>. Otherwise returns false.</p>
+<h3 id="setp">setp</h3>
+<pre><code class="lisp">Function: (setp object &amp;key test key)
+</code></pre>
+
+<p>Returns true if <code>object</code> is a list that denotes a
+set, <code>nil</code> otherwise. A list denotes a set if each element of the list
+is unique under <code>key</code> and <code>test</code>.</p>
+<hr />
+<h2 id="4-sequences">4. Sequences</h2>
+<h3 id="proper-sequence">proper-sequence</h3>
+<p>Type designator for proper sequences,
+that is proper lists and sequences that are not lists.</p>
+<h3 id="deletef">deletef</h3>
+<pre><code class="lisp">Macro: (deletef place item &amp;rest remove-keywords env)
+</code></pre>
+
+<p>Modify-macro for <code>delete</code>. Sets place designated
+by the first argument to the result of calling <code>delete</code> with <code>item</code>,
+place, and the <code>remove-keywords</code>.</p>
+<h3 id="removef">removef</h3>
+<pre><code class="lisp">Macro: (removef place item &amp;rest remove-keywords env)
+</code></pre>
+
+<p>Modify-macro for <code>remove</code>. Sets place designated
+by the first argument to the result of calling <code>remove</code> with <code>item</code>,
+place, and the <code>remove-keywords</code>.</p>
+<h3 id="rotate">rotate</h3>
+<pre><code class="lisp">Function: (rotate sequence &amp;optional n)
+</code></pre>
+
+<p>Returns a sequence of the same type as
+<code>sequence</code>, with the elements of <code>sequence</code> rotated by <code>n:</code> <code>n</code>
+elements are moved from the end of the sequence to the front if <code>n</code> is
+positive, and <code>-n</code> elements moved from the front to the end if <code>n</code> is
+negative. <code>sequence</code> must be a proper sequence. <code>n</code> must be an
+integer, defaulting to <code>1</code>.</p>
+<p>If absolute value of <code>n</code> is greater then the length of the sequence,
+the results are identical to calling <code>rotate</code> with</p>
+<pre><code class="lisp">            (* (signum n) (mod n (length sequence))).
+
+</code></pre>
+
+<p>Note: the original sequence may be destructively altered, and result
+sequence may share structure with it.</p>
+<h3 id="shuffle">shuffle</h3>
+<pre><code class="lisp">Function: (shuffle sequence &amp;key start end)
+</code></pre>
+
+<p>Returns a random permutation of <code>sequence</code>
+bounded by <code>start</code> and <code>end</code>. Original sequece may be destructively
+modified, and share storage with the original one. Signals an error if
+<code>sequence</code> is not a proper sequence.</p>
+<h3 id="random-elt">random-elt</h3>
+<pre><code class="lisp">Function: (random-elt sequence &amp;key start end)
+</code></pre>
+
+<p>Returns a random element from <code>sequence</code>
+bounded by <code>start</code> and <code>end</code>. Signals an error if the <code>sequence</code> is
+not a proper non-empty sequence, or if <code>end</code> and <code>start</code> are not
+proper bounding index designators for <code>sequence</code>.</p>
+<h3 id="emptyp">emptyp</h3>
+<pre><code class="lisp">Function: (emptyp sequence)
+</code></pre>
+
+<p>Returns true if <code>sequence</code> is an empty sequence.
+Signals an error if <code>sequence</code> is not a sequence.</p>
+<h3 id="sequence-of-length-p">sequence-of-length-p</h3>
+<pre><code class="lisp">Function: (sequence-of-length-p sequence length)
+</code></pre>
+
+<p>Return true if <code>sequence</code> is a
+sequence of length <code>length</code>. Signals an error if <code>sequence</code> is not a
+sequence. Returns <code>false</code> for circular lists.</p>
+<h3 id="length">length=</h3>
+<pre><code class="lisp">Function: (length= &amp;rest sequences)
+</code></pre>
+
+<p>Takes any number of sequences or integers in
+any order. Returns true iff the length of all the sequences and the
+integers are equal. Hint: there's a compiler macro that expands into
+more efficient code if the first argument is a literal integer.</p>
+<h3 id="copy-sequence">copy-sequence</h3>
+<pre><code class="lisp">Function: (copy-sequence type sequence)
+</code></pre>
+
+<p>Returns a fresh sequence of <code>type</code>, which
+has the same elements as <code>sequence</code>.</p>
+<h3 id="first-elt">first-elt</h3>
+<pre><code class="lisp">Function: (first-elt sequence)
+</code></pre>
+
+<p>Returns the first element of <code>sequence</code>.
+Signals a type-error if <code>sequence</code> is not a sequence, or is an empty
+sequence.</p>
+<h3 id="setf-first-elt">(setf first-elt)</h3>
+<pre><code class="lisp">Function: ((setf first-elt))
+</code></pre>
+
+<p>Sets the first element of
+<code>sequence</code>. Signals a type-error if <code>sequence</code> is not a sequence, is
+an empty sequence, or if <code>object</code> cannot be stored in <code>sequence</code>.</p>
+<h3 id="last-elt">last-elt</h3>
+<pre><code class="lisp">Function: (last-elt sequence)
+</code></pre>
+
+<p>Returns the last element of <code>sequence</code>. Signals
+a type-error if <code>sequence</code> is not a proper sequence, or is an empty
+sequence.</p>
+<h3 id="setf-last-elt">(setf last-elt)</h3>
+<pre><code class="lisp">Function: ((setf last-elt))
+</code></pre>
+
+<p>Sets the last element of
+<code>sequence</code>. Signals a type-error if <code>sequence</code> is not a proper
+sequence, is an empty sequence, or if <code>object</code> cannot be stored in
+<code>sequence</code>.</p>
+<h3 id="starts-with">starts-with</h3>
+<pre><code class="lisp">Function: (starts-with object sequence &amp;key test key)
+</code></pre>
+
+<p>Returns true if <code>sequence</code> is a sequence
+whose first element is <code>eql</code> to <code>object</code>. Returns <code>nil</code> if the
+<code>sequence</code> is not a sequence or is an empty sequence.</p>
+<h3 id="starts-with-subseq">starts-with-subseq</h3>
+<pre><code class="lisp">Function: (starts-with-subseq prefix sequence &amp;rest args &amp;key return-suffix &amp;allow-other-keys)
+</code></pre>
+
+<p>Test whether the first elements of
+<code>sequence</code> are the same (as per TEST) as the elements of <code>prefix</code>.</p>
+<p>If <code>return-suffix</code> is <code>t</code> the functions returns, as a second value, a
+displaced array pointing to the sequence after <code>prefix</code>.</p>
+<h3 id="ends-with">ends-with</h3>
+<pre><code class="lisp">Function: (ends-with object sequence &amp;key test key)
+</code></pre>
+
+<p>Returns true if <code>sequence</code> is a sequence whose
+last element is <code>eql</code> to <code>object</code>. Returns <code>nil</code> if the <code>sequence</code> is
+not a sequence or is an empty sequence. Signals an error if <code>sequence</code>
+is an improper list.</p>
+<h3 id="ends-with-subseq">ends-with-subseq</h3>
+<pre><code class="lisp">Function: (ends-with-subseq suffix sequence &amp;key test)
+</code></pre>
+
+<p>Test whether <code>sequence</code> ends with
+<code>suffix</code>. In other words: return true if the last (length SUFFIX)
+elements of <code>sequence</code> are equal to <code>suffix</code>.</p>
+<h3 id="map-combinations">map-combinations</h3>
+<pre><code class="lisp">Function: (map-combinations function sequence &amp;key start end length copy)
+</code></pre>
+
+<p>Calls <code>function</code> with each combination
+of <code>length</code> constructable from the elements of the subsequence of
+<code>sequence</code> delimited by <code>start</code> and <code>end</code>. <code>start</code> defaults to <code>0</code>,
+<code>end</code> to length of <code>sequence</code>, and <code>length</code> to the length of the
+delimited subsequence. (So unless <code>length</code> is specified there is only
+a single combination, which has the same elements as the delimited
+subsequence.) If <code>copy</code> is true (the default) each combination is
+freshly allocated. If <code>copy</code> is false all combinations are <code>eq</code> to
+each other, in which case consequences are specified if a combination
+is modified by <code>function</code>.</p>
+<h3 id="map-derangements">map-derangements</h3>
+<pre><code class="lisp">Function: (map-derangements function sequence &amp;key start end copy)
+</code></pre>
+
+<p>Calls <code>function</code> with each derangement
+of the subsequence of <code>sequence</code> denoted by the bounding index
+designators <code>start</code> and <code>end</code>. Derangement is a permutation of the
+sequence where no element remains in place. <code>sequence</code> is not
+modified, but individual derangements are <code>eq</code> to each other.
+Consequences are unspecified if calling <code>function</code> modifies either the
+derangement or <code>sequence</code>.</p>
+<h3 id="map-permutations">map-permutations</h3>
+<pre><code class="lisp">Function: (map-permutations function sequence &amp;key start end length copy)
+</code></pre>
+
+<p>Calls function with each permutation of
+<code>length</code> constructable from the subsequence of <code>sequence</code> delimited by
+<code>start</code> and <code>end</code>. <code>start</code> defaults to <code>0</code>, <code>end</code> to length of the
+sequence, and <code>length</code> to the length of the delimited subsequence.</p>
+<h2 id="5-io">5. IO</h2>
+<hr />
+<h3 id="read-file-into-string">read-file-into-string</h3>
+<pre><code class="lisp">Function: (read-file-into-string pathname &amp;key buffer-size external-format)
+</code></pre>
+
+<p>Return the contents of the file
+denoted by <code>pathname</code> as a fresh string.</p>
+<p>The <code>external-format</code> parameter will be passed directly to
+<code>with-open-file</code> unless it's <code>nil</code>, which means the system default.</p>
+<pre><code class="lisp">Function: (read-file-into-byte-vector pathname)
+</code></pre>
+
+<p>Read <code>pathname</code> into a
+freshly allocated (unsigned-byte 8) vector.</p>
+<hr />
+<h2 id="6-macro-writing">6. Macro Writing</h2>
+<h3 id="once-only">once-only</h3>
+<pre><code class="lisp">Macro: (once-only specs &amp;body forms)
+</code></pre>
+
+<p>Evaluates <code>forms</code> with symbols specified in
+<code>specs</code> rebound to temporary variables, ensuring that each initform is
+evaluated only once.</p>
+<p>Each of <code>specs</code> must either be a symbol naming the variable to be
+rebound, or of the form:</p>
+<pre><code class="lisp">            (symbol initform)
+
+</code></pre>
+
+<p>Bare symbols in <code>specs</code> are equivalent to</p>
+<pre><code class="lisp">            (symbol symbol)
+
+</code></pre>
+
+<p>Example:</p>
+<pre><code class="lisp">            (defmacro cons1 (x) (once-only (x) `(cons ,x ,x)))
+            (let ((y 0)) (cons1 (incf y))) =(1 . 1)
+
+</code></pre>
+
+<h3 id="with-gensyms">with-gensyms</h3>
+<pre><code class="lisp">Macro: (with-gensyms names &amp;body forms)
+</code></pre>
+
+<p>Binds each variable named by a symbol in
+<code>names</code> to a unique symbol around <code>forms</code>. Each of <code>names</code> must either
+be either a symbol, or of the form:</p>
+<pre><code class="lisp">           (symbol string-designator)
+
+</code></pre>
+
+<p>Bare symbols appearing in <code>names</code> are equivalent to:</p>
+<pre><code class="lisp">           (symbol symbol)
+
+</code></pre>
+
+<p>The string-designator is used as the argument to <code>gensym</code> when
+constructing the unique symbol the named variable will be bound to.</p>
+<h3 id="with-unique-names">with-unique-names</h3>
+<pre><code class="lisp">Macro: (with-unique-names names &amp;body forms)
+</code></pre>
+
+<p>Alias for <code>with-gensyms</code>.</p>
+<h3 id="featurep">featurep</h3>
+<pre><code class="lisp">Function: (featurep feature-expression)
+</code></pre>
+
+<p>Returns <code>t</code> if the argument matches the state
+of the <code>*features*</code> list and <code>nil</code> if it does not.
+<code>feature-expression</code> can be any atom or list acceptable to the reader
+macros <code>#+</code> and <code>#-</code>.</p>
+<h3 id="parse-body">parse-body</h3>
+<pre><code class="lisp">Function: (parse-body body &amp;key documentation whole)
+</code></pre>
+
+<p>Parses <code>body</code> into (values remaining-forms
+declarations doc-string). Documentation strings are recognized only if
+<code>documentation</code> is true. Syntax errors in body are signalled and
+<code>whole</code> is used in the signal arguments when given.</p>
+<h3 id="parse-ordinary-lambda-list">parse-ordinary-lambda-list</h3>
+<pre><code class="lisp">Function: (parse-ordinary-lambda-list lambda-list 
+             &amp;key normalize 
+                  allow-specializers 
+                  normalize-optional
+                  normalize-keyword
+                  normalize-auxilary)
+</code></pre>
+
+<p>Parses an ordinary
+lambda-list, returning as multiple values:</p>
+<p><code>1</code>. Required parameters.</p>
+<p><code>2</code>. Optional parameter specifications, normalized into form:</p>
+<pre><code class="lisp">             (name init suppliedp)
+
+</code></pre>
+
+<p><code>3</code>. Name of the rest parameter, or <code>nil</code>.</p>
+<p><code>4</code>. Keyword parameter specifications, normalized into form:</p>
+<pre><code class="lisp">             ((keyword-name name) init suppliedp)
+
+</code></pre>
+
+<p><code>5</code>. Boolean indicating <code>&amp;allow-other-keys</code> presence.</p>
+<p><code>6</code>. <code>&amp;aux</code> parameter specifications, normalized into form</p>
+<pre><code class="lisp">             (name init).
+
+</code></pre>
+
+<p>Signals a <code>program-error</code> is the lambda-list is malformed.</p>
+<hr />
+<h2 id="7-symbols">7. Symbols</h2>
+<h3 id="ensure-symbol">ensure-symbol</h3>
+<pre><code class="lisp">Function: (ensure-symbol name &amp;optional package)
+</code></pre>
+
+<p>Returns a symbol with name designated by
+<code>name</code>, accessible in package designated by <code>package</code>. If symbol is
+not already accessible in <code>package</code>, it is interned there. Returns a
+secondary value reflecting the status of the symbol in the package,
+which matches the secondary return value of <code>intern</code>.</p>
+<p>Example:</p>
+<pre><code class="lisp">            (ensure-symbol :cons :cl) =cl:cons, :external
+
+</code></pre>
+
+<h3 id="format-symbol">format-symbol</h3>
+<pre><code class="lisp">Function: (format-symbol package control &amp;rest arguments)
+</code></pre>
+
+<p>Constructs a string by applying
+<code>arguments</code> to string designator <code>control</code> as if by <code>format</code> within
+<code>with-standard-io-syntax</code>, and then creates a symbol named by that
+string.</p>
+<p>If <code>package</code> is <code>nil</code>, returns an uninterned symbol, if package is
+<code>t</code>, returns a symbol interned in the current package, and otherwise
+returns a symbol interned in the package designated by <code>package</code>.</p>
+<h3 id="make-keyword">make-keyword</h3>
+<pre><code class="lisp">Function: (make-keyword name)
+</code></pre>
+
+<p>Interns the string designated by <code>name</code> in
+the <code>keyword</code> package.</p>
+<h3 id="make-gensym">make-gensym</h3>
+<pre><code class="lisp">Function: (make-gensym name)
+</code></pre>
+
+<p>If <code>name</code> is a non-negative integer, calls
+<code>gensym</code> using it. Otherwise <code>name</code> must be a string designator, in
+which case calls <code>gensym</code> using the designated string as the argument.</p>
+<h3 id="make-gensym-list">make-gensym-list</h3>
+<pre><code class="lisp">Function: (make-gensym-list length &amp;optional x)
+</code></pre>
+
+<p>Returns a list of <code>length</code> gensyms,
+each generated as if with a call to <code>make-gensym</code>, using the second
+(optional, defaulting to "G") argument.</p>
+<h3 id="symbolicate">symbolicate</h3>
+<pre><code class="lisp">Function: (symbolicate &amp;rest things)
+</code></pre>
+
+<p>Concatenate together the names of some
+strings and symbols, producing a symbol in the current package.</p>
+<hr />
+<h2 id="8-arrays">8. Arrays</h2>
+<h3 id="array-index">array-index</h3>
+<pre><code>Type designator for an index into array of
+`length:` an integer between `0` (inclusive) and `length` (exclusive).
+`length` defaults to `array-dimension-limit`.
+
+
+
+### array-length
+</code></pre>
+
+<p>Type designator for a dimension of an array
+of <code>length:</code> an integer between <code>0</code> (inclusive) and <code>length</code>
+(inclusive). <code>length</code> defaults to <code>array-dimension-limit</code>.</p>
+<h3 id="copy-array">copy-array</h3>
+<pre><code class="lisp">Function: (copy-array array &amp;key element-type fill-pointer
+adjustable)
+</code></pre>
+
+<p>Returns an undisplaced copy of <code>array</code>, with
+same fill-pointer and adjustability (if any) as the original, unless
+overridden by the keyword arguments.</p>
+<hr />
+<h2 id="9-types">9. Types</h2>
+<h3 id="string-designator">string-designator</h3>
+<p>A string designator type. A string
+designator is either a string, a symbol, or a character.</p>
+<h3 id="coercef">coercef</h3>
+<pre><code class="lisp">Macro: (coercef place type-spec env)
+</code></pre>
+
+<p>Modify-macro for <code>coerce</code>.</p>
+<h3 id="of-type">of-type</h3>
+<pre><code class="lisp">Function: (of-type type)
+</code></pre>
+
+<p>Returns a function of one argument, which
+returns true when its argument is of <code>type</code>.</p>
+<h3 id="type">type=</h3>
+<pre><code class="lisp">Function: (type= type1 type2)
+</code></pre>
+
+<p>Returns a primary value of <code>t</code> is <code>type1</code> and
+<code>type2</code> are the same type, and a secondary value that is true is the
+type equality could be reliably determined: primary value of <code>nil</code> and
+secondary value of <code>t</code> indicates that the types are not equivalent.</p>
+<hr />
+<h2 id="10-numbers">10. Numbers</h2>
+<h3 id="maxf">maxf</h3>
+<pre><code class="lisp">Macro: (maxf place &amp;rest numbers env)
+</code></pre>
+
+<p>Modify-macro for <code>max</code>. Sets place designated by
+the first argument to the maximum of its original value and <code>numbers</code>.</p>
+<h3 id="minf">minf</h3>
+<pre><code class="lisp">Macro: (minf place &amp;rest numbers env)
+</code></pre>
+
+<p>Modify-macro for <code>min</code>. Sets place designated by
+the first argument to the minimum of its original value and <code>numbers</code>.</p>
+<h3 id="binomial-coefficient">binomial-coefficient</h3>
+<pre><code class="lisp">Function: (binomial-coefficient n k)
+</code></pre>
+
+<p>Binomial coefficient of <code>n</code> and
+<code>k</code>, also expressed as <code>n</code> choose <code>k</code>. This is the number of <code>k</code>
+element combinations given <code>n</code> choises. <code>n</code> must be equal to or
+greater then <code>k</code>.</p>
+<h3 id="count-permutations">count-permutations</h3>
+<pre><code class="lisp">Function: (count-permutations n &amp;optional k)
+</code></pre>
+
+<p>Number of <code>k</code> element permutations
+for a sequence of <code>n</code> objects. <code>k</code> defaults to <code>n</code></p>
+<h3 id="clamp">clamp</h3>
+<pre><code class="lisp">Function: (clamp number min max)
+</code></pre>
+
+<p>Clamps the <code>number</code> into [min, max] range.
+Returns <code>min</code> if <code>number</code> is lesser then <code>min</code> and <code>max</code> if <code>number</code>
+is greater then <code>max</code>, otherwise returns <code>number</code>.</p>
+<h3 id="lerp">lerp</h3>
+<pre><code class="lisp">Function: (lerp v a b)
+</code></pre>
+
+<p>Returns the result of linear interpolation between
+A and <code>b</code>, using the interpolation coefficient <code>v</code>.</p>
+<h3 id="factorial">factorial</h3>
+<pre><code class="lisp">Function: (factorial n)
+</code></pre>
+
+<p>Factorial of non-negative integer <code>n</code>.</p>
+<h3 id="subfactorial">subfactorial</h3>
+<pre><code class="lisp">Function: (subfactorial n)
+</code></pre>
+
+<p>Subfactorial of the non-negative integer
+<code>n</code>.</p>
+<h3 id="gaussian-random">gaussian-random</h3>
+<pre><code class="lisp">Function: (gaussian-random &amp;optional min max)
+</code></pre>
+
+<p>Returns two gaussian random double
+floats as the primary and secondary value, optionally constrained by
+<code>min</code> and <code>max</code>. Gaussian random numbers form a standard normal
+distribution around <code>0</code>.0d0.</p>
+<p>Sufficiently positive <code>min</code> or negative <code>max</code> will cause the algorithm
+used to take a very long time. If <code>min</code> is positive it should be close
+to zero, and similarly if <code>max</code> is negative it should be close to
+zero.</p>
+<h3 id="iota">iota</h3>
+<pre><code class="lisp">Function: (iota n &amp;key start step)
+</code></pre>
+
+<p>Return a list of n numbers, starting from <code>start</code>
+(with numeric contagion from <code>step</code> applied), each consequtive number
+being the sum of the previous one and <code>step</code>. <code>start</code> defaults to <code>0</code>
+and <code>step</code> to <code>1</code>.</p>
+<p>Examples:</p>
+<pre><code class="lisp">            (iota 4)                      =(0 1 2 3)
+            (iota 3 :start 1 :step 1.0)   =(1.0 2.0 3.0)
+            (iota 3 :start -1 :step -1/2) =(-1 -3/2 -2)
+
+</code></pre>
+
+<h3 id="map-iota">map-iota</h3>
+<pre><code class="lisp">Function: (map-iota function n &amp;key start
+step)
+</code></pre>
+
+<p>Calls <code>function</code> with <code>n</code> numbers, starting
+from <code>start</code> (with numeric contagion from <code>step</code> applied), each
+consequtive number being the sum of the previous one and <code>step</code>.
+<code>start</code> defaults to <code>0</code> and <code>step</code> to <code>1</code>. Returns <code>n</code>.</p>
+<p>Examples:</p>
+<pre><code class="lisp">            (map-iota #'print 3 :start 1 :step 1.0) =3
+              ;;; 1.0
+              ;;; 2.0
+              ;;; 3.0
+
+</code></pre>
+
+<h3 id="mean">mean</h3>
+<pre><code class="lisp">Function: (mean sample)
+</code></pre>
+
+<p>Returns the mean of <code>sample</code>. <code>sample</code> must be a
+sequence of numbers.</p>
+<h3 id="median">median</h3>
+<pre><code class="lisp">Function: (median sample)
+</code></pre>
+
+<p>Returns median of <code>sample</code>. <code>sample</code> must be a
+sequence of real numbers.</p>
+<h3 id="variance">variance</h3>
+<pre><code class="lisp">Function: (variance sample &amp;key biased)
+</code></pre>
+
+<p>Variance of <code>sample</code>. Returns the biased
+variance if <code>biased</code> is true (the default), and the unbiased estimator
+of variance if <code>biased</code> is false. <code>sample</code> must be a sequence of
+numbers.</p>
+<h3 id="standard-deviation">standard-deviation</h3>
+<pre><code class="lisp">Function: (standard-deviation sample &amp;key biased)
+</code></pre>
+
+<p>Standard deviation of <code>sample</code>.
+Returns the biased standard deviation if <code>biased</code> is true (the
+default), and the square root of the unbiased estimator for variance
+if <code>biased</code> is false (which is not the same as the unbiased estimator
+for standard deviation). <code>sample</code> must be a sequence of numbers.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href=".." class="btn btn-neutral" title="index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

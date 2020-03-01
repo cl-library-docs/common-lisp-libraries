@@ -1,0 +1,14 @@
+site_name: common-lisp.readthedocs
+theme:
+    name: readthedocs
+    collapse_by_default: false
+    highlightjs: true
+    hljs_languages:
+        - lisp
+include_search_page: true
+nav:
+    - index: index.md
+    - Defacto libraries:
+      - alexandria.md
+plugins:
+    - search

@@ -10,5 +10,6 @@ nav:
     - index: index.md
     - Defacto libraries:
       - alexandria.md
+      - bordeaux-threads.md
 plugins:
     - search

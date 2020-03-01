@@ -1,6 +1,8 @@
 # Alexandria Manual - draft version
 
-*(This documentation is copied from [here](https://common-lisp.net/project/alexandria/draft/alexandria.html) on 01 March, 2020.)*
+Version: 1.0.0
+
+*(This documentation is modified to markdown from [here](https://common-lisp.net/project/alexandria/draft/alexandria.html) on 01 March, 2020.)*
 
 ## Alexandria 
 

@@ -31,3 +31,10 @@ As a marketing for mkdocs: `mkdocs` is simple as
 - `mkdocs gh-deploy`
 
 Done!
+
+## Current Documentation:
+
+(See from the [html version of this page](https://digikar99.github.io/common-lisp.readthedocs/), rather than the markdown version.)
+
+- [alexandria](./alexandria/)
+- [bordeaux-threads](./bordeaux-threads/)

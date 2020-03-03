@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Bordeaux Threads - common-lisp.readthedocs</title>
+  <title>bordeaux-threads - common-lisp.readthedocs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Bordeaux Threads";
+    var mkdocs_page_name = "bordeaux-threads";
     var mkdocs_page_input_path = "bordeaux-threads.md";
     var mkdocs_page_url = null;
   </script>
@@ -56,67 +56,81 @@
                 <ul class="current">
                     <li class="toctree-l1"><a class="reference internal" href="../alexandria/">Alexandria Manual - draft version</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Bordeaux Threads</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">bordeaux-threads</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#thread-creation">Thread Creation</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#make-thread">make-thread</a>
+    <li class="toctree-l2"><a class="reference internal" href="#default-special-bindings">*default-special-bindings*</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#default-special-bindings">*default-special-bindings*</a>
+    <li class="toctree-l2"><a class="reference internal" href="#standard-io-bindings">*standard-io-bindings*</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#current-thread">current-thread</a>
+    <li class="toctree-l2"><a class="reference internal" href="#supports-threads-p">*supports-threads-p*</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#threadp">threadp</a>
+    <li class="toctree-l2"><a class="reference internal" href="#acquire-lock">acquire-lock</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#thread-name">thread-name</a>
+    <li class="toctree-l2"><a class="reference internal" href="#acquire-recursive-lock">acquire-recursive-lock</a>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#all-threads">all-threads</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#resource-contention-locks-and-recursive-locks">Resource contention: locks and recursive locks</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#make-lock">make-lock</a>
+    <li class="toctree-l2"><a class="reference internal" href="#condition-notify">condition-notify</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#acquire-lock">acquire-lock</a>
+    <li class="toctree-l2"><a class="reference internal" href="#condition-wait">condition-wait</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#release-lock">release-lock</a>
+    <li class="toctree-l2"><a class="reference internal" href="#current-thread">current-thread</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#with-lock-held">with-lock-held</a>
+    <li class="toctree-l2"><a class="reference internal" href="#destroy-thread">destroy-thread</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#make-recursive-lock">make-recursive-lock</a>
+    <li class="toctree-l2"><a class="reference internal" href="#interrupt-thread">interrupt-thread</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#acquire-recursive-lock">acquire-recursive-lock</a>
+    <li class="toctree-l2"><a class="reference internal" href="#join-thread">join-thread</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#release-recursive-lock">release-recursive-lock</a>
+    <li class="toctree-l2"><a class="reference internal" href="#lock">lock</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#with-recursive-lock-held">with-recursive-lock-held</a>
+    <li class="toctree-l2"><a class="reference internal" href="#lock-p">lock-p</a>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#make-condition-variable">make-condition-variable</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#resource-contention-condition-variables">Resource contention: condition variables</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#thread-yield">thread-yield</a>
+    <li class="toctree-l2"><a class="reference internal" href="#make-lock">make-lock</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#make-condition-variable">make-condition-variable</a>
+    <li class="toctree-l2"><a class="reference internal" href="#make-recursive-lock">make-recursive-lock</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#condition-wait">condition-wait</a>
+    <li class="toctree-l2"><a class="reference internal" href="#make-semaphore">make-semaphore</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#condition-notify">condition-notify</a>
+    <li class="toctree-l2"><a class="reference internal" href="#make-thread">make-thread</a>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#recursive-lock">recursive-lock</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#introspectiondebugging">Introspection/debugging</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#all-threads">all-threads</a>
+    <li class="toctree-l2"><a class="reference internal" href="#recursive-lock-p">recursive-lock-p</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#interrupt-thread">interrupt-thread</a>
+    <li class="toctree-l2"><a class="reference internal" href="#release-lock">release-lock</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#destroy-thread">destroy-thread</a>
+    <li class="toctree-l2"><a class="reference internal" href="#release-recursive-lock">release-recursive-lock</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#thread-alive-p">thread-alive-p</a>
+    <li class="toctree-l2"><a class="reference internal" href="#semaphore">semaphore</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#join-thread">join-thread</a>
+    <li class="toctree-l2"><a class="reference internal" href="#semaphore-p">semaphore-p</a>
     </li>
-        </ul>
+    <li class="toctree-l2"><a class="reference internal" href="#signal-semaphore">signal-semaphore</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#start-multiprocessing">start-multiprocessing</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#thread">thread</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#thread-alive-p">thread-alive-p</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#thread-name">thread-name</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#thread-yield">thread-yield</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#threadp">threadp</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#timeout">timeout</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wait-on-semaphore">wait-on-semaphore</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-lock-held">with-lock-held</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-recursive-lock-held">with-recursive-lock-held</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-timeout">with-timeout</a>
     </li>
     </ul>
                     </li>
@@ -146,7 +160,7 @@
         
       
     
-    <li>Bordeaux Threads</li>
+    <li>bordeaux-threads</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -157,166 +171,317 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="bordeaux-threads">Bordeaux Threads</h1>
+                <h1 id="bordeaux-threads">bordeaux-threads</h1>
 <p>Version: 0.8.7</p>
-<p><em>(This documentation is modified to markdown from <a href="https://trac.common-lisp.net/bordeaux-threads/wiki/TracGuide">here</a> on 01 March, 2020.)</em></p>
-<p>BORDEAUX-THREADS is a proposed standard for a minimal MP/Threading interface. It is similar to the CLIM-SYS threading and lock support, but for the following broad differences:</p>
-<ol>
-<li>Some behaviours are defined in additional detail: attention has been given to special variable interaction, whether and when cleanup forms are run. Some behaviours are defined in less detail: an implementation that does not support multiple threads is not required to use a new list (nil) for a lock, for example.</li>
-<li>Many functions which would be difficult, dangerous or inefficient to provide on some implementations have been removed. Chiefly these are functions such as thread-wait which expect for efficiency that the thread scheduler is written in Lisp and 'hookable', which can't sensibly be done if the scheduler is external to the Lisp image, or the system has more than one CPU.</li>
-<li>Unbalanced ACQUIRE-LOCK and RELEASE-LOCK functions have been added.</li>
-<li>Posix-style condition variables have been added, as it's not otherwise possible to implement them correctly using the other operations that are specified.</li>
-</ol>
-<p>Threads may be implemented using whatever applicable techniques are provided by the operating system: user-space scheduling, kernel-based LWPs or anything else that does the job.</p>
-<p>Some parts of this specification can also be implemented in a Lisp that does not support multiple threads. Thread creation and some thread inspection operations will not work, but the locking functions are still present (though they may do nothing) so that thread-safe code can be compiled on both multithread and single-thread implementations without need of conditionals.</p>
-<p>To avoid conflict with existing MP/threading interfaces in implementations, these symbols live in the BORDEAUX-THREADS package. Implementations and/or users may also make them visible or exported in other more traditionally named packages.")</p>
-<h2 id="thread-creation">Thread Creation</h2>
-<h3 id="make-thread">make-thread</h3>
-<pre><code class="lisp">Function: (make-thread function &amp;key name)
-</code></pre>
-
-<p>Creates and returns a thread named NAME, which will call the function FUNCTION with no arguments: when FUNCTION returns, the thread terminates. NAME defaults to NIL if unsupplied.</p>
-<p>On systems that do not support multi-threading, MAKE-THREAD will signal an error.</p>
-<p>The interaction between threads and dynamic variables is in some cases complex, and depends on whether the variable has only a global binding (as established by e.g. DEFVAR/DEFPARAMETER/top-level SETQ) or has been bound locally (e.g. with LET or LET*) in the calling thread.</p>
-<ul>
-<li>Global bindings are shared between threads: the initial value of a global variable in the new thread will be the same as in the parent, and an assignment to such a variable in any thread will be visible to all threads in which the global binding is visible.</li>
-<li>Local bindings are local to the thread they are introduced in, except that</li>
-<li>Local bindings in the the caller of MAKE-THREAD may or may not be shared with the new thread that it creates: this is implementation-defined. Portable code should not depend on particular behaviour in this case, nor should it assign to such variables without first rebinding them in the new thread.</li>
-</ul>
+<p>BORDEAUX-THREADS is a proposed standard for a minimal
+  MP/threading interface. It is similar to the CLIM-SYS threading and
+  lock support, but for the following broad differences:</p>
+<p>1) Some behaviours are defined in additional detail: attention has
+     been given to special variable interaction, whether and when
+     cleanup forms are run. Some behaviours are defined in less
+     detail: an implementation that does not support multiple
+     threads is not required to use a new list (nil) for a lock, for
+     example.</p>
+<p>2) Many functions which would be difficult, dangerous or inefficient
+     to provide on some implementations have been removed. Chiefly
+     these are functions such as thread-wait which expect for
+     efficiency that the thread scheduler is written in Lisp and
+     'hookable', which can't sensibly be done if the scheduler is
+     external to the Lisp image, or the system has more than one CPU.</p>
+<p>3) Unbalanced ACQUIRE-LOCK and RELEASE-LOCK functions have been
+     added.</p>
+<p>4) Posix-style condition variables have been added, as it's not
+     otherwise possible to implement them correctly using the other
+     operations that are specified.</p>
+<p>Threads may be implemented using whatever applicable techniques are
+  provided by the operating system: user-space scheduling,
+  kernel-based LWPs or anything else that does the job.</p>
+<p>Some parts of this specification can also be implemented in a Lisp
+  that does not support multiple threads. Thread creation and some
+  thread inspection operations will not work, but the locking
+  functions are still present (though they may do nothing) so that
+  thread-safe code can be compiled on both multithread and
+  single-thread implementations without need of conditionals.</p>
+<p>To avoid conflict with existing MP/threading interfaces in
+  implementations, these symbols live in the BORDEAUX-THREADS package.
+  Implementations and/or users may also make them visible or exported
+  in other more traditionally named packages.</p>
 <h3 id="default-special-bindings">*default-special-bindings*</h3>
-<p>This variable holds an alist associating special variable symbols with forms to evaluate for binding values. Special variables named in this list will be locally bound in the new thread before it begins executing user code.</p>
-<p>This variable may be rebound around calls to MAKE-THREAD to add/alter default bindings. The effect of mutating this list is undefined, but earlier forms take precedence over later forms for the same symbol, so defaults may be overridden by consing to the head of the list.</p>
-<p><em>Forms are evaluated in the new thread or in the calling thread? Standard contents of this list: print/reader control, etc. Can borrow the Franz equivalent?</em></p>
-<h3 id="current-thread">current-thread</h3>
-<pre><code class="lisp">Function: (current-thread)
-</code></pre>
-
-<p>Returns the thread object for the calling thread. This is the same kind of object as would be returned by MAKE-THREAD.</p>
-<h3 id="threadp">threadp</h3>
-<pre><code class="lisp">Function: (threadp object) 
-</code></pre>
-
-<p>Returns true if object is a thread, otherwise NIL.</p>
-<h3 id="thread-name">thread-name</h3>
-<pre><code class="lisp">Function: (thread-name thread) 
-</code></pre>
-
-<p>Returns the name of the thread, as supplied to <code>MAKE-THREAD</code></p>
-<h2 id="resource-contention-locks-and-recursive-locks">Resource contention: locks and recursive locks</h2>
-<h3 id="make-lock">make-lock</h3>
-<pre><code class="lisp">Function: (make-lock &amp;optional name) 
-</code></pre>
-
-<p>Creates a lock (a mutex) whose name is NAME. If the system does not support multiple threads this will still return some object, but it may not be used for very much.</p>
-<p>''In CLIM-SYS this is a freshly consed list (NIL). I don't know if there's some good reason it should be said structure or that it be freshly consed - EQ comparison of locks?''</p>
+<p>This variable holds an alist associating special variable symbols
+  to forms to evaluate. Special variables named in this list will
+  be locally bound in the new thread before it begins executing user code.</p>
+<p>This variable may be rebound around calls to MAKE-THREAD to
+  add/alter default bindings. The effect of mutating this list is
+  undefined, but earlier forms take precedence over later forms for
+  the same symbol, so defaults may be overridden by consing to the
+  head of the list.</p>
+<h3 id="standard-io-bindings">*standard-io-bindings*</h3>
+<p>Standard bindings of printer/reader control variables as per CL:WITH-STANDARD-IO-SYNTAX.</p>
+<h3 id="supports-threads-p">*supports-threads-p*</h3>
+<p>This should be set to T if the running instance has thread support.</p>
 <h3 id="acquire-lock">acquire-lock</h3>
-<pre><code class="lisp">Function: (acquire-lock lock &amp;optional wait-p) 
+<pre><code class="lisp">Function: (acquire-lock lock &amp;optional (wait-p t))
 </code></pre>
 
-<p>Acquire the lock LOCK for the calling thread. WAIT-P governs what happens if the lock is not available: if WAIT-P is true, the calling thread will wait until the lock is available and then acquire it; if WAIT-P is NIL, ACQUIRE-LOCK will return immediately. ACQUIRE-LOCK returns true if the lock was acquired and NIL otherwise.</p>
-<p>This specification does not define what happens if a thread attempts to acquire a lock that it already holds. For applications that require locks to be safe when acquired recursively, see instead MAKE-RECURSIVE-LOCK and friends.</p>
-<h3 id="release-lock">release-lock</h3>
-<pre><code class="lisp">Function: (release-lock lock) 
-</code></pre>
-
-<p>Release LOCK. It is an error to call this unless the lock has previously been acquired (and not released) by the same thread. If other threads are waiting for the lock, the ACQUIRE-LOCK call in one of them will now be able to continue.</p>
-<p>This function has no interesting return value.</p>
-<h3 id="with-lock-held">with-lock-held</h3>
-<pre><code class="lisp">Macro: (with-lock-held (place) &amp;body body) 
-</code></pre>
-
-<p>Evaluates BODY with the lock named by PLACE, the value of which is a lock created by MAKE-LOCK. Before the forms in BODY are evaluated, the lock is acquired as if by using ACQUIRE-LOCK. After the forms in BODY have been evaluated, or if a non-local control transfer is caused (e.g. by THROW or SIGNAL), the lock is released as if by RELEASE-LOCK.</p>
-<p>Note that if the debugger is entered, it is unspecified whether the lock is released at debugger entry or at debugger exit when execution is restarted.</p>
-<h3 id="make-recursive-lock">make-recursive-lock</h3>
-<pre><code class="lisp">Function: (make-recursive-lock &amp;optional name) 
-</code></pre>
-
-<p>Create and return a recursive lock whose name is NAME. A recursive lock differs from an ordinary lock in that a thread that already holds the recursive lock can acquire it again without blocking. The thread must then release the lock twice before it becomes available for another thread.</p>
+<p>Acquire the lock LOCK for the calling thread.
+  WAIT-P governs what happens if the lock is not available: if WAIT-P
+  is true, the calling thread will wait until the lock is available
+  and then acquire it; if WAIT-P is NIL, ACQUIRE-LOCK will return
+  immediately. ACQUIRE-LOCK returns true if the lock was acquired and
+  NIL otherwise.</p>
+<p>This specification does not define what happens if a thread
+  attempts to acquire a lock that it already holds. For applications
+  that require locks to be safe when acquired recursively, see instead
+  MAKE-RECURSIVE-LOCK and friends.</p>
 <h3 id="acquire-recursive-lock">acquire-recursive-lock</h3>
 <pre><code class="lisp">Function: (acquire-recursive-lock lock)
 </code></pre>
 
 <p>As for ACQUIRE-LOCK, but for recursive locks.</p>
-<h3 id="release-recursive-lock">release-recursive-lock</h3>
-<pre><code class="lisp">Function: (release-recursive-lock lock)
-</code></pre>
-
-<p>Release the recursive LOCK. The lock will only become free after as many Release operations as there have been Acquire operations. See RELEASE-LOCK for other information.</p>
-<h3 id="with-recursive-lock-held">with-recursive-lock-held</h3>
-<pre><code class="lisp">Macro: (with-recursive-lock-held (place &amp;key timeout) &amp;body body)
-</code></pre>
-
-<p>Evaluates BODY with the recursive lock named by PLACE, which is a reference to a recursive lock created by MAKE-RECURSIVE-LOCK. See WITH-LOCK-HELD etc etc</p>
-<h2 id="resource-contention-condition-variables">Resource contention: condition variables</h2>
-<p>A condition variable provides a mechanism for threads to put themselves to sleep while waiting for the state of something to change, then to be subsequently woken by another thread which has changed the state.</p>
-<p>A condition variable must be used in conjunction with a lock to protect access to the state of the object of interest. The procedure is as follows:</p>
-<p>Suppose two threads A and B, and some kind of notional event channel C. A is consuming events in C, and B is producing them. CV is a condition-variable</p>
-<ol>
-<li>A acquires the lock that safeguards access to C</li>
-<li>A threads and removes all events that are available in C</li>
-<li>When C is empty, A calls CONDITION-WAIT, which atomically releases the lock and puts A to sleep on CV</li>
-<li>Wait to be notified; CONDITION-WAIT will acquire the lock again before returning</li>
-<li>Loop back to step 2, for as long as threading should continue</li>
-</ol>
-<p>When B generates an event E, it</p>
-<ol>
-<li>acquires the lock guarding C</li>
-<li>adds E to the channel</li>
-<li>calls CONDITION-NOTIFY on CV to wake any sleeping thread</li>
-<li>releases the lock</li>
-</ol>
-<p>To avoid the "lost wakeup" problem, the implementation must guarantee that CONDITION-WAIT in thread A atomically releases the lock and sleeps. If this is not guaranteed there is the possibility that thread B can add an event and call CONDITION-NOTIFY between the lock release and the sleep - in this case the notify call would not see A, which would be left sleeping despite there being an event available.</p>
-<h3 id="thread-yield">thread-yield</h3>
-<pre><code class="lisp">Function: (thread-yield) 
-</code></pre>
-
-<p>Allows other threads to run. It may be necessary or desirable to call this periodically in some implementations; others may schedule threads automatically. On systems that do not support multi-threading, this does nothing.</p>
-<h3 id="make-condition-variable">make-condition-variable</h3>
-<pre><code class="lisp">Function: (make-condition-variable)
-</code></pre>
-
-<p>Returns a new condition-variable object for use with CONDITION-WAIT and CONDITION-NOTIFY.</p>
-<h3 id="condition-wait">condition-wait</h3>
-<pre><code class="lisp">Function: (condition-wait condition-variable lock)
-</code></pre>
-
-<p>Atomically release LOCK and enqueue the calling thread waiting for CONDITION-VARIABLE. The thread will resume when another thread has notified it using CONDITION-NOTIFY; it may also resume if interrupted by some external event or in other implementation-dependent circumstances: the caller must always test on waking that there is threading to be done, instead of assuming that it can go ahead.</p>
-<p>However and for whatever reason the thread is resumed, the system always reacquires LOCK before returning to the caller. It is an error to call this unless from the thread that holds LOCK.</p>
-<p>In an implementation that does not support multiple threads, this function signals an error.</p>
-<h3 id="condition-notify">condition-notify</h3>
-<pre><code class="lisp">Function: (condition-notify condition-variable) 
-</code></pre>
-
-<p>Notify at least one of the threads waiting for CONDITION-VARIABLE. It is implementation-dependent whether one or more than one (and possibly all) threads are woken, but if the implementation is capable of waking only a single thread (not all are) this is probably preferable for efficiency reasons. The order of wakeup is unspecified and does not necessarily relate to the order that the threads went to sleep in.</p>
-<p>CONDITION-NOTIFY has no useful return value. In an implementation that does not support multiple threads, it has no effect.</p>
-<h2 id="introspectiondebugging">Introspection/debugging</h2>
-<p>The following functions may be provided for debugging purposes, but are not advised to be called from normal user code.</p>
 <h3 id="all-threads">all-threads</h3>
 <pre><code class="lisp">Function: (all-threads)
 </code></pre>
 
-<p>Returns a sequence of all of the threads. This may or may not be freshly-allocated, so the caller should not modify it.</p>
-<h3 id="interrupt-thread">interrupt-thread</h3>
-<pre><code class="lisp">Function: (interrupt-thread thread function)
+<p>Returns a sequence of all of the threads. This may not
+  be freshly-allocated, so the caller should not modify it.</p>
+<h3 id="condition-notify">condition-notify</h3>
+<pre><code class="lisp">Function: (condition-notify condition-variable)
 </code></pre>
 
-<p>Interrupt THREAD and cause it to evaluate FUNCTION before continuing with the interrupted path of execution. This may not be a good idea if THREAD is holding locks or doing anything important. On systems that do not support multiple threads, this function signals an error.</p>
+<p>Notify at least one of the threads waiting for
+  CONDITION-VARIABLE. It is implementation-dependent whether one or
+  more than one (and possibly all) threads are woken, but if the
+  implementation is capable of waking only a single thread (not all
+  are) this is probably preferable for efficiency reasons. The order
+  of wakeup is unspecified and does not necessarily relate to the
+  order that the threads went to sleep in.</p>
+<p>CONDITION-NOTIFY has no useful return value. In an implementation
+  that does not support multiple threads, it has no effect.</p>
+<h3 id="condition-wait">condition-wait</h3>
+<pre><code class="lisp">Function: (condition-wait condition-variable lock &amp;key timeout)
+</code></pre>
+
+<p>Atomically release LOCK and enqueue the calling
+  thread waiting for CONDITION-VARIABLE. The thread will resume when
+  another thread has notified it using CONDITION-NOTIFY; it may also
+  resume if interrupted by some external event or in other
+  implementation-dependent circumstances: the caller must always test
+  on waking that there is threading to be done, instead of assuming
+  that it can go ahead.</p>
+<p>It is an error to call function this unless from the thread that
+  holds LOCK.</p>
+<p>If TIMEOUT is nil or not provided, the system always reacquires LOCK
+  before returning to the caller. In this case T is returned.</p>
+<p>If TIMEOUT is non-nil, the call will return after at most TIMEOUT
+  seconds (approximately), whether or not a notification has occurred.
+  Either NIL or T will be returned. A return of NIL indicates that the
+  lock is no longer held and that the timeout has expired. A return of
+  T indicates that the lock is held, in which case the timeout may or
+  may not have expired.</p>
+<p><strong>NOTE</strong>: The behavior of CONDITION-WAIT with TIMEOUT diverges from
+  the POSIX function pthread_cond_timedwait. The former may return
+  without the lock being held while the latter always returns with the
+  lock held.</p>
+<p>In an implementation that does not support multiple threads, this
+  function signals an error.</p>
+<h3 id="current-thread">current-thread</h3>
+<pre><code class="lisp">Function: (current-thread)
+</code></pre>
+
+<p>Returns the thread object for the calling
+  thread. This is the same kind of object as would be returned by
+  MAKE-THREAD.</p>
 <h3 id="destroy-thread">destroy-thread</h3>
-<pre><code class="lisp">Function: (destroy-thread thread) 
+<pre><code class="lisp">Function: (destroy-thread thread)
 </code></pre>
 
-<p>Terminates the thread THREAD, which is an object as returned by MAKE-THREAD. This should be used with caution: it is implementation-defined whether the thread runs cleanup forms or releases its locks first.</p>
+<p>Terminates the thread THREAD, which is an object
+  as returned by MAKE-THREAD. This should be used with caution: it is
+  implementation-defined whether the thread runs cleanup forms or
+  releases its locks first.</p>
 <p>Destroying the calling thread is an error.</p>
-<h3 id="thread-alive-p">thread-alive-p</h3>
-<pre><code class="lisp">Function: (thread-alive-p thread) 
+<h3 id="interrupt-thread">interrupt-thread</h3>
+<pre><code class="lisp">Function: (interrupt-thread thread function &amp;rest args)
 </code></pre>
 
-<p>Returns true if THREAD is alive, that is, if DESTROY-THREAD has not been called on it.</p>
+<p>Interrupt THREAD and cause it to evaluate FUNCTION
+  before continuing with the interrupted path of execution. This may
+  not be a good idea if THREAD is holding locks or doing anything
+  important. On systems that do not support multiple threads, this
+  function signals an error.</p>
 <h3 id="join-thread">join-thread</h3>
 <pre><code class="lisp">Function: (join-thread thread)
 </code></pre>
 
-<p>Wait until THREAD terminates. If THREAD has already terminated, return immediately.</p>
+<p>Wait until THREAD terminates. If THREAD has already terminated,
+  return immediately. The return values of the thread function are
+  returned.</p>
+<h3 id="lock">lock</h3>
+<h3 id="lock-p">lock-p</h3>
+<pre><code class="lisp">Function: (lock-p object)
+</code></pre>
+
+<p>Returns T if OBJECT is a lock; returns NIL otherwise.</p>
+<h3 id="make-condition-variable">make-condition-variable</h3>
+<pre><code class="lisp">Function: (make-condition-variable &amp;key name)
+</code></pre>
+
+<p>Returns a new condition-variable object for use
+  with CONDITION-WAIT and CONDITION-NOTIFY.</p>
+<h3 id="make-lock">make-lock</h3>
+<pre><code class="lisp">Function: (make-lock &amp;optional name)
+</code></pre>
+
+<p>Creates a lock (a mutex) whose name is NAME. If the system does not
+  support multiple threads this will still return some object, but it
+  may not be used for very much.</p>
+<h3 id="make-recursive-lock">make-recursive-lock</h3>
+<pre><code class="lisp">Function: (make-recursive-lock &amp;optional name)
+</code></pre>
+
+<p>Create and return a recursive lock whose name is NAME. A recursive
+  lock differs from an ordinary lock in that a thread that already
+  holds the recursive lock can acquire it again without blocking. The
+  thread must then release the lock twice before it becomes available
+  for another thread.</p>
+<h3 id="make-semaphore">make-semaphore</h3>
+<pre><code class="lisp">Function: (make-semaphore &amp;key name (count 0))
+</code></pre>
+
+<p>Create a semaphore with the supplied NAME and initial counter value COUNT.</p>
+<h3 id="make-thread">make-thread</h3>
+<pre><code class="lisp">Function: (make-thread function &amp;key name (initial-bindings
+                                           *default-special-bindings*))
+</code></pre>
+
+<p>Creates and returns a thread named NAME, which will call the
+  function FUNCTION with no arguments: when FUNCTION returns, the
+  thread terminates. NAME defaults to "Anonymous thread" if unsupplied.</p>
+<p>On systems that do not support multi-threading, MAKE-THREAD will
+  signal an error.</p>
+<p>The interaction between threads and dynamic variables is in some
+  cases complex, and depends on whether the variable has only a global
+  binding (as established by e.g. DEFVAR/DEFPARAMETER/top-level SETQ)
+  or has been bound locally (e.g. with LET or LET*) in the calling
+  thread.</p>
+<ul>
+<li>
+<p>Global bindings are shared between threads: the initial value of a
+    global variable in the new thread will be the same as in the
+    parent, and an assignment to such a variable in any thread will be
+    visible to all threads in which the global binding is visible.</p>
+</li>
+<li>
+<p>Local bindings, such as the ones introduced by INITIAL-BINDINGS,
+    are local to the thread they are introduced in, except that</p>
+</li>
+<li>
+<p>Local bindings in the the caller of MAKE-THREAD may or may not be
+    shared with the new thread that it creates: this is
+    implementation-defined. Portable code should not depend on
+    particular behaviour in this case, nor should it assign to such
+    variables without first rebinding them in the new thread.</p>
+</li>
+</ul>
+<h3 id="recursive-lock">recursive-lock</h3>
+<h3 id="recursive-lock-p">recursive-lock-p</h3>
+<pre><code class="lisp">Function: (recursive-lock-p object)
+</code></pre>
+
+<p>Returns T if OBJECT is a recursive lock; returns NIL otherwise.</p>
+<h3 id="release-lock">release-lock</h3>
+<pre><code class="lisp">Function: (release-lock lock)
+</code></pre>
+
+<p>Release LOCK. It is an error to call this unless
+  the lock has previously been acquired (and not released) by the same
+  thread. If other threads are waiting for the lock, the
+  ACQUIRE-LOCK call in one of them will now be able to continue.</p>
+<p>This function has no interesting return value.</p>
+<h3 id="release-recursive-lock">release-recursive-lock</h3>
+<pre><code class="lisp">Function: (release-recursive-lock lock)
+</code></pre>
+
+<p>Release the recursive LOCK. The lock will only
+  become free after as many Release operations as there have been
+  Acquire operations. See RELEASE-LOCK for other information.</p>
+<h3 id="semaphore">semaphore</h3>
+<h3 id="semaphore-p">semaphore-p</h3>
+<pre><code class="lisp">Function: (semaphore-p object)
+</code></pre>
+
+<p>Returns T if OBJECT is a semaphore; returns NIL otherwise.</p>
+<h3 id="signal-semaphore">signal-semaphore</h3>
+<pre><code class="lisp">Function: (signal-semaphore semaphore &amp;key (count 1))
+</code></pre>
+
+<p>Increment SEMAPHORE by COUNT. If there are threads waiting on this
+semaphore, then COUNT of them are woken up.</p>
+<h3 id="start-multiprocessing">start-multiprocessing</h3>
+<pre><code class="lisp">Function: (start-multiprocessing)
+</code></pre>
+
+<p>If the host implementation uses user-level threads, start the
+scheduler and multiprocessing, otherwise do nothing.
+It is safe to call repeatedly.</p>
+<h3 id="thread">thread</h3>
+<h3 id="thread-alive-p">thread-alive-p</h3>
+<pre><code class="lisp">Function: (thread-alive-p thread)
+</code></pre>
+
+<p>Returns true if THREAD is alive, that is, if
+  DESTROY-THREAD has not been called on it.</p>
+<h3 id="thread-name">thread-name</h3>
+<pre><code class="lisp">Function: (thread-name thread)
+</code></pre>
+
+<p>Returns the name of the thread, as supplied to MAKE-THREAD.</p>
+<h3 id="thread-yield">thread-yield</h3>
+<pre><code class="lisp">Function: (thread-yield)
+</code></pre>
+
+<p>Allows other threads to run. It may be necessary or desirable to
+  call this periodically in some implementations; others may schedule
+  threads automatically. On systems that do not support
+  multi-threading, this does nothing.</p>
+<h3 id="threadp">threadp</h3>
+<pre><code class="lisp">Function: (threadp object)
+</code></pre>
+
+<p>Returns true if object is a thread, otherwise NIL.</p>
+<h3 id="timeout">timeout</h3>
+<h3 id="wait-on-semaphore">wait-on-semaphore</h3>
+<pre><code class="lisp">Function: (wait-on-semaphore semaphore &amp;key timeout)
+</code></pre>
+
+<p>Decrement the count of SEMAPHORE by 1 if the count would not be negative.</p>
+<p>Else blocks until the semaphore can be decremented. Returns generalized boolean
+T on success.</p>
+<p>If TIMEOUT is given, it is the maximum number of seconds to wait. If the count
+cannot be decremented in that time, returns NIL without decrementing the count.</p>
+<h3 id="with-lock-held">with-lock-held</h3>
+<pre><code class="lisp">Function: (with-lock-held (place) &amp;body body)
+</code></pre>
+
+<p>Evaluates BODY with the lock named by PLACE, the value of which
+  is a lock created by MAKE-LOCK. Before the forms in BODY are
+  evaluated, the lock is acquired as if by using ACQUIRE-LOCK. After the
+  forms in BODY have been evaluated, or if a non-local control transfer
+  is caused (e.g. by THROW or SIGNAL), the lock is released as if by
+  RELEASE-LOCK.</p>
+<p>Note that if the debugger is entered, it is unspecified whether the
+  lock is released at debugger entry or at debugger exit when execution
+  is restarted.</p>
+<h3 id="with-recursive-lock-held">with-recursive-lock-held</h3>
+<pre><code class="lisp">Function: (with-recursive-lock-held (place) &amp;body body)
+</code></pre>
+
+<p>Evaluates BODY with the recursive lock named by PLACE, which is a
+reference to a recursive lock created by MAKE-RECURSIVE-LOCK. See
+WITH-LOCK-HELD etc etc</p>
+<h3 id="with-timeout">with-timeout</h3>
+<pre><code class="lisp">Function: (with-timeout (timeout) &amp;body body)
+</code></pre>
               
             </div>
           </div>

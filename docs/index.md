@@ -20,7 +20,7 @@ Documentation efforts have been made at:
 
 ## UltraSpec
 
-I liked (the theme of) UltraSpec. I also liked `mkdocs` - that is what I am using here. What UltraSpec seems to be good for is more largish websites than what is here. And anyways, `markdown` files and `dokuwiki` files (which is what UltraSpec uses) are interconvertible (untested - to a fair extent perhaps?) using `pandoc`. (It is also useful for a ton of other files.)
+I liked (the theme of) UltraSpec. I also liked `mkdocs` - that is what I am using here. What UltraSpec seems to be good for is more largish websites than what is here. And anyways, `markdown` files and `dokuwiki` files (which is what UltraSpec uses) are interconvertible (untested - to a fair extent perhaps?) using `pandoc`. (pandoc is also useful for a ton of other files!)
 
 ## mkdocs
 
@@ -32,9 +32,28 @@ As a marketing for mkdocs: `mkdocs` is simple as
 
 Done!
 
-## Current Documentation:
+## Defacto Libraries
 
-(See from the [html version of this page](https://digikar99.github.io/common-lisp.readthedocs/), rather than the markdown version.)
+### <span id="defacto-installation">Installation</span>
+
+Each of the defacto libraries can be installed using quiclisp:
+
+```lisp
+(ql:quickload "alexandria") ; for example
+```
+See [quicklisp.org](https://www.quicklisp.org/) for instructions on
+installing quicklisp.
+
+Optionally, you may want to use `sb-ext:add-package-local-nickname` the packages for, well, [adding package local nicknames](https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here).
+
+```lisp
+(sb-ext:add-package-local-nickname :a :alexandria) ; for SBCL
+```
+
+### Libraries documented so far
+
+(See the [html version of this page](https://digikar99.github.io/common-lisp.readthedocs/), rather than the markdown version for the working links below.)
 
 - [alexandria](./alexandria/)
 - [bordeaux-threads](./bordeaux-threads/)
+- [hunchentoot](./hunchentoot/)

@@ -11,5 +11,6 @@ nav:
     - Defacto libraries:
       - alexandria.md
       - bordeaux-threads.md
+      - hunchentoot.md
 plugins:
     - search

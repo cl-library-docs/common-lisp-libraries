@@ -1,0 +1,3089 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>hunchentoot - The Common Lisp web server (formerly TBNL) - common-lisp.readthedocs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "hunchentoot - The Common Lisp web server (formerly TBNL)";
+    var mkdocs_page_input_path = "hunchentoot.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp.readthedocs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">Alexandria Manual - draft version</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">hunchentoot - The Common Lisp web server (formerly TBNL)</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">INTRODUCTION</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">GETTING STARTED</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#installation-using-quicklisp">Installation using quicklisp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#serving-local-files">Serving local files</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#going-dynamic">Going dynamic</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#create-x-dispatcher">create-X-dispatcher</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#define-easy-handler">define-easy-handler</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#accessing-get-and-post-parameters">Accessing GET and POST parameters</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#more-documentation-tutorials-and-add-ons">More documentation, tutorials and add-ons</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#api-reference">API REFERENCE</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#1-acceptor">1. ACCEPTOR</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#relevant-methods">RELEVANT METHODS</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#slots">SLOTS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#2-easy-acceptor">2. EASY-ACCEPTOR</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#3-define-easy-handler">3. DEFINE-EASY-HANDLER</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#4-ssl-acceptor">4. SSL-ACCEPTOR</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#direct-slots">DIRECT SLOTS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#5-easy-ssl-acceptor">5. EASY-SSL-ACCEPTOR</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#6-reply">6. REPLY</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#relevant-methods_1">RELEVANT METHODS</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#slots_1">SLOTS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#7-request">7. REQUEST</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#relevant-methods_2">RELEVANT METHODS</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#slots_2">SLOTS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#8-session">8. SESSION</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#relevant-methods_3">RELEVANT METHODS</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#slots_3">SLOTS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#9-miscellaneous-functions">9. MISCELLANEOUS FUNCTIONS</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#bad-request">bad-request</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#client-as-string">client-as-string</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#create-folder-dispatcher-and-handler">create-folder-dispatcher-and-handler</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#create-prefix-dispatcher">create-prefix-dispatcher</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#create-regex-dispatcher">create-regex-dispatcher</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#create-request-handler-thread">create-request-handler-thread</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#create-static-file-dispatcher-and-handler">create-static-file-dispatcher-and-handler</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#decrement-taskmaster-thread-count">decrement-taskmaster-thread-count</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#default-document-directory">default-document-directory</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#detach-socket_1">detach-socket</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#dispatch-easy-handlers">dispatch-easy-handlers</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#escape-for-html">escape-for-html</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#handle-if-modified-since">handle-if-modified-since</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#handle-static-file">handle-static-file</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-token-p">http-token-p</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#hunchentoot-error">hunchentoot-error</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#increment-taskmaster-thread-count">increment-taskmaster-thread-count</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#initialize-connection-stream_1">initialize-connection-stream</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#log-message">log-message*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#maybe-invoke-debugger">maybe-invoke-debugger</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#mime-type">mime-type</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#next-session-id">next-session-id</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#no-cache">no-cache</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#parameter-error">parameter-error</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#process-connection_1">process-connection</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reason-phrase">reason-phrase</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#redirect">redirect</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#regenerate-session-cookie-value">regenerate-session-cookie-value</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reply-external-format_1">reply-external-format*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#request-pathname">request-pathname</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#require-authorization">require-authorization</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reset-connection-stream_1">reset-connection-stream</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reset-session-secret">reset-session-secret</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reset-sessions">reset-sessions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#rfc-1123-date">rfc-1123-date</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#script-name_2">script-name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#server-protocol_2">server-protocol</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-cookie-name">session-cookie-name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-cookie-value">session-cookie-value</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-created">session-created</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-db">session-db</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-db-lock">session-db-lock</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-gc">session-gc</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-too-old-p">session-too-old-p</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-verify">session-verify</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#set-cookie">set-cookie</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#set-cookie_1">set-cookie*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#ssl-p">ssl-p</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#taskmaster-max-accept-count">taskmaster-max-accept-count</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#taskmaster-max-thread-count">taskmaster-max-thread-count</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#taskmaster-thread-count">taskmaster-thread-count</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#too-many-taskmaster-requests">too-many-taskmaster-requests</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#url-decode">url-decode</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#url-encode">url-encode</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#within-request-p">within-request-p</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#10-configuration-variables">10. CONFIGURATION VARIABLES</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#catch-errors-p">*catch-errors-p*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#content-types-for-url-rewrite">*content-types-for-url-rewrite*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#default-connection-timeout">*default-connection-timeout*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#default-content-type">*default-content-type*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#dispatch-table">*dispatch-table*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#file-upload-hook">*file-upload-hook*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#handle-http-errors-p">*handle-http-errors-p*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#header-stream">*header-stream*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-error-handler">*http-error-handler*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#hunchentoot-default-external-format">*hunchentoot-default-external-format*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#hunchentoot-version">*hunchentoot-version*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#lisp-errors-log-level">*lisp-errors-log-level*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#lisp-warnings-log-level">*lisp-warnings-log-level*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#log-lisp-backtraces-p">*log-lisp-backtraces-p*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#log-lisp-errors-p">*log-lisp-errors-p*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#log-lisp-warnings-p">*log-lisp-warnings-p*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#methods-for-post-parameters">*methods-for-post-parameters*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#rewrite-for-session-urls">*rewrite-for-session-urls*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-gc-frequency">*session-gc-frequency*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-max-time">*session-max-time*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session-secret">*session-secret*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#show-lisp-backtraces-p">*show-lisp-backtraces-p*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#show-lisp-errors-p">*show-lisp-errors-p*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#tmp-directory">*tmp-directory*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#use-remote-addr-for-sessions">*use-remote-addr-for-sessions*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#use-user-agent-for-sessions">*use-user-agent-for-sessions*</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#11-variables-in-the-context-of-a-request">11. VARIABLES IN THE CONTEXT OF A REQUEST</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#acceptor_1">*acceptor*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#reply">*reply*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#request">*request*</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#session_1">*session*</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#12-constants">12. CONSTANTS</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#http-accepted">+http-accepted+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-authorization-required">+http-authorization-required+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-bad-gateway">+http-bad-gateway+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-bad-request">+http-bad-request+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-conflict">+http-conflict+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-continue">+http-continue+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-created">+http-created+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-expectation-failed">+http-expectation-failed+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-failed-dependency">+http-failed-dependency+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-forbidden">+http-forbidden+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-gateway-time-out">+http-gateway-time-out+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-gone">+http-gone+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-internal-server-error">+http-internal-server-error+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-length-required">+http-length-required+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-method-not-allowed">+http-method-not-allowed+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-moved-permanently">+http-moved-permanently+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-moved-temporarily">+http-moved-temporarily+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-multi-status">+http-multi-status+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-multiple-choices">+http-multiple-choices+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-network-authentication-required">+http-network-authentication-required+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-no-content">+http-no-content+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-non-authoritative-information">+http-non-authoritative-information+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-not-acceptable">+http-not-acceptable+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-not-found">+http-not-found+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-not-implemented">+http-not-implemented+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-not-modified">+http-not-modified+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-ok">+http-ok+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-partial-content">+http-partial-content+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-payment-required">+http-payment-required+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-precondition-failed">+http-precondition-failed+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-precondition-required">+http-precondition-required+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-proxy-authentication-required">+http-proxy-authentication-required+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-request-entity-too-large">+http-request-entity-too-large+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-request-header-fields-too-large">+http-request-header-fields-too-large+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-request-time-out">+http-request-time-out+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-request-uri-too-large">+http-request-uri-too-large+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-requested-range-not-satisfiable">+http-requested-range-not-satisfiable+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-reset-content">+http-reset-content+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-see-other">+http-see-other+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-service-unavailable">+http-service-unavailable+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-switching-protocols">+http-switching-protocols+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-temporary-redirect">+http-temporary-redirect+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-too-many-requests">+http-too-many-requests+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-unsupported-media-type">+http-unsupported-media-type+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-use-proxy">+http-use-proxy+</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#http-version-not-supported">+http-version-not-supported+</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#13-hunchentoot-condition">13. HUNCHENTOOT-CONDITION</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#14-hunchentoot-warning">14. HUNCHENTOOT-WARNING</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#15-taskmaster">15. TASKMASTER</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#taskmaster_1">taskmaster</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#multi-threaded-taskmaster">multi-threaded-taskmaster</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#one-thread-per-connection-taskmaster">one-thread-per-connection-taskmaster</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#single-threaded-taskmaster">single-threaded-taskmaster</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#advanced-topics">ADVANCED TOPICS</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#customizing-session-behaviour">CUSTOMIZING SESSION BEHAVIOUR</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#customizing-acceptor-behaviour">CUSTOMIZING ACCEPTOR BEHAVIOUR</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#an-example-of-how-to-subclass-acceptor">An example of how to subclass ACCEPTOR</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#taskmasters">TASKMASTERS</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#some-more-technical-details">SOME MORE TECHNICAL DETAILS</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#without-clssl">Without cl+ssl</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clbuild">clbuild</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gentoo-linux">Gentoo Linux</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#running-hunchentoot-on-port-80">Running Hunchentoot on port 80</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hunchentoot-behind-a-proxy">Hunchentoot behind a proxy</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#support">SUPPORT</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp.readthedocs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Defacto libraries &raquo;</li>
+        
+      
+    
+    <li>hunchentoot - The Common Lisp web server (formerly TBNL)</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="hunchentoot-the-common-lisp-web-server-formerly-tbnl">hunchentoot - The Common Lisp web server (formerly TBNL)</h1>
+<p>Version: 1.2.38</p>
+<h2 id="introduction">INTRODUCTION</h2>
+<p>Hunchentoot is a web server written in Common Lisp and a toolkit for building
+dynamic websites.  As a stand-alone web
+server, Hunchentoot is capable of HTTP/1.1 chunking (both directions),
+persistent connections (keep-alive), and SSL.</p>
+<p>Hunchentoot provides facilities like automatic session handling (with
+and without cookies), logging, customizable error handling, and easy
+access to GET and POST parameters sent by the client. It does <em>not</em>
+include functionality to programmatically generate HTML output. For
+this task you can use any library you like,
+e.g. <a href="https://github.com/edicl/cl-who/">CL-WHO</a> or
+<a href="https://github.com/edicl/html-template/">HTML-TEMPLATE</a>.</p>
+<p>Hunchentoot should work with most popular lisp implementations including 
+SBCL, CCL, LispWorks and all
+Lisps which are supported by the compatibility layers
+<a href="http://common-lisp.net/project/usocket/">usocket</a> and <a href="http://common-lisp.net/project/bordeaux-threads/">Bordeaux
+Threads</a>. </p>
+<p>Hunchentoot talks with its front-end or with the client over TCP/IP
+sockets and optionally uses multiprocessing to handle several requests
+at the same time.  Therefore, it cannot be implemented completely in
+<a href="http://www.lispworks.com/documentation/HyperSpec/Front/index.htm">portable Common
+Lisp</a>.</p>
+<p>Hunchentoot comes with a <a href="http://www.opensource.org/licenses/bsd-license.php">BSD-style
+license</a> so you
+can basically do with it whatever you want.</p>
+<p>Official documentation for Hunchentoot can be found in the <code>docs</code> directory or at the <a href="https://edicl.github.io/hunchentoot/">project
+website</a>.</p>
+<h2 id="getting-started">GETTING STARTED</h2>
+<h3 id="installation-using-quicklisp">Installation using quicklisp</h3>
+<p>See <a href="../index.html#defacto-installation">the section on Installation under Defacto Libraries on Home Page</a>.</p>
+<h3 id="serving-local-files">Serving local files</h3>
+<p>To start the server, simply</p>
+<pre><code class="lisp">(defvar *acceptor*)
+(setq *acceptor* (make-instance 'hunchentoot:easy-acceptor :port 4242))
+(hunchentoot:start *acceptor*)
+</code></pre>
+
+<p>You should see something - but not very interesting - at
+"<a href="http://127.0.0.1:4242/"><code>http://127.0.0.1:4242/</code></a>" in your browser.</p>
+<p>By default, Hunchentoot serves files from the <code>www/</code> directory from
+its source tree.  In the distribution, that directory contains a HTML
+version of the documentation as well as the error templates. If installed via
+quicklisp, see <code>(ql:where-is-system "hunchentoot")</code>.</p>
+<ul>
+<li>
+<p>See <a href="#acceptor-slots">acceptor slots</a> for a list of various <code>slots</code> (with or
+without <code>initargs</code>). </p>
+</li>
+<li>
+<p>And <a href="#configuration-variables">configuration variables</a>
+for a list of various configuration options for hunchentoot, such as whether to
+<code>*catch-errors-p</code> or <code>*log-lisp-errors-p*</code> and more.</p>
+</li>
+<li>
+<p>Acceptors provided with hunchentoot:</p>
+</li>
+<li><a href="#acceptor">acceptor</a></li>
+<li><a href="#easy-acceptor">easy-acceptor</a></li>
+<li><a href="#ssl-acceptor">ssl-acceptor</a></li>
+<li><a href="#easy-ssl-acceptor">easy-ssl-acceptor</a></li>
+</ul>
+<h3 id="going-dynamic">Going dynamic</h3>
+<h4 id="create-x-dispatcher">create-X-dispatcher</h4>
+<p>To bind an existing function to a route, we <a href="#create-prefix-dispatcher">create-prefix-dispatcher</a>
+that we push onto the <a href="#dispatch-table">*dispatch-table*</a> 
+(just a global list of dispatch functions):</p>
+<pre><code class="lisp">(defun hello ()
+  (format nil &quot;Hello, it works!&quot;))
+
+(push
+  (hunchentoot:create-prefix-dispatcher &quot;/hello.html&quot; 'hello) 
+  hunchentoot:*dispatch-table*)
+</code></pre>
+
+<p>To create a route with a regexp, we use <a href="#create-regex-dispatcher">create-regex-dispatcher</a>, where the url-as-regexp can be a string, an s-expression or a cl-ppcre scanner. In all, there exist</p>
+<ul>
+<li><a href="#create-folder-dispatcher-and-handler">create-folder-dispatcher-and-handler</a></li>
+<li><a href="#create-prefix-dispatcher">create-prefix-dispatcher</a></li>
+<li><a href="#create-regex-dispatcher">create-regex-dispatcher</a></li>
+<li><a href="#create-static-file-dispatcher-and-handler">create-static-file-dispatcher-and-handler</a></li>
+</ul>
+<h4 id="define-easy-handler">define-easy-handler</h4>
+<p><code>define-easy-handler</code> allows to create a function and to bind it to an uri at once. For instance:</p>
+<pre><code class="lisp">(hunchentoot:define-easy-handler (say-yo :uri &quot;/yo&quot;) (name)
+  (setf (hunchentoot:content-type*) &quot;text/plain&quot;)
+  (format nil &quot;Hey~@[ ~A~]!&quot; name))
+</code></pre>
+
+<p>Visit <a href="http://localhost:4242/yo">http://localhost:4242/yo</a> or add parameters to the url:
+<a href="http://localhost:4242/yo?name=Alice">http://localhost:4242/yo?name=Alice</a>.</p>
+<p>Note that we didn't explicitly ask Hunchentoot to add this
+route to our first acceptor of the port 4242. This handler also works for another acceptor, 
+say another one opened at port 4444: 
+<a href="http://localhost:4444/yo?name=Bob">http://localhost:4444/yo?name=Bob</a> In fact, 
+<code>define-easy-handler</code> accepts an <code>acceptor-names</code> parameter that defines which acceptors it works for.</p>
+<h4 id="accessing-get-and-post-parameters">Accessing GET and POST parameters</h4>
+<p>Query parameters are accessible with</p>
+<pre><code class="lisp">(hunchentoot:parameter &quot;my-param&quot;)
+</code></pre>
+
+<p>while in the <a href="#variables-in-request-context">context of a request</a>.</p>
+<p>It acts on the default <code>*request*</code> object which is passed to all handlers.</p>
+<p>There also are <a href="#get-parameter">get-paramater</a> and <a href="#post-parameter">post-parameter</a>. </p>
+<p>See also the <a href="#variables-in-request-context">Variables in the context of a request</a>.</p>
+<h3 id="more-documentation-tutorials-and-add-ons">More documentation, tutorials and add-ons</h3>
+<ul>
+<li>Adam Petersen has written a book called <a href="http://www.adampetersen.se/articles/lispweb.htm">"Lisp for the
+Web"</a> which explains
+how Hunchentoot and some other libraries can be used to build web sites.</li>
+<li>See also the <a href="http://lispcookbook.github.io/cl-cookbook/web.html">Web Development - Cookbook</a>.</li>
+<li><a href="https://roeim.net/vetle/docs/cl-webapp-intro/part-1/">Implementing a blog in Common Lisp - Vetle Roeim</a></li>
+</ul>
+<p>Extensions and related softwares:</p>
+<ul>
+<li><a href="https://github.com/fukamachi/clack">Clack</a> is a web server
+    abstraction layer, defaulting to Hunchentoot.</li>
+<li><a href="https://github.com/slyrus/hunchentoot-cgi">hunchentoot-cgi</a> (by 
+        Cyrus Harmo) provides
+    <a href="http://en.wikipedia.org/wiki/Common_Gateway_Interface">CGI</a>
+    handlers for Hunchentoot.</li>
+<li><a href="http://weitz.de/cl-webdav/">CL-WEBDAV</a> is a
+    <a href="http://webdav.org/">WebDAV</a> server based on Hunchentoot.</li>
+<li><a href="http://restas.lisper.ru/">RESTAS</a> is a web framework based on
+    Hunchentoot. <a href="https://github.com/fukamachi/caveman">Caveman</a>,
+    <a href="https://github.com/Shirakumo/radiance">Radiance</a>,
+    <a href="https://github.com/joaotavora/snooze">Snooze</a> or again
+    <a href="http://40ants.com/weblocks/">Weblocks</a> are frameworks compatible
+    with it.</li>
+</ul>
+<h2 id="api-reference">API REFERENCE</h2>
+<h3 id="1-acceptor">1. <span id="acceptor">ACCEPTOR</span></h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>To create a Hunchentoot webserver, you make an
+instance of this class and use the generic function START to start it
+(and STOP to stop it).  Use the :PORT initarg if you don't want to
+listen on the default http port 80.  There are other initargs most of
+which you probably won't need very often.  They are explained in
+detail in the docstrings of the slot definitions for this class.</p>
+<p>Unless you are in a Lisp without MP capabilities, you can have several
+active instances of ACCEPTOR (listening on different ports) at the
+same time.</p>
+<ul>
+<li>Direct superclasses: STANDARD-OBJECT</li>
+<li>Direct subclasses: <a href="#easy-acceptor">EASY-ACCEPTOR</a>, <a href="#ssl-acceptor">SSL-ACCEPTOR</a></li>
+</ul>
+<h4 id="relevant-methods">RELEVANT METHODS</h4>
+<h5 id="accept-connections">accept-connections</h5>
+<pre><code class="lisp">Function: (accept-connections acceptor)
+</code></pre>
+
+<p>In a loop, accepts a connection and hands it over
+to the acceptor's taskmaster for processing using
+HANDLE-INCOMING-CONNECTION.  On LispWorks, this function returns
+immediately, on other Lisps it retusn only once the acceptor has been
+stopped.</p>
+<h5 id="acceptor-log-access">acceptor-log-access</h5>
+<pre><code class="lisp">Function: (acceptor-log-access acceptor &amp;key return-code)
+</code></pre>
+
+<p>Function to call to log access to the acceptor.  The RETURN-CODE,
+CONTENT and CONTENT-LENGTH keyword arguments contain additional
+information about the request to log.  In addition, it can use the
+standard request accessor functions that are available to handler
+functions to find out more information about the request.</p>
+<h5 id="acceptor-log-message">acceptor-log-message</h5>
+<pre><code class="lisp">Function: (acceptor-log-message acceptor log-level format-string &amp;rest format-arguments)
+</code></pre>
+
+<p>Function to call to log messages by the ACCEPTOR.  It must accept
+a severity level for the message, which will be one of :ERROR, :INFO,
+or :WARNING, a format string and an arbitary number of formatting
+arguments.</p>
+<h5 id="acceptor-status-message">acceptor-status-message</h5>
+<pre><code class="lisp">Function: (acceptor-status-message acceptor http-status-code &amp;key &amp;allow-other-keys)
+</code></pre>
+
+<p>This function is called after the request's handler has been
+invoked to convert the HTTP-STATUS-CODE to a HTML message to be
+displayed to the user.  If this function returns a string, that
+string is sent to the client instead of the content produced by the
+handler, if any.</p>
+<p>If an ERROR-TEMPLATE-DIRECTORY is set in the current acceptor and
+the directory contains a file corresponding to HTTP-STATUS-CODE
+named \&lt;code>.html, that file is sent to the client after variable
+substitution.  Variables are referenced by ${<variable-name>}.</p>
+<p>Additional keyword arguments may be provided which are made
+available to the templating logic as substitution variables.  These
+variables can be interpolated into error message templates in,
+which contains the current URL relative to the server and without
+GET parameters.</p>
+<p>In addition to the variables corresponding to keyword arguments,
+the script-name, lisp-implementation-type,
+lisp-implementation-version and hunchentoot-version variables are
+available.</p>
+<h5 id="detach-socket">detach-socket</h5>
+<pre><code class="lisp">Function: (detach-socket acceptor)
+</code></pre>
+
+<p>Indicate to Hunchentoot that it should stop serving
+requests on the current request's socket.
+Hunchentoot will finish processing the current
+request and then return from PROCESS-CONNECTION
+without closing the connection to the client.
+DETACH-SOCKET can only be called from within a
+request handler function.</p>
+<h5 id="initialize-connection-stream">initialize-connection-stream</h5>
+<pre><code class="lisp">Function: (initialize-connection-stream acceptor stream)
+</code></pre>
+
+<p>Can be used to modify the stream which is used to
+communicate between client and server before the request is read.  The
+default method of ACCEPTOR does nothing, but see for example the
+method defined for SSL-ACCEPTOR.  All methods of this generic function
+must return the stream to use.</p>
+<h5 id="process-connection">process-connection</h5>
+<pre><code class="lisp">Function: (process-connection acceptor socket)
+</code></pre>
+
+<p>This function is called by the taskmaster when a
+new client connection has been established.  Its arguments are the
+ACCEPTOR object and a LispWorks socket handle or a usocket socket
+stream object in SOCKET.  It reads the request headers, sets up the
+request and reply objects, and hands over to PROCESS-REQUEST.  This is
+done in a loop until the stream has to be closed or until a connection
+timeout occurs.</p>
+<p>It is probably not a good idea to re-implement this method until you
+really, really know what you're doing.</p>
+<p>Handlers may call to the <code>DETACH-SOCKET</code>generic function to
+indicate that no further requests should be handled on the connection
+by Hunchentoot, and that responsibility for the socket is assumed by
+third-party software. This can be used by specialized handlers that
+wish to hand over connection polling or processing to functions
+outside of Hunchentoot, i.e. for connection multiplexing or
+implementing specialized client protocols. Hunchentoot will finish
+processing the request and the <code>PROCESS-CONNECTION</code> function
+will return without closing the connection. At that point, the
+acceptor may interact with the socket in whatever fashion required.</p>
+<h5 id="reset-connection-stream">reset-connection-stream</h5>
+<pre><code class="lisp">Function: (reset-connection-stream acceptor stream)
+</code></pre>
+
+<p>Resets the stream which is used to communicate
+between client and server after one request has been served so that it
+can be used to process the next request.  This generic function is
+called after a request has been processed and must return the
+stream.</p>
+<h5 id="start">start</h5>
+<pre><code class="lisp">Function: (start acceptor)
+</code></pre>
+
+<p>Starts the ACCEPTOR so that it begins accepting
+connections.  Returns the acceptor.</p>
+<h5 id="start-listening">start-listening</h5>
+<pre><code class="lisp">Function: (start-listening acceptor)
+</code></pre>
+
+<p>Sets up a listen socket for the given ACCEPTOR and
+enables it to listen to incoming connections.  This function is called
+from the thread that starts the acceptor initially and may return
+errors resulting from the listening operation (like 'address in use'
+or similar).</p>
+<h5 id="stop">stop</h5>
+<pre><code class="lisp">Function: (stop acceptor &amp;key soft)
+</code></pre>
+
+<p>Stops the ACCEPTOR so that it no longer accepts
+requests.  If SOFT is true, and there are any requests in progress,
+wait until all requests are fully processed, but meanwhile do not
+accept new requests.  Note that SOFT must not be set when calling
+STOP from within a request handler, as that will deadlock.</p>
+<h5 id="started-p">started-p</h5>
+<pre><code class="lisp">Function: (started-p acceptor)
+</code></pre>
+
+<p>Tells if ACCEPTOR has been started.
+The default implementation simply queries ACCEPTOR for its listening
+status, so if T is returned to the calling thread, then some thread
+has called START or some thread's call to STOP hasn't finished. If NIL
+is returned either some thread has called STOP, or some thread's call
+to START hasn't finished or START was never called at all for
+ACCEPTOR.</p>
+<h4 id="slots"><span id="acceptor-slots">SLOTS</span></h4>
+<h5 id="acceptor-shutdown-p">acceptor-shutdown-p</h5>
+<pre><code class="lisp">Initform: T
+</code></pre>
+
+<p>A flag that makes the acceptor
+ shutdown itself when set to something other than NIL.</p>
+<h5 id="access-log-destination">access-log-destination</h5>
+<pre><code class="lisp">Initargs: :access-log-destination
+Readers: hunchentoot:acceptor-access-log-destination
+Writers: (setf hunchentoot:acceptor-access-log-destination)
+</code></pre>
+
+<p>Destination of the access log
+ which contains one log entry per request handled in a format similar
+ to Apache's access.log.  Can be set to a pathname or string
+ designating the log file, to a open output stream or to NIL to
+ suppress logging.</p>
+<h5 id="address">address</h5>
+<pre><code class="lisp">Initargs: :address
+Readers: hunchentoot:acceptor-address
+</code></pre>
+
+<p>The address the acceptor is listening on.
+ If address is a string denoting an IP address, then the server only
+ receives connections for that address.  This must be one of the
+ addresses associated with the machine and allowed values are host
+ names such as "www.zappa.com" and address strings such as
+ "72.3.247.29".  If address is NIL, then the server will receive
+ connections to all IP addresses on the machine. This is the default.</p>
+<h5 id="document-root">document-root</h5>
+<pre><code class="lisp">Initargs: :document-root
+Readers: hunchentoot:acceptor-document-root
+Writers: (setf hunchentoot:acceptor-document-root)
+</code></pre>
+
+<p>Directory pathname that points to
+ files that are served by the acceptor if no more specific
+ acceptor-dispatch-request method handles the request.</p>
+<h5 id="error-template-directory">error-template-directory</h5>
+<pre><code class="lisp">Initargs: :error-template-directory
+Readers: hunchentoot:acceptor-error-template-directory
+Writers: (setf hunchentoot:acceptor-error-template-directory)
+</code></pre>
+
+<p>Directory pathname that
+  contains error message template files for server-generated error
+  messages.  Files must be named <return-code>.html with <return-code>
+  representing the HTTP return code that the file applies to,
+  i.e. 404.html would be used as the content for a HTTP 404 Not found
+  response.</p>
+<h5 id="listen-backlog">listen-backlog</h5>
+<pre><code class="lisp">Initargs: :listen-backlog
+Readers: hunchentoot:acceptor-listen-backlog
+</code></pre>
+
+<p>Number of pending connections
+allowed in the listen socket before the kernel rejects
+further incoming connections.</p>
+<h5 id="listen-socket">listen-socket</h5>
+<p>The socket listening for incoming
+ connections.</p>
+<h5 id="message-log-destination">message-log-destination</h5>
+<pre><code class="lisp">Initargs: :message-log-destination
+Readers: hunchentoot:acceptor-message-log-destination
+Writers: (setf hunchentoot:acceptor-message-log-destination)
+</code></pre>
+
+<p>Destination of the server
+ error log which is used to log informational, warning and error
+ messages in a free-text format intended for human inspection. Can be
+ set to a pathname or string designating the log file, to a open output
+ stream or to NIL to suppress logging.</p>
+<h5 id="input-chunking-p">input-chunking-p</h5>
+<pre><code class="lisp">Initargs: :input-chunking-p
+Readers: hunchentoot:acceptor-input-chunking-p
+Writers: (setf hunchentoot:acceptor-input-chunking-p)
+</code></pre>
+
+<p>A generalized boolean denoting
+ whether the acceptor may use chunked encoding for input, i.e. when
+ accepting request bodies from the client.  The default is T and
+ there's usually no reason to change this to NIL.</p>
+<h5 id="name">name</h5>
+<pre><code class="lisp">Initargs: :name
+Readers: hunchentoot:acceptor-name
+Writers: (setf hunchentoot:acceptor-name)
+</code></pre>
+
+<p>The optional name of the acceptor, a symbol.
+ This name can be utilized when defining "easy handlers" - see
+ DEFINE-EASY-HANDLER.  The default name is an uninterned symbol as
+ returned by GENSYM.</p>
+<h5 id="output-chunking-p">output-chunking-p</h5>
+<pre><code class="lisp">Initargs: :output-chunking-p
+Readers: hunchentoot:acceptor-output-chunking-p
+Writers: (setf hunchentoot:acceptor-output-chunking-p)
+</code></pre>
+
+<p>A generalized boolean denoting
+ whether the acceptor may use chunked encoding for output, i.e. when
+ sending data to the client.  The default is T and there's usually no
+ reason to change this to NIL.</p>
+<h5 id="persistent-connections-p">persistent-connections-p</h5>
+<pre><code class="lisp">Initargs: :persistent-connections-p
+Readers: hunchentoot:acceptor-persistent-connections-p
+Writers: (setf hunchentoot:acceptor-persistent-connections-p)
+</code></pre>
+
+<p>A generalized boolean
+ denoting whether the acceptor supports persistent connections, which
+ is the default for threaded acceptors.  If this property is NIL,
+ Hunchentoot closes each incoming connection after having processed one
+ request.  This is the default for non-threaded acceptors.</p>
+<h5 id="port">port</h5>
+<pre><code class="lisp">Initargs: :port
+Readers: hunchentoot:acceptor-port
+</code></pre>
+
+<p>The port the acceptor is listening on.  The
+ default is 80.  Note that depending on your operating system you might
+ need special privileges to listen on port 80.  When 0, the port will be
+ chosen by the system the first time the acceptor is started.</p>
+<h5 id="read-timeout">read-timeout</h5>
+<pre><code class="lisp">Initargs: :read-timeout
+Readers: hunchentoot:acceptor-read-timeout
+</code></pre>
+
+<p>The read timeout of the acceptor,
+ specified in (fractional) seconds.  The precise semantics of this
+ parameter is determined by the underlying Lisp's implementation of
+ socket timeouts.  NIL means no timeout.</p>
+<h5 id="reply-class">reply-class</h5>
+<pre><code class="lisp">Initargs: :reply-class
+Readers: hunchentoot:acceptor-reply-class
+Writers: (setf hunchentoot:acceptor-reply-class)
+</code></pre>
+
+<p>Determines which class of reply
+ objects is created when a request is served in and should be (a
+ symbol naming) a class which inherits from REPLY.  The default is the
+ symbol REPLY.</p>
+<h5 id="request-class">request-class</h5>
+<pre><code class="lisp">Initargs: :request-class
+Readers: hunchentoot:acceptor-request-class
+Writers: (setf hunchentoot:acceptor-request-class)
+</code></pre>
+
+<p>Determines which class of request
+ objects is created when a request comes in and should be (a symbol
+ naming) a class which inherits from REQUEST.  The default is the
+ symbol REQUEST.</p>
+<h5 id="requests-in-progress">requests-in-progress</h5>
+<pre><code class="lisp">Initform: 0
+</code></pre>
+
+<p>The number of
+ requests currently in progress.</p>
+<h5 id="shutdown-lock">shutdown-lock</h5>
+<p>The lock protecting the shutdown-queue
+ condition variable and the requests-in-progress counter.</p>
+<h5 id="shutdown-queue">shutdown-queue</h5>
+<p>A condition variable
+ used with soft shutdown, signaled when all requests
+ have been processed.</p>
+<h5 id="taskmaster"><span id="acceptor-taskmaster">taskmaster</span></h5>
+<pre><code class="lisp">Initargs: :taskmaster
+</code></pre>
+
+<p>The taskmaster (i.e. an instance of a
+ subclass of TASKMASTER) that is responsible for scheduling the work
+ for this acceptor.  The default depends on the MP capabilities of the
+ underlying Lisp.</p>
+<h5 id="write-timeout">write-timeout</h5>
+<pre><code class="lisp">Initargs: :write-timeout
+Readers: hunchentoot:acceptor-write-timeout
+</code></pre>
+
+<p>The write timeout of the acceptor,
+ specified in (fractional) seconds.  The precise semantics of this
+ parameter is determined by the underlying Lisp's implementation of
+ socket timeouts.  NIL means no timeout.</p>
+<h3 id="2-easy-acceptor">2. <span id="easy-acceptor">EASY-ACCEPTOR</span></h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>This is the acceptor of the "easy" Hunchentoot framework.</p>
+<ul>
+<li>Direct superclasses: <a href="#acceptor">ACCEPTOR</a></li>
+<li>Direct subclasses: <a href="#easy-ssl-acceptor">EASY-SSL-ACCEPTOR</a></li>
+</ul>
+<h3 id="3-define-easy-handler">3. <span id="define-easy-handler">DEFINE-EASY-HANDLER</span></h3>
+<pre><code class="lisp">Macro: (define-easy-handler description lambda-list &amp;body body)
+</code></pre>
+
+<p>Defines a handler with the body BODY and optionally registers
+it with a URI so that it will be found by <a href="#DISPATCH-EASY-HANDLERS">DISPATCH-EASY-HANDLERS</a>.
+DESCRIPTION is either a symbol NAME or a list matching the
+destructuring lambda list</p>
+<pre><code class="lisp">  (name &amp;key uri acceptor-names default-parameter-type default-request-type)
+</code></pre>
+
+<p>LAMBDA-LIST is a list the elements of which are either a symbol
+VAR or a list matching the destructuring lambda list</p>
+<pre><code class="lisp">  (var &amp;key real-name parameter-type init-form request-type)
+</code></pre>
+
+<p>The resulting handler will be a Lisp function with the name NAME
+and keyword parameters named by the VAR symbols.  Each VAR will
+be bound to the value of the GET or POST parameter called
+REAL-NAME (a string) before BODY is executed.  If REAL-NAME is
+not provided, it will be computed by downcasing the symbol name
+of VAR.</p>
+<p>If URI (which is evaluated) is provided, then it must be a string or
+a function designator for a function of one argument.  In this case,
+the handler will be returned by DISPATCH-EASY-HANDLERS, if URI is a
+string and the script name of a request is URI, or if URI designates a
+function and applying this function to the current request object
+returns a true value.</p>
+<p>ACCEPTOR-NAMES (which is evaluated) can be a list of symbols which
+means that the handler will be returned by DISPATCH-EASY-HANDLERS in
+acceptors which have one of these names (see ACCEPTOR-NAME).
+ACCEPTOR-NAMES can also be the symbol T which means that the handler
+will be returned by DISPATCH-EASY-HANDLERS in every acceptor.</p>
+<p>Whether the GET or POST parameter (or both) will be taken into
+consideration, depends on REQUEST-TYPE which can
+be :GET, :POST, :BOTH, or NIL.  In the last case, the value of
+DEFAULT-REQUEST-TYPE (the default of which is :BOTH) will be
+used.</p>
+<p>The value of VAR will usually be a string (unless it resulted from a
+file upload in which case it won't be converted at all), but if
+PARAMETER-TYPE (which is evaluated) is provided, the string will be
+converted to another Lisp type by the following rules:</p>
+<p>If the corresponding GET or POST parameter wasn't provided by the
+client, VAR's value will be NIL.  If PARAMETER-TYPE is 'STRING, VAR's
+value remains as is.  If PARAMETER-TYPE is 'INTEGER and the parameter
+string consists solely of decimal digits, VAR's value will be the
+corresponding integer, otherwise NIL.  If PARAMETER-TYPE is 'KEYWORD,
+VAR's value will be the keyword obtained by interning the upcased
+parameter string into the keyword package.  If PARAMETER-TYPE is
+'CHARACTER and the parameter string is of length one, VAR's value will
+be the single character of this string, otherwise NIL.  If
+PARAMETER-TYPE is 'BOOLEAN, VAR's value will always be T (unless it
+is NIL by the first rule above, of course).  If PARAMETER-TYPE is any
+other atom, it is supposed to be a function designator for a unary
+function which will be called to convert the string to something else.</p>
+<p>Those were the rules for <code>simple' types, but PARAMETER-TYPE can
+also be a list starting with one of the symbols LIST, ARRAY, or
+HASH-TABLE.  The second value of the list must always be a simple
+parameter type as in the last paragraph - we'll call it the</code>inner type' below.</p>
+<p>In the case of 'LIST, all GET/POST parameters called REAL-NAME
+will be collected, converted to the inner type, and assembled
+into a list which will be the value of VAR.</p>
+<p>In the case of 'ARRAY, all GET/POST parameters which have a name
+like the result of</p>
+<pre><code class="lisp">  (format nil &quot;~A[~A]&quot; real-name n)
+</code></pre>
+
+<p>where N is a non-negative integer, will be assembled into an
+array where the Nth element will be set accordingly, after
+conversion to the inner type.  The array, which will become the
+value of VAR, will be big enough to hold all matching parameters,
+but not bigger.  Array elements not set as described above will
+be NIL.  Note that VAR will always be bound to an array, which
+may be empty, so it will never be NIL, even if no appropriate
+GET/POST parameters are found.</p>
+<p>The full form of a 'HASH-TABLE parameter type is</p>
+<pre><code class="lisp">  (hash-table inner-type key-type test-function),
+</code></pre>
+
+<p>but KEY-TYPE and TEST-FUNCTION can be left out in which case they
+default to 'STRING and 'EQUAL, respectively.  For this parameter
+type, all GET/POST parameters which have a name like the result
+of</p>
+<pre><code class="lisp">  (format nil &quot;~A{~A}&quot; real-name key)
+</code></pre>
+
+<p>(where KEY is a string that doesn't contain curly brackets) will
+become the values (after conversion to INNER-TYPE) of a hash
+table with test function TEST-FUNCTION where KEY (after
+conversion to KEY-TYPE) will be the corresponding key.  Note that
+VAR will always be bound to a hash table, which may be empty, so
+it will never be NIL, even if no appropriate GET/POST parameters
+are found.</p>
+<p>To make matters even more complicated, the three compound
+parameter types also have an abbreviated form - just one of the
+symbols LIST, ARRAY, or HASH-TABLE.  In this case, the inner type
+will default to 'STRING.</p>
+<p>If PARAMETER-TYPE is not provided or NIL, DEFAULT-PARAMETER-TYPE
+(the default of which is 'STRING) will be used instead.</p>
+<p>If the result of the computations above would be that VAR would
+be bound to NIL, then INIT-FORM (if provided) will be evaluated
+instead, and VAR will be bound to the result of this evaluation.</p>
+<p>Handlers built with this macro are constructed in such a way that
+the resulting Lisp function is useful even outside of
+Hunchentoot.  Specifically, all the parameter computations above
+will only happen if *REQUEST* is bound, i.e. if we're within a
+Hunchentoot request.  Otherwise, VAR will always be bound to the
+result of evaluating INIT-FORM unless a corresponding keyword
+argument is provided.</p>
+<h3 id="4-ssl-acceptor">4. <span id="ssl-acceptor">SSL-ACCEPTOR</span></h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Create and START an instance of this class
+(instead of ACCEPTOR) if you want an https server.  There are two
+required initargs, :SSL-CERTIFICATE-FILE and :SSL-PRIVATEKEY-FILE, for
+pathname designators denoting the certificate file and the key file in
+PEM format.  On LispWorks, you can have both in one file in which case
+the second initarg is optional.  You can also use the
+:SSL-PRIVATEKEY-PASSWORD initarg to provide a password (as a string)
+for the key file (or NIL, the default, for no password).</p>
+<p>The default port for SSL-ACCEPTOR instances is 443 instead of 80</p>
+<ul>
+<li>Direct superclasses: <a href="#acceptor">ACCEPTOR</a></li>
+<li>Direct subclasses: <a href="#easy-ssl-acceptor">EASY-SSL-ACCEPTOR</a></li>
+</ul>
+<h4 id="direct-slots">DIRECT SLOTS</h4>
+<p>Also see slots for the superclass.</p>
+<h5 id="ssl-certificate-file">ssl-certificate-file</h5>
+<pre><code class="lisp">Initargs: :ssl-certificate-file
+Readers: hunchentoot:acceptor-ssl-certificate-file
+</code></pre>
+
+<p>A pathname designator for a
+ certificate file in PEM format.</p>
+<h5 id="ssl-privatekey-file">ssl-privatekey-file</h5>
+<pre><code class="lisp">Initargs: :ssl-privatekey-file
+Readers: hunchentoot:acceptor-ssl-privatekey-file
+</code></pre>
+
+<p>A pathname designator for a
+ private key file in PEM format, or (only on LispWorks) NIL if the
+ certificate file contains the private key.</p>
+<h5 id="ssl-privatekey-password">ssl-privatekey-password</h5>
+<pre><code class="lisp">Initargs: :ssl-privatekey-password
+Readers: hunchentoot:acceptor-ssl-privatekey-password
+</code></pre>
+
+<p>The password for the
+ private key file or NIL for no password.</p>
+<h3 id="5-easy-ssl-acceptor">5. <span id="easy-ssl-acceptor">EASY-SSL-ACCEPTOR</span></h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>This is an acceptor that mixes the "easy" Hunchentoot with SSL connections.</p>
+<ul>
+<li>Direct superclasses: <a href="#easy-acceptor">EASY-ACCEPTOR</a>, <a href="#ssl-acceptor">SSL-ACCEPTOR</a></li>
+<li>No subclasses.</li>
+</ul>
+<h3 id="6-reply">6. <span id="class-reply">REPLY</span></h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Objects of this class hold all the information
+about an outgoing reply.  They are created automatically by
+Hunchentoot and can be accessed and modified by the corresponding
+handler.</p>
+<p>You should not mess with the slots of these objects directly, but you
+can subclass REPLY in order to implement your own behaviour.  See the
+REPLY-CLASS slot of the ACCEPTOR class.</p>
+<ul>
+<li>Direct superclasses: STANDARD-OBJECT</li>
+<li>No subclasses.</li>
+</ul>
+<h4 id="relevant-methods_1">RELEVANT METHODS</h4>
+<h5 id="headers-out">headers-out*</h5>
+<pre><code class="lisp">Function: (headers-out* &amp;optional (reply *reply*))
+</code></pre>
+
+<p>Returns an alist of the outgoing headers associated with the
+REPLY object REPLY.</p>
+<h5 id="content-length">content-length*</h5>
+<pre><code class="lisp">Function: (content-length* &amp;optional (reply *reply*))
+</code></pre>
+
+<p>The outgoing 'Content-Length' http header of REPLY.</p>
+<h5 id="content-type">content-type*</h5>
+<pre><code class="lisp">Function: (content-type* &amp;optional (reply *reply*))
+</code></pre>
+
+<p>The outgoing 'Content-Type' http header of REPLY.</p>
+<h5 id="cookie-out">cookie-out</h5>
+<pre><code class="lisp">Function: (cookie-out name &amp;optional (reply *reply*))
+</code></pre>
+
+<p>Returns the current value of the outgoing cookie named
+NAME. Search is case-sensitive.</p>
+<h5 id="cookies-out">cookies-out*</h5>
+<pre><code class="lisp">Function: (cookies-out* &amp;optional (reply *reply*))
+</code></pre>
+
+<p>Returns an alist of the outgoing cookies associated with the
+REPLY object REPLY.</p>
+<h5 id="return-code">return-code*</h5>
+<pre><code class="lisp">Function: (return-code* &amp;optional (reply *reply*))
+</code></pre>
+
+<p>The http return code of REPLY.  The return codes Hunchentoot can
+handle are defined in specials.lisp.</p>
+<h5 id="send-headers">send-headers</h5>
+<pre><code class="lisp">Function: (send-headers)
+</code></pre>
+
+<p>Sends the initial status line and all headers as determined by the
+REPLY object *REPLY*.  Returns a binary stream to which the body of
+the reply can be written.  Once this function has been called, further
+changes to *REPLY* don't have any effect.  Also, automatic handling of
+errors (i.e. sending the corresponding status code to the browser,
+etc.) is turned off for this request.  If your handlers return the
+full body as a string or as an array of octets you should NOT call
+this function.</p>
+<p>This function does not return control to the caller during HEAD
+request processing.</p>
+<h5 id="reply-external-format">reply-external-format*</h5>
+<pre><code class="lisp">Function: (reply-external-format* &amp;optional (reply *reply*))
+</code></pre>
+
+<p>The external format of REPLY which is used for character output.</p>
+<h4 id="slots_1">SLOTS</h4>
+<h5 id="content-type_1">content-type</h5>
+<pre><code class="lisp">Readers: hunchentoot:content-type
+</code></pre>
+
+<p>The outgoing 'Content-Type' http
+ header which defaults to the value of *DEFAULT-CONTENT-TYPE*.</p>
+<h5 id="content-length_1">content-length</h5>
+<pre><code class="lisp">Readers: hunchentoot:content-length
+</code></pre>
+
+<p>The outgoing 'Content-Length'
+ http header which defaults NIL.  If this is NIL, Hunchentoot will
+ compute the content length.</p>
+<h5 id="headers-out_1">headers-out</h5>
+<pre><code class="lisp">Readers: hunchentoot:headers-out
+</code></pre>
+
+<p>An alist of the outgoing http headers
+ not including the 'Set-Cookie', 'Content-Length', and 'Content-Type'
+ headers.  Use the functions HEADER-OUT and (SETF HEADER-OUT) to
+ modify this slot.</p>
+<h5 id="return-code_1">return-code</h5>
+<pre><code class="lisp">Initform: hunchentoot:+http-ok+
+Readers: hunchentoot:return-code
+Writers: (setf hunchentoot:return-code)
+</code></pre>
+
+<p>The http return code of this
+ reply.  The return codes Hunchentoot can handle are defined in
+ specials.lisp.</p>
+<h5 id="external-format">external-format</h5>
+<pre><code class="lisp">Initform: hunchentoot:*hunchentoot-default-external-format*
+Readers: hunchentoot:reply-external-format
+Writers: (setf hunchentoot:reply-external-format)
+</code></pre>
+
+<p>The external format of the reply -
+ used for character output.</p>
+<h5 id="cookies-out_1">cookies-out</h5>
+<pre><code class="lisp">Readers: hunchentoot:cookies-out
+Writers: (setf hunchentoot:cookies-out)
+</code></pre>
+
+<p>The outgoing cookies.  This slot's
+ value should only be modified by the functions defined in
+ cookies.lisp.</p>
+<h3 id="7-request">7. <span id="class-request">REQUEST</span></h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Objects of this class hold all the information
+about an incoming request.  They are created automatically by
+acceptors and can be accessed by the corresponding handler.</p>
+<p>You should not mess with the slots of these objects directly, but you
+can subclass REQUEST in order to implement your own behaviour.  See
+the REQUEST-CLASS slot of the ACCEPTOR class.</p>
+<ul>
+<li>Direct superclasses: STANDARD-OBJECT</li>
+<li>No subclasses.</li>
+</ul>
+<h4 id="relevant-methods_2">RELEVANT METHODS</h4>
+<h5 id="real-remote-addr">real-remote-addr</h5>
+<pre><code class="lisp">Function: (real-remote-addr &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the 'X-Forwarded-For' incoming http header as the
+second value in the form of a list of IP addresses and the first
+element of this list as the first value if this header exists.
+Otherwise returns the value of REMOTE-ADDR as the only value.</p>
+<h5 id="parameter">parameter</h5>
+<pre><code class="lisp">Function: (parameter name &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the GET or the POST parameter with name NAME (a string) -
+or NIL if there is none.  If both a GET and a POST parameter with the
+same name exist the GET parameter is returned.  Search is
+case-sensitive.</p>
+<h5 id="get-parameter">get-parameter</h5>
+<pre><code class="lisp">Function: (get-parameter name &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the GET parameter with name NAME (a string) - or NIL if
+there is none.  Search is case-sensitive.</p>
+<h5 id="get-parameters">get-parameters*</h5>
+<pre><code class="lisp">Function: (get-parameters* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns an alist of the GET parameters associated with the REQUEST
+object REQUEST.</p>
+<h5 id="post-parameter">post-parameter</h5>
+<pre><code class="lisp">Function: (post-parameter name &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the POST parameter with name NAME (a string) - or NIL if
+there is none.  Search is case-sensitive.</p>
+<h5 id="post-parameters">post-parameters*</h5>
+<pre><code class="lisp">Function: (post-parameters* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns an alist of the POST parameters associated with the REQUEST
+object REQUEST.</p>
+<h5 id="cookie-in">cookie-in</h5>
+<pre><code class="lisp">Function: (cookie-in name &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the cookie with the name NAME (a string) as sent by the
+browser - or NIL if there is none.</p>
+<h5 id="cookies-in">cookies-in*</h5>
+<pre><code class="lisp">Function: (cookies-in* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns an alist of all cookies associated with the REQUEST object
+REQUEST.</p>
+<h5 id="host">host</h5>
+<pre><code class="lisp">Function: (host &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the 'Host' incoming http header value.</p>
+<h5 id="query-string">query-string*</h5>
+<pre><code class="lisp">Function: (query-string* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the query string of the REQUEST object REQUEST. That's
+the part behind the question mark (i.e. the GET parameters).</p>
+<h5 id="referer">referer</h5>
+<pre><code class="lisp">Function: (referer &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the 'Referer' (sic!) http header.</p>
+<h5 id="request-method">request-method*</h5>
+<pre><code class="lisp">Function: (request-method* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the request method as a Lisp keyword.</p>
+<h5 id="request-uri">request-uri*</h5>
+<pre><code class="lisp">Function: (request-uri* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the request URI.</p>
+<h5 id="server-protocol">server-protocol*</h5>
+<pre><code class="lisp">Function: (server-protocol* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the request protocol as a Lisp keyword.</p>
+<h5 id="user-agent">user-agent</h5>
+<pre><code class="lisp">Function: (user-agent &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the 'User-Agent' http header.</p>
+<h5 id="header-in">header-in*</h5>
+<pre><code class="lisp">Function: (header-in* name &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the incoming header with name NAME.  NAME can be a keyword
+(recommended) or a string.</p>
+<h5 id="headers-in">headers-in*</h5>
+<pre><code class="lisp">Function: (headers-in* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns an alist of the incoming headers associated with the
+REQUEST object REQUEST.</p>
+<h5 id="remote-addr">remote-addr*</h5>
+<pre><code class="lisp">Function: (remote-addr* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the address the current request originated from.</p>
+<h5 id="remote-port">remote-port*</h5>
+<pre><code class="lisp">Function: (remote-port* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the port the current request originated from.</p>
+<h5 id="local-addr">local-addr*</h5>
+<pre><code class="lisp">Function: (local-addr* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the address the current request connected to.</p>
+<h5 id="local-port">local-port*</h5>
+<pre><code class="lisp">Function: (local-port* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the port the current request connected to.</p>
+<h5 id="script-name">script-name*</h5>
+<pre><code class="lisp">Function: (script-name* &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the file name of the REQUEST object REQUEST. That's the
+requested URI without the query string (i.e the GET parameters).</p>
+<h5 id="aux-request-value">aux-request-value</h5>
+<pre><code class="lisp">Function: (aux-request-value symbol &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns the value associated with SYMBOL from the request object
+REQUEST (the default is the current request) if it exists.  The
+second return value is true if such a value was found.
+Sets the value associated with SYMBOL from the request object
+REQUEST (default is *REQUEST*).  If there is already a value
+associated with SYMBOL it will be replaced.</p>
+<h5 id="delete-aux-request-value">delete-aux-request-value</h5>
+<pre><code class="lisp">Function: (delete-aux-request-value symbol &amp;optional (request *request*))
+</code></pre>
+
+<p>Removes the value associated with SYMBOL from the request object
+REQUEST.</p>
+<h5 id="authorization">authorization</h5>
+<pre><code class="lisp">Function: (authorization &amp;optional (request *request*))
+</code></pre>
+
+<p>Returns as two values the user and password (if any) as encoded in
+the 'AUTHORIZATION' header.  Returns NIL if there is no such header.</p>
+<h5 id="raw-post-data">raw-post-data</h5>
+<pre><code class="lisp">Function: (raw-post-data &amp;key (request *request*) external-format force-text force-binary want-stream)
+</code></pre>
+
+<p>Returns the content sent by the client if there was any (unless
+the content type was "multipart/form-data").  By default, the result
+is a string if the type of the <code>Content-Type' media type is "text",
+and a vector of octets otherwise.  In the case of a string, the
+external format to be used to decode the content will be determined
+from the</code>charset' parameter sent by the client (or otherwise
+*HUNCHENTOOT-DEFAULT-EXTERNAL-FORMAT* will be used).</p>
+<p>You can also provide an external format explicitly (through
+EXTERNAL-FORMAT) in which case the result will unconditionally be a
+string.  Likewise, you can provide a true value for FORCE-TEXT which
+will force Hunchentoot to act as if the type of the media type had
+been "text".  Or you can provide a true value for FORCE-BINARY which
+means that you want a vector of octets at any rate.</p>
+<p>If, however, you provide a true value for WANT-STREAM, the other
+parameters are ignored and you'll get the content (flexi) stream to
+read from it yourself.  It is then your responsibility to read the
+correct amount of data, because otherwise you won't be able to return
+a response to the client.  If the content type of the request was
+<code>multipart/form-data' or</code>application/x-www-form-urlencoded', the
+content has been read by Hunchentoot already and you can't read from
+the stream anymore.</p>
+<p>You can call RAW-POST-DATA more than once per request, but you can't
+mix calls which have different values for WANT-STREAM.</p>
+<p>Note that this function is slightly misnamed because a client can send
+content even if the request method is not POST.</p>
+<h5 id="recompute-request-parameters">recompute-request-parameters</h5>
+<pre><code class="lisp">Function: (recompute-request-parameters 
+             &amp;key (request *request*) 
+               (external-format *hunchentoot-default-external-format*))
+</code></pre>
+
+<p>Recomputes the GET and POST parameters for the REQUEST object
+REQUEST.  This only makes sense if you're switching external formats
+during the request.</p>
+<h5 id="process-request">process-request</h5>
+<pre><code class="lisp">Function: (process-request request)
+</code></pre>
+
+<p>This function is called by PROCESS-CONNECTION after
+the incoming headers have been read.  It calls HANDLE-REQUEST to
+select and call a handler and sends the output of this handler to the
+client using START-OUTPUT.  Note that PROCESS-CONNECTION is called
+once per connection and loops in case of a persistent connection while
+PROCESS-REQUEST is called anew for each request.</p>
+<p>Essentially, you can view process-request as a thin wrapper around
+HANDLE-REQUEST.</p>
+<p>The return value of this function is ignored.</p>
+<h5 id="handle-request">handle-request</h5>
+<pre><code class="lisp">Function: (handle-request acceptor request)
+</code></pre>
+
+<p>This function is called once the request has been
+read and a REQUEST object has been created.  Its job is to set up
+standard error handling and request logging.</p>
+<p>Might be a good place for around methods specialized for your subclass
+of ACCEPTOR which bind or rebind special variables which can then be
+accessed by your handlers.</p>
+<h5 id="handle-request_1">handle-request</h5>
+<pre><code class="lisp">Function: (handle-request acceptor request)
+</code></pre>
+
+<p>This function is called once the request has been
+read and a REQUEST object has been created.  Its job is to set up
+standard error handling and request logging.</p>
+<p>Might be a good place for around methods specialized for your subclass
+of ACCEPTOR which bind or rebind special variables which can then be
+accessed by your handlers.</p>
+<h5 id="acceptor-dispatch-request">acceptor-dispatch-request</h5>
+<pre><code class="lisp">Function: (acceptor-dispatch-request acceptor request)
+</code></pre>
+
+<p>This function is called to actually dispatch the
+request once the standard logging and error handling has been set up.
+ACCEPTOR subclasses implement methods for this function in order to
+perform their own request routing.  If a method does not want to
+handle the request, it is supposed to invoke CALL-NEXT-METHOD so that
+the next ACCEPTOR in the inheritance chain gets a chance to handle the
+request.</p>
+<h4 id="slots_2">SLOTS</h4>
+<h5 id="acceptor">acceptor</h5>
+<pre><code class="lisp">Initargs: :acceptor
+Readers: hunchentoot:request-acceptor
+</code></pre>
+
+<p>The acceptor which created this request
+ object.</p>
+<h5 id="headers-in_1">headers-in</h5>
+<pre><code class="lisp">Initargs: :headers-in
+Readers: hunchentoot:headers-in
+</code></pre>
+
+<p>An alist of the incoming headers.</p>
+<h5 id="method">method</h5>
+<pre><code class="lisp">Initargs: :method
+Readers: hunchentoot:request-method
+</code></pre>
+
+<p>The request method as a keyword.</p>
+<h5 id="uri">uri</h5>
+<pre><code class="lisp">Initargs: :uri
+Readers: hunchentoot:request-uri
+</code></pre>
+
+<p>The request URI as a string.</p>
+<h5 id="server-protocol_1">server-protocol</h5>
+<pre><code class="lisp">Initargs: :server-protocol
+Readers: hunchentoot:server-protocol
+</code></pre>
+
+<p>The HTTP protocol as a keyword.</p>
+<h5 id="local-addr_1">local-addr</h5>
+<pre><code class="lisp">Initargs: :local-addr
+Readers: hunchentoot:local-addr
+</code></pre>
+
+<p>The IP address of the local system
+ that the client connected to.</p>
+<h5 id="local-port_1">local-port</h5>
+<pre><code class="lisp">Initargs: :local-port
+Readers: hunchentoot:local-port
+</code></pre>
+
+<p>The TCP port number of the local
+ system that the client connected to.</p>
+<h5 id="remote-addr_1">remote-addr</h5>
+<pre><code class="lisp">Initargs: :remote-addr
+Readers: hunchentoot:remote-addr
+</code></pre>
+
+<p>The IP address of the client that
+ initiated this request.</p>
+<h5 id="remote-port_1">remote-port</h5>
+<pre><code class="lisp">Initargs: :remote-port
+Readers: hunchentoot:remote-port
+</code></pre>
+
+<p>The TCP port number of the client
+ socket from which this request originated.</p>
+<h5 id="content-stream">content-stream</h5>
+<pre><code class="lisp">Initargs: :content-stream
+</code></pre>
+
+<p>A stream from which the request
+ body can be read if there is one.</p>
+<h5 id="cookies-in_1">cookies-in</h5>
+<pre><code class="lisp">Readers: hunchentoot:cookies-in
+</code></pre>
+
+<p>An alist of the cookies sent by the client.</p>
+<h5 id="get-parameters_1">get-parameters</h5>
+<pre><code class="lisp">Readers: hunchentoot:get-parameters
+</code></pre>
+
+<p>An alist of the GET parameters sent
+ by the client.</p>
+<h5 id="post-parameters_1">post-parameters</h5>
+<pre><code class="lisp">Readers: hunchentoot:post-parameters
+</code></pre>
+
+<p>An alist of the POST parameters
+ sent by the client.</p>
+<h5 id="script-name_1">script-name</h5>
+<pre><code class="lisp">Readers: hunchentoot:script-name
+</code></pre>
+
+<p>The URI requested by the client without
+ the query string.</p>
+<h5 id="query-string_1">query-string</h5>
+<pre><code class="lisp">Readers: hunchentoot:query-string
+</code></pre>
+
+<p>The query string of this request.</p>
+<h5 id="session">session</h5>
+<pre><code class="lisp">Readers: hunchentoot:session
+Writers: (setf hunchentoot:session)
+</code></pre>
+
+<p>The session object associated with this
+ request.</p>
+<h5 id="aux-data">aux-data</h5>
+<p>Used to keep a user-modifiable alist with
+ arbitrary data during the request.</p>
+<h5 id="raw-post-data_1">raw-post-data</h5>
+<p>The raw string sent as the body of a
+ POST request, populated only if not a multipart/form-data request.</p>
+<h3 id="8-session">8. <span id="class-session">SESSION</span></h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>SESSION objects are automatically maintained by
+Hunchentoot.  They should not be created explicitly with MAKE-INSTANCE
+but implicitly with START-SESSION and they should be treated as opaque
+objects.</p>
+<p>You can ignore Hunchentoot's SESSION objects altogether and implement
+your own sessions if you provide corresponding methods for
+SESSION-COOKIE-VALUE and SESSION-VERIFY.</p>
+<ul>
+<li>Direct superclasses: STANDARD-OBJECT</li>
+<li>No subclasses.</li>
+</ul>
+<p>Hunchentoot supports <em>sessions</em>: Once a <a href="#request-dispatch">request
+handler</a> has called <code>START-SESSION</code>,
+Hunchentoot uses either cookies or (if the client doesn't send the
+cookies back) <a href="#*rewrite-for-session-urls*">rewrites URLs</a> to keep track
+of this client, i.e. to provide a kind of 'state' for the stateless http
+protocol. </p>
+<p>Hunchentoot makes some reasonable effort to prevent eavesdroppers from
+hijacking sessions (see below), but this should not be considered really
+secure. Don't store sensitive data in sessions and rely solely on the
+session mechanism as a safeguard against malicious users who want to get
+at this data!</p>
+<p>For each request there's one <code>SESSION</code> object which is
+accessible to the <a href="#handler">handler</a> via the special variable
+<code>*SESSION*</code>. This object holds all the information available
+about the session and can be accessed with the functions described in
+this chapter. Note that the internal structure of <code>SESSION</code>
+objects should be considered opaque and may change in future releases of
+Hunchentoot.</p>
+<p>Sessions are automatically <a href="#session-verify">verified</a> for validity and
+age when the <code>REQUEST</code> object is instantiated, i.e. if
+<code>*SESSION*</code> is not NIL then this session is valid (as far as
+Hunchentoot is concerned) and not <a href="#session-too-old-p">too old</a>. Old
+sessions are <a href="#session-gc">automatically removed</a>.</p>
+<p>Hunchentoot also provides a <code>SESSION-REGENERATE-COOKIE-VALUE</code>
+function that creates a new cookie value. This helps to prevent against
+<a href="https://www.owasp.org/index.php/Session_fixation">session fixation
+attacks</a>, and should
+be used when a user logs in according to the application.</p>
+<h4 id="relevant-methods_3">RELEVANT METHODS</h4>
+<h5 id="start-session">start-session</h5>
+<pre><code class="lisp">Function: (start-session)
+</code></pre>
+
+<p>Returns the current SESSION object. If there is no current session,
+creates one and updates the corresponding data structures. In this
+case the function will also send a session cookie to the browser.</p>
+<h5 id="session-value">session-value</h5>
+<pre><code class="lisp">Function: (session-value symbol &amp;optional (session *session*))
+</code></pre>
+
+<p>Returns the value associated with SYMBOL from the session object
+SESSION (the default is the current session) if it exists.
+Sets the value associated with SYMBOL from the session object
+SESSION. If there is already a value associated with SYMBOL it will be
+replaced. Will automatically start a session if none was supplied and
+there's no session for the current request.</p>
+<h5 id="delete-session-value">delete-session-value</h5>
+<pre><code class="lisp">Function: (delete-session-value symbol &amp;optional (session *session*))
+</code></pre>
+
+<p>Removes the value associated with SYMBOL from SESSION if there is
+one.</p>
+<h5 id="remove-session">remove-session</h5>
+<pre><code class="lisp">Function: (remove-session session)
+</code></pre>
+
+<p>Completely removes the SESSION object SESSION from Hunchentoot's
+internal session database.</p>
+<h4 id="slots_3">SLOTS</h4>
+<h5 id="session-id">session-id</h5>
+<pre><code class="lisp">Type: integer
+Initform: (hunchentoot:next-session-id (hunchentoot:request-acceptor hunchentoot:*request*))
+Readers: hunchentoot:session-id
+</code></pre>
+
+<p>The unique ID (an INTEGER) of the session.</p>
+<h5 id="session-string">session-string</h5>
+<p>The session string encodes enough
+ data to safely retrieve this session.  It is sent to the browser as a
+ cookie value or as a GET parameter.</p>
+<h5 id="user-agent_1">user-agent</h5>
+<pre><code class="lisp">Initform: (hunchentoot:user-agent hunchentoot:*request*)
+Readers: hunchentoot:session-user-agent
+</code></pre>
+
+<p>The incoming 'User-Agent' header that
+ was sent when this session was created.</p>
+<h5 id="remote-addr_2">remote-addr</h5>
+<pre><code class="lisp">Initform: (hunchentoot:real-remote-addr hunchentoot:*request*)
+Readers: hunchentoot:session-remote-addr
+</code></pre>
+
+<p>The remote IP address of the client
+ when this session was started as returned by REAL-REMOTE-ADDR.</p>
+<h5 id="session-start">session-start</h5>
+<pre><code class="lisp">Initform: (GET-UNIVERSAL-TIME)
+Readers: hunchentoot:session-start
+</code></pre>
+
+<p>The time this session was started.</p>
+<h5 id="last-click">last-click</h5>
+<p>The last time this session was used.</p>
+<h5 id="session-data">session-data</h5>
+<pre><code class="lisp">Initargs: :session-data
+</code></pre>
+
+<p>Data associated with this session -
+ see SESSION-VALUE.</p>
+<h5 id="max-time">max-time</h5>
+<pre><code class="lisp">Type: fixnum
+Initargs: :max-time
+Initform: hunchentoot:*session-max-time*
+Readers: hunchentoot:session-max-time
+Writers: (setf hunchentoot:session-max-time)
+</code></pre>
+
+<p>The time (in seconds) after which this
+ session expires if it's not used.</p>
+<h5 id="session-id_1">session-id</h5>
+<pre><code class="lisp">Type: integer
+Initform: (hunchentoot:next-session-id (hunchentoot:request-acceptor hunchentoot:*request*))
+Readers: hunchentoot:session-id
+</code></pre>
+
+<p>The unique ID (an INTEGER) of the session.</p>
+<h5 id="session-string_1">session-string</h5>
+<p>The session string encodes enough
+ data to safely retrieve this session.  It is sent to the browser as a
+ cookie value or as a GET parameter.</p>
+<h5 id="user-agent_2">user-agent</h5>
+<pre><code class="lisp">Initform: (HUNCHENTOOT:USER-AGENT HUNCHENTOOT:*REQUEST*)
+Readers: hunchentoot:session-user-agent
+</code></pre>
+
+<p>The incoming 'User-Agent' header that
+ was sent when this session was created.</p>
+<h5 id="remote-addr_3">remote-addr</h5>
+<pre><code class="lisp">Initform: (hunchentoot:real-remote-addr hunchentoot:*request*)
+Readers: hunchentoot:session-remote-addr
+</code></pre>
+
+<p>The remote IP address of the client
+ when this session was started as returned by REAL-REMOTE-ADDR.</p>
+<h5 id="session-start_1">session-start</h5>
+<pre><code class="lisp">Initform: (get-universal-time)
+Readers: hunchentoot:session-start
+</code></pre>
+
+<p>The time this session was started.</p>
+<h3 id="9-miscellaneous-functions">9. MISCELLANEOUS FUNCTIONS</h3>
+<h4 id="bad-request">bad-request</h4>
+<pre><code class="lisp">Class
+</code></pre>
+
+<ul>
+<li>Direct superclasses: <a href="#hunchentoot-error">HUNCHENTOOT-ERROR</a></li>
+<li>No subclasses.</li>
+</ul>
+<h4 id="client-as-string">client-as-string</h4>
+<pre><code class="lisp">Function: (client-as-string socket)
+</code></pre>
+
+<p>A helper function which returns the client's address and port as a
+string and tries to act robustly in the presence of network problems.</p>
+<h4 id="create-folder-dispatcher-and-handler">create-folder-dispatcher-and-handler</h4>
+<pre><code class="lisp">Function: (create-folder-dispatcher-and-handler uri-prefix base-path &amp;optional content-type)
+</code></pre>
+
+<p>Creates and returns a dispatch function which will dispatch to a
+handler function which emits the file relative to BASE-PATH that is
+denoted by the URI of the request relative to URI-PREFIX.  URI-PREFIX
+must be a string ending with a slash, BASE-PATH must be a pathname
+designator for an existing directory.  If CONTENT-TYPE is not NIL,
+it'll be the content type used for all files in the folder.</p>
+<h4 id="create-prefix-dispatcher">create-prefix-dispatcher</h4>
+<pre><code class="lisp">Function: (create-prefix-dispatcher prefix handler)
+</code></pre>
+
+<p>Creates a request dispatch function which will dispatch to the
+function denoted by HANDLER if the file name of the current request
+starts with the string PREFIX.</p>
+<h4 id="create-regex-dispatcher">create-regex-dispatcher</h4>
+<pre><code class="lisp">Function: (create-regex-dispatcher regex handler)
+</code></pre>
+
+<p>Creates a request dispatch function which will dispatch to the
+function denoted by HANDLER if the file name of the current request
+matches the CL-PPCRE regular expression REGEX.</p>
+<h4 id="create-request-handler-thread">create-request-handler-thread</h4>
+<pre><code class="lisp">Function: (create-request-handler-thread taskmaster socket)
+</code></pre>
+
+<p>Create a new thread in which to process the request.
+ This thread will call PROCESS-CONNECTION to process the request.</p>
+<h4 id="create-static-file-dispatcher-and-handler">create-static-file-dispatcher-and-handler</h4>
+<pre><code class="lisp">Function: (create-static-file-dispatcher-and-handler uri path &amp;optional content-type)
+</code></pre>
+
+<p>Creates and returns a request dispatch function which will dispatch
+to a handler function which emits the file denoted by the pathname
+designator PATH with content type CONTENT-TYPE if the SCRIPT-NAME of
+the request matches the string URI.  If CONTENT-TYPE is NIL, tries to
+determine the content type via the file's suffix.</p>
+<h4 id="decrement-taskmaster-thread-count">decrement-taskmaster-thread-count</h4>
+<pre><code class="lisp">Function: (decrement-taskmaster-thread-count taskmaster)
+</code></pre>
+
+<p>Atomically decrement the number of taskmaster requests</p>
+<h4 id="default-document-directory">default-document-directory</h4>
+<pre><code class="lisp">Function: (default-document-directory &amp;optional sub-directory)
+</code></pre>
+
+<h4 id="detach-socket_1">detach-socket</h4>
+<pre><code class="lisp">Function: (detach-socket acceptor)
+</code></pre>
+
+<p>Indicate to Hunchentoot that it should stop serving
+ requests on the current request's socket.
+ Hunchentoot will finish processing the current
+ request and then return from PROCESS-CONNECTION
+ without closing the connection to the client.
+ DETACH-SOCKET can only be called from within a
+ request handler function.</p>
+<h4 id="dispatch-easy-handlers">dispatch-easy-handlers</h4>
+<pre><code class="lisp">Function: (dispatch-easy-handlers request)
+</code></pre>
+
+<p>This is a dispatcher which returns the appropriate handler
+defined with DEFINE-EASY-HANDLER, if there is one.</p>
+<h4 id="escape-for-html">escape-for-html</h4>
+<pre><code class="lisp">Function: (escape-for-html string)
+</code></pre>
+
+<p>Escapes the characters #\&lt;, #>, #\', #\", and #\&amp; for HTML
+output.</p>
+<h4 id="handle-if-modified-since">handle-if-modified-since</h4>
+<pre><code class="lisp">Function: (handle-if-modified-since time &amp;optional (request *request*))
+</code></pre>
+
+<p>Handles the 'If-Modified-Since' header of REQUEST.  The date string
+is compared to the one generated from the supplied universal time
+TIME.</p>
+<h4 id="handle-static-file">handle-static-file</h4>
+<pre><code class="lisp">Function: (handle-static-file pathname &amp;optional content-type)
+</code></pre>
+
+<p>A function which acts like a Hunchentoot handler for the file
+denoted by PATHNAME.  Sends a content type header corresponding to
+CONTENT-TYPE or (if that is NIL) tries to determine the content type
+via the file's suffix.</p>
+<h4 id="http-token-p">http-token-p</h4>
+<pre><code class="lisp">Function: (http-token-p token)
+</code></pre>
+
+<p>This function tests whether OBJECT is a non-empty string which is a
+TOKEN according to RFC 2068 (i.e. whether it may be used for, say,
+cookie names).</p>
+<h4 id="hunchentoot-error">hunchentoot-error</h4>
+<pre><code class="lisp">Function: (hunchentoot-error format-control &amp;rest format-arguments)
+</code></pre>
+
+<p>Signals an error of type HUNCHENTOOT-SIMPLE-ERROR with the provided
+format control and arguments.
+Superclass for all errors related to Hunchentoot.</p>
+<h4 id="increment-taskmaster-thread-count">increment-taskmaster-thread-count</h4>
+<pre><code class="lisp">Function: (increment-taskmaster-thread-count taskmaster)
+</code></pre>
+
+<p>Atomically increment the number of taskmaster requests.</p>
+<h4 id="initialize-connection-stream_1">initialize-connection-stream</h4>
+<pre><code class="lisp">Function: (initialize-connection-stream acceptor stream)
+</code></pre>
+
+<p>Can be used to modify the stream which is used to
+communicate between client and server before the request is read.  The
+default method of ACCEPTOR does nothing, but see for example the
+method defined for SSL-ACCEPTOR.  All methods of this generic function
+must return the stream to use.</p>
+<h4 id="log-message">log-message*</h4>
+<pre><code class="lisp">Function: (log-message* log-level format-string &amp;rest format-arguments)
+</code></pre>
+
+<p>Convenience function which calls the message logger of the current
+acceptor (if there is one) with the same arguments it accepts.</p>
+<p>This is the function which Hunchentoot itself uses to log errors it
+catches during request processing.</p>
+<h4 id="maybe-invoke-debugger">maybe-invoke-debugger</h4>
+<pre><code class="lisp">Function: (maybe-invoke-debugger condition)
+</code></pre>
+
+<p>This generic function is called whenever a
+condition CONDITION is signaled in Hunchentoot.  You might want to
+specialize it on specific condition classes for debugging purposes.</p>
+<h4 id="mime-type">mime-type</h4>
+<pre><code class="lisp">Function: (mime-type pathspec)
+</code></pre>
+
+<p>Given a pathname designator PATHSPEC returns the MIME type
+(as a string) corresponding to the suffix of the file denoted by
+PATHSPEC (or NIL).</p>
+<h4 id="next-session-id">next-session-id</h4>
+<pre><code class="lisp">Function: (next-session-id acceptor)
+</code></pre>
+
+<p>Returns the next sequential session ID, an integer,
+which should be unique per session.  The default method uses a simple
+global counter and isn't guarded by a lock.  For a high-performance
+production environment you might consider using a more robust
+implementation.</p>
+<h4 id="no-cache">no-cache</h4>
+<pre><code class="lisp">Function: (no-cache)
+</code></pre>
+
+<p>Adds appropriate headers to completely prevent caching on most browsers.</p>
+<h4 id="parameter-error">parameter-error</h4>
+<pre><code class="lisp">Function: (parameter-error format-control &amp;rest format-arguments)
+</code></pre>
+
+<p>Signals an error of type PARAMETER-ERROR with the provided
+format control and arguments.
+Signalled if a function was called with incosistent or illegal parameters.</p>
+<h4 id="process-connection_1">process-connection</h4>
+<pre><code class="lisp">Function: (process-connection acceptor socket)
+</code></pre>
+
+<p>This function is called by the taskmaster when a
+new client connection has been established.  Its arguments are the
+ACCEPTOR object and a LispWorks socket handle or a usocket socket
+stream object in SOCKET.  It reads the request headers, sets up the
+request and reply objects, and hands over to PROCESS-REQUEST.  This is
+done in a loop until the stream has to be closed or until a connection
+timeout occurs.</p>
+<p>It is probably not a good idea to re-implement this method until you
+really, really know what you're doing.</p>
+<h4 id="reason-phrase">reason-phrase</h4>
+<pre><code class="lisp">Function: (reason-phrase return-code)
+</code></pre>
+
+<p>Returns a reason phrase for the HTTP return code RETURN-CODE (which
+should be an integer) or NIL for return codes Hunchentoot doesn't know.</p>
+<h4 id="redirect">redirect</h4>
+<pre><code class="lisp">Function: (redirect target &amp;key 
+                             (host (host *request*) host-provided-p)
+                             port 
+                             (protocol (if (ssl-p) :https :http))
+                             (add-session-id (not (or host-provided-p
+                                                      (starts-with-scheme-p target)
+                                                      (cookie-in (session-cookie-name *acceptor*)))))
+                             (code +http-moved-temporarily+))
+</code></pre>
+
+<p>Redirects the browser to TARGET which should be a string.  If
+TARGET is a full URL starting with a scheme, HOST, PORT and PROTOCOL
+are ignored.  Otherwise, TARGET should denote the path part of a URL,
+PROTOCOL must be one of the keywords :HTTP or :HTTPS, and the URL to
+redirect to will be constructed from HOST, PORT, PROTOCOL, and TARGET.
+Adds a session ID if ADD-SESSION-ID is true.  If CODE is a 3xx
+redirection code, it will be sent as status code.</p>
+<h4 id="regenerate-session-cookie-value">regenerate-session-cookie-value</h4>
+<pre><code class="lisp">Function: (regenerate-session-cookie-value session)
+</code></pre>
+
+<p>Regenerates the cookie value. This should be used
+when a user logs in according to the application to prevent against
+session fixation attacks. The cookie value being dependent on ID,
+USER-AGENT, REMOTE-ADDR, START, and *SESSION-SECRET*, the only value
+we can change is START to regenerate a new value. Since we're
+generating a new cookie, it makes sense to have the session being
+restarted, in time. That said, because of this fact, calling this
+function twice in the same second will regenerate twice the same value.</p>
+<h4 id="reply-external-format_1">reply-external-format*</h4>
+<pre><code class="lisp">Function: (reply-external-format* &amp;optional (reply *reply*))
+</code></pre>
+
+<p>The external format of REPLY which is used for character output.</p>
+<h4 id="request-pathname">request-pathname</h4>
+<pre><code class="lisp">Function: (request-pathname &amp;optional (request *request*) drop-prefix)
+</code></pre>
+
+<p>Construct a relative pathname from the request's SCRIPT-NAME.
+If DROP-PREFIX is given, pathname construction starts at the first path
+segment after the prefix.</p>
+<h4 id="require-authorization">require-authorization</h4>
+<pre><code class="lisp">Function: (require-authorization &amp;optional (realm hunchentoot))
+</code></pre>
+
+<p>Sends back appropriate headers to require basic HTTP authentication
+(see RFC 2617) for the realm REALM.</p>
+<h4 id="reset-connection-stream_1">reset-connection-stream</h4>
+<pre><code class="lisp">Function: (reset-connection-stream acceptor stream)
+</code></pre>
+
+<p>Resets the stream which is used to communicate
+between client and server after one request has been served so that it
+can be used to process the next request.  This generic function is
+called after a request has been processed and must return the
+stream.</p>
+<h4 id="reset-session-secret">reset-session-secret</h4>
+<pre><code class="lisp">Function: (reset-session-secret)
+</code></pre>
+
+<p>Sets *SESSION-SECRET* to a new random value. All old sessions will
+cease to be valid.</p>
+<h4 id="reset-sessions">reset-sessions</h4>
+<pre><code class="lisp">Function: (reset-sessions &amp;optional (acceptor *acceptor*))
+</code></pre>
+
+<p>Removes ALL stored sessions of ACCEPTOR.</p>
+<h4 id="rfc-1123-date">rfc-1123-date</h4>
+<pre><code class="lisp">Function: (rfc-1123-date &amp;optional (time (get-universal-time)))
+</code></pre>
+
+<p>Generates a time string according to RFC 1123. Default is current time.
+This can be used to send a 'Last-Modified' header - see
+HANDLE-IF-MODIFIED-SINCE.</p>
+<h4 id="script-name_2">script-name</h4>
+<pre><code class="lisp">Function: (script-name object)
+</code></pre>
+
+<h4 id="server-protocol_2">server-protocol</h4>
+<pre><code class="lisp">Function: (server-protocol object)
+</code></pre>
+
+<h4 id="session-cookie-name">session-cookie-name</h4>
+<pre><code class="lisp">Function: (session-cookie-name acceptor)
+</code></pre>
+
+<p>Returns the name (a string) of the cookie (or the
+GET parameter) which is used to store a session on the client side.
+The default is to use the string "hunchentoot-session", but you can
+specialize this function if you want another name.</p>
+<h4 id="session-cookie-value">session-cookie-value</h4>
+<pre><code class="lisp">Function: (session-cookie-value session)
+</code></pre>
+
+<p>Returns a string which can be used to safely
+restore the session SESSION if as session has already been
+established.  This is used as the value stored in the session cookie
+or in the corresponding GET parameter and verified by SESSION-VERIFY.</p>
+<p>A default method is provided and there's no reason to change it unless
+you want to use your own session objects.</p>
+<h4 id="session-created">session-created</h4>
+<pre><code class="lisp">Function: (session-created acceptor new-session)
+</code></pre>
+
+<p>This function is called whenever a new session has
+been created.  There's a default method which might trigger a session
+GC based on the value of *SESSION-GC-FREQUENCY*.</p>
+<p>The return value is ignored.</p>
+<h4 id="session-db">session-db</h4>
+<pre><code class="lisp">Function: (session-db acceptor)
+</code></pre>
+
+<p>Returns the current session database which is an
+alist where each car is a session's ID and the cdr is the
+corresponding SESSION object itself.  The default is to use a global
+list for all acceptors.</p>
+<h4 id="session-db-lock">session-db-lock</h4>
+<pre><code class="lisp">Function: (session-db-lock acceptor &amp;key whole-db-p)
+</code></pre>
+
+<p>A function which returns a lock that will be used
+to prevent concurrent access to sessions.  The first argument will be
+the acceptor that handles the current request, the second argument is
+true if the whole (current) session database is modified.  If it is
+NIL, only one existing session in the database is modified.</p>
+<p>This function can return NIL which means that sessions or session
+databases will be modified without a lock held (for example for
+single-threaded environments).  The default is to always return a
+global lock (ignoring the ACCEPTOR argument) for Lisps that support
+threads and NIL otherwise.</p>
+<h4 id="session-gc">session-gc</h4>
+<pre><code class="lisp">Function: (session-gc)
+</code></pre>
+
+<p>Removes sessions from the current session database which are too
+old - see SESSION-TOO-OLD-P.</p>
+<h4 id="session-too-old-p">session-too-old-p</h4>
+<pre><code class="lisp">Function: (session-too-old-p session)
+</code></pre>
+
+<p>Returns true if the SESSION object SESSION has not been active in
+the last (SESSION-MAX-TIME SESSION) seconds.</p>
+<h4 id="session-verify">session-verify</h4>
+<pre><code class="lisp">Function: (session-verify request)
+</code></pre>
+
+<p>Tries to get a session identifier from the cookies
+(or alternatively from the GET parameters) sent by the client (see
+SESSION-COOKIE-NAME and SESSION-COOKIE-VALUE).  This identifier is
+then checked for validity against the REQUEST object REQUEST.  On
+success the corresponding session object (if not too old) is returned
+(and updated).  Otherwise NIL is returned.</p>
+<p>A default method is provided and you only need to write your own one
+if you want to maintain your own sessions.</p>
+<h4 id="set-cookie">set-cookie</h4>
+<pre><code class="lisp">Function: (set-cookie name &amp;key (value &quot;&quot;) expires max-age 
+                             path domain secure http-only (reply *reply*))
+</code></pre>
+
+<p>Creates a cookie object from the parameters provided and adds
+it to the outgoing cookies of the REPLY object REPLY. If a cookie
+with the name NAME (case-sensitive) already exists, it is
+replaced.</p>
+<h4 id="set-cookie_1">set-cookie*</h4>
+<pre><code class="lisp">Function: (set-cookie* cookie &amp;optional (reply *reply*))
+</code></pre>
+
+<p>Adds the COOKIE object COOKIE to the outgoing cookies of the
+REPLY object REPLY. If a cookie with the same name
+(case-sensitive) already exists, it is replaced.</p>
+<h4 id="ssl-p">ssl-p</h4>
+<pre><code class="lisp">Function: (ssl-p &amp;optional (acceptor *acceptor*))
+</code></pre>
+
+<p>Whether the current connection to the client is secure. See
+ACCEPTOR-SSL-P.</p>
+<h4 id="taskmaster-max-accept-count">taskmaster-max-accept-count</h4>
+<pre><code class="lisp">Function: (taskmaster-max-accept-count taskmaster)
+</code></pre>
+
+<p>The maximum number of connections this taskmaster will accept before refusing
+    new connections.  If supplied, this must be greater than MAX-THREAD-COUNT.
+    The number of queued requests is the difference between MAX-ACCEPT-COUNT
+    and MAX-THREAD-COUNT.</p>
+<h4 id="taskmaster-max-thread-count">taskmaster-max-thread-count</h4>
+<pre><code class="lisp">Function: (taskmaster-max-thread-count taskmaster)
+</code></pre>
+
+<p>The maximum number of request threads this taskmaster will simultaneously
+    run before refusing or queueing new connections requests.  If the value
+    is null, then there is no limit.</p>
+<h4 id="taskmaster-thread-count">taskmaster-thread-count</h4>
+<pre><code class="lisp">Function: (taskmaster-thread-count taskmaster)
+</code></pre>
+
+<p>Returns the current number of taskmaster requests.</p>
+<h4 id="too-many-taskmaster-requests">too-many-taskmaster-requests</h4>
+<pre><code class="lisp">Function: (too-many-taskmaster-requests taskmaster socket)
+</code></pre>
+
+<p>Signal a "too many requests" error, just prior to closing the connection.</p>
+<h4 id="url-decode">url-decode</h4>
+<pre><code class="lisp">Function: (url-decode string &amp;optional (external-format
+                                        *hunchentoot-default-external-format*))
+</code></pre>
+
+<p>Decodes a URL-encoded string which is assumed to be encoded using the
+external format EXTERNAL-FORMAT, i.e. this is the inverse of
+URL-ENCODE. It is assumed that you'll rarely need this function, if
+ever. But just in case - here it is. The default for EXTERNAL-FORMAT is
+the value of *HUNCHENTOOT-DEFAULT-EXTERNAL-FORMAT*.</p>
+<h4 id="url-encode">url-encode</h4>
+<pre><code class="lisp">Function: (url-encode string &amp;optional (external-format
+                                        *hunchentoot-default-external-format*))
+</code></pre>
+
+<p>URL-encodes a string using the external format EXTERNAL-FORMAT. The
+default for EXTERNAL-FORMAT is the value of
+*HUNCHENTOOT-DEFAULT-EXTERNAL-FORMAT*.</p>
+<h4 id="within-request-p">within-request-p</h4>
+<pre><code class="lisp">Function: (within-request-p)
+</code></pre>
+
+<p>True if we're in the context of a request, otherwise nil.</p>
+<h3 id="10-configuration-variables">10. <span id="configuration-variables">CONFIGURATION VARIABLES</span></h3>
+<h4 id="catch-errors-p">*catch-errors-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether Hunchentoot should catch and log errors (or rather invoke
+the debugger).</p>
+<h4 id="content-types-for-url-rewrite">*content-types-for-url-rewrite*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The content types for which url-rewriting is OK. See
+<a href="#rewrite-for-session-urls">*REWRITE-FOR-SESSION-URLS*</a>.</p>
+<h4 id="default-connection-timeout">*default-connection-timeout*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The default connection timeout used when an acceptor is reading
+from and writing to a socket stream.</p>
+<h4 id="default-content-type">*default-content-type*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The default content-type header which is returned to the client.
+If this is text content type, the character set used for encoding the
+response will automatically be added to the content type in a
+``charset'' attribute.</p>
+<h4 id="dispatch-table">*dispatch-table*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>A global list of dispatch functions.</p>
+<h4 id="file-upload-hook">*file-upload-hook*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>If this is not NIL, it should be a unary function which will
+be called with a pathname for each file which is uploaded to
+Hunchentoot.  The pathname denotes the temporary file to which
+the uploaded file is written.  The hook is called directly before
+the file is created.</p>
+<h4 id="handle-http-errors-p">*handle-http-errors-p*</h4>
+<h4 id="header-stream">*header-stream*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>If this variable is not NIL, it should be bound to a stream to
+which incoming and outgoing headers will be written for debugging
+purposes.</p>
+<h4 id="http-error-handler">*http-error-handler*</h4>
+<h4 id="hunchentoot-default-external-format">*hunchentoot-default-external-format*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The external format used to compute the REQUEST object.</p>
+<h4 id="hunchentoot-version">*hunchentoot-version*</h4>
+<h4 id="lisp-errors-log-level">*lisp-errors-log-level*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Log level for Lisp errors.  Should be one of :ERROR (the default),
+:WARNING, or :INFO.</p>
+<h4 id="lisp-warnings-log-level">*lisp-warnings-log-level*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Log level for Lisp warnings.  Should be one of :ERROR, :WARNING
+(the default), or :INFO.</p>
+<h4 id="log-lisp-backtraces-p">*log-lisp-backtraces-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether Lisp backtraces should be logged.  Only has an effect if
+[*LOG-LISP-ERRORS-P*](#log-lisp-errors-p] is true as well.</p>
+<h4 id="log-lisp-errors-p">*log-lisp-errors-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether Lisp errors in request handlers should be logged.</p>
+<h4 id="log-lisp-warnings-p">*log-lisp-warnings-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether Lisp warnings in request handlers should be logged.</p>
+<h4 id="methods-for-post-parameters">*methods-for-post-parameters*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>A list of the request method types (as keywords) for which
+Hunchentoot will try to compute <a href="#post-parameters">POST-PARAMETERS</a>.</p>
+<h4 id="rewrite-for-session-urls">*rewrite-for-session-urls*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether HTML pages should possibly be rewritten for cookie-less
+session-management.</p>
+<h4 id="session-gc-frequency">*session-gc-frequency*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>A session GC (see function SESSION-GC) will happen every
+*SESSION-GC-FREQUENCY* requests (counting only requests which create
+a new session) if this variable is not NIL.  See <a href="#session-created">SESSION-CREATED</a>.</p>
+<h4 id="session-max-time">*session-max-time*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The default time (in seconds) after which a session times out.</p>
+<h4 id="session-secret">*session-secret*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>A random ASCII string that's used to encode the public session
+data.  This variable is initially unbound and will be set (using
+<a href="#reset-session-secret">RESET-SESSION-SECRET</a>) the first time a session is created, if
+necessary.  You can prevent this from happening if you set the value
+yourself before starting acceptors.</p>
+<h4 id="show-lisp-backtraces-p">*show-lisp-backtraces-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether Lisp errors shown in HTML output should contain backtrace information.</p>
+<h4 id="show-lisp-errors-p">*show-lisp-errors-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether Lisp errors in request handlers should be shown in HTML output.</p>
+<h4 id="tmp-directory">*tmp-directory*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Directory for temporary files created by MAKE-TMP-FILE-NAME.</p>
+<h4 id="use-remote-addr-for-sessions">*use-remote-addr-for-sessions*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether the client's remote IP (as returned by <a href="#real-remote-addr">REAL-REMOTE-ADDR</a>)
+should be encoded into the session string.  If this value is true, a
+session will cease to be accessible if the client's remote IP changes.</p>
+<p>This might for example be an issue if the client uses a proxy server
+which doesn't send correct 'X_FORWARDED_FOR' headers.</p>
+<h4 id="use-user-agent-for-sessions">*use-user-agent-for-sessions*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Whether the 'User-Agent' header should be encoded into the session
+string.  If this value is true, a session will cease to be accessible
+if the client sends a different 'User-Agent' header.</p>
+<h3 id="11-variables-in-the-context-of-a-request">11. <span id="variables-in-request-context">VARIABLES IN THE CONTEXT OF A REQUEST</span></h3>
+<h4 id="acceptor_1">*acceptor*</h4>
+<pre><code class="lisp">Variable
+
+</code></pre>
+
+<p>The current <a href="#acceptor">ACCEPTOR</a> object.</p>
+<h4 id="reply">*reply*</h4>
+<pre><code class="lisp">Variable
+
+</code></pre>
+
+<p>The current <a href="#class-reply">REPLY</a> object.</p>
+<h4 id="request">*request*</h4>
+<pre><code class="lisp">Variable
+
+</code></pre>
+
+<p>The current <a href="#class-request">REQUEST</a> object.</p>
+<h4 id="session_1">*session*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The current <a href="#class-session">SESSION</a> (can be NIL).</p>
+<h3 id="12-constants">12. CONSTANTS</h3>
+<h4 id="http-accepted">+http-accepted+</h4>
+<pre><code class="lisp">Constant: 202
+</code></pre>
+
+<p>HTTP return code (202) for 'Accepted'.</p>
+<h4 id="http-authorization-required">+http-authorization-required+</h4>
+<pre><code class="lisp">Constant: 401
+</code></pre>
+
+<p>HTTP return code (401) for 'Authorization Required'.</p>
+<h4 id="http-bad-gateway">+http-bad-gateway+</h4>
+<pre><code class="lisp">Constant: 502
+</code></pre>
+
+<p>HTTP return code (502) for 'Bad Gateway'.</p>
+<h4 id="http-bad-request">+http-bad-request+</h4>
+<pre><code class="lisp">Constant: 400
+</code></pre>
+
+<p>HTTP return code (400) for 'Bad Request'.</p>
+<h4 id="http-conflict">+http-conflict+</h4>
+<pre><code class="lisp">Constant: 409
+</code></pre>
+
+<p>HTTP return code (409) for 'Conflict'.</p>
+<h4 id="http-continue">+http-continue+</h4>
+<pre><code class="lisp">Constant: 100
+</code></pre>
+
+<p>HTTP return code (100) for 'Continue'.</p>
+<h4 id="http-created">+http-created+</h4>
+<pre><code class="lisp">Constant: 201
+</code></pre>
+
+<p>HTTP return code (201) for 'Created'.</p>
+<h4 id="http-expectation-failed">+http-expectation-failed+</h4>
+<pre><code class="lisp">Constant: 417
+</code></pre>
+
+<p>HTTP return code (417) for 'Expectation Failed'.</p>
+<h4 id="http-failed-dependency">+http-failed-dependency+</h4>
+<pre><code class="lisp">Constant: 424
+</code></pre>
+
+<p>HTTP return code (424) for 'Failed Dependency'.</p>
+<h4 id="http-forbidden">+http-forbidden+</h4>
+<pre><code class="lisp">Constant: 403
+</code></pre>
+
+<p>HTTP return code (403) for 'Forbidden'.</p>
+<h4 id="http-gateway-time-out">+http-gateway-time-out+</h4>
+<pre><code class="lisp">Constant: 504
+</code></pre>
+
+<p>HTTP return code (504) for 'Gateway Time-out'.</p>
+<h4 id="http-gone">+http-gone+</h4>
+<pre><code class="lisp">Constant: 410
+</code></pre>
+
+<p>HTTP return code (410) for 'Gone'.</p>
+<h4 id="http-internal-server-error">+http-internal-server-error+</h4>
+<pre><code class="lisp">Constant: 500
+</code></pre>
+
+<p>HTTP return code (500) for 'Internal Server Error'.</p>
+<h4 id="http-length-required">+http-length-required+</h4>
+<pre><code class="lisp">Constant: 411
+</code></pre>
+
+<p>HTTP return code (411) for 'Length Required'.</p>
+<h4 id="http-method-not-allowed">+http-method-not-allowed+</h4>
+<pre><code class="lisp">Constant: 405
+</code></pre>
+
+<p>HTTP return code (405) for 'Method Not Allowed'.</p>
+<h4 id="http-moved-permanently">+http-moved-permanently+</h4>
+<pre><code class="lisp">Constant: 301
+</code></pre>
+
+<p>HTTP return code (301) for 'Moved Permanently'.</p>
+<h4 id="http-moved-temporarily">+http-moved-temporarily+</h4>
+<pre><code class="lisp">Constant: 302
+</code></pre>
+
+<p>HTTP return code (302) for 'Moved Temporarily'.</p>
+<h4 id="http-multi-status">+http-multi-status+</h4>
+<pre><code class="lisp">Constant: 207
+</code></pre>
+
+<p>HTTP return code (207) for 'Multi-Status'.</p>
+<h4 id="http-multiple-choices">+http-multiple-choices+</h4>
+<pre><code class="lisp">Constant: 300
+</code></pre>
+
+<p>HTTP return code (300) for 'Multiple Choices'.</p>
+<h4 id="http-network-authentication-required">+http-network-authentication-required+</h4>
+<pre><code class="lisp">Constant: 511
+</code></pre>
+
+<p>HTTP return code (511) for 'Network Authentication Required'.</p>
+<h4 id="http-no-content">+http-no-content+</h4>
+<pre><code class="lisp">Constant: 204
+</code></pre>
+
+<p>HTTP return code (204) for 'No Content'.</p>
+<h4 id="http-non-authoritative-information">+http-non-authoritative-information+</h4>
+<pre><code class="lisp">Constant: 203
+</code></pre>
+
+<p>HTTP return code (203) for 'Non-Authoritative Information'.</p>
+<h4 id="http-not-acceptable">+http-not-acceptable+</h4>
+<pre><code class="lisp">Constant: 406
+</code></pre>
+
+<p>HTTP return code (406) for 'Not Acceptable'.</p>
+<h4 id="http-not-found">+http-not-found+</h4>
+<pre><code class="lisp">Constant: 404
+</code></pre>
+
+<p>HTTP return code (404) for 'Not Found'.</p>
+<h4 id="http-not-implemented">+http-not-implemented+</h4>
+<pre><code class="lisp">Constant: 501
+</code></pre>
+
+<p>HTTP return code (501) for 'Not Implemented'.</p>
+<h4 id="http-not-modified">+http-not-modified+</h4>
+<pre><code class="lisp">Constant: 304
+</code></pre>
+
+<p>HTTP return code (304) for 'Not Modified'.</p>
+<h4 id="http-ok">+http-ok+</h4>
+<pre><code class="lisp">Constant: 200
+</code></pre>
+
+<p>HTTP return code (200) for 'OK'.</p>
+<h4 id="http-partial-content">+http-partial-content+</h4>
+<pre><code class="lisp">Constant: 206
+</code></pre>
+
+<p>HTTP return code (206) for 'Partial Content'.</p>
+<h4 id="http-payment-required">+http-payment-required+</h4>
+<pre><code class="lisp">Constant: 402
+</code></pre>
+
+<p>HTTP return code (402) for 'Payment Required'.</p>
+<h4 id="http-precondition-failed">+http-precondition-failed+</h4>
+<pre><code class="lisp">Constant: 412
+</code></pre>
+
+<p>HTTP return code (412) for 'Precondition Failed'.</p>
+<h4 id="http-precondition-required">+http-precondition-required+</h4>
+<pre><code class="lisp">Constant: 428
+</code></pre>
+
+<p>HTTP return code (428) for 'Precondition Required'.</p>
+<h4 id="http-proxy-authentication-required">+http-proxy-authentication-required+</h4>
+<pre><code class="lisp">Constant: 407
+</code></pre>
+
+<p>HTTP return code (407) for 'Proxy Authentication Required'.</p>
+<h4 id="http-request-entity-too-large">+http-request-entity-too-large+</h4>
+<pre><code class="lisp">Constant: 413
+</code></pre>
+
+<p>HTTP return code (413) for 'Request Entity Too Large'.</p>
+<h4 id="http-request-header-fields-too-large">+http-request-header-fields-too-large+</h4>
+<pre><code class="lisp">Constant: 431
+</code></pre>
+
+<p>HTTP return code (431) for 'Request Header Fields Too Large'.</p>
+<h4 id="http-request-time-out">+http-request-time-out+</h4>
+<pre><code class="lisp">Constant: 408
+</code></pre>
+
+<p>HTTP return code (408) for 'Request Time-out'.</p>
+<h4 id="http-request-uri-too-large">+http-request-uri-too-large+</h4>
+<pre><code class="lisp">Constant: 414
+</code></pre>
+
+<p>HTTP return code (414) for 'Request-URI Too Large'.</p>
+<h4 id="http-requested-range-not-satisfiable">+http-requested-range-not-satisfiable+</h4>
+<pre><code class="lisp">Constant: 416
+</code></pre>
+
+<p>HTTP return code (416) for 'Requested range not satisfiable'.</p>
+<h4 id="http-reset-content">+http-reset-content+</h4>
+<pre><code class="lisp">Constant: 205
+</code></pre>
+
+<p>HTTP return code (205) for 'Reset Content'.</p>
+<h4 id="http-see-other">+http-see-other+</h4>
+<pre><code class="lisp">Constant: 303
+</code></pre>
+
+<p>HTTP return code (303) for 'See Other'.</p>
+<h4 id="http-service-unavailable">+http-service-unavailable+</h4>
+<pre><code class="lisp">Constant: 503
+</code></pre>
+
+<p>HTTP return code (503) for 'Service Unavailable'.</p>
+<h4 id="http-switching-protocols">+http-switching-protocols+</h4>
+<pre><code class="lisp">Constant: 101
+</code></pre>
+
+<p>HTTP return code (101) for 'Switching Protocols'.</p>
+<h4 id="http-temporary-redirect">+http-temporary-redirect+</h4>
+<pre><code class="lisp">Constant: 307
+</code></pre>
+
+<p>HTTP return code (307) for 'Temporary Redirect'.</p>
+<h4 id="http-too-many-requests">+http-too-many-requests+</h4>
+<pre><code class="lisp">Constant: 429
+</code></pre>
+
+<p>HTTP return code (429) for 'Too Many Requests'.</p>
+<h4 id="http-unsupported-media-type">+http-unsupported-media-type+</h4>
+<pre><code class="lisp">Constant: 415
+</code></pre>
+
+<p>HTTP return code (415) for 'Unsupported Media Type'.</p>
+<h4 id="http-use-proxy">+http-use-proxy+</h4>
+<pre><code class="lisp">Constant: 305
+</code></pre>
+
+<p>HTTP return code (305) for 'Use Proxy'.</p>
+<h4 id="http-version-not-supported">+http-version-not-supported+</h4>
+<pre><code class="lisp">Constant: 505
+</code></pre>
+
+<p>HTTP return code (505) for 'Version not supported'.</p>
+<h3 id="13-hunchentoot-condition">13. HUNCHENTOOT-CONDITION</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Superclass for all conditions related to Hunchentoot.</p>
+<h3 id="14-hunchentoot-warning">14. HUNCHENTOOT-WARNING</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Superclass for all warnings related to Hunchentoot.</p>
+<h3 id="15-taskmaster">15. TASKMASTER</h3>
+<h4 id="taskmaster_1"><span id="class-taskmaster">taskmaster</span></h4>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>An instance of this class is responsible for
+distributing the work of handling requests for its acceptor.  This is
+an "abstract" class in the sense that usually only instances of
+subclasses of TASKMASTER will be used.</p>
+<ul>
+<li>Direct superclasses: STANDARD-OBJECT</li>
+<li>Direct subclasses: <a href="#multi-threaded-taskmaster">MULTI-THREADED-TASKMASTER</a>, <a href="#single-threaded-taskmaster">SINGLE-THREADED-TASKMASTER</a></li>
+</ul>
+<h5 id="relevant-methods_4">RELEVANT METHODS</h5>
+<h6 id="shutdown">shutdown</h6>
+<pre><code class="lisp">Function: (shutdown taskmaster)
+</code></pre>
+
+<p>Shuts down the taskmaster, i.e. frees all resources
+that were set up by it.  For example, a multi-threaded taskmaster
+might terminate all threads that are currently associated with it.
+This function is called by the acceptor's STOP method.</p>
+<h6 id="execute-acceptor">execute-acceptor</h6>
+<pre><code class="lisp">Function: (execute-acceptor taskmaster)
+</code></pre>
+
+<p>This is a callback called by the acceptor once it
+has performed all initial processing to start listening for incoming
+connections (see START-LISTENING).  It usually calls the
+ACCEPT-CONNECTIONS method of the acceptor, but depending on the
+taskmaster instance the method might be called from a new thread.</p>
+<h6 id="handle-incoming-connection">handle-incoming-connection</h6>
+<pre><code class="lisp">Function: (handle-incoming-connection taskmaster socket)
+</code></pre>
+
+<p>This function is called by the acceptor to start
+processing of requests on a new incoming connection.  SOCKET is the
+usocket instance that represents the new connection (or a socket
+handle on LispWorks).  The taskmaster starts processing requests on
+the incoming connection by calling the PROCESS-CONNECTION method of
+the acceptor instance.  The SOCKET argument is passed to
+PROCESS-CONNECTION as an argument.</p>
+<h6 id="start-thread">start-thread</h6>
+<pre><code class="lisp">Function: (start-thread taskmaster thunk &amp;key name)
+</code></pre>
+
+<p>Start a name thread in which to call the THUNK, in the context of the given TASKMASTER.
+Keyword arguments provide TASKMASTER-dependent options.
+Return a thread object.</p>
+<p>Hunchentoot taskmaster methods will call it with the taskmaster as the context,
+allowing hunchentoot extensions to define specialized methods that may e.g.
+wrap the thunk within a proper set of bindings and condition handlers.</p>
+<h5 id="direct-slots_1">DIRECT SLOTS</h5>
+<h6 id="acceptor_2">acceptor</h6>
+<pre><code class="lisp">Readers: taskmaster-acceptor
+Writers: (setf taskmaster-acceptor)
+</code></pre>
+
+<p>A backpointer to the acceptor instance
+this taskmaster works for.</p>
+<h4 id="multi-threaded-taskmaster">multi-threaded-taskmaster</h4>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>An abstract class for taskmasters that use multiple threads.
+For a concrete class to instantiate, use one-thread-per-connection-taskmaster.</p>
+<ul>
+<li>Direct superclasses: <a href="#class-taskmaster">TASKMASTER</a></li>
+<li>Direct subclasses: <a href="#one-thread-per-connection-taskmaster">ONE-THREAD-PER-CONNECTION-TASKMASTER</a></li>
+</ul>
+<h5 id="direct-slots_2">DIRECT SLOTS</h5>
+<h6 id="acceptor-process">acceptor-process</h6>
+<p>A process that accepts incoming connections and hands them off to new processes
+  for request handling.</p>
+<h4 id="one-thread-per-connection-taskmaster">one-thread-per-connection-taskmaster</h4>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A taskmaster that starts one thread for listening
+to incoming requests and one new thread for each incoming connection.</p>
+<p>If MAX-THREAD-COUNT is null, a new thread will always be created for
+each request.</p>
+<p>If MAX-THREAD-COUNT is supplied, the number of request threads is
+limited to that.  Furthermore, if MAX-ACCEPT-COUNT is not supplied, an
+HTTP 503 will be sent if the thread limit is exceeded.  Otherwise, if
+MAX-ACCEPT-COUNT is supplied, it must be greater than MAX-THREAD-COUNT;
+in this case, requests are accepted up to MAX-ACCEPT-COUNT, and only
+then is HTTP 503 sent.</p>
+<p>It is important to note that MAX-ACCEPT-COUNT and the HTTP 503 behavior
+described above is racing with the acceptor listen backlog. If we are receiving
+requests faster than threads can be spawned and 503 sent, the requests will be
+silently rejected by the kernel.</p>
+<p>In a load-balanced environment with multiple Hunchentoot servers, it's
+reasonable to provide MAX-THREAD-COUNT but leave MAX-ACCEPT-COUNT null.
+This will immediately result in HTTP 503 when one server is out of
+resources, so the load balancer can try to find another server.</p>
+<p>In an environment with a single Hunchentoot server, it's reasonable
+to provide both MAX-THREAD-COUNT and a somewhat larger value for
+MAX-ACCEPT-COUNT.  This will cause a server that's almost out of
+resources to wait a bit; if the server is completely out of resources,
+then the reply will be HTTP 503.</p>
+<p>This is the default taskmaster implementation for multi-threaded Lisp
+implementations.</p>
+<ul>
+<li>Direct superclasses: <a href="#multi-threaded-taskmaster">MULTI-THREADED-TASKMASTER</a></li>
+<li>No subclasses.</li>
+</ul>
+<h5 id="direct-slots_3">DIRECT SLOTS</h5>
+<h6 id="max-thread-count">max-thread-count</h6>
+<pre><code class="lisp">Type: (OR INTEGER NULL)
+Initargs: :max-thread-count
+Readers: taskmaster-max-thread-count
+Writers: (setf taskmaster-max-thread-count)
+</code></pre>
+
+<p>The maximum number of request threads this taskmaster will simultaneously
+  run before refusing or queueing new connections requests.  If the value
+  is null, then there is no limit.</p>
+<h6 id="thread-count">thread-count</h6>
+<pre><code class="lisp">Type: INTEGER
+Initform: 0
+Readers: taskmaster-thread-count
+Writers: (setf taskmaster-thread-count)
+</code></pre>
+
+<p>The number of taskmaster processing threads currently running.</p>
+<h6 id="thread-count-lock">thread-count-lock</h6>
+<p>In the absence of 'atomic-incf', we need this to atomically
+  increment and decrement the request count.</p>
+<h6 id="max-accept-count">max-accept-count</h6>
+<pre><code class="lisp">Type: (OR INTEGER NULL)
+Initargs: :max-accept-count
+Readers: taskmaster-max-accept-count
+Writers: (setf taskmaster-max-accept-count)
+</code></pre>
+
+<p>The maximum number of connections this taskmaster will accept before refusing
+  new connections.  If supplied, this must be greater than MAX-THREAD-COUNT.
+  The number of queued requests is the difference between MAX-ACCEPT-COUNT
+  and MAX-THREAD-COUNT.</p>
+<h6 id="accept-count">accept-count</h6>
+<pre><code class="lisp">Type: INTEGER
+Initform: 0
+</code></pre>
+
+<p>The number of connection currently accepted by the taskmaster. These
+ connections are not ensured to be processed, thay may be waiting for an
+ empty processing slot or rejected because the load is too heavy.</p>
+<h6 id="accept-count-lock">accept-count-lock</h6>
+<p>In the absence of 'atomic-incf', we need this to atomically
+  increment and decrement the accept count.</p>
+<h6 id="wait-queue">wait-queue</h6>
+<p>A queue that we use to wait for a free connection.</p>
+<h6 id="wait-lock">wait-lock</h6>
+<p>The lock for the connection wait queue.</p>
+<h6 id="worker-thread-name-format">worker-thread-name-format</h6>
+<pre><code class="lisp">Type: (OR STRING NULL)
+Initargs: :worker-thread-name-format
+Initform: &quot;hunchentoot-worker-~A&quot;
+</code></pre>
+
+<h4 id="single-threaded-taskmaster">single-threaded-taskmaster</h4>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A taskmaster that runs synchronously in the thread
+where the START function was invoked (or in the case of LispWorks in
+the thread started by COMM:START-UP-SERVER).  This is the simplest
+possible taskmaster implementation in that its methods do nothing but
+calling their acceptor "sister" methods - EXECUTE-ACCEPTOR calls
+ACCEPT-CONNECTIONS, HANDLE-INCOMING-CONNECTION calls
+PROCESS-CONNECTION.</p>
+<ul>
+<li>Direct superclasses: <a href="#class-taskmaster">TASKMASTER</a></li>
+</ul>
+<h2 id="advanced-topics">ADVANCED TOPICS</h2>
+<h3 id="customizing-session-behaviour">CUSTOMIZING SESSION BEHAVIOUR</h3>
+<p>For everyday session usage, you will probably just use
+<code>START-SESSION</code>, <code>SESSION-VALUE</code>, and maybe
+<code>DELETE-SESSION-VALUE</code> and <code>*SESSION*</code>. However,
+there are two ways to customize the way Hunchentoot maintains sessions.</p>
+<p>One way is to mostly leave the session mechanism intact but to tweak it
+a bit:</p>
+<ul>
+<li>The publicly visible part of a session is encoded using a
+    <a href="#session-secret">secret</a> which you can set yourself.</li>
+<li>And it is stored using a cookie (or GET parameter)
+    <a href="#session-cookie-name">name</a> that you can override.</li>
+<li>Each session receives a <a href="#next-session-id">new ID</a> when it is
+    created and you can implement a more robust way to do that.</li>
+<li>You can arrange to be called whenever a session is
+    <a href="#session-created">created</a> to trigger some action. You might also
+    do this to invent your own session <a href="#session-gc">garbage
+    collection</a>.</li>
+<li>By default, all sessions are stored in a global alist in memory. You
+    can't change the alist part, but you can distribute your sessions
+    over different <a href="#session-db">"databases"</a>.</li>
+<li>By default, every operation which modifies sessions or one of the
+    session databases is guarded by a global lock, but you can arrange
+    to <a href="#session-db-lock">provide</a> different locks for this.</li>
+</ul>
+<p>The other way to customize Hunchentoot's sessions is to completely
+replace them. This is actually pretty easy: Create your own class to
+store state (which doesn't have to and probably shouldn't inherit from
+<code>SESSION</code>) and implement methods for
+<code>SESSION-VERIFY</code> and <code>SESSION-COOKIE-VALUE</code> - that's
+it. Hunchentoot will continue to use cookies and/or to rewrite URLs to
+keep track of session state and it will store "the current session"
+(whatever that is in your implementation) in <code>*SESSION*</code>.
+Everything else (like persisting sessions, GC, getting and setting
+values) you'll have to take care of yourself and the other session
+functions (like <code>START-SESSION</code> or <code>SESSION-VALUE</code>)
+won't work anymore. (Almost) total freedom, but a lot of responsibility
+as well... :)</p>
+<ul>
+<li><a href="#reset-session-secret">reset-session-secret</a></li>
+<li><a href="#session-cookie-name">session-cookie-name</a></li>
+<li><a href="#session-cookie-value">session-cookie-value</a></li>
+<li><a href="#session-created">session-created</a></li>
+<li><a href="#next-session-id">next-session-id</a></li>
+<li><a href="#session-db">session-db</a></li>
+<li><a href="#session-db-lock">session-db-lock</a></li>
+<li><a href="#session-verify">session-verify</a></li>
+</ul>
+<h3 id="customizing-acceptor-behaviour"><span id="acceptor-behaviour">CUSTOMIZING ACCEPTOR BEHAVIOUR</span></h3>
+<p>If you want to modify what acceptors do, you should subclass
+<code>ACCEPTOR</code> (or <code>SSL-ACCEPTOR</code>) and specialize the
+generic functions that constitute their behaviour (see example below).
+The life of an acceptor looks like this: It is started with the function
+<code>START</code> which immediately calls <code>START-LISTENING</code>
+and then applies the function <code>EXECUTE-ACCEPTOR</code> to its
+<a href="#taskmasters">taskmaster</a>. This function will eventually call
+<code>ACCEPT-CONNECTIONS</code> which is responsible for setting things
+up to wait for clients to connect. For each incoming connection which
+comes in, <code>HANDLE-INCOMING-CONNECTION</code> is applied to the
+taskmaster which will either call <code>PROCESS-CONNECTION</code>
+directly, or will create a thread to call it.
+<code>PROCESS-CONNECTION</code> calls
+<code>INITIALIZE-CONNECTION-STREAM</code> before it does anything else,
+then it selects and calls a function which handles the
+<a href="#requests">request</a>, and finally it sends the <a href="#replies">reply</a> to the
+client before it calls <code>RESET-CONNECTION-STREAM</code>. If the
+connection is persistent, this procedure is repeated (except for the
+intialization step) in a loop until the connection is closed. The
+acceptor is stopped with <code>STOP</code>.</p>
+<p>If you just want to use the standard acceptors that come with
+Hunchentoot, you don't need to know anything about the functions listed
+in this section.</p>
+<ul>
+<li><a href="#start-listening">start-listening</a></li>
+<li><a href="#accept-connections">accept-connections</a></li>
+<li><a href="#acceptor-log-access">acceptor-log-access</a></li>
+<li><a href="#acceptor-log-message">acceptor-log-message</a></li>
+<li><a href="#acceptor-status-message">acceptor-status-message</a></li>
+<li><a href="#detach-socket">detach-socket</a></li>
+<li><a href="#initialize-connection-stream">initialize-connection-stream</a></li>
+<li><a href="#process-connection">process-connection</a></li>
+<li><a href="#reset-connection-stream">reset-connection-stream</a></li>
+</ul>
+<h4 id="an-example-of-how-to-subclass-acceptor">An example of how to subclass ACCEPTOR</h4>
+<p>This example shows how to subclass <code>ACCEPTOR</code> in order to
+provide Hunchentoot with basic virtual host support. It assumes
+Hunchentoot is sitting behind an Internet-facing reverse-proxy web
+server that maps the host (or domain) part of incoming HTTP requests to
+unique localhost ports.</p>
+<pre><code class="lisp">    (ql:quickload '(&quot;hunchentoot&quot; &quot;drakma&quot;))
+</code></pre>
+
+<pre><code class="lisp">    ;;; Subclass ACCEPTOR
+    (defclass vhost (hunchentoot:acceptor)
+      ;; slots
+      ((dispatch-table
+        :initform '()
+        :accessor dispatch-table
+        :documentation &quot;List of dispatch functions&quot;))
+      ;; options
+      (:default-initargs                    ; default-initargs must be used
+       :address &quot;127.0.0.1&quot;))               ; because ACCEPTOR uses it
+
+    ;;; Specialise ACCEPTOR-DISPATCH-REQUEST for VHOSTs
+    (defmethod hunchentoot:acceptor-dispatch-request ((vhost vhost) request)
+      ;; try REQUEST on each dispatcher in turn
+      (mapc (lambda (dispatcher)
+          (let ((handler (funcall dispatcher request)))
+            (when handler               ; Handler found. FUNCALL it and return result
+              (return-from hunchentoot:acceptor-dispatch-request (funcall handler)))))
+        (dispatch-table vhost))
+      (call-next-method))
+
+    ;;; ======================================================================
+    ;;; Now all we need to do is test it
+
+    ;;; Instantiate VHOSTs
+    (defvar vhost1 (make-instance 'vhost :port 50001))
+    (defvar vhost2 (make-instance 'vhost :port 50002))
+
+    ;;; Populate each dispatch table
+    (push
+     (hunchentoot:create-prefix-dispatcher &quot;/foo&quot; 'foo1)
+     (dispatch-table vhost1))
+    (push
+     (hunchentoot:create-prefix-dispatcher &quot;/foo&quot; 'foo2)
+     (dispatch-table vhost2))
+
+    ;;; Define handlers
+    (defun foo1 () &quot;Hello&quot;)
+    (defun foo2 () &quot;Goodbye&quot;)
+
+    ;;; Start VHOSTs
+    (hunchentoot:start vhost1)
+    (hunchentoot:start vhost2)
+
+    ;;; Make some requests
+    (drakma:http-request &quot;http://127.0.0.1:50001/foo&quot;)
+    ;;; =|
+    ;;; 127.0.0.1 - [2012-06-08 14:30:39] &quot;GET /foo HTTP/1.1&quot; 200 5 &quot;-&quot; &quot;Drakma/1.2.6 (SBCL 1.0.56; Linux; 2.6.32-5-686; http://weitz.de/drakma/)&quot;
+    ;;; =&gt;
+    ;;; &quot;Hello&quot;
+    ;;; 200
+    ;;; ((:CONTENT-LENGTH . &quot;5&quot;) (:DATE . &quot;Fri, 08 Jun 2012 14:30:39 GMT&quot;)
+    ;;;  (:SERVER . &quot;Hunchentoot 1.2.3&quot;) (:CONNECTION . &quot;Close&quot;)
+    ;;;  (:CONTENT-TYPE . &quot;text/html; charset=utf-8&quot;))
+    ;;; #&lt;PURI:URI http://127.0.0.1:50001/foo&gt;
+    ;;; #&lt;FLEXI-STREAMS:FLEXI-IO-STREAM {CA90059}&gt;
+    ;;; T
+    ;;; &quot;OK&quot;
+    (drakma:http-request &quot;http://127.0.0.1:50002/foo&quot;)
+    ;;; =|
+    ;;; 127.0.0.1 - [2012-06-08 14:30:47] &quot;GET /foo HTTP/1.1&quot; 200 7 &quot;-&quot; &quot;Drakma/1.2.6 (SBCL 1.0.56; Linux; 2.6.32-5-686; http://weitz.de/drakma/)&quot;
+    ;;; =&gt;
+    ;;; &quot;Goodbye&quot;
+    ;;; 200
+    ;;; ((:CONTENT-LENGTH . &quot;7&quot;) (:DATE . &quot;Fri, 08 Jun 2012 14:30:47 GMT&quot;)
+    ;;;  (:SERVER . &quot;Hunchentoot 1.2.3&quot;) (:CONNECTION . &quot;Close&quot;)
+    ;;;  (:CONTENT-TYPE . &quot;text/html; charset=utf-8&quot;))
+    ;;; #&lt;PURI:URI http://127.0.0.1:50002/foo&gt;
+    ;;; #&lt;FLEXI-STREAMS:FLEXI-IO-STREAM {CAE8059}&gt;
+    ;;; T
+    ;;; &quot;OK&quot;
+</code></pre>
+
+<p>How to make each VHOST write to separate access log streams (or files)
+is left as an exercise to the reader.</p>
+<h3 id="taskmasters">TASKMASTERS</h3>
+<p>As a "normal" Hunchentoot user, you can completely ignore taskmasters
+and skip this section. But if you're still reading, here are the dirty
+details: Each <a href="#acceptors">acceptor</a> has a taskmaster associated with it
+at creation time. It is the taskmaster's job to distribute the work of
+accepting and handling incoming connections. The acceptor calls the
+taskmaster if appropriate and the taskmaster calls back into the
+acceptor. This is done using the generic functions described in this and
+the <a href="#acceptor-behaviour">previous</a> section. Hunchentoot comes with two
+standard taskmaster implementations - one (which is the default used on
+multi-threaded Lisps) which starts a new thread for each incoming
+connection and one which handles all requests sequentially. It should
+for example be relatively straightforward to create a taskmaster which
+allocates threads from a fixed pool instead of creating a new one for
+each connection.</p>
+<p>You can control the resources consumed by a threaded taskmaster via two
+initargs. <code>:max-thread-count</code> lets you set the maximum number of request
+threads that can be processes simultaneously. If this is <code>nil</code>, the is
+no thread limit imposed. <code>:max-accept-count</code> lets you set the maximum
+number of requests that can be outstanding (i.e. being processed or
+queued for processing). If <code>:max-thread-count</code> is supplied and
+<code>:max-accept-count</code> is <code>NIL</code>, then a
+<code>+HTTP-SERVICE-UNAVAILABLE+</code> error will be generated if there
+are more than the max-thread-count threads processing requests. If both
+<code>:max-thread-count</code> and <code>:max-accept-count</code> are supplied, then
+max-thread-count must be less than max-accept-count; if more than
+max-thread-count requests are being processed, then requests up to
+max-accept-count will be queued until a thread becomes available. If
+more than max-accept-count requests are outstanding, then a
+<code>+HTTP-SERVICE-UNAVAILABLE+</code> error will be generated. In a
+load-balanced environment with multiple Hunchentoot servers, it's
+reasonable to provide <code>:max-thread-count</code> but leave <code>:max-accept-count</code>
+null. This will immediately result in
+<code>+HTTP-SERVICE-UNAVAILABLE+</code> when one server is out of
+resources, so the load balancer can try to find another server. In an
+environment with a single Hunchentoot server, it's reasonable to provide
+both <code>:max-thread-count</code> and a somewhat larger value for
+<code>:max-accept-count</code>. This will cause a server that's almost out of
+resources to wait a bit; if the server is completely out of resources,
+then the reply will be <code>+HTTP-SERVICE-UNAVAILABLE+</code>. The
+default for these values is 100 and 120, respectively.</p>
+<p>If you want to implement your own taskmasters, you should subclass
+<a href="#class-taskmaster">TASKMASTER</a> or one of its subclasses,
+<a href="#single-threaded-taskmaster">SINGLE-THREADED-TASKMASTER</a> or
+<a href="#one-thread-per-connection-taskmaster">ONE-THREAD-PER-CONNECTION-TASKMASTER</a>, and specialize the
+generic functions in this section.</p>
+<ul>
+<li><a href="#execute-acceptor">execute-acceptor</a></li>
+<li><a href="#handle-incoming-connection">handle-incoming-connection</a></li>
+<li><a href="#start-thread">start-thread</a></li>
+<li><a href="#create-request-handler-thread">create-request-handler-thread</a></li>
+<li><a href="#shutdown">shutdown</a></li>
+</ul>
+<p>Decodes a URL-encoded string which is assumed to be encoded using the
+external format EXTERNAL-FORMAT, i.e. this is the inverse of
+URL-ENCODE. It is assumed that you'll rarely need this function, if
+ever. But just in case - here it is. The default for EXTERNAL-FORMAT is
+the value of *HUNCHENTOOT-DEFAULT-EXTERNAL-FORMAT*.</p>
+<h2 id="some-more-technical-details">SOME MORE TECHNICAL DETAILS</h2>
+<p>Hunchentoot will only work with Lisps where the <a href="http://www.lispworks.com/documentation/HyperSpec/Body/26_glo_c.htm#character_code">character
+codes</a>
+of all <a href="http://en.wikipedia.org/wiki/ISO/IEC_8859-1">Latin-1</a> characters
+coincide with their Unicode <a href="http://en.wikipedia.org/wiki/Code_point">code
+points</a> (which is the case for
+all current implementations I know).</p>
+<p>Source code can be downloaded from <a href="https://github.com/edicl/hunchentoot/archive/v1.2.38.tar.gz">https://github.com/edicl/hunchentoot/archive/v1.2.38.tar.gz</a>.</p>
+<p>The current development version of Hunchentoot can be found at
+<a href="https://github.com/edicl/hunchentoot">https://github.com/edicl/hunchentoot</a>. If you want to send patches,
+please fork the github repository and send pull requests.</p>
+<h3 id="without-clssl">Without cl+ssl</h3>
+<p>You can compile Hunchentoot without
+SSL support - and thus without the need to have CL+SSL - if you add
+<code>:HUNCHENTOOT-NO-SSL</code> to
+<a href="http://www.lispworks.com/documentation/HyperSpec/Body/v_featur.htm"><code>*FEATURES*</code></a>
+<em>before</em> you compile it.</p>
+<h3 id="clbuild">clbuild</h3>
+<p>Hunchentoot and its dependencies can also be installed with
+<a href="http://common-lisp.net/project/clbuild/">clbuild</a>. </p>
+<h3 id="gentoo-linux">Gentoo Linux</h3>
+<p>There's also a port
+for <a href="http://www.gentoo.org/proj/en/lisp/common-lisp/index.xml">Gentoo Linux</a> thanks
+to Matthew Kennedy.</p>
+<h3 id="running-hunchentoot-on-port-80">Running Hunchentoot on port 80</h3>
+<p>Hunchentoot does not come with code to help with running it on a
+privileged port (i.e. port 80 or 443) on Unix-like operating systems.
+Modern Unix-like systems have specific, non-portable ways to allow
+non-root users to listen to privileged ports, so including such
+functionality in Hunchentoot was considered unnecessary. Please refer to
+online resources for help. At the time of this writing, the YAWS
+documentation has a <a href="http://yaws.hyber.org/privbind.yaws">comprehensive
+writeup</a> on the topic.</p>
+<h3 id="hunchentoot-behind-a-proxy">Hunchentoot behind a proxy</h3>
+<p>If you're feeling unsecure about exposing Hunchentoot to the wild, wild
+Internet or if your Lisp web application is part of a larger website,
+you can hide it behind a <a href="http://en.wikipedia.org/wiki/Proxy_server">proxy
+server</a>. One approach that I
+have used several times is to employ Apache's
+<a href="http://httpd.apache.org/docs/current/mod/mod_proxy.html">mod_proxy</a>
+module with a configuration that looks like this:</p>
+<pre><code>ProxyPass /hunchentoot http://127.0.0.1:3000/hunchentoot
+ProxyPassReverse /hunchentoot http://127.0.0.1:3000/hunchentoot
+</code></pre>
+<p>This will tunnel all requests where the URI path begins with
+<code>"/hunchentoot"</code> to a (Hunchentoot) server listening on port 3000 on the
+same machine.</p>
+<p>Of course, there are <a href="http://www.red-bean.com/pipermail/lispweb/2006-October/001342.html">several
+other</a>
+(more lightweight) web proxies that you could use instead of Apache.</p>
+<h2 id="support">SUPPORT</h2>
+<p>The development version of Hunchentoot can be found <a href="https://github.com/edicl/hunchentoot">on
+github</a>. Please use the github
+issue tracking system to submit bug reports. Patches are welcome, please
+use <a href="https://github.com/edicl/hunchentoot/pulls">GitHub pull requests</a>.
+If you want to make a change, please <a href="http://weitz.de/patches.html">read this
+first</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../bordeaux-threads/" class="btn btn-neutral" title="bordeaux-threads"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../bordeaux-threads/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

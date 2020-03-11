@@ -1,6 +1,10 @@
-# hunchentoot - The Common Lisp web server (formerly TBNL)
+# hunchentoot - The Common Lisp web server
 
 Version: 1.2.38
+
+*(This page was possible due to the excellent [official documentation](https://edicl.github.io/hunchentoot/) as well as the page on [Web Development on The Common Lisp Cookbook](http://lispcookbook.github.io/cl-cookbook/web.html).)*
+
+*hunchentoot was formerly known as TBNL.
 
 ## INTRODUCTION
 

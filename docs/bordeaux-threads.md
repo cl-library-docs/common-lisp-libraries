@@ -2,28 +2,30 @@
 
 Version: 0.8.7
 
+*(This page was possible due to the [official documentation](https://trac.common-lisp.net/bordeaux-threads/wiki/ApiDocumentation), albeit its a bit outdated.)*
+
 BORDEAUX-THREADS is a proposed standard for a minimal
   MP/threading interface. It is similar to the CLIM-SYS threading and
   lock support, but for the following broad differences:
 
-  1) Some behaviours are defined in additional detail: attention has
+  1. Some behaviours are defined in additional detail: attention has
      been given to special variable interaction, whether and when
      cleanup forms are run. Some behaviours are defined in less
      detail: an implementation that does not support multiple
      threads is not required to use a new list (nil) for a lock, for
      example.
 
-  2) Many functions which would be difficult, dangerous or inefficient
+  2. Many functions which would be difficult, dangerous or inefficient
      to provide on some implementations have been removed. Chiefly
      these are functions such as thread-wait which expect for
      efficiency that the thread scheduler is written in Lisp and
      'hookable', which can't sensibly be done if the scheduler is
      external to the Lisp image, or the system has more than one CPU.
 
-  3) Unbalanced ACQUIRE-LOCK and RELEASE-LOCK functions have been
+  3. Unbalanced ACQUIRE-LOCK and RELEASE-LOCK functions have been
      added.
 
-  4) Posix-style condition variables have been added, as it's not
+  4. Posix-style condition variables have been added, as it's not
      otherwise possible to implement them correctly using the other
      operations that are specified.
 

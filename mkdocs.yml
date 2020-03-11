@@ -12,5 +12,6 @@ nav:
       - alexandria.md
       - bordeaux-threads.md
       - hunchentoot.md
+      - iterate.md
 plugins:
     - search

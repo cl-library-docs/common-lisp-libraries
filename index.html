@@ -53,12 +53,6 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#previous-efforts">Previous Efforts</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#ultraspec">UltraSpec</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#mkdocs">mkdocs</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#defacto-libraries">Defacto Libraries</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
@@ -66,6 +60,12 @@
     <li class="toctree-l3"><a class="reference internal" href="#libraries-documented-so-far">Libraries documented so far</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#previous-efforts">Previous Efforts</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ultraspec">UltraSpec</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mkdocs">mkdocs</a>
     </li>
     </ul>
                     </li>
@@ -76,7 +76,9 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="bordeaux-threads/">bordeaux-threads</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="hunchentoot/">hunchentoot - The Common Lisp web server (formerly TBNL)</a>
+                    <li class="toctree-l1"><a class="reference internal" href="hunchentoot/">hunchentoot - The Common Lisp web server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="iterate/">iterate</a>
                     </li>
                 </ul>
       </div>
@@ -113,36 +115,7 @@
               
                 <h1 id="common-lispreadthedocs">common-lisp.readthedocs</h1>
 <h2 id="introduction">Introduction</h2>
-<p>Common Lisp documentation - libraries or the HyperSpec - isn't particularly "modern" or "attractive". </p>
-<h2 id="previous-efforts">Previous Efforts</h2>
-<p>Documentation efforts have been made at:</p>
-<ul>
-<li>
-<p>Quickdocs: I didn't like the theme. I want the API at a glance! Honestly, this can improve! But don't look at me.</p>
-</li>
-<li>
-<p>Quickref: Frankly, this is just too much. As a user, all I want to know is "What can this library do? And, how do I do it? (What functions, macros or anything is available?)" Therefore, for a user, the only good place I found was the Packages section here. It is, after all, a Reference Manual.</p>
-</li>
-<li>
-<p>common-lisp.net: Ultimately, this seems to be the place for everything.</p>
-</li>
-<li>
-<p>CLiki: Again, layout and "at a glance"!</p>
-</li>
-<li>
-<p>UltraSpec: I liked this. The only trouble? It isn't "quick".</p>
-</li>
-</ul>
-<h2 id="ultraspec">UltraSpec</h2>
-<p>I liked (the theme of) UltraSpec. I also liked <code>mkdocs</code> - that is what I am using here. What UltraSpec seems to be good for is more largish websites than what is here. And anyways, <code>markdown</code> files and <code>dokuwiki</code> files (which is what UltraSpec uses) are interconvertible (untested - to a fair extent perhaps?) using <code>pandoc</code>. (pandoc is also useful for a ton of other files!)</p>
-<h2 id="mkdocs">mkdocs</h2>
-<p>As a marketing for mkdocs: <code>mkdocs</code> is simple as</p>
-<ul>
-<li><code>pip install mkdocs # or conda</code></li>
-<li>create a .yml configuration file (or copy and edit!)</li>
-<li><code>mkdocs gh-deploy</code></li>
-</ul>
-<p>Done!</p>
+<p>Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have <em>some</em> objective component to it.</p>
 <h2 id="defacto-libraries">Defacto Libraries</h2>
 <h3 id="installation"><span id="defacto-installation">Installation</span></h3>
 <p>Each of the defacto libraries can be installed using quiclisp:</p>
@@ -158,10 +131,43 @@ installing quicklisp.</p>
 <h3 id="libraries-documented-so-far">Libraries documented so far</h3>
 <p>(See the <a href="https://digikar99.github.io/common-lisp.readthedocs/">html version of this page</a>, rather than the markdown version for the working links below.)</p>
 <ul>
-<li><a href="./alexandria/">alexandria</a></li>
-<li><a href="./bordeaux-threads/">bordeaux-threads</a></li>
-<li><a href="./hunchentoot/">hunchentoot</a></li>
+<li><a href="./alexandria/">alexandria</a> - a utility library</li>
+<li><a href="./bordeaux-threads/">bordeaux-threads</a> - library for threading</li>
+<li><a href="./hunchentoot/">hunchentoot</a> - web server</li>
+<li><a href="./iterate/">iterate</a> - a lispy extensible alternative to <code>loop</code></li>
 </ul>
+<h2 id="previous-efforts">Previous Efforts</h2>
+<p>Documentation efforts have been made at:</p>
+<ul>
+<li>
+<p><a href="http://quickdocs.org/">Quickdocs</a>: I didn't like the theme. I want the API at a glance! Honestly, this can improve! But don't look at me. I'm also not very at ease with full automation without human intervention.</p>
+</li>
+<li>
+<p><a href="http://quickref.common-lisp.net/">Quickref</a>: Frankly, this is just too much. As a user, all I want to know is "What can this library do? And, how do I do it? (What functions, macros or anything is available?)" Therefore, for a user, the only good place I found was the Packages section here. It is, after all, a Reference Manual. Another excuse is, again, that I do want human intervention in documentation.</p>
+</li>
+<li>
+<p><a href="http://common-lisp.net/">common-lisp.net</a>: Ultimately, this seems to be the place for everything. And indeed, most of the work on the site you are reading is directly based on the official documentation. An attempt is made to "simplify" wherever need is felt.</p>
+</li>
+<li>
+<p><a href="http://cliki.net/">CLiki</a>: Again, layout and "at a glance"!</p>
+</li>
+<li>
+<p><a href="https://phoe.tymoon.eu/clus/doku.php">UltraSpec</a>: I liked this. The only trouble? It isn't "quick".</p>
+</li>
+</ul>
+<h2 id="ultraspec">UltraSpec</h2>
+<p>I liked (the theme of) <a href="https://phoe.tymoon.eu/clus/doku.php">UltraSpec</a>. I also liked <a href="https://www.mkdocs.org/">mkdocs</a> - I am using mkdocs with the pre-provided <a href="https://readthedocs.org/">readthedocs</a> theme. What UltraSpec seems to be good for is larger websites than what is currently here, in that it isn't as straightforward as mkdocs for library-documenters to use it. </p>
+<p>Additionally, <code>markdown</code> files and <code>dokuwiki</code> files (the format UltraSpec requires) are interconvertible (but the compatibility is untested) using <a href="https://pandoc.org/">pandoc</a>. (pandoc is indeed useful for a ton of other file formats!)</p>
+<h2 id="mkdocs">mkdocs</h2>
+<p>As a marketing for mkdocs: <code>mkdocs</code> is simple as</p>
+<ul>
+<li><code>pip install mkdocs # or conda</code></li>
+<li>create a .yml configuration file (or copy and edit!)</li>
+<li>put your markdown files inside docs/ directory (or as mentioned in the .yml file)</li>
+<li><code>mkdocs gh-deploy</code># to deploy on github-pages</li>
+</ul>
+<p>Done!</p>
+<p><em>PS: Regardless of the justifications, all I wanted was a documentation site with a "sidebar" that, both, tells the page at glance, and is easy to navigate.</em></p>
               
             </div>
           </div>
@@ -215,5 +221,5 @@ installing quicklisp.</p>
 
 <!--
 MkDocs version : 1.1
-Build Date UTC : 2020-03-06 20:36:34
+Build Date UTC : 2020-03-11 09:52:47
 -->

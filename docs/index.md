@@ -4,11 +4,11 @@
 
 Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have *some* objective component to it.
 
-## Defacto Libraries
+## Libraries
 
 ### <span id="defacto-installation">Installation</span>
 
-Each of the defacto libraries can be installed using quiclisp:
+Each of the below libraries can be installed using quicklisp:
 
 ```lisp
 (ql:quickload "alexandria") ; for example
@@ -30,6 +30,7 @@ Optionally, you may want to use `sb-ext:add-package-local-nickname` the packages
 - [bordeaux-threads](./bordeaux-threads/) - library for threading
 - [hunchentoot](./hunchentoot/) - web server
 - [iterate](./iterate/) - a lispy extensible alternative to `loop`
+- [numcl](./numcl/) - lispy clone of numpy
 
 
 ## Previous Efforts

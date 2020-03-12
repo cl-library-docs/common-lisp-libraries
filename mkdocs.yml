@@ -13,5 +13,7 @@ nav:
       - bordeaux-threads.md
       - hunchentoot.md
       - iterate.md
+    - Not yet defacto:
+      - numcl.md
 plugins:
     - search

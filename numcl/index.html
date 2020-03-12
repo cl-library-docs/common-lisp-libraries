@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>numcl - Lispy clone of numpy - common-lisp.readthedocs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "numcl - Lispy clone of numpy";
+    var mkdocs_page_input_path = "numcl.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp.readthedocs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">Alexandria Manual - draft version</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - The Common Lisp web server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">numcl - Lispy clone of numpy</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#goals">Goals</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#featurescontracts">Features/Contracts</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#array-representation">Array Representation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#packages">Packages</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#types">Types</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#examples">Examples</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_1">*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">**</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">***</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_4">+</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_5">++</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_6">+++</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#-">-</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_7">/</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_8">//</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_9">///</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_10">/=</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#1">1+</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#1-">1-</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_11">&lt;</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_12">&lt;=</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_13">=</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_14">&gt;</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_15">&gt;=</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#abs">abs</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#acos">acos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#amax">amax</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#amin">amin</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#arange">arange</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#aref">aref</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#argmax">argmax</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#argmin">argmin</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#argwhere">argwhere</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#array-index-from-row-major-index">array-index-from-row-major-index</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#asarray">asarray</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#asin">asin</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#astype">astype</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#atan">atan</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#avg">avg</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bernoulli">bernoulli</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bernoulli-like">bernoulli-like</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#beta">beta</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#binomial">binomial</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#broadcast">broadcast</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ceiling">ceiling</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#chisquare">chisquare</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cis">cis</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clip">clip</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#concatenate">concatenate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#conjugate">conjugate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#copy">copy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cos">cos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cosh">cosh</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#denominator">denominator</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#diag">diag</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dirichlet">dirichlet</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dot">dot</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dtype">dtype</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#einsum">einsum</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#spec">SPEC</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#transform">TRANSFORM</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#args">ARGS</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#performance">Performance</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#empty">empty</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#empty-like">empty-like</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exp">exp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#expand-dims">expand-dims</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exponential">exponential</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#eye">eye</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#f">f</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fceiling">fceiling</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ffloor">ffloor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#flatten">flatten</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#floor">floor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fround">fround</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ftruncate">ftruncate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#full">full</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#full-like">full-like</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gamma">gamma</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#geometric">geometric</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gumbel">gumbel</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#histogram">histogram</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hypergeometric">hypergeometric</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#imagpart">imagpart</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#inner">inner</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#integer-length">integer-length</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#invalid-array-index-error">invalid-array-index-error</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#axis">axis</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#laplace">laplace</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#length">length</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#linspace">linspace</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#log">log</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logand">logand</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logandc1">logandc1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logandc2">logandc2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logcount">logcount</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logeqv">logeqv</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logior">logior</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logistic">logistic</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lognand">lognand</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lognor">lognor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lognormal">lognormal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lognot">lognot</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logorc1">logorc1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logorc2">logorc2</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logseries">logseries</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#logxor">logxor</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map">map</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-array">map-array</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-array-into">map-array-into</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-into">map-into</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#matmul">matmul</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#max">max</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mean">mean</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#min">min</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#mod">mod</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multinomial">multinomial</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#multivariate-normal">multivariate-normal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#negative-binomial">negative-binomial</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#noncentral-chisquare">noncentral-chisquare</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#noncentral-f">noncentral-f</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nonzero">nonzero</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#normal">normal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#numcl-array">numcl-array</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#numcl-array-p">numcl-array-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#numerator">numerator</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#onehot">onehot</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ones">ones</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ones-like">ones-like</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#outer">outer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pareto">pareto</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#phase">phase</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#poisson">poisson</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#power">power</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prod">prod</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rank">rank</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rayleigh">rayleigh</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#realpart">realpart</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reduce-array">reduce-array</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rem">rem</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reshape">reshape</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#round">round</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#shape">shape</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#shuffle">shuffle</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#signum">signum</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sin">sin</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sinh">sinh</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#size">size</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sqrt">sqrt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#square">square</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#squeeze">squeeze</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stack">stack</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-cauchy">standard-cauchy</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-deviation">standard-deviation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-exponential">standard-exponential</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-gamma">standard-gamma</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-normal">standard-normal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-t">standard-t</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stdev">stdev</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sum">sum</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#take">take</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tan">tan</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tanh">tanh</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#to-simple-array">to-simple-array</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#transpose">transpose</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tri">tri</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#triangular">triangular</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#tril">tril</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#triu">triu</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#truncate">truncate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#uniform">uniform</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unstack">unstack</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vander">vander</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#var">var</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#variance">variance</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vdot">vdot</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vonmises">vonmises</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wald">wald</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#weibull">weibull</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#where">where</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#zeros">zeros</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#zeros-like">zeros-like</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#zipf">zipf</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#more-discussion">More Discussion</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#common-lisp-types">Common Lisp Types</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#array-representation-details">Array Representation Details</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#author-license-copyright">Author, License, Copyright</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp.readthedocs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Not yet defacto &raquo;</li>
+        
+      
+    
+    <li>numcl - Lispy clone of numpy</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="numcl-lispy-clone-of-numpy">numcl - Lispy clone of numpy</h1>
+<p>Version: 0.1</p>
+<p><em>(This documentation was possible due to the excellent 
+<a href="https://numcl.github.io/numcl/">official documentation</a>.)</em></p>
+<h2 id="introduction">Introduction</h2>
+<p>This is a Numpy clone in Common Lisp. At the moment the library is
+written in pure Common Lisp, focusing more on correctness and
+usefulness, not speed. Track the progress at
+<a href="https://github.com/numcl/numcl/projects/1">https://github.com/numcl/numcl/projects/1</a> .</p>
+<h3 id="goals">Goals</h3>
+<ul>
+<li><strong>Closely follow the numpy API, but still make it lispy.</strong><ul>
+<li>Delegate the documentation effort to Numpy community.</li>
+</ul>
+</li>
+<li><strong>Replace the Common Lisp array interface.</strong><ul>
+<li>We do not deviate from the traditional symbols/idioms in Common
+    Lisp unless necessary. Therefore we provide symbols that
+    conflicts the Common Lisp symbol. Math functions become aliases
+    to the original CL functions when the inputs are not arrays.</li>
+<li>See <em>doc/DETAILS.org#packages</em> .</li>
+</ul>
+</li>
+</ul>
+<h3 id="featurescontracts">Features/Contracts</h3>
+<ul>
+<li>APIs are provided as functions, not macros.<ul>
+<li>It is a design flaw otherwise.</li>
+<li>This does not mean the API is functional — we use procedural
+    code.</li>
+</ul>
+</li>
+<li>Still, zero overhead.<ul>
+<li>The APIs are simply the wrappers over simple functions and
+    designed to be fully inlined.</li>
+<li>Optimization will be done on the compiler side, not by macros.</li>
+</ul>
+</li>
+<li>Operations are type-correct.<ul>
+<li>They always return arrays of the most specific
+    array-element-type. For example,</li>
+<li>(zeros 5) returns a bit vector.</li>
+<li>(asarray '(1 2 3)) returns an (unsigned-byte 2) vector.</li>
+<li>See <em>doc/DETAILS.org#types</em> .</li>
+</ul>
+</li>
+<li>NUMCL Arrays are CL arrays.<ul>
+<li>As this library aims to extend Common Lisp (not to replace part
+    of it) in a compatible way, we do not introduce custom
+    structures/classes for representing an array.</li>
+<li>See <em>doc/DETAILS.org#representation</em> .</li>
+</ul>
+</li>
+</ul>
+<h3 id="dependencies">Dependencies</h3>
+<p>NUMCL depends on the following libraries that must be installed manually
+and other libraries that are automatically loaded by quicklisp.</p>
+<ul>
+<li><a href="https://github.com/numcl/constantfold">https://github.com/numcl/constantfold</a></li>
+<li><a href="https://github.com/numcl/gtype">https://github.com/numcl/gtype</a></li>
+<li><a href="https://github.com/numcl/specialized-function">https://github.com/numcl/specialized-function</a> .</li>
+</ul>
+<p>With Roswell, installation can be done by</p>
+<pre><code class="example">ros install numcl/constantfold numcl/specialized-function numcl/gtype numcl/numcl
+</code></pre>
+
+<p>This library is at least tested on implementation listed below:</p>
+<ul>
+<li>SBCL 1.4.12 on X86-64 Linux 4.4.0-141-generic (author's environment)</li>
+<li>SBCL 1.5.1 on X86-64 Linux 4.4.0-141-generic (author's environment)</li>
+<li>CI tested on CCL, ECL.</li>
+</ul>
+<p>Dependency graph:</p>
+<p><img src="https://numcl.github.io/numcl/numcl.png"></p>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="array-representation">Array Representation</h3>
+<p>NUMCL arrays are merely the displaced multidimentional arrays 
+and no classes or structures are used.</p>
+<p>However, in order to guarantee speed and simplify implementation,
+arrays given to numcl functions must satisfy the following two
+conditions:</p>
+<ul>
+<li>Be a specialized array. Things of type <code>(array single-float)</code>,
+    <code>(array (unsigned-byte 16))</code> etc.</li>
+<li>Be an array displaced to a simple 1D specialized array. "<a href="http://www.lispworks.com/documentation/HyperSpec/Body/t_smp_ar.htm">Simple
+    array</a>"
+    means a non-displaced, non-adjustable array without fill pointer.</li>
+</ul>
+<p>There are a few ways to create the required arrays:</p>
+<pre><code class="lisp">(reshape (arange 4.0) '(2 2))
+(asarray #2A((0.0 1.0) (2.0 3.0)))
+(asarray '((0.0 1.0) (2.0 3.0)))
+(asarray '(#(0.0 1.0) #(2.0 3.0)))
+(let ((a (zeros '(2 2) :type 'single-float)))
+  (dotimes (i 2)
+    (dotimes (j 2)
+      (setf (aref a i j) ...))))
+</code></pre>
+
+<p>The names and the parameters of numcl functions mostly (rather strictly)
+follows the numpy counterpart. There are even numpy names, such as
+<code>dtype</code>, which are just aliases for <code>array-element-type</code>.</p>
+<p>See <a href="#api-reference">API Reference</a> for the complete list of functions.
+Optionally, see <a href="#array-representation-details">Array Representation Details</a> if required.</p>
+<h3 id="packages">Packages</h3>
+<p>NUMCL defines several symbols which have names identical to the
+corresponding CL symbols. We call them <strong>conflicting symbols</strong>. To avoid
+confusion in the code base, we use 3 packages:</p>
+<ul>
+<li><code>NUMCL.IMPL</code>: (internal package) for implementing numcl.</li>
+<li><code>NUMCL.EXPORTED</code>: (external package), for storing the numcl exported
+    symbols,</li>
+<li><code>NUMCL</code>: package, that replaces <code>COMMON-LISP</code> package by
+    shadowing-import symbols from <code>NUMCL.EXPORTED</code> on top of
+    <code>COMMON-LISP</code> package.</li>
+</ul>
+<h3 id="types">Types</h3>
+<p>In NUMCL, there is no <code>ratio</code> type:
+ - CL prohibits <code>ratio</code> to have a denominator 1 (e.g. 3/1), and thus the
+operations on ratios are not closed. 
+  - No implementations provide a specialized array for <code>rational</code>.
+  - Ratio computation requires
+an additional simplification phase (e.g. 2/4 -&gt; 1/2) which does not
+finish in a constant number of operations and is incompatible to SIMD
+operations.</p>
+<p>As a result, <code>ratios</code> are always converted to
+<code>*numcl-default-float-format*</code>, which is single-float by default. This
+means that <code>/</code> always returns a float array (except atomic numbers are
+given).</p>
+<p>We also force irrational functions to always return floats, by coercion.
+(Implementations are allowed to return rationals for certain constants,
+e.g. (sin pi).)</p>
+<p><code>(array bignum)</code> does not exist either. However, when the result of
+numerical computation causes a fixnum overflow, it signals an error
+instead of overflowing silently.</p>
+<p>For complex arrays, only <code>(complex *-float)</code> exists (for each float
+type). Both complex integers and complex ratios are converted into
+floats. This is because CL does not allow rational complex with imagpart
+0 (cf. <a href="http://clhs.lisp.se/Body/t_comple.htm">http://clhs.lisp.se/Body/t_comple.htm</a>), thus the numerical
+operation always coerces the result into reals. This prevents us from
+having (ARRAY (COMPLEX FIXNUM)).</p>
+<p>This may be contrasted with that in <a href="#common-lisp-types">Common Lisp</a> as provided.</p>
+<h3 id="examples">Examples</h3>
+<p><a href="https://github.com/numcl/numcl/blob/master/example.lisp">example.lisp</a> contains a script that you can explore
+the functionality implemented so far in NUMCL.</p>
+<h2 id="api-reference">API Reference</h2>
+<p>As stated on the section on <a href="#packages">Packages</a>, NUMCL exports all the symbols in package CL, along with the ones with <code>numcl.exported</code>. Therefore, here, we only list the symbols exported by 
+<code>numcl.exported</code>.</p>
+<h3 id="_1">*</h3>
+<pre><code class="lisp">Function: (* &amp;rest args)
+</code></pre>
+
+<h3 id="_2">**</h3>
+<h3 id="_3">***</h3>
+<h3 id="_4">+</h3>
+<pre><code class="lisp">Function: (+ &amp;rest args)
+</code></pre>
+
+<h3 id="_5">++</h3>
+<h3 id="_6">+++</h3>
+<h3 id="-">-</h3>
+<pre><code class="lisp">Function: (- first &amp;rest args)
+</code></pre>
+
+<h3 id="_7">/</h3>
+<pre><code class="lisp">Function: (/ first &amp;rest args)
+</code></pre>
+
+<h3 id="_8">//</h3>
+<h3 id="_9">///</h3>
+<h3 id="_10">/=</h3>
+<pre><code class="lisp">Function: (/= x y)
+</code></pre>
+
+<h3 id="1">1+</h3>
+<pre><code class="lisp">Function: (1+ array)
+</code></pre>
+
+<h3 id="1-">1-</h3>
+<pre><code class="lisp">Function: (1- array)
+</code></pre>
+
+<h3 id="_11">&lt;</h3>
+<pre><code class="lisp">Function: (&lt; x y)
+</code></pre>
+
+<h3 id="_12">&lt;=</h3>
+<pre><code class="lisp">Function: (&lt;= x y)
+</code></pre>
+
+<h3 id="_13">=</h3>
+<pre><code class="lisp">Function: (= x y)
+</code></pre>
+
+<h3 id="_14">&gt;</h3>
+<pre><code class="lisp">Function: (&gt; x y)
+</code></pre>
+
+<h3 id="_15">&gt;=</h3>
+<pre><code class="lisp">Function: (&gt;= x y)
+</code></pre>
+
+<h3 id="abs">abs</h3>
+<pre><code class="lisp">Function: (abs x)
+</code></pre>
+
+<h3 id="acos">acos</h3>
+<pre><code class="lisp">Function: (acos x)
+</code></pre>
+
+<h3 id="amax">amax</h3>
+<pre><code class="lisp">Function: (amax array &amp;rest args &amp;key axes type)
+</code></pre>
+
+<h3 id="amin">amin</h3>
+<pre><code class="lisp">Function: (amin array &amp;rest args &amp;key axes type)
+</code></pre>
+
+<h3 id="arange">arange</h3>
+<pre><code class="lisp">Function: (arange &amp;rest args)
+</code></pre>
+
+<p>Arange's argument signature is irregular, following the API of numpy.
+The interpretation of its arguments depends on the number of arguments.</p>
+<p>(arange stop            &amp;key type)
+ (arange start stop      &amp;key type)
+ (arange start stop step &amp;key type)</p>
+<p>Don't worry, we provide a compiler-macro to avoid the runtime dispatch.</p>
+<h3 id="aref">aref</h3>
+<pre><code class="lisp">Function: (aref array &amp;rest subscripts)
+</code></pre>
+
+<p>An extended <code>aref</code> that accepts ranges as lists, similar to numpy's array access.
+For a 3D array x,</p>
+<ul>
+<li>range</li>
+</ul>
+<pre><code>x[1:5,2,3]   = (aref x '(1 5) 2 3)
+x[2,1:5,3]   = (aref x 2 '(1 5) 3)
+x[2,1:2:5,3] = (aref x 2 '(1 2 5) 3)
+x[2,1:,3]    = (aref x 2 '(1 t) 3)
+x[2,:1,3]    = (aref x 2 '(t 1) 3)
+x[2,:,3]     = (aref x 2 '(t t) 3)
+x[2,:,3]     = (aref x 2    t   3)
+</code></pre>
+
+<ul>
+<li>insufficient axis</li>
+</ul>
+<pre><code class="commonlisp">(aref x '(1 5)) == (aref x '(1 5) t t)
+(aref x 2 '(1 5)) == (aref x 2 '(1 5) t)
+</code></pre>
+
+<ul>
+<li>newaxis</li>
+</ul>
+<pre><code class="commonlisp">(aref x '(1 2 5) nil 2 3)
+</code></pre>
+
+<ul>
+<li>ellipsis</li>
+</ul>
+<pre><code class="commonlisp">(aref x '- 2) = (aref x t t 2) = x[...,2]
+(aref x 2 '-) = (aref x 2 t t) = x[2,...]
+(aref x 2 '- 3) = (aref x 2 t 3) = x[2,...,3]
+(aref x 2 3 '-) = (aref x 2 3 t) = x[2,3,...]
+</code></pre>
+
+<h3 id="argmax">argmax</h3>
+<h3 id="argmin">argmin</h3>
+<h3 id="argwhere">argwhere</h3>
+<pre><code class="lisp">Function: (argwhere array fn)
+</code></pre>
+
+<p>Returns a list of the multidimentional indices of the elements which satisfies the predicate FN.
+Note that the list elements are the multidimentional indices, even for a single-dimensional array.</p>
+<h3 id="array-index-from-row-major-index">array-index-from-row-major-index</h3>
+<pre><code class="lisp">Function: (array-index-from-row-major-index array row-major-index)
+</code></pre>
+
+<p>Takes a multidimentional array and a row-major-index.
+ Returns a list containing the normal index.</p>
+<h3 id="asarray">asarray</h3>
+<pre><code class="lisp">Function: (asarray contents &amp;key type)
+</code></pre>
+
+<p>Copy CONTENTS to a new array. NOTE: ASARRAY is <em>SLOW</em> as it recurses into the substructures.
+When CONTENTS is a multidimentional array, its elements are copied to a new array that guarantees the NUMCL assumption.
+When CONTENTS is a nested sequence, it is traversed up to the depth that guarantees the sane shape for an array.
+When elements are copied, it is coerced to TYPE.
+When TYPE is not given, it is replaced with the float-contagion type deduced from the elements of CONTENTS.
+It may return a 0-dimensional array with CONTENTS being the only element.</p>
+<p>For example:</p>
+<pre><code class="lisp">;; a vector of two lists.
+(asarray '((1) (1 2)))               -&gt; #((1) (1 2))
+;; a 2D array of 4 lists.
+(asarray '(((1) (1 2)) ((3) (3 4)))) -&gt; #2A(((1) (1 2)) ((3) (3 4)))
+
+(asarray '((1 2) (3 4)))    -&gt; #2A((1 2) (3 4))
+(asarray #(#(1 2) #(3 4)))  -&gt; #2A((1 2) (3 4))
+(asarray #((1 2) (3 4)))    -&gt; #2A((1 2) (3 4))
+</code></pre>
+
+<p>However, this behavior may not be ideal because the resulting shape could be affected by the lengths of the strings.</p>
+<pre><code class="lisp">(asarray #(#(1 2) #(3 4)))   -&gt; #2A((1 2) (3 4))
+(asarray #(#(1 2) #(3 4 5))) -&gt; #(#(1 2) #(3 4 5))
+
+(asarray #(&quot;aa&quot; &quot;aa&quot;))   -&gt; #2A((#a #a) (#a #a))
+(asarray #(&quot;aa&quot; &quot;aaa&quot;))  -&gt; #(&quot;aa&quot; &quot;aaa&quot;)
+</code></pre>
+
+<p>As a remedy to this problem, we allow TYPE to be a specifier for vector subtypes. Providing such a type specifier
+will keep the leaf objects (e.g. strings) from split into individual elements.
+We don't allow it to be a multidimentional array [at the moment.]</p>
+<pre><code class="lisp">(asarray #(#(1 2) #(3 4))   :type '(array fixnum (*))) -&gt; #(#(1 2) #(3 4))
+(asarray #(#(1 2) #(3 4 5)) :type '(array fixnum (*))) -&gt; #(#(1 2) #(3 4 5))
+
+(asarray #(&quot;aa&quot; &quot;aa&quot;)  :type 'string)    -&gt; #(&quot;aa&quot; &quot;aa&quot;)
+(asarray #(&quot;aa&quot; &quot;aaa&quot;) :type 'string)    -&gt; #(&quot;aa&quot; &quot;aaa&quot;)
+
+(asarray '((1 2) (3 4))   :type '(array fixnum (* *)))  -&gt; error
+</code></pre>
+
+<h3 id="asin">asin</h3>
+<pre><code class="lisp">Function: (asin x)
+</code></pre>
+
+<h3 id="astype">astype</h3>
+<pre><code class="lisp">Function: (astype array type)
+</code></pre>
+
+<h3 id="atan">atan</h3>
+<pre><code class="lisp">Function: (atan x)
+</code></pre>
+
+<h3 id="avg">avg</h3>
+<pre><code class="lisp">Function: (avg array &amp;key axes)
+</code></pre>
+
+<h3 id="bernoulli">bernoulli</h3>
+<pre><code class="lisp">Function: (bernoulli p &amp;optional shape)
+</code></pre>
+
+<p>Returns a bit array whose elements are 1 with probability P</p>
+<h3 id="bernoulli-like">bernoulli-like</h3>
+<pre><code class="lisp">Function: (bernoulli-like a)
+</code></pre>
+
+<h3 id="beta">beta</h3>
+<pre><code class="lisp">Function: (beta a b &amp;optional shape (type
+                                     (union-to-float-type (type-of a)
+                                                          (type-of b))))
+</code></pre>
+
+<h3 id="binomial">binomial</h3>
+<pre><code class="lisp">Function: (binomial n p &amp;optional shape)
+</code></pre>
+
+<h3 id="broadcast">broadcast</h3>
+<pre><code class="lisp">Function: (broadcast function x y &amp;key type (atomic function))
+</code></pre>
+
+<p>For binary functions</p>
+<h3 id="ceiling">ceiling</h3>
+<pre><code class="lisp">Function: (ceiling number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="chisquare">chisquare</h3>
+<h3 id="cis">cis</h3>
+<pre><code class="lisp">Function: (cis x)
+</code></pre>
+
+<h3 id="clip">clip</h3>
+<pre><code class="lisp">Function: (clip array min max)
+</code></pre>
+
+<h3 id="concatenate">concatenate</h3>
+<pre><code class="lisp">Function: (concatenate arrays &amp;key (axis 0) out)
+</code></pre>
+
+<h3 id="conjugate">conjugate</h3>
+<pre><code class="lisp">Function: (conjugate x)
+</code></pre>
+
+<h3 id="copy">copy</h3>
+<pre><code class="lisp">Function: (copy array)
+</code></pre>
+
+<h3 id="cos">cos</h3>
+<pre><code class="lisp">Function: (cos x)
+</code></pre>
+
+<h3 id="cosh">cosh</h3>
+<pre><code class="lisp">Function: (cosh x)
+</code></pre>
+
+<h3 id="denominator">denominator</h3>
+<pre><code class="lisp">Function: (denominator x)
+</code></pre>
+
+<h3 id="diag">diag</h3>
+<pre><code class="lisp">Function: (diag a &amp;optional result)
+</code></pre>
+
+<p>Return the diagonal element of a matrix as a vector</p>
+<h3 id="dirichlet">dirichlet</h3>
+<h3 id="dot">dot</h3>
+<h3 id="dtype">dtype</h3>
+<pre><code class="lisp">Function: (dtype array)
+</code></pre>
+
+<h3 id="einsum">einsum</h3>
+<pre><code class="lisp">Function: (einsum subscripts &amp;rest args)
+</code></pre>
+
+<p>Performs Einstein's summation.
+The SUBSCRIPT specification is significantly extended from that of Numpy
+and can be seens as a full-brown DSL for array operations.</p>
+<p>SUBSCRIPTS is a sequence of the form <code>(&lt;SPEC&gt;+ [-&gt; &lt;TRANSFORM&gt;*] [-&gt; [&lt;SPEC&gt;*])</code>.
+The remaining arguments ARGS contain the input arrays and optionally the output arrays.</p>
+<h4 id="spec">SPEC</h4>
+<p>The first set of SPECs specifies the input subscripts,
+and the second set of SPECs specifies the output subscripts.
+Unlike Numpy, there can be multiple output subscripts:
+It can performs multiple operations in the same loop, then return multiple values.
+The symbol <code>-&gt;</code> can be a string and can belong to any package because it is compared by STRING=.</p>
+<p>Each SPEC is an alphabetical string designator, such as a symbol IJK or a string "IJK",
+where each alphabet is considered as an index. It signals a type-error when it contains any
+non-alpha char. 
+Note that a symbol NIL is interpreted as an empty list rather than N, I and L.</p>
+<p>Alternatively, each SPEC can be a list that contains a list of symbols.
+For example, <code>((i j) (j k) -&gt; (i k))</code> and <code>(ij jk -&gt; ik)</code> are equivalent.</p>
+<p>When -&gt; and the output SPECs are omitted, a single output is assumed and its spec is
+a union of the input specs.
+For example, <code>(ij jk)</code> is equivalent to <code>(ij jk -&gt; ijk)</code>.
+Note that <code>(ij jk)</code> and <code>(ij jk -&gt;)</code> have the different meanings:
+The latter sums up all elements.</p>
+<h4 id="transform">TRANSFORM</h4>
+<p>TRANSFORM is a list of element-wise operations.
+The number of TRANSFORM should correspond to the number of outputs.
+In each TRANSFORM, the elements in the input arrays can be referenced by $N, where N is a 1-indexed number.
+Similarly the output array can be referred to by @N.</p>
+<p>For example, <code>(ij ik -&gt; (+ @1 (* $1 $2)) -&gt; ik)</code> is equivalent to <code>(ij ik -&gt; ik)</code> (a GEMM).</p>
+<p>By default, TRANSFORM is <code>(+ @1 (* $1 ... $N))</code> for N inputs, which is equivalent to Einstein's summation.</p>
+<h4 id="args">ARGS</h4>
+<p>The shape of each input array should unify against the corresponding input spec. For example,
+with a spec IJI, the input array should be of rank 3 as well as
+the 1st and the 3rd dimension of the input array should be the same.</p>
+<p>The shape of each output array is determined by the corresponding output spec.
+For example, if SUBSCRIPTS is <code>(ij jk -&gt; ik)</code>, the output is an array of rank 2,
+and the output shape has the same dimension as the first input in the first axis,
+and the same dimension as the second input in the second axis.</p>
+<p>If the output arrays are provided, their shapes and types are also checked against the
+corresponding output spec.  The types should match the result of the numerical
+operations on the elements of the input arrays.</p>
+<p>The outputs are calculated in the following rule.</p>
+<ul>
+<li>The output array types are calculated based on the TRANSFORM, and 
+  the shapes are calcurated based on the SPEC and the input arrays.</li>
+<li>The output arrays are allocated and initialized by zeros.</li>
+<li>Einsum nests one loop for each index in the input specs.
+  For example, <code>(ij jk -&gt; ik)</code> results in a triple loop.</li>
+<li>In the innermost loop, each array element is bound to <code>$1..$N</code> / <code>@1..@N</code>.</li>
+<li>
+<p>For each <code>@i</code>, <code>i</code>-th TRANSFORM is evaluated and assigned to <code>@i</code>.</p>
+</li>
+<li>
+<p>If the same index appears multiple times in a single spec,
+  they share the same value in each iteration.
+  For example, <code>(ii -&gt; i)</code> returns the diagonal elements of the matrix.</p>
+</li>
+</ul>
+<p>When TRANSFORMs are missing, it follows naturally from the default TRANSFORM values that</p>
+<ul>
+<li>When an index used in the input spec is missing in the output spec,
+  the axis is aggregated over the iteration by summation.</li>
+<li>If the same index appears across the different input specs,
+  the element values from the multiple input arrays are aggregated by multiplication.
+  For example, <code>(ij jk -&gt; ik)</code> will perform
+  <code>(setf (aref a2 i k) (* (aref a0 i j) (aref a1 j k)))</code>
+  when a0, a1 are the input arrays and a2 is the output array.</li>
+</ul>
+<p>For example, (einsum '(ij jk) a b) is equivalent to:</p>
+<pre><code class="commonlisp"> (dotimes (i &lt;max&gt; &lt;output&gt;)
+   (dotimes (j &lt;max&gt;)
+     (dotimes (k &lt;max&gt;)
+       (setf (aref &lt;output&gt; i j k) (* (aref a i j) (aref b j k))))))
+</code></pre>
+
+<h4 id="performance">Performance</h4>
+<p>If SUBSCRIPTS is a constant, the compiler macro
+builds an iterator function and make them inlined. Otherwise,
+a new function is made in each call to einsum, resulting in a large bottleneck.
+ (It could be memoized in the future.)</p>
+<p>The nesting order of the loops are automatically decided based on the specs.
+The order affects the memory access pattern and therefore the performance due to
+the access locality. For example, when writing a GEMM which accesses three matrices
+by <code>(setf (aref output i j) (* (aref a i k) (aref b k j)))</code>,
+it is well known that ikj-loop is the fastest among other loops, e.g. ijk-loop.
+EINSUM reorders the indices so that it maximizes the cache locality.</p>
+<h3 id="empty">empty</h3>
+<pre><code class="lisp">Function: (empty shape &amp;key (type 'bit))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="empty-like">empty-like</h3>
+<pre><code class="lisp">Function: (empty-like array &amp;key (type (array-element-type array)))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="exp">exp</h3>
+<pre><code class="lisp">Function: (exp x)
+</code></pre>
+
+<h3 id="expand-dims">expand-dims</h3>
+<pre><code class="lisp">Function: (expand-dims a axes)
+</code></pre>
+
+<p>axes: an int or a list of ints</p>
+<h3 id="exponential">exponential</h3>
+<pre><code class="lisp">Function: (exponential scale &amp;optional shape (type
+                                              (union-to-float-type
+                                               (type-of scale))))
+</code></pre>
+
+<h3 id="eye">eye</h3>
+<pre><code class="lisp">Function: (eye n &amp;key (m n) (k 0) (type 'bit))
+</code></pre>
+
+<p>Returns a matrix whose k-th diagnonal filled with 1.
+ N,M specifies the shape of the return array. K will adjust the sub-diagonal -- positive K moves it upward.</p>
+<h3 id="f">f</h3>
+<pre><code class="lisp">Function: (f dfnum dfden &amp;optional shape (type
+                                          (union-to-float-type (type-of dfnum)
+                                                               (type-of dfden))))
+</code></pre>
+
+<h3 id="fceiling">fceiling</h3>
+<pre><code class="lisp">Function: (fceiling number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="ffloor">ffloor</h3>
+<pre><code class="lisp">Function: (ffloor number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="flatten">flatten</h3>
+<pre><code class="lisp">Function: (flatten a)
+</code></pre>
+
+<h3 id="floor">floor</h3>
+<pre><code class="lisp">Function: (floor number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="fround">fround</h3>
+<pre><code class="lisp">Function: (fround number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="ftruncate">ftruncate</h3>
+<pre><code class="lisp">Function: (ftruncate number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="full">full</h3>
+<pre><code class="lisp">Function: (full shape value &amp;key (type (type-of value)))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="full-like">full-like</h3>
+<pre><code class="lisp">Function: (full-like array value &amp;key (type (array-element-type array)))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="gamma">gamma</h3>
+<pre><code class="lisp">Function: (gamma k &amp;optional (theta 1.0) shape (type
+                                                (union-to-float-type
+                                                 (type-of k) (type-of theta))))
+</code></pre>
+
+<h3 id="geometric">geometric</h3>
+<h3 id="gumbel">gumbel</h3>
+<h3 id="histogram">histogram</h3>
+<pre><code class="lisp">Function: (histogram array &amp;key (low (amin array)) (high (amax array)) (split 1))
+</code></pre>
+
+<p>Returns a fixnum vector representing a histogram of values.
+The interval between LOW and HIGH are split by STEP value.
+All values less than LOW are put in the 0-th bucket;
+All values greater than equal to HIGH are put in the last bucket.</p>
+<h3 id="hypergeometric">hypergeometric</h3>
+<h3 id="imagpart">imagpart</h3>
+<pre><code class="lisp">Function: (imagpart x)
+</code></pre>
+
+<h3 id="inner">inner</h3>
+<pre><code class="lisp">Function: (inner a b &amp;optional result)
+</code></pre>
+
+<p>Inner product of two vectors.</p>
+<h3 id="integer-length">integer-length</h3>
+<pre><code class="lisp">Function: (integer-length x)
+</code></pre>
+
+<h3 id="invalid-array-index-error">invalid-array-index-error</h3>
+<pre><code class="lisp">NIL
+</code></pre>
+
+<p>NUMCL.EXPORTED:SHAPE
+Initargs: :shape
+Readers: numcl.exported:invalid-array-index-error-shape
+Writers: (setf numcl.exported:invalid-array-index-error-shape)</p>
+<h4 id="axis">axis</h4>
+<pre><code class="lisp">Initargs: :axis
+Readers: numcl.exported:invalid-array-index-error-axis
+Writers: (setf numcl.exported:invalid-array-index-error-axis)
+
+#### subscripts
+
+```lisp
+Initargs: :subscripts
+Readers: numcl.exported:invalid-array-index-error-subscripts
+Writers: (setf numcl.exported:invalid-array-index-error-subscripts)### kron
+
+```lisp
+Function: (kron a b &amp;optional result)
+</code></pre>
+
+<p>Compute the kronecker product of two vectors.</p>
+<h3 id="laplace">laplace</h3>
+<h3 id="length">length</h3>
+<pre><code class="lisp">Function: (length array)
+</code></pre>
+
+<h3 id="linspace">linspace</h3>
+<pre><code class="lisp">Function: (linspace start stop length &amp;key type endpoint)
+</code></pre>
+
+<h3 id="log">log</h3>
+<pre><code class="lisp">Function: (log x)
+</code></pre>
+
+<h3 id="logand">logand</h3>
+<pre><code class="lisp">Function: (logand &amp;rest args)
+</code></pre>
+
+<h3 id="logandc1">logandc1</h3>
+<pre><code class="lisp">Function: (logandc1 &amp;rest args)
+</code></pre>
+
+<h3 id="logandc2">logandc2</h3>
+<pre><code class="lisp">Function: (logandc2 &amp;rest args)
+</code></pre>
+
+<h3 id="logcount">logcount</h3>
+<pre><code class="lisp">Function: (logcount x)
+</code></pre>
+
+<h3 id="logeqv">logeqv</h3>
+<pre><code class="lisp">Function: (logeqv &amp;rest args)
+</code></pre>
+
+<h3 id="logior">logior</h3>
+<pre><code class="lisp">Function: (logior &amp;rest args)
+</code></pre>
+
+<h3 id="logistic">logistic</h3>
+<h3 id="lognand">lognand</h3>
+<pre><code class="lisp">Function: (lognand &amp;rest args)
+</code></pre>
+
+<h3 id="lognor">lognor</h3>
+<pre><code class="lisp">Function: (lognor &amp;rest args)
+</code></pre>
+
+<h3 id="lognormal">lognormal</h3>
+<h3 id="lognot">lognot</h3>
+<pre><code class="lisp">Function: (lognot x)
+</code></pre>
+
+<h3 id="logorc1">logorc1</h3>
+<pre><code class="lisp">Function: (logorc1 &amp;rest args)
+</code></pre>
+
+<h3 id="logorc2">logorc2</h3>
+<pre><code class="lisp">Function: (logorc2 &amp;rest args)
+</code></pre>
+
+<h3 id="logseries">logseries</h3>
+<h3 id="logxor">logxor</h3>
+<pre><code class="lisp">Function: (logxor &amp;rest args)
+</code></pre>
+
+<h3 id="map">map</h3>
+<pre><code class="lisp">Function: (map result-type function &amp;rest sequences)
+</code></pre>
+
+<h3 id="map-array">map-array</h3>
+<pre><code class="lisp">Function: (map-array function &amp;rest sequences)
+</code></pre>
+
+<h3 id="map-array-into">map-array-into</h3>
+<pre><code class="lisp">Function: (map-array-into result-sequence function &amp;rest sequences)
+</code></pre>
+
+<h3 id="map-into">map-into</h3>
+<pre><code class="lisp">Function: (map-into result-sequence function &amp;rest sequences)
+</code></pre>
+
+<h3 id="matmul">matmul</h3>
+<pre><code class="lisp">Function: (matmul a b &amp;optional result)
+</code></pre>
+
+<p>Matrix product of two arrays.</p>
+<h3 id="max">max</h3>
+<pre><code class="lisp">Function: (max &amp;rest args)
+</code></pre>
+
+<h3 id="mean">mean</h3>
+<pre><code class="lisp">Function: (mean array &amp;key axes)
+</code></pre>
+
+<h3 id="min">min</h3>
+<pre><code class="lisp">Function: (min &amp;rest args)
+</code></pre>
+
+<h3 id="mod">mod</h3>
+<pre><code class="lisp">Function: (mod number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="multinomial">multinomial</h3>
+<pre><code class="lisp">Function: (multinomial n pvals &amp;optional shape)
+</code></pre>
+
+<p>pvals is a sequence of probabilities summing up to 1.</p>
+<h3 id="multivariate-normal">multivariate-normal</h3>
+<h3 id="negative-binomial">negative-binomial</h3>
+<pre><code class="lisp">Function: (negative-binomial n p &amp;optional shape)
+</code></pre>
+
+<h3 id="noncentral-chisquare">noncentral-chisquare</h3>
+<h3 id="noncentral-f">noncentral-f</h3>
+<h3 id="nonzero">nonzero</h3>
+<pre><code class="lisp">Function: (nonzero array)
+</code></pre>
+
+<p>collect multidimentional indices where the element is nonzero</p>
+<h3 id="normal">normal</h3>
+<pre><code class="lisp">Function: (normal &amp;optional (mean 0.0) (var 1.0) shape (type
+                                                        (union-to-float-type
+                                                         (type-of mean)
+                                                         (type-of var))))
+</code></pre>
+
+<h3 id="numcl-array">numcl-array</h3>
+<h3 id="numcl-array-p">numcl-array-p</h3>
+<pre><code class="lisp">Function: (numcl-array-p array)
+</code></pre>
+
+<p>Returns true when ARRAY satisfies the NUMCL assumption, that is,
+an array displaced to a non-displaced 1D array.</p>
+<h3 id="numerator">numerator</h3>
+<pre><code class="lisp">Function: (numerator x)
+</code></pre>
+
+<h3 id="onehot">onehot</h3>
+<h3 id="ones">ones</h3>
+<pre><code class="lisp">Function: (ones shape &amp;key (type 'bit))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="ones-like">ones-like</h3>
+<pre><code class="lisp">Function: (ones-like array &amp;key (type (array-element-type array)))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="outer">outer</h3>
+<pre><code class="lisp">Function: (outer a b &amp;optional result)
+</code></pre>
+
+<p>Compute the outer product of two vectors.</p>
+<h3 id="pareto">pareto</h3>
+<h3 id="phase">phase</h3>
+<pre><code class="lisp">Function: (phase x)
+</code></pre>
+
+<h3 id="poisson">poisson</h3>
+<pre><code class="lisp">Function: (poisson &amp;optional (lambda 1.0) shape (type
+                                                 (union-to-float-type
+                                                  (type-of lambda))))
+</code></pre>
+
+<h3 id="power">power</h3>
+<h3 id="prod">prod</h3>
+<pre><code class="lisp">Function: (prod array &amp;rest args &amp;key axes type)
+</code></pre>
+
+<h3 id="rank">rank</h3>
+<pre><code class="lisp">Function: (rank array)
+</code></pre>
+
+<h3 id="rayleigh">rayleigh</h3>
+<h3 id="realpart">realpart</h3>
+<pre><code class="lisp">Function: (realpart x)
+</code></pre>
+
+<h3 id="reduce-array">reduce-array</h3>
+<pre><code class="lisp">Function: (reduce-array fn array &amp;key axes (type
+                                            (%reduce-array-result-type array
+                                                                       fn)) (initial-element
+                                                                             (zero-value
+                                                                              type)))
+</code></pre>
+
+<h3 id="rem">rem</h3>
+<pre><code class="lisp">Function: (rem number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="reshape">reshape</h3>
+<pre><code class="lisp">Function: (reshape a shape)
+</code></pre>
+
+<p>Reshape the array while sharing the backing 1D array.
+-1 implies that the axis size is deduced from the other axes. At most one axis is allowed to be -1.
+T  implies that the axis size is preserved. It can be used as many times, but only at the right/leftmost axes.</p>
+<p>Example of reshaping (3 8 5):</p>
+<p>valid:</p>
+<pre><code>(6 -1 10)     = (6 2 10)
+(t 2 2 2 t)   = (3 2 2 2 5)
+(3 t t)       = (3 8 5)
+(2 -1 2 2 t)  = (2 3 2 2 5)
+</code></pre>
+<p>invalid:</p>
+<pre><code>(2 t 2 2 t)
+</code></pre>
+<h3 id="round">round</h3>
+<pre><code class="lisp">Function: (round number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="shape">shape</h3>
+<pre><code class="lisp">Function: (shape array)
+</code></pre>
+
+<h3 id="shuffle">shuffle</h3>
+<pre><code class="lisp">Function: (shuffle array-or-sequence &amp;key (start 0) end)
+</code></pre>
+
+<p>This code extends alexandria:shuffle.
+It additionally accepts arrays and shuffles the elements according to the first axis,
+viewing the remaining axes as one "element".</p>
+<p>Original documentation:</p>
+<p>Returns a random permutation of SEQUENCE bounded by START and END.
+Original sequence may be destructively modified, and (if it contains
+CONS or lists themselv) share storage with the original one.
+Signals an error if SEQUENCE is not a proper sequence.</p>
+<h3 id="signum">signum</h3>
+<pre><code class="lisp">Function: (signum x)
+</code></pre>
+
+<h3 id="sin">sin</h3>
+<pre><code class="lisp">Function: (sin x)
+</code></pre>
+
+<h3 id="sinh">sinh</h3>
+<pre><code class="lisp">Function: (sinh x)
+</code></pre>
+
+<h3 id="size">size</h3>
+<pre><code class="lisp">Function: (size array)
+</code></pre>
+
+<h3 id="sqrt">sqrt</h3>
+<pre><code class="lisp">Function: (sqrt x)
+</code></pre>
+
+<h3 id="square">square</h3>
+<pre><code class="lisp">Function: (square x)
+</code></pre>
+
+<h3 id="squeeze">squeeze</h3>
+<pre><code class="lisp">Function: (squeeze a)
+</code></pre>
+
+<h3 id="stack">stack</h3>
+<pre><code class="lisp">Function: (stack arrays &amp;key (axis 0) out)
+</code></pre>
+
+<h3 id="standard-cauchy">standard-cauchy</h3>
+<h3 id="standard-deviation">standard-deviation</h3>
+<pre><code class="lisp">Function: (standard-deviation array &amp;key axes)
+</code></pre>
+
+<h3 id="standard-exponential">standard-exponential</h3>
+<h3 id="standard-gamma">standard-gamma</h3>
+<h3 id="standard-normal">standard-normal</h3>
+<h3 id="standard-t">standard-t</h3>
+<h3 id="stdev">stdev</h3>
+<pre><code class="lisp">Function: (stdev array &amp;key axes)
+</code></pre>
+
+<h3 id="sum">sum</h3>
+<pre><code class="lisp">Function: (sum array &amp;rest args &amp;key axes type)
+</code></pre>
+
+<h3 id="take">take</h3>
+<pre><code class="lisp">Function: (take array indices)
+</code></pre>
+
+<p>Collect the elements using a list of multidimentional indices (in a format returned by WHERE).</p>
+<h3 id="tan">tan</h3>
+<pre><code class="lisp">Function: (tan x)
+</code></pre>
+
+<h3 id="tanh">tanh</h3>
+<pre><code class="lisp">Function: (tanh x)
+</code></pre>
+
+<h3 id="to-simple-array">to-simple-array</h3>
+<pre><code class="lisp">Function: (to-simple-array array)
+</code></pre>
+
+<p>Returns a simple array of the equivalent contents.</p>
+<h3 id="transpose">transpose</h3>
+<pre><code class="lisp">Function: (transpose matrix &amp;optional result)
+</code></pre>
+
+<p>Reverses the axes of an array.</p>
+<h3 id="tri">tri</h3>
+<pre><code class="lisp">Function: (tri n &amp;key (m n) (k 0) (type 'bit))
+</code></pre>
+
+<p>Returns a triangle matrix whose lower diagnonal (including the diagonal) filled with 1.
+ N,M specifies the shape of the return array. K will adjust the sub-diagonal -- positive K fills more 1s.</p>
+<h3 id="triangular">triangular</h3>
+<h3 id="tril">tril</h3>
+<pre><code class="lisp">Function: (tril matrix &amp;optional (k 0))
+</code></pre>
+
+<p>Returns the copy of matrix with elements above the k-th diagonal zeroed. Positive K fills less 0s.</p>
+<h3 id="triu">triu</h3>
+<pre><code class="lisp">Function: (triu matrix &amp;optional (k 0))
+</code></pre>
+
+<p>Returns the copy of matrix with elements below the k-th diagonal zeroed. Positive K fills more 0s.</p>
+<h3 id="truncate">truncate</h3>
+<pre><code class="lisp">Function: (truncate number &amp;optional (divisor 1))
+</code></pre>
+
+<h3 id="uniform">uniform</h3>
+<pre><code class="lisp">Function: (uniform &amp;optional (low 0.0) (high 1.0) shape type)
+</code></pre>
+
+<h3 id="unstack">unstack</h3>
+<pre><code class="lisp">Function: (unstack array &amp;key (axis 0))
+</code></pre>
+
+<h3 id="vander">vander</h3>
+<pre><code class="lisp">Function: (vander v &amp;key (n (length v)) increasing)
+</code></pre>
+
+<p>Returns a matrix where M[i,j] == V[i]^(N-j) when increasing is false (default), and 
+ M[i,j] == V[i]^j when increasing is true.</p>
+<h3 id="var">var</h3>
+<pre><code class="lisp">Function: (var array &amp;key axes)
+</code></pre>
+
+<h3 id="variance">variance</h3>
+<pre><code class="lisp">Function: (variance array &amp;key axes)
+</code></pre>
+
+<h3 id="vdot">vdot</h3>
+<pre><code class="lisp">Function: (vdot a b &amp;optional result)
+</code></pre>
+
+<p>Dot product of two vectors. For complex values, the first value is conjugated.</p>
+<h3 id="vonmises">vonmises</h3>
+<h3 id="wald">wald</h3>
+<h3 id="weibull">weibull</h3>
+<h3 id="where">where</h3>
+<pre><code class="lisp">Function: (where array fn)
+</code></pre>
+
+<p>Returns a list of list of indices of the elements which satisfies the predicate FN.
+The first list contains the indices for the 1st dimension,
+the second list contains the indices for the 2nd dimension, and so on.</p>
+<h3 id="zeros">zeros</h3>
+<pre><code class="lisp">Function: (zeros shape &amp;key (type 'bit))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="zeros-like">zeros-like</h3>
+<pre><code class="lisp">Function: (zeros-like array &amp;key (type (array-element-type array)))
+</code></pre>
+
+<p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
+<ul>
+<li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
+  junk value may appear.</li>
+<li><code>full</code>  : fill the array with a certain value.</li>
+<li><code>zeros</code>, <code>ones</code> : fill the array with zeros / ones. <code>type</code> affects the actual
+  value being filled.</li>
+<li><code>X-like</code> : similar to above functions, but takes another array and returns the
+  array of the same shape.</li>
+</ul>
+<h3 id="zipf">zipf</h3>
+<h2 id="more-discussion">More Discussion</h2>
+<h3 id="common-lisp-types">Common Lisp Types</h3>
+<p>Common Lisp has the following types for numbers.</p>
+<pre><code class="lisp">number = (or complex real)
+real   = (or float rational)
+rational = (or ratio integer)
+integer  = (or fixnum bignum)
+float    = (or short-float ... long-float) (== irrational).
+</code></pre>
+
+<p>Common Lisp defines several rules for the type of the values returned by
+the numerical operations. The detail of the rules are explained in <a href="http://clhs.lisp.se/Body/12_a.htm">CLHS
+12.1 Number Concepts</a>.</p>
+<p><em>Rational functions</em> behave as <code>rational* -&gt; rational</code>,
+<code>float* -&gt; float</code>, <code>{rational,float}* -&gt; float</code>. This rule is called
+<strong>float contagion</strong> rule.</p>
+<p>Rational functions do not guarantee <code>integer -&gt; integer</code>, primarily due
+to <code>/</code> , which returns <code>integer* -&gt; (or ratio integer)</code>.</p>
+<p>Irrational functions behaves as <code>rational -&gt; (or rational float)</code>,
+<code>float -&gt; float</code>: For a certain irrational functions, implementations
+are allowed to return the exact rational number or its float
+approximation. Examples are <code>(sin pi) -&gt; 1/2</code>. The behavior depends on
+the implementation and is called <strong>float substitution rule</strong>.</p>
+<h3 id="array-representation-details">Array Representation Details</h3>
+<p>NUMCL arrays are not based on custom classes or structures. They are
+merely the displaced multidimentional arrays.</p>
+<p>In order to guarantee the speed and to simplify the implementation, the
+arrays given to numcl functions must satisfy the following two
+conditions:</p>
+<ul>
+<li>It is a specialized array. Things of type <code>(array single-float)</code>,
+    <code>(array (unsigned-byte 16))</code> etc.</li>
+<li>It is an array displaced to a simple 1D specialized array. "<a href="http://www.lispworks.com/documentation/HyperSpec/Body/t_smp_ar.htm">Simple
+    array</a>"
+    means a non-displaced, non-adjustable array without fill pointer.</li>
+</ul>
+<p>The base function for creating a new array is <code>%make-array</code>, but this is
+not exported in NUMCL. You should use the wrapper functions like <code>ones</code>,
+<code>zeros</code>, <code>ones-like</code>, <code>arange</code>, <code>linspace</code>, <code>asarray</code> etc. They are
+always inline-expanded to <code>%make-array</code>, therefore there is no worry
+about the performance. These functions analyze the input and return the
+most specialized array for the input, but you can also specify the
+element type.</p>
+<p><code>%make-array</code> instantiates a new flattened array and returns another
+array displaced to it with the specified shape. The flattened array is
+returned as the secondary value (as does most other numcl functions).</p>
+<p>The justification for this scheme is that some implementations (esp.
+SBCL) require an indirection for accessing the array element (e.g.
+through array-header in SBCL) even for a simple multi-dimentional array
+and thus using a displacing array has essentially no performance penalty
+over using a simple multi-dimentional array.</p>
+<p>We also ensure that the length of the base arrays are the multiples of
+8. This ensures that the program can safely iterate over the extended
+region with a future support for SIMD operations in mind.</p>
+<h2 id="author-license-copyright">Author, License, Copyright</h2>
+<p>Masataro Asai (guicho2.71828@gmail.com)
+Licensed under LGPL v3.
+Copyright (c) 2019 IBM Corporation</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../iterate/" class="btn btn-neutral" title="iterate"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../iterate/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

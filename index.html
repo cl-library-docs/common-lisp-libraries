@@ -129,8 +129,15 @@
 
 <p>See <a href="https://www.quicklisp.org/">quicklisp.org</a> for instructions on
 installing quicklisp.</p>
-<p>Optionally, you may want to use <code>sb-ext:add-package-local-nickname</code> the packages for, well, <a href="https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here">adding package local nicknames</a>.</p>
-<pre><code class="lisp">(sb-ext:add-package-local-nickname :a :alexandria) ; for SBCL
+<p>Optionally, you may want to use <code>add-package-local-nickname</code> the packages for, well, <a href="https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here">adding package local nicknames</a>.</p>
+<pre><code class="lisp">(ql:quickload :trivial-package-local-nicknames)
+(trivial-package-local-nicknames:add-package-local-nickname :a :alexandria)
+; OR
+(defpackage my-package 
+  (:use #:cl)
+  (:local-nicknames (#:a #:alexandria)))
+;;; I'm yet to read up on the naming conventions and the reasons behind those conventions
+;;; in the context of systems and packages; some conventions do exist.
 </code></pre>
 
 <h3 id="libraries-documented-so-far">Libraries documented so far</h3>
@@ -165,7 +172,7 @@ installing quicklisp.</p>
 <p>I liked (the theme of) <a href="https://phoe.tymoon.eu/clus/doku.php">UltraSpec</a>. I also liked <a href="https://www.mkdocs.org/">mkdocs</a> - I am using mkdocs with the pre-provided <a href="https://readthedocs.org/">readthedocs</a> theme. What UltraSpec seems to be good for is larger websites than what is currently here, in that it isn't as straightforward as mkdocs for library-documenters to use it. </p>
 <p>Additionally, <code>markdown</code> files and <code>dokuwiki</code> files (the format UltraSpec requires) are interconvertible (but the compatibility is untested) using <a href="https://pandoc.org/">pandoc</a>. (pandoc is indeed useful for a ton of other file formats!)</p>
 <h2 id="mkdocs">mkdocs</h2>
-<p>As a marketing for mkdocs: <code>mkdocs</code> is simple as</p>
+<p>As a marketing for mkdocs: <a href="https://www.mkdocs.org/#getting-started">mkdocs</a> is as simple as</p>
 <ul>
 <li><code>pip install mkdocs # or conda</code></li>
 <li>create a .yml configuration file (or copy and edit!)</li>
@@ -227,5 +234,5 @@ installing quicklisp.</p>
 
 <!--
 MkDocs version : 1.1
-Build Date UTC : 2020-03-12 05:25:06
+Build Date UTC : 2020-03-15 18:07:00
 -->

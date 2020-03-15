@@ -13,7 +13,7 @@ For a tutorial on looping in Common Lisp, check out [Loops, Iterate and Mapping 
 - [dsetq](#dsetq): for use outside the `iter` form
 - [finally-protected](#finally-protected): for protecting against unwindings
 - [finding-maximizing](#finding): `loop` equivalent can be quite verbose
-- [for - Sequence Iteration](https://common-lisp.net/project/iterate/doc/Sequence-Iteration.html): particularly, in-package, in-packages, in-file, in-stream, in-hashtable.
+- [for](#for): lots of variants!
 - [generate](#generate)
 - [in](#in): `loop` equivalent can be quite verbose
 - there's no support for "true" parallel assignment - see [with](#with)

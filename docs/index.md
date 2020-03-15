@@ -16,10 +16,17 @@ Each of the below libraries can be installed using quicklisp:
 See [quicklisp.org](https://www.quicklisp.org/) for instructions on
 installing quicklisp.
 
-Optionally, you may want to use `sb-ext:add-package-local-nickname` the packages for, well, [adding package local nicknames](https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here).
+Optionally, you may want to use `add-package-local-nickname` the packages for, well, [adding package local nicknames](https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here).
 
 ```lisp
-(sb-ext:add-package-local-nickname :a :alexandria) ; for SBCL
+(ql:quickload :trivial-package-local-nicknames)
+(trivial-package-local-nicknames:add-package-local-nickname :a :alexandria)
+; OR
+(defpackage my-package 
+  (:use #:cl)
+  (:local-nicknames (#:a #:alexandria)))
+;;; I'm yet to read up on the naming conventions and the reasons behind those conventions
+;;; in the context of systems and packages; some conventions do exist.
 ```
 
 ### Libraries documented so far
@@ -55,7 +62,7 @@ Additionally, `markdown` files and `dokuwiki` files (the format UltraSpec requir
 
 ## mkdocs
 
-As a marketing for mkdocs: `mkdocs` is simple as
+As a marketing for mkdocs: [mkdocs](https://www.mkdocs.org/#getting-started) is as simple as
 
 - `pip install mkdocs # or conda`
 - create a .yml configuration file (or copy and edit!)

@@ -33,10 +33,11 @@ Optionally, you may want to use `add-package-local-nickname` the packages for, w
 
 (See the [html version of this page](https://digikar99.github.io/common-lisp.readthedocs/), rather than the markdown version for the working links below.)
 
-- [alexandria](./alexandria/) - a utility library
-- [bordeaux-threads](./bordeaux-threads/) - library for threading
-- [hunchentoot](./hunchentoot/) - web server
-- [iterate](./iterate/) - a lispy extensible alternative to `loop`
+- [alexandria](./alexandria/) - a utility library [defacto]
+- [bordeaux-threads](./bordeaux-threads/) - library for threading [defacto]
+- [hunchentoot](./hunchentoot/) - web server [defacto]
+- [fiveam](./fiveam/) - regression testing framework [defacto]
+- [iterate](./iterate/) - a lispy extensible alternative to `loop` [defacto]
 - [numcl](./numcl/) - lispy clone of numpy
 
 

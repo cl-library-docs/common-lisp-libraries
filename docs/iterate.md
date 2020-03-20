@@ -1,4 +1,8 @@
-# iterate
+# iterate - Psuedocodic Iteration
+
+Version: 1.5
+<br/>
+Repository: [iterate/iterate - Gitlab](https://gitlab.common-lisp.net/iterate/iterate)
 
 `iterate` is a powerful iteration facility for Common Lisp, and a alternative to `loop`. As opposed to `loop`, `iterate` is more lispy, extensible, besides being more powerful.
 

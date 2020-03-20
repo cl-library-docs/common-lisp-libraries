@@ -1,6 +1,8 @@
-# bordeaux-threads
+# bordeaux-threads - Threading
 
 Version: 0.8.7
+<br/>
+Repository: [sionescu/bordeaux-threads - Github](https://github.com/sionescu/bordeaux-threads/)
 
 *(This page was possible due to the [official documentation](https://trac.common-lisp.net/bordeaux-threads/wiki/ApiDocumentation), albeit its a bit outdated.)*
 

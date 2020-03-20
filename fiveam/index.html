@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>fiveam - Regression Testing Framework - common-lisp.readthedocs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "fiveam - Regression Testing Framework";
+    var mkdocs_page_input_path = "fiveam.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp.readthedocs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">fiveam - Regression Testing Framework</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#checks-and-tests">Checks and Tests</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#suites">Suites</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#more-things">More Things</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-variables">Configuration Variables</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#debug-on-error">*debug-on-error*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#debug-on-failure">*debug-on-failure*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#default-test-compilation-time">*default-test-compilation-time*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#max-trials">*max-trials*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#num-trials">*num-trials*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#on-error">*on-error*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#on-failure">*on-failure*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#print-names">*print-names*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run-test-when-defined">*run-test-when-defined*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test-dribble">*test-dribble*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#verbose-failures">*verbose-failures*</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#functions-and-macros">Functions and Macros</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#_1">!</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_2">!!</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#_3">!!!</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#debug">debug!</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#def-fixture">def-fixture</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#def-suite">def-suite</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#def-suite_1">def-suite*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#def-test">def-test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#explain">explain!</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fail">fail</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#finishes">finishes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#for-all">for-all</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-buffer">gen-buffer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-character">gen-character</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-float">gen-float</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-integer">gen-integer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-list">gen-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-one-element">gen-one-element</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-string">gen-string</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#gen-tree">gen-tree</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-fixture">get-fixture</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-test">get-test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#in-suite">in-suite</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#in-suite_1">in-suite*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#is">is</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#is-every">is-every</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#is-false">is-false</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#is-true">is-true</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-fixture">make-fixture</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-suite">make-suite</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-test">make-test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#pass">pass</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rem-fixture">rem-fixture</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#rem-test">rem-test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#results-status">results-status</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run">run</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run_1">run!</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run-all-tests">run-all-tests</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#signals">signals</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#skip">skip</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test">test</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test-names">test-names</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-fixture">with-fixture</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp.readthedocs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Defacto libraries &raquo;</li>
+        
+      
+    
+    <li>fiveam - Regression Testing Framework</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="fiveam-regression-testing-framework">fiveam - Regression Testing Framework</h1>
+<p>Version: 1.4.1
+<br/>
+Nickname: 5am
+<br/>
+Repository: <a href="https://github.com/sionescu/fiveam">sionescu/fiveam - Github</a></p>
+<p><em>(This documentation was possible due to <a href="http://turtleware.eu/posts/Tutorial-Working-with-FiveAM.html">Tomek Kurez's tutorial on fiveam</a> and the <a href="https://common-lisp.net/project/fiveam/docs/">excellent official documentation</a>).</em></p>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="checks-and-tests">Checks and Tests</h3>
+<p>A check, defined using the macro <a href="#is">is</a>, is a line of code that makes sure something is indeed true. A basic check definition is of the form <code>(is test &amp;rest reason-args)</code>.</p>
+<p>However, checks can only be defined in the context of tests:</p>
+<pre><code class="lisp">(test test-demo
+  &quot;This demonstrates the basic use of test and check.&quot;
+  (is (listp (list 1 2)))
+  (is (= 5 (+ 2 3)) &quot;This should pass.&quot;)  ; &amp;rest reason-args
+  (is (= 4 4.1) &quot;~D and ~D are not = to each other.&quot; 4 4.1))
+</code></pre>
+
+<p>To run the test, simply, call <a href="#run_1">run!</a>:</p>
+<pre><code class="lisp">(run! 'test-demo)
+;; Running test TEST-DEMO ..f
+;;  Did 3 checks.
+;;     Pass: 2 (66%)
+;;     Skip: 0 ( 0%)
+;;     Fail: 1 (33%)
+;; 
+;;  Failure Details:
+;;  --------------------------------
+;;  TEST-DEMO [This demonstrates the basic use of test and check.]: 
+;;       4 and 4.1 are not = to each other.
+;;       
+;; (= 4 4.1)
+;; 
+;;  was NIL..
+;;  --------------------------------
+</code></pre>
+
+<p>Tests can automatically be run on (re)compilation by setting <a href="#run-test-when-defined">*run-test-when-defined*</a> to <code>t</code>. So, simply compiling</p>
+<pre><code class="lisp">(test another-test (is (eq t t)))
+;; 
+;; Running test ANOTHER-TEST .
+;;  Did 1 check.
+;;     Pass: 1 (100%)
+;;     Skip: 0 ( 0%)
+;;     Fail: 0 ( 0%)
+</code></pre>
+
+<p>runs the test. (Also see other <a href="#configuration-variables">Configuration Variables</a>.)</p>
+<p><code>(run!)</code> can be called without arguments to run all the tests.</p>
+<h3 id="suites">Suites</h3>
+<p>Tests can be grouped into suites. In fact, suites can also parent other suites.</p>
+<p>Suites can be defined using <a href="#def-suite">def-suite</a>, and similar to* <code>in-package</code>, the current
+suite can be specified using <a href="#in-suite">in-suite</a>.</p>
+<pre><code class="lisp">(def-suite suite-one)
+(def-suite suite-two)
+
+(in-suite suite-one)
+
+(test first-test (is (= 1 1)))
+(test (second-test :suite suite-two) ; perhaps, not recommended
+  (is (null nil)))
+
+(in-suite suite-two)
+
+(test third-test (is (eq 'done 'done)))
+</code></pre>
+
+<p>All tests can be run with <a href="#run-all-tests">run-all-tests</a>. Also see the arguments to <a href="#run_1">run!</a>.</p>
+<pre><code class="lisp">(run-all-tests)
+;; Running test suite NIL
+;;  Running test FIRST-TEST .
+;;  Running test THIRD-TEST .
+;; Running test suite SUITE-TWO
+;;  Running test SECOND-TEST .
+;;  Did 3 checks.
+;;     Pass: 3 (100%)
+;;     Skip: 0 ( 0%)
+;;     Fail: 0 ( 0%)
+</code></pre>
+
+<h3 id="more-things">More Things</h3>
+<ul>
+<li>Tests can be removed using <a href="#rem-test">rem-test</a>.</li>
+<li>See <a href="#gen-buffer">generators</a> for utilities for generating random data. These are to be used in
+conjunction with the <a href="#for-all">for-all</a> macro. Generators are merely closures and you can
+define your own.</li>
+<li>fiveam also provides the ability to <a href="#def-fixture">def-fixture</a> and
+<a href="#with-fixture">with-fixture</a>; however, (as of 2016) it is <a href="https://github.com/sionescu/fiveam/issues/31">recommended to just use macros
+instead</a>.</li>
+<li>The <a href="#signals">signals</a> macro can be used to check if conditions are signalled appropriately.</li>
+</ul>
+<h2 id="configuration-variables">Configuration Variables</h2>
+<h3 id="debug-on-error">*debug-on-error*</h3>
+<p>T if we should drop into the debugger on error, NIL otherwise.
+OBSOLETE: superseded by *ON-ERROR*</p>
+<h3 id="debug-on-failure">*debug-on-failure*</h3>
+<p>T if we should drop into the debugger on a failing check, NIL otherwise.
+OBSOLETE: superseded by *ON-FAILURE*</p>
+<h3 id="default-test-compilation-time">*default-test-compilation-time*</h3>
+<h3 id="max-trials">*max-trials*</h3>
+<p>Number of total times we attempt to run the body of the
+  FOR-ALL test including when the body is skipped due to failed
+  guard conditions.</p>
+<p>Since we have guard conditions we may get into infinite loops
+where the test code is never run due to the guards never
+returning true. This second run limit prevents that.</p>
+<h3 id="num-trials">*num-trials*</h3>
+<p>Number of times we attempt to run the body of the FOR-ALL test.</p>
+<h3 id="on-error">*on-error*</h3>
+<p>The action to perform on error:
+- :DEBUG if we should drop into the debugger
+- :BACKTRACE to print a backtrace
+- NIL to simply continue</p>
+<h3 id="on-failure">*on-failure*</h3>
+<p>The action to perform on check failure:
+- :DEBUG if we should drop into the debugger
+- :BACKTRACE to print a backtrace
+- NIL to simply continue</p>
+<h3 id="print-names">*print-names*</h3>
+<p>T if we should print test running progress, NIL otherwise.</p>
+<h3 id="run-test-when-defined">*run-test-when-defined*</h3>
+<p>When non-NIL tests are run as soon as they are defined.</p>
+<h3 id="test-dribble">*test-dribble*</h3>
+<h3 id="verbose-failures">*verbose-failures*</h3>
+<p>T if we should print the expression failing, NIL otherwise.</p>
+<h2 id="functions-and-macros">Functions and Macros</h2>
+<h3 id="_1">!</h3>
+<pre><code class="lisp">Function: (!)
+</code></pre>
+
+<p>Rerun the most recently run test and explain the results.</p>
+<h3 id="_2">!!</h3>
+<pre><code class="lisp">Function: (!!)
+</code></pre>
+
+<p>Rerun the second most recently run test and explain the results.</p>
+<h3 id="_3">!!!</h3>
+<pre><code class="lisp">Function: (!!!)
+</code></pre>
+
+<p>Rerun the third most recently run test and explain the results.</p>
+<h3 id="debug">debug!</h3>
+<pre><code class="lisp">Function: (debug! &amp;optional (test-spec *suite*))
+</code></pre>
+
+<p>Calls (run! test-spec) but enters the debugger if any kind of error happens.</p>
+<h3 id="def-fixture">def-fixture</h3>
+<pre><code class="lisp">Macro: (def-fixture name (&amp;rest args) &amp;body body)
+</code></pre>
+
+<p>Defines a fixture named NAME. A fixture is very much like a
+macro but is used only for simple templating. A fixture created
+with DEF-FIXTURE is a macro which can use the special macrolet
+&amp;BODY to specify where the body should go.</p>
+<p>See Also: <a href="#with-fixture">WITH-FIXTURE</a>.</p>
+<h3 id="def-suite">def-suite</h3>
+<pre><code class="lisp">Macro: (def-suite name &amp;key description in)
+</code></pre>
+
+<p>Define a new test-suite named NAME.</p>
+<p>IN (a symbol), if provided, causes this suite te be nested in the
+suite named by IN. NB: This macro is built on top of make-suite,
+as such it, like make-suite, will overrwrite any existing suite
+named NAME.</p>
+<h3 id="def-suite_1">def-suite*</h3>
+<pre><code class="lisp">Macro: (def-suite* name &amp;rest def-suite-args)
+</code></pre>
+
+<h3 id="def-test">def-test</h3>
+<pre><code class="lisp">Macro: (def-test name (&amp;key depends-on (suite) fixture (compile-at) profile) &amp;body body)
+</code></pre>
+
+<p>Create a test named NAME.</p>
+<p>NAME is the symbol which names the test.</p>
+<p>DEPENDS-ON is a list of the form:</p>
+<p>(AND . test-names) - This test is run only if all of the tests
+ in TEST-NAMES have passed, otherwise a single test-skipped
+ result is generated.</p>
+<p>(OR . test-names) - If any of TEST-NAMES has passed this test is
+ run, otherwise a test-skipped result is generated.</p>
+<p>(NOT test-name) - This is test is run only if TEST-NAME failed.</p>
+<p>AND, OR and NOT can be combined to produce complex dependencies.</p>
+<p>If DEPENDS-ON is a symbol it is interpreted as `(AND
+,depends-on), this is accomadate the common case of one test
+depending on another.</p>
+<p>FIXTURE specifies a fixture to wrap the body in.</p>
+<p>If PROFILE is T profiling information will be collected as well.</p>
+<h3 id="explain">explain!</h3>
+<pre><code class="lisp">Function: (explain! result-list)
+</code></pre>
+
+<p>Explain the results of RESULT-LIST using a
+detailed-text-explainer with output going to <em>test-dribble</em>.
+Return a boolean indicating whether no tests failed.</p>
+<h3 id="fail">fail</h3>
+<pre><code class="lisp">Macro: (fail &amp;rest message-args)
+</code></pre>
+
+<p>Simply generate a FAIL.</p>
+<h3 id="finishes">finishes</h3>
+<pre><code class="lisp">Macro: (finishes &amp;body body)
+</code></pre>
+
+<p>Generates a pass if BODY executes to normal completion. In
+other words if body does signal, return-from or throw this test
+fails.</p>
+<h3 id="for-all">for-all</h3>
+<pre><code class="lisp">Macro: (for-all bindings &amp;body body)
+</code></pre>
+
+<p>Bind <code>BINDINGS</code> to random variables and test <code>BODY</code> <em>num-trials</em> times.</p>
+<p><code>BINDINGS</code> is a list of binding forms, each element is a list
+of <code>(BINDING VALUE &amp;optional GUARD)</code>. Value, which is evaluated
+once when the for-all is evaluated, must return a generator which
+be called each time <code>BODY</code> is evaluated. <code>BINDING</code> is either a symbol
+or a list which will be passed to destructuring-bind. <code>GUARD</code> is a
+form which, if present, stops <code>BODY</code> from executing when <code>IT</code> returns
+NIL. The GUARDS are evaluated after all the random data has been
+generated and they can refer to the current value of any
+binding. NB: Generator forms, unlike guard forms, can not contain
+references to the bound variables.</p>
+<p>Examples:</p>
+<pre><code class="lisp">  (for-all ((a (gen-integer)))
+    (is (integerp a)))
+
+  (for-all ((a (gen-integer) (plusp a)))
+    (is (integerp a))
+    (is (plusp a)))
+
+  (for-all ((less (gen-integer))
+            (more (gen-integer) (&lt; less more)))
+    (is (&lt;= less more)))
+
+  (for-all (((a b) (gen-two-integers)))
+    (is (integerp a))
+    (is (integerp b)))
+</code></pre>
+
+<h3 id="gen-buffer">gen-buffer</h3>
+<pre><code class="lisp">Function: (gen-buffer &amp;key
+                      (length (gen-integer min 0 max 50))
+                      (element-type '(unsigned-byte 8))
+                      (elements (gen-integer :min 0 :max (1- (expt 2 8)))))
+</code></pre>
+
+<h3 id="gen-character">gen-character</h3>
+<pre><code class="lisp">Function: (gen-character &amp;key
+                         (code-limit char-code-limit)
+                         (code (gen-integer :min 0 :max (1- code-limit)))
+                         (alphanumericp nil))
+</code></pre>
+
+<p>Returns a generator of characters.</p>
+<p>CODE must be a generator of random integers. ALPHANUMERICP, if
+non-NIL, limits the returned chars to those which pass
+alphanumericp.</p>
+<h3 id="gen-float">gen-float</h3>
+<pre><code class="lisp">Function: (gen-float &amp;key bound (type 'short-float))
+</code></pre>
+
+<p>Returns a generator which produces floats of type TYPE. BOUND,
+if specified, constrains the results to be in the range (-BOUND,
+BOUND).</p>
+<h3 id="gen-integer">gen-integer</h3>
+<pre><code class="lisp">Function: (gen-integer &amp;key
+                       (max (1+ most-positive-fixnum))
+                       (min (1- most-negative-fixnum)))
+</code></pre>
+
+<p>Returns a generator which produces random integers greater
+than or equal to MIN and less than or equal to MAX.</p>
+<h3 id="gen-list">gen-list</h3>
+<pre><code class="lisp">Function: (gen-list &amp;key
+                    (length (gen-integer :min 0 :max 10))
+                    (elements (gen-integer :min -10 :max 10)))
+</code></pre>
+
+<p>Returns a generator which produces random lists. LENGTH must be
+an integer generator and ELEMENTS must be a generator which
+produces objects.</p>
+<h3 id="gen-one-element">gen-one-element</h3>
+<pre><code class="lisp">Function: (gen-one-element &amp;rest elements)
+</code></pre>
+
+<h3 id="gen-string">gen-string</h3>
+<pre><code class="lisp">
+Function: (gen-string &amp;key
+                      (length (gen-integer :min 0 :max 80))
+                      (elements (gen-character))
+                      (element-type 'character))
+</code></pre>
+
+<p>Returns a generator which produces random strings. LENGTH must
+be a generator which produces integers, ELEMENTS must be a
+generator which produces characters of type ELEMENT-TYPE.</p>
+<h3 id="gen-tree">gen-tree</h3>
+<pre><code class="lisp">Function: (gen-tree &amp;key (size 20) (elements (gen-integer :min -10 :max 10)))
+</code></pre>
+
+<p>Returns a generator which produces random trees. SIZE controls
+the approximate size of the tree, but don't try anything above
+ 30, you have been warned. ELEMENTS must be a generator which
+will produce the elements.</p>
+<h3 id="get-fixture">get-fixture</h3>
+<pre><code class="lisp">Function: (get-fixture key &amp;optional default)
+</code></pre>
+
+<h3 id="get-test">get-test</h3>
+<pre><code class="lisp">Function: (get-test key &amp;optional default)
+</code></pre>
+
+<h3 id="in-suite">in-suite</h3>
+<pre><code class="lisp">Macro: (in-suite suite-name)
+</code></pre>
+
+<p>Set the <em>suite</em> special variable so that all tests defined
+after the execution of this form are, unless specified otherwise,
+in the test-suite named SUITE-NAME.</p>
+<p>See also: DEF-SUITE <em>SUITE</em></p>
+<h3 id="in-suite_1">in-suite*</h3>
+<pre><code class="lisp">Macro: (in-suite* suite-name &amp;key in)
+</code></pre>
+
+<p>Just like in-suite, but silently creates missing suites.</p>
+<h3 id="is">is</h3>
+<pre><code class="lisp">Macro: (is test &amp;rest reason-args)
+</code></pre>
+
+<p>The DWIM checking operator.</p>
+<p>If TEST returns a true value a test-passed result is generated,
+otherwise a test-failure result is generated. The reason, unless
+REASON-ARGS is provided, is generated based on the form of TEST:</p>
+<p>(predicate expected actual) - Means that we want to check
+ whether, according to PREDICATE, the ACTUAL value is
+ in fact what we EXPECTED.</p>
+<p>(predicate value) - Means that we want to ensure that VALUE
+ satisfies PREDICATE.</p>
+<p>Wrapping the TEST form in a NOT simply produces a negated reason
+ string.</p>
+<h3 id="is-every">is-every</h3>
+<pre><code class="lisp">Macro: (is-every predicate &amp;body clauses)
+</code></pre>
+
+<p>The input is either a list of lists, or a list of pairs. Generates (is (,predicate ,expr ,value))
+   for each pair of elements or (is (,predicate ,expr ,value) ,@reason) for each list.</p>
+<h3 id="is-false">is-false</h3>
+<pre><code class="lisp">Macro: (is-false condition &amp;rest reason-args)
+</code></pre>
+
+<p>Generates a pass if CONDITION returns false, generates a
+  failure otherwise. Like IS-TRUE, and unlike IS, IS-FALSE does
+  not inspect CONDITION to determine what reason to give it case
+  of test failure</p>
+<h3 id="is-true">is-true</h3>
+<pre><code class="lisp">Macro: (is-true condition &amp;rest reason-args)
+</code></pre>
+
+<p>Like IS this check generates a pass if CONDITION returns true
+  and a failure if CONDITION returns false. Unlike IS this check
+  does not inspect CONDITION to determine how to report the
+  failure.</p>
+<h3 id="make-fixture">make-fixture</h3>
+<h3 id="make-suite">make-suite</h3>
+<pre><code class="lisp">Function: (make-suite name &amp;key description ((in parent-suite)))
+</code></pre>
+
+<p>Create a new test suite object.</p>
+<p>Overrides any existing suite named NAME.</p>
+<h3 id="make-test">make-test</h3>
+<h3 id="pass">pass</h3>
+<pre><code class="lisp">Macro: (pass &amp;rest message-args)
+</code></pre>
+
+<p>Simply generate a PASS.</p>
+<h3 id="rem-fixture">rem-fixture</h3>
+<pre><code class="lisp">Function: (rem-fixture key)
+</code></pre>
+
+<h3 id="rem-test">rem-test</h3>
+<pre><code class="lisp">Function: (rem-test key)
+</code></pre>
+
+<h3 id="results-status">results-status</h3>
+<pre><code class="lisp">Function: (results-status result-list)
+</code></pre>
+
+<p>Given a list of test results (generated while running a test)
+  return true if no results are of type TEST-FAILURE.  Returns second
+  and third values, which are the set of failed tests and skipped
+  tests respectively.</p>
+<h3 id="run">run</h3>
+<pre><code class="lisp">Function: (run test-spec &amp;key (print-names *print-names*))
+</code></pre>
+
+<p>Run the test specified by TEST-SPEC.</p>
+<p>TEST-SPEC can be either a symbol naming a test or test suite, or
+a testable-object object. This function changes the operations
+performed by the !, !! and !!! functions.</p>
+<h3 id="run_1">run!</h3>
+<pre><code class="lisp">Function: (run! &amp;optional (test-spec *suite*)
+                &amp;key (print-names *print-names*))
+</code></pre>
+
+<p>Equivalent to (explain! (run TEST-SPEC)).</p>
+<h3 id="run-all-tests">run-all-tests</h3>
+<pre><code class="lisp">Function: (run-all-tests &amp;key (summary :end))
+</code></pre>
+
+<p>Runs all defined test suites, T if all tests passed and NIL otherwise.
+SUMMARY can be :END to print a summary at the end, :SUITE to print it
+after each suite or NIL to skip explanations.</p>
+<h3 id="signals">signals</h3>
+<pre><code class="lisp">Macro: (signals condition-spec &amp;body body)
+</code></pre>
+
+<p>Generates a pass if BODY signals a condition of type
+CONDITION. BODY is evaluated in a block named NIL, CONDITION is
+not evaluated.</p>
+<h3 id="skip">skip</h3>
+<pre><code class="lisp">Macro: (skip &amp;rest reason)
+</code></pre>
+
+<p>Generates a TEST-SKIPPED result.</p>
+<h3 id="test">test</h3>
+<pre><code class="lisp">Macro: (test name &amp;body body)
+</code></pre>
+
+<p>Create a test named NAME. If NAME is a list it must be of the
+form:</p>
+<pre><code class="lisp">  (name &amp;key depends-on suite fixture compile-at profile)
+</code></pre>
+
+<p>NAME is the symbol which names the test.</p>
+<p>DEPENDS-ON is a list of the form:</p>
+<ul>
+<li>
+<p>(AND . test-names) - This test is run only if all of the tests
+ in TEST-NAMES have passed, otherwise a single test-skipped
+ result is generated.</p>
+</li>
+<li>
+<p>(OR . test-names) - If any of TEST-NAMES has passed this test is
+ run, otherwise a test-skipped result is generated.</p>
+</li>
+<li>
+<p>(NOT test-name) - This is test is run only if TEST-NAME failed.</p>
+</li>
+</ul>
+<p>AND, OR and NOT can be combined to produce complex dependencies.</p>
+<p>If DEPENDS-ON is a symbol it is interpreted as `(AND
+,depends-on), this is accomadate the common case of one test
+depending on another.</p>
+<p>FIXTURE specifies a fixture to wrap the body in.</p>
+<p>If PROFILE is T profiling information will be collected as well.</p>
+<h3 id="test-names">test-names</h3>
+<pre><code class="lisp">Function: (test-names)
+</code></pre>
+
+<h3 id="with-fixture">with-fixture</h3>
+<pre><code class="lisp">Macro: (with-fixture fixture-name (&amp;rest args) &amp;body body)
+</code></pre>
+
+<p>Insert BODY into the fixture named FIXTURE-NAME.</p>
+<p>See Also: <a href="#def-fixture">DEF-FIXTURE</a>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../hunchentoot/" class="btn btn-neutral float-right" title="hunchentoot - Web Server">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../bordeaux-threads/" class="btn btn-neutral" title="bordeaux-threads - Threading"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../bordeaux-threads/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../hunchentoot/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

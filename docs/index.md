@@ -1,5 +1,7 @@
 # common-lisp.readthedocs
 
+*In case of any errors here, please [create an issue](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+
 ## Introduction
 
 Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have *some* objective component to it.
@@ -16,7 +18,7 @@ Each of the below libraries can be installed using quicklisp:
 See [quicklisp.org](https://www.quicklisp.org/) for instructions on
 installing quicklisp.
 
-Optionally, you may want to use `add-package-local-nickname` the packages for, well, [adding package local nicknames](https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here).
+Optionally, you may want to use `trivial-package-local-nicknames` for, well, [adding package local nicknames](https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here).
 
 ```lisp
 (ql:quickload :trivial-package-local-nicknames)
@@ -31,13 +33,22 @@ Optionally, you may want to use `add-package-local-nickname` the packages for, w
 
 ### Libraries documented so far
 
+See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
+
 (See the [html version of this page](https://digikar99.github.io/common-lisp.readthedocs/), rather than the markdown version for the working links below.)
 
-- [alexandria](./alexandria/) - a utility library [defacto]
-- [bordeaux-threads](./bordeaux-threads/) - library for threading [defacto]
-- [hunchentoot](./hunchentoot/) - web server [defacto]
-- [fiveam](./fiveam/) - regression testing framework [defacto]
-- [iterate](./iterate/) - a lispy extensible alternative to `loop` [defacto]
+#### Defacto libraries
+
+- [alexandria](./alexandria/) - a utility library
+- [bordeaux-threads](./bordeaux-threads/) - library for threading 
+- [cl-ppcre](./cl-ppcre/) - regular expressions
+- [cl-who](./cl-who/) - DSL for HTML Markup
+- [hunchentoot](./hunchentoot/) - web server
+- [fiveam](./fiveam/) - regression testing framework
+- [iterate](./iterate/) - a lispy extensible alternative to `loop`
+
+#### Not yet defacto
+
 - [numcl](./numcl/) - lispy clone of numpy
 
 

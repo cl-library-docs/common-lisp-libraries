@@ -1,4 +1,14 @@
-(ql:quickload '(:alexandria :str :iterate :reader :arrow-macros :swank :closer-mop))
+(handler-bind ((asdf/find-system:load-system-definition-error
+                (lambda (c)
+                  (declare (ignore c))
+                  (invoke-restart 'sb-impl::drop-them)))
+               (sb-int:package-at-variance-error
+                (lambda (c)
+                  (declare (ignore c))
+                  (invoke-restart 'sb-impl::drop-them))))
+  (ql:quickload '(:alexandria :str :iterate :reader :cl-arrows :swank :closer-mop)))
+
+(ql:quickload '(:alexandria :str :iterate :reader :cl-arrows :closer-mop))
 
 ;;; This file is more of a scratch pad than anything more serious.
 ;;; Just open the file with SLIME or equivalent, and C-c C-c the
@@ -10,7 +20,7 @@
 ;;; I found docparser leaving behind some details. I liked it for generating a
 ;;; output independent documentation-tree, but it seems not very complete.
 
-(use-package '(:alexandria :iterate :arrow-macros))
+(use-package '(:alexandria :iterate :cl-arrows))
 (reader:enable-reader-syntax 'lambda 'get-val)
 (add-package-local-nickname :mop :closer-mop)
 

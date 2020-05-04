@@ -11,10 +11,13 @@ nav:
     - Defacto libraries:
       - alexandria.md
       - bordeaux-threads.md
+      - cl-ppcre.md
+      - cl-who.md
       - fiveam.md
       - hunchentoot.md
       - iterate.md
     - Not yet defacto:
       - numcl.md
+      - unix-opts.md
 plugins:
     - search

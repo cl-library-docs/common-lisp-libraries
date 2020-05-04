@@ -4,7 +4,12 @@ Version: 0.8.7
 <br/>
 Repository: [sionescu/bordeaux-threads - Github](https://github.com/sionescu/bordeaux-threads/)
 
-*(This page was possible due to the [official documentation](https://trac.common-lisp.net/bordeaux-threads/wiki/ApiDocumentation), albeit its a bit outdated.)*
+*This page was possible due to the [official documentation](https://trac.common-lisp.net/bordeaux-threads/wiki/ApiDocumentation), albeit its a bit outdated.*
+
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+
+***
+
 
 BORDEAUX-THREADS is a proposed standard for a minimal
   MP/threading interface. It is similar to the CLIM-SYS threading and

@@ -6,7 +6,11 @@ Nickname: ppcre
 <br/>
 Repository: [edicl/cl-ppcre - Github](https://github.com/edicl/cl-ppcre)
 
-*(This documentation was possible due to the [excellent official documentation](https://edicl.github.io/cl-ppcre).)*
+*This documentation is modified to markdown from the [excellent official documentation](https://edicl.github.io/cl-ppcre) as of 4th May 2020.*
+
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+
+***
 
 CL-PPCRE is a Portable Perl-compatible Regular Expressions library for Common Lisp.
 This is also thread-safe, and allows specifying [regular expressions using

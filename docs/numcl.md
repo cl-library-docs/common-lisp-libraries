@@ -4,8 +4,12 @@ Version: 0.1
 <br/>
 Repository: [numcl/numcl - Github](https://github.com/numcl/numcl/)
 
-*(This documentation was possible due to the excellent 
-[official documentation](https://numcl.github.io/numcl/).)*
+*This documentation was possible due to the excellent 
+[official documentation](https://numcl.github.io/numcl/).*
+
+*In case of any errors here, please [create an issue](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+
+***
 
 ## Introduction
 

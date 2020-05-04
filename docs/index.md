@@ -1,6 +1,8 @@
 # common-lisp.readthedocs
 
-*In case of any errors here, please [create an issue](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+
+***
 
 ## Introduction
 

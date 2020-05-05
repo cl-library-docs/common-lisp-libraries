@@ -12,7 +12,6 @@ nav:
       - alexandria.md
       - bordeaux-threads.md
       - cl-ppcre.md
-      - cl-who.md
       - fiveam.md
       - hunchentoot.md
       - iterate.md

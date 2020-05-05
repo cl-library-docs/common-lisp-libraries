@@ -12,7 +12,7 @@ Repository: [sionescu/fiveam - Github](https://github.com/sionescu/fiveam)
 
 ***
 
-## Getting Started
+## GETTING STARTED
 
 ### Checks and Tests
 
@@ -115,7 +115,7 @@ instead](https://github.com/sionescu/fiveam/issues/31).
 
 
 
-## Configuration Variables
+## CONFIGURATION VARIABLES
 
 ### \*debug-on-error\*
 
@@ -172,7 +172,7 @@ When non-NIL tests are run as soon as they are defined.
 T if we should print the expression failing, NIL otherwise.
 
 
-## Functions and Macros
+## FUNCTIONS AND MACROS
 
 
 

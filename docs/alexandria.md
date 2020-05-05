@@ -10,7 +10,7 @@ Repository: [alexandria/alexandria - Gitlab](https://gitlab.common-lisp.net/alex
 
 ***
 
-## Alexandria 
+## ALEXANDRIA 
 
 Alexandria software and associated documentation are in the public
 domain:
@@ -52,7 +52,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 -------------
 
-## 1. Hash Tables
+## 1. HASH TABLES
 
 ### ensure-gethash
 
@@ -154,7 +154,7 @@ using the `hash-table-initargs`.
 
 -----------
 
-## 2.  Data and Control Flow
+## 2. DATA AND CONTROL FLOW
 
 ### define-constant
 
@@ -537,7 +537,7 @@ is called with and `arguments` to `function`.
 
 --------
 
-## 3. Conses
+## 3. CONSES
 
 
 ### proper-list
@@ -877,7 +877,7 @@ is unique under `key` and `test`.
 
 -----------
 
-## 4. Sequences
+## 4. SEQUENCES
 
 
 ### proper-sequence 
@@ -1164,7 +1164,7 @@ freshly allocated (unsigned-byte 8) vector.
 
 ---------------
 
-## 6. Macro Writing
+## 6. MACRO WRITING
 
 ### once-only
 
@@ -1306,7 +1306,7 @@ Signals a `program-error` is the lambda-list is malformed.
 
 ---------
 
-## 7. Symbols
+## 7. SYMBOLS
 
 
 ### ensure-symbol
@@ -1387,7 +1387,7 @@ strings and symbols, producing a symbol in the current package.
 
 --------
 
-## 8. Arrays
+## 8. ARRAYS
 
 
 ### array-index
@@ -1418,7 +1418,7 @@ overridden by the keyword arguments.
 
 -------
 
-## 9. Types
+## 9. TYPES
 
 
 ### string-designator
@@ -1462,7 +1462,7 @@ secondary value of `t` indicates that the types are not equivalent.
 
 ------------------------------------------------------------------------
 
-## 10. Numbers
+## 10. NUMBERS
 
 
 ### maxf

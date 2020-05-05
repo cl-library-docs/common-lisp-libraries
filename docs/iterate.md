@@ -14,7 +14,7 @@ See [The Iterate Manual] for a more detailed explanation of the various faciliti
 
 For a tutorial on looping in Common Lisp, check out [Loops, Iterate and Mapping - The Common Lisp Cookbook](http://lispcookbook.github.io/cl-cookbook/iteration.html).
 
-## Highlights
+## HIGHLIGHTS
 
 - [def*](#defclause-sequence): extensibility
 - [display-iterate-clauses](#display-iterate-clauses): quick help for clauses
@@ -26,7 +26,7 @@ For a tutorial on looping in Common Lisp, check out [Loops, Iterate and Mapping 
 - [in](#in): `loop` equivalent can be quite verbose
 - there's no support for "true" parallel assignment - see [with](#with)
 
-## Other Points
+## OTHER POINTS
 
 - `iterate` does not declare variables unless asked to. See [Types and Declarations].
 - `into `*`var`* stores the value into *`var`* instead of returning it.
@@ -51,7 +51,7 @@ Otherwise [head over here](https://common-lisp.net/project/iterate/index.html).
 The differences between accumulate and reducing are slight. One difference is that the functions take their arguments in a different order. Another is that in the absence of init-val, accumulate will use nil, whereas reducing will generate different code that avoids any dependence on the initial value. The reason for having both clauses is that one usually thinks of reductions (like sum) and accumulations (like collect) as different beasts.
 
 
-## API (Clause) Reference
+## API (CLAUSE) REFERENCE
 
 ### accumulate
 `accumulate `*`expr`*` by `*`func`*` &optional initial-value `*`init-val`*` into `*`var`*
@@ -651,16 +651,11 @@ CL-USER> (iter (with i = 1)
 
 See [Variable Binding and Setting] and [Parallel Binding and Stepping].
 
-## Other Resources on Iterate
+## OTHER RESOURCES ON ITERATE
 
 - [The Iterate Manual]
 - [Comparing LOOP and ITERATE](https://items.sjbach.com/211/comparing-loop-and-iterate)
 - [Loop v Iterate - SabraOnTheHill](https://sites.google.com/site/sabraonthehill/loop-v-iter)
-
-## Also check out
-
-- 
-
 
 ---
 

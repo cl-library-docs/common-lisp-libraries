@@ -12,12 +12,12 @@ Repository: [edicl/cl-ppcre - Github](https://github.com/edicl/cl-ppcre)
 
 ***
 
-CL-PPCRE is a Portable Perl-compatible Regular Expressions library for Common Lisp.
+CL-PPCRE is a Portable Perl-Compatible Regular Expressions library for Common Lisp.
 This is also thread-safe, and allows specifying [regular expressions using
 S-expressions](#using-s-expressions).
 
 
-## Getting Started
+## GETTING STARTED
 
 ### Using perl regex
 
@@ -164,7 +164,7 @@ Evaluation took:
   100.00% CPU
   2,463,959,814 processor cycles
   50,000,032 bytes consed
-  ```
+```
 
 But still (more than) 5 times faster than python:
 
@@ -192,7 +192,7 @@ Honestly, though, it should be possible to use implementation specific means to 
 Perhaps, see the [manual](https://edicl.github.io/cl-ppcre/#blabla) for hints on speeding things
 up.
 
-## Functions and Macros
+## FUNCTIONS AND MACROS
 
 ### all-matches
 
@@ -561,7 +561,7 @@ behind this match.  If `sharedp` is true, the substrings may share
 structure with `target-string`.
 
 
-## Configuration Variables
+## CONFIGURATION VARIABLES
 
 ### \*allow-named-registers\*
 
@@ -608,7 +608,7 @@ but large) Boyer-Moore-Horspool matchers.
 
 
 
-## Support
+## SUPPORT
 
 The development version of cl-ppcre can be found [on
 github](https://github.com/edicl/cl-ppcre). Please use the github issue

@@ -11,7 +11,7 @@ Repository: [numcl/numcl - Github](https://github.com/numcl/numcl/)
 
 ***
 
-## Introduction
+## INTRODUCTION
 
 This is a Numpy clone in Common Lisp. At the moment the library is
 written in pure Common Lisp, focusing more on correctness and
@@ -76,7 +76,7 @@ Dependency graph:
 
 <img src="https://numcl.github.io/numcl/numcl.png">
 
-## Getting Started
+## GETTING STARTED
 
 ### Array Representation
 
@@ -164,7 +164,7 @@ This may be contrasted with that in [Common Lisp](#common-lisp-types) as provide
 [example.lisp](https://github.com/numcl/numcl/blob/master/example.lisp) contains a script that you can explore
 the functionality implemented so far in NUMCL.
 
-## API Reference
+## API REFERENCE
 
 As stated on the section on [Packages](#packages), NUMCL exports all the symbols in package CL, along with the ones with `numcl.exported`. Therefore, here, we only list the symbols exported by 
 `numcl.exported`.
@@ -1436,7 +1436,7 @@ Equivalent of the same function in numpy. Note the default `type` difference.
 
 ### zipf
 
-## More Discussion
+## MORE DISCUSSION
 
 ### Common Lisp Types
 
@@ -1505,7 +1505,7 @@ We also ensure that the length of the base arrays are the multiples of
 region with a future support for SIMD operations in mind.
 
 
-## Author, License, Copyright
+## AUTHOR, LICENSE, COPYRIGHT
 
 Masataro Asai (guicho2.71828@gmail.com)
 Licensed under LGPL v3.

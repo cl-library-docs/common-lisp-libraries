@@ -9,8 +9,9 @@ example](https://github.com/libre-man/unix-opts).*
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
 
+***
 
-## Getting Started
+## GETTING STARTED
 
 Consider the following command line options defined using [define-opts](#define-opts):
 
@@ -151,7 +152,7 @@ CL-USER> *level*
 2
 ```
 
-## API Reference
+## API REFERENCE
 
 ### arg-parser-failed
 

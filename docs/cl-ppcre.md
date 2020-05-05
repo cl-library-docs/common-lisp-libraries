@@ -364,9 +364,17 @@ Returns the parse tree the `symbol` symbol is a synonym for.  Returns
 
 ### ppcre-error
 
+Every error signaled by CL-PPCRE is of type `ppcre-error`. This is a direct subtype of
+[simple-error](http://www.lispworks.com/documentation/HyperSpec/Body/e_smp_er.htm)
+without any additional slots or options.
+
 ### ppcre-invocation-error
 
+Errors of type `ppcre-invocation-error` are signaled if one of the exported functions of CL-PPCRE is called with wrong or inconsistent arguments. This is a direct subtype of `ppcre-error` without any additional slots or options.
+
 ### ppcre-syntax-error
+
+An error of type `ppcre-syntax-error` is signaled if CL-PPCRE's parser encounters an error when trying to parse a regex string or to convert a parse tree into its internal representation. This is a direct subtype of `ppcre-error` with two additional slots. These denote the regex string which HTML-PPCRE was parsing and the position within the string where the error occurred. If the error happens while CL-PPCRE is converting a parse tree, both of these slots contain NIL. (See the next two entries on how to access these slots.)
 
 ### ppcre-syntax-error-pos
 

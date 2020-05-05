@@ -1,5 +1,7 @@
 (in-package :cl-rtd)
 
+(reader:enable-reader-syntax 'lambda 'get-val)
+
 (defun string-upcase-p (string)
   (every (lambda (char)
            (or (not (alpha-char-p char))

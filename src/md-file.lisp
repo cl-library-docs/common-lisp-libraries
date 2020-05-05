@@ -15,6 +15,7 @@
 ;;; relevant forms for use in the REPL.
 
 (reader:enable-reader-syntax 'lambda 'get-val)
+(in-package :cl-rtd)
 
 ;;; Our main function is the md-file function below.
 

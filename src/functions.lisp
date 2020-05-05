@@ -1,6 +1,7 @@
 (in-package :cl-rtd)
 
 ;; This file gets the documentation of Functions, Macros and Generic Functions
+(reader:enable-reader-syntax 'lambda 'get-val)
 
 (defmethod format-documentation ((slot (eql 'function)) symbol
                                  &optional (docstring (documentation symbol slot)))

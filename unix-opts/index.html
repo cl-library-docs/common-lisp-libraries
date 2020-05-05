@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>unix-opts - cmd line argument parser - common-lisp.readthedocs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "unix-opts - cmd line argument parser";
+    var mkdocs_page_input_path = "unix-opts.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp.readthedocs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">unix-opts - cmd line argument parser</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#arg-parser-failed">arg-parser-failed</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#argv">argv</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#define-opts">define-opts</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#describe">describe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exit">exit</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-opts">get-opts</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-arg">missing-arg</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-options">missing-options</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-required-option">missing-required-option</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#option">option</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#raw-arg">raw-arg</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#reparse-arg">reparse-arg</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#skip-option">skip-option</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unknown-option">unknown-option</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#use-value">use-value</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp.readthedocs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Not yet defacto &raquo;</li>
+        
+      
+    
+    <li>unix-opts - cmd line argument parser</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="unix-opts-cmd-line-argument-parser">unix-opts - cmd line argument parser</h1>
+<p>Version: 0.1.7
+<br/>
+Nickname: opts</p>
+<p><em>This documentation was possible due to the excellent <a href="https://github.com/libre-man/unix-opts">official documentation and
+example</a>.</em></p>
+<p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Consider the following command line options defined using <a href="#define-opts">define-opts</a>:</p>
+<pre><code class="lisp">(opts:define-opts
+  (:name :help
+   :description &quot;print this help text&quot;
+   :short #\h
+   :long &quot;help&quot;)
+  (:name :verbose
+   :description &quot;verbose output&quot;
+   :short #\v
+   :long &quot;verbose&quot;)
+  (:name :level
+   :description &quot;the program will run on LEVEL level&quot;
+   :short #\l
+   :long &quot;level&quot;
+   :required t
+   :arg-parser #'parse-integer ; &lt;- takes an argument, which we want to parse into integer
+   :meta-var &quot;LEVEL&quot;)
+  (:name :output
+   :description &quot;redirect output to file FILE&quot;
+   :short #\o
+   :long &quot;output&quot;
+   :arg-parser #'identity ; &lt;- takes an argument, but we keep it as the string
+   :meta-var &quot;FILE&quot;))
+</code></pre>
+
+<p><a href="#describe">describe</a> gets us the required "help text" (see the documentation for other
+options):</p>
+<pre><code class="lisp">CL-USER&gt; (opts:describe :prefix &quot;Demonstrating REPL&quot;)
+Demonstrating REPL
+
+Available options:
+  -h, --help               print this help text
+  -v, --verbose            verbose output
+  -l, --level LEVEL (Required)                           the program will run on LEVEL level
+  -o, --output FILE        redirect output to file FILE
+NIL
+</code></pre>
+
+<p>Command line arguments can be processed with a call to <a href="#get-opts">get-opts</a>.
+For demonstration purposes, we use the REPL. See <a href="https://github.com/libre-man/unix-opts/tree/master/example">this example
+directory</a>
+to see how this might be done in a script.</p>
+<pre><code class="lisp">CL-USER&gt; (opts:get-opts '())
+; Evaluation aborted on #&lt;UNIX-OPTS:MISSING-REQUIRED-OPTION {10084173F3}&gt;.
+CL-USER&gt; (opts:get-opts '(&quot;--level&quot; &quot;2&quot;))
+(:LEVEL 2)
+NIL
+CL-USER&gt; (opts:get-opts '(&quot;--level&quot; &quot;2&quot; &quot;--help&quot;))
+(:LEVEL 2 :HELP T)
+NIL
+</code></pre>
+
+<p><code>get-opts</code> can throw several conditions:</p>
+<ul>
+<li><a href="#unknown-option">unknown-option</a></li>
+<li><a href="#missing-arg">missing-arg</a></li>
+<li><a href="#arg-parser-failed">arg-parser-failed</a></li>
+<li><a href="#missing-required-option">missing-required-option</a></li>
+</ul>
+<p>Each of these has several restarts:</p>
+<ul>
+<li><a href="#use-value">use-value</a></li>
+<li><a href="#skip-option">skip-option</a></li>
+<li><a href="#reparse-arg">reparse-arg</a></li>
+</ul>
+<p>(See the documentation for <a href="#get-opts">get-opts</a> for the details about each of these restarts.
+The Cookbook chapter on <a href="https://lispcookbook.github.io/cl-cookbook/error_handling.html">Error and Exception
+Handling</a> should be helpful
+if you want to learn about them.)</p>
+<p>Thus, a typical way to use <code>get-opts</code> would be simply wrap the error in <a href="">handler-case</a>:</p>
+<pre><code class="lisp">CL-USER&gt; (handler-case (opts:get-opts '())
+           (error (condition)
+             (format t &quot;~A&quot; condition)
+             (opts:describe)))
+missing required options: &quot;--level&quot;
+Available options:
+  -h, --help               print this help text
+  -v, --verbose            verbose output
+  -l, --level LEVEL (Required)                           the program will run on LEVEL level
+  -o, --output FILE        redirect output to file FILE
+
+NIL
+</code></pre>
+
+<p>You could use <a href="http://www.lispworks.com/documentation/lw50/CLHS/Body/f_getf.htm#getf">getf</a>
+or <a href="http://www.lispworks.com/documentation/HyperSpec/Body/m_destru.htm#destructuring-bind">destructuring-bind</a>
+to obtain the arguments you need:</p>
+<pre><code class="lisp">CL-USER&gt; (defun process-options (&amp;rest options)
+           (handler-case (opts:get-opts options)
+             (error (condition) ; or you could case down on the various conditions above!
+               (format t &quot;~A&quot; condition)
+               (opts:describe))))
+PROCESS-OPTIONS
+CL-USER&gt; (destructuring-bind (&amp;key level help) (process-options &quot;--level&quot; &quot;2&quot; &quot;--help&quot;)
+           (if help
+               (opts:describe)
+               (format t &quot;I see you've supplied level option, you want ~a level!~%&quot; level)))
+
+Available options:
+  -h, --help               print this help text
+  -v, --verbose            verbose output
+  -l, --level LEVEL (Required)                           the program will run on LEVEL level
+  -o, --output FILE        redirect output to file FILE
+
+NIL
+CL-USER&gt; (destructuring-bind (&amp;key level help) (process-options &quot;--level&quot; &quot;2&quot;)
+           (if help
+               (opts:describe)
+               (format t &quot;I see you've supplied level option, you want ~a level!~%&quot; level)))
+I see you've supplied level option, you want 2 level!
+NIL
+</code></pre>
+
+<p>You could also <a href="../iterate/#dsetq">iterate:dsetq</a> to bring the options to global space.</p>
+<pre><code class="lisp">CL-USER&gt; (destructuring-bind (&amp;key verbose level help)
+             (process-options &quot;--level&quot; &quot;2&quot; &quot;--verbose&quot;)
+           (if help
+               (opts:describe) ; assume we have defined *level* and *verbose* previously
+               (dsetq (*verbose* *level*) (list verbose level))))
+(T 2)
+CL-USER&gt; *verbose*
+T
+CL-USER&gt; *level*
+2
+</code></pre>
+
+<h2 id="api-reference">API Reference</h2>
+<h3 id="arg-parser-failed">arg-parser-failed</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>This condition is thrown when some option OPTION wants
+an argument, it's given but cannot be parsed by argument parser.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>raw-arg</strong></p>
+<pre><code class="lisp">Initargs: :RAW-ARG
+Readers: RAW-ARG
+</code></pre>
+
+<h3 id="argv">argv</h3>
+<pre><code class="lisp">Function: (argv)
+</code></pre>
+
+<p>Return a list of program's arguments, including command used to execute
+the program as first elements of the list. Portable across implementations.</p>
+<h3 id="define-opts">define-opts</h3>
+<pre><code class="lisp">Macro: (define-opts &amp;body descriptions)
+</code></pre>
+
+<p>Define command line options. Arguments of this macro must be plists
+containing various parameters. Here we enumerate all allowed parameters:</p>
+<ul>
+<li>
+<p><strong>:name</strong> - keyword that will be included in list returned by <a href="#get-opts">get-opts</a> function if
+actual option is supplied by user.</p>
+</li>
+<li>
+<p><strong>:description</strong> - description of the option (it will be used in <a href="#describe">describe</a>
+function). This argument is optional, but it's recommended to supply it.</p>
+</li>
+<li>
+<p><strong>:short</strong> - single character, short variant of the option. You may omit this
+argument if you supply <code>:long</code> variant of option.</p>
+</li>
+<li>
+<p><strong>:long</strong> - string, long variant of option. You may omit this argument if you
+supply <code>:short</code> variant of option.</p>
+</li>
+<li>
+<p><strong>:arg-parser</strong> - if actual option must take an argument, supply this argument, it
+must be a function that takes a string and parses it.</p>
+</li>
+<li>
+<p><strong>:meta-var</strong> - if actual option requires an argument, this is how it will be
+printed in option description.</p>
+</li>
+</ul>
+<h3 id="describe">describe</h3>
+<pre><code class="lisp">Function: (describe &amp;key prefix suffix usage-of args (stream *standard-output*))
+</code></pre>
+
+<p>Return string describing options of the program that were defined with
+<code>define-opts</code> macro previously. You can supply <code>prefix</code> and <code>suffix</code> arguments
+that will be printed before and after options respectively. If <code>usage-of</code> is
+supplied, it should be a string, name of the program for "Usage: "
+section. This section is only printed if this name is given. If your program
+takes arguments (apart from options), you can specify how to print them in
+"Usage: " section with <code>args</code> option (should be a string designator). Output
+goes to <code>stream</code>.</p>
+<h3 id="exit">exit</h3>
+<pre><code class="lisp">Function: (exit &amp;optional (status 0))
+</code></pre>
+
+<p>Exit the program returning <code>status</code>.</p>
+<h3 id="get-opts">get-opts</h3>
+<pre><code class="lisp">Function: (get-opts &amp;optional options)
+</code></pre>
+
+<p>Parse command line options. If <code>options</code> is given, it should be a list to
+parse. If it's not given, the function will use <code>argv</code> function to get list
+of command line arguments.</p>
+<p>Return two values:</p>
+<ul>
+<li>a list that contains keywords associated with command line options with
+  <code>define-opts</code> macro, and</li>
+<li>a list of free arguments.</li>
+</ul>
+<p>If some option requires an argument, you can use <code>getf</code> to
+test presence of the option and get its argument if the option is present.</p>
+<p>The parser may signal various conditions. Let's list them all specifying
+which restarts are available for every condition, and what kind of
+information the programmer can extract from the conditions.</p>
+<ul>
+<li>
+<p><a href="#unknown-option">unknown-option</a> is thrown when parser encounters unknown (not previously
+defined with <code>define-opts</code>) option. Use the <code>option</code> reader to get name of
+the option (string). Available restarts: </p>
+<ul>
+<li><a href="#use-value">use-value</a>: substitute the option and try again, </li>
+<li><a href="#skip-option">skip-option</a>: ignore the option.</li>
+</ul>
+</li>
+<li>
+<p><a href="#missing-arg">missing-arg</a> is thrown when some option wants an argument, but there is no
+such argument given. Use the <code>option</code> reader to get name of the
+option (string). Available restarts: </p>
+<ul>
+<li><a href="#use-value">use-value</a>: supplied value will be used, </li>
+<li><a href="#skip-option">skip-option</a>: ignore the option.</li>
+</ul>
+</li>
+<li>
+<p><a href="#arg-parser-failed">arg-parser-failed</a> is thrown when some option wants an argument, it's given
+but cannot be parsed by argument parser. Use the <code>option</code> reader to get name
+of the option (string) and <code>raw-arg</code> to get raw string representing the
+argument before parsing. Available restarts: </p>
+<ul>
+<li><a href="#use-value">use-value</a>: supplied value will be used, </li>
+<li><a href="#skip-option">skip-option</a>: ignore the option, </li>
+<li><a href="#reparse-arg">reparse-arg</a>: supplied string will be parsed instead.</li>
+</ul>
+</li>
+<li>
+<p><a href="#missing-required-option">missing-required-option</a> is thrown when some option was required but was
+not given. Use the <code>missing-options</code> reader to get the list of options that
+are missing. Available restarts: </p>
+<ul>
+<li><a href="#use-value">use-value</a>: supplied list of values will be used, </li>
+<li><a href="#skip-option">skip-option</a>: ignore all these options, effectively binding them
+to <code>nil</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="missing-arg">missing-arg</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>This condition is thrown when some option OPTION wants
+an argument, but there is no such argument given.</p>
+<h3 id="missing-options">missing-options</h3>
+<pre><code class="lisp">Generic Function: (missing-options condition)
+</code></pre>
+
+<h3 id="missing-required-option">missing-required-option</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>This condition is thrown when required options are missing.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>missing-options</strong></p>
+<pre><code class="lisp">Initargs: :MISSING-OPTIONS
+Readers: MISSING-OPTIONS
+</code></pre>
+
+<h3 id="option">option</h3>
+<pre><code class="lisp">Generic Function: (option condition)
+</code></pre>
+
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>representation of an option</p>
+<h3 id="raw-arg">raw-arg</h3>
+<pre><code class="lisp">Generic Function: (raw-arg condition)
+</code></pre>
+
+<h3 id="reparse-arg">reparse-arg</h3>
+<h3 id="skip-option">skip-option</h3>
+<h3 id="unknown-option">unknown-option</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>This condition is thrown when parser encounters
+unknown (not previously defined with <code>define-opts</code>) option.</p>
+<h3 id="use-value">use-value</h3>
+<pre><code class="lisp">Function: (use-value value &amp;optional condition)
+</code></pre>
+
+<p>Transfer control and <code>value</code> to a restart named USE-VALUE, or
+return NIL if none exists.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../numcl/" class="btn btn-neutral" title="numcl - Lispy clone of numpy"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../numcl/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

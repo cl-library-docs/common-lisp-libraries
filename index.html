@@ -58,6 +58,12 @@
     <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#libraries-documented-so-far">Libraries documented so far</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#defacto-libraries">Defacto libraries</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#not-yet-defacto">Not yet defacto</a>
+    </li>
+        </ul>
     </li>
         </ul>
     </li>
@@ -76,6 +82,10 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="bordeaux-threads/">bordeaux-threads - Threading</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="cl-who/">cl-who</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="fiveam/">fiveam - Regression Testing Framework</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="hunchentoot/">hunchentoot - Web Server</a>
@@ -86,6 +96,8 @@
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="numcl/">numcl - Lispy clone of numpy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="unix-opts/">unix-opts - cmd line argument parser</a>
                     </li>
                 </ul>
       </div>
@@ -121,6 +133,8 @@
             <div class="section">
               
                 <h1 id="common-lispreadthedocs">common-lisp.readthedocs</h1>
+<p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
+<hr />
 <h2 id="introduction">Introduction</h2>
 <p>Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have <em>some</em> objective component to it.</p>
 <h2 id="libraries">Libraries</h2>
@@ -131,7 +145,7 @@
 
 <p>See <a href="https://www.quicklisp.org/">quicklisp.org</a> for instructions on
 installing quicklisp.</p>
-<p>Optionally, you may want to use <code>add-package-local-nickname</code> the packages for, well, <a href="https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here">adding package local nicknames</a>.</p>
+<p>Optionally, you may want to use <code>trivial-package-local-nicknames</code> for, well, <a href="https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here">adding package local nicknames</a>.</p>
 <pre><code class="lisp">(ql:quickload :trivial-package-local-nicknames)
 (trivial-package-local-nicknames:add-package-local-nickname :a :alexandria)
 ; OR
@@ -143,14 +157,22 @@ installing quicklisp.</p>
 </code></pre>
 
 <h3 id="libraries-documented-so-far">Libraries documented so far</h3>
+<p>See <a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a> for more libraries.</p>
 <p>(See the <a href="https://digikar99.github.io/common-lisp.readthedocs/">html version of this page</a>, rather than the markdown version for the working links below.)</p>
+<h4 id="defacto-libraries">Defacto libraries</h4>
 <ul>
-<li><a href="./alexandria/">alexandria</a> - a utility library [defacto]</li>
-<li><a href="./bordeaux-threads/">bordeaux-threads</a> - library for threading [defacto]</li>
-<li><a href="./hunchentoot/">hunchentoot</a> - web server [defacto]</li>
-<li><a href="./fiveam/">fiveam</a> - regression testing framework [defacto]</li>
-<li><a href="./iterate/">iterate</a> - a lispy extensible alternative to <code>loop</code> [defacto]</li>
+<li><a href="./alexandria/">alexandria</a> - a utility library</li>
+<li><a href="./bordeaux-threads/">bordeaux-threads</a> - library for threading </li>
+<li><a href="./cl-ppcre/">cl-ppcre</a> - regular expressions</li>
+<li><a href="./cl-who/">cl-who</a> - DSL for HTML Markup</li>
+<li><a href="./hunchentoot/">hunchentoot</a> - web server</li>
+<li><a href="./fiveam/">fiveam</a> - regression testing framework</li>
+<li><a href="./iterate/">iterate</a> - a lispy extensible alternative to <code>loop</code></li>
+</ul>
+<h4 id="not-yet-defacto">Not yet defacto</h4>
+<ul>
 <li><a href="./numcl/">numcl</a> - lispy clone of numpy</li>
+<li><a href="./unix-opts/">unix-opts</a> - minimalistic command line options parser</li>
 </ul>
 <h2 id="previous-efforts">Previous Efforts</h2>
 <p>Documentation efforts have been made at:</p>
@@ -237,5 +259,5 @@ installing quicklisp.</p>
 
 <!--
 MkDocs version : 1.1
-Build Date UTC : 2020-03-20 16:03:00
+Build Date UTC : 2020-05-05 12:52:16
 -->

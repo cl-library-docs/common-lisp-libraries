@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>cl-who - common-lisp.readthedocs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "cl-who";
+    var mkdocs_page_input_path = "cl-who.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp.readthedocs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">cl-who</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">GETTING STARTED</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-variables">CONFIGURATION VARIABLES</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#attribute-quote-char">*attribute-quote-char*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#downcase-tokens-p">*downcase-tokens-p*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#empty-attribute-syntax">*empty-attribute-syntax*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-char-p">*escape-char-p*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#html-empty-tag-aware-p">*html-empty-tag-aware-p*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#html-empty-tags">*html-empty-tags*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#html-no-indent-tags">*html-no-indent-tags*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prologue">*prologue*</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#functions-and-macros">FUNCTIONS AND MACROS</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#conc">conc</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#convert-attributes">convert-attributes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#esc">esc</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-char">escape-char</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-char-all">escape-char-all</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-char-iso-8859-1">escape-char-iso-8859-1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-char-minimal">escape-char-minimal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-char-minimal-plus-quotes">escape-char-minimal-plus-quotes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-string">escape-string</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-string-all">escape-string-all</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-string-iso-8859-1">escape-string-iso-8859-1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-string-minimal">escape-string-minimal</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#escape-string-minimal-plus-quotes">escape-string-minimal-plus-quotes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#fmt">fmt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#htm">htm</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#html-mode">html-mode</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#str">str</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-html-output">with-html-output</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-html-output-to-string">with-html-output-to-string</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp.readthedocs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Defacto libraries &raquo;</li>
+        
+      
+    
+    <li>cl-who</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="cl-who">cl-who</h1>
+<p>Version: 1.1.4
+<br/>
+Repository: <a href="https://github.com/edicl/cl-who">edicl/cl-who - Github</a></p>
+<h2 id="getting-started">GETTING STARTED</h2>
+<p>A few example code snippets to produce output to <code>*standard-output*</code> are given below:</p>
+<table>
+
+<tr>
+<td>
+
+A basic demonstration of `cl-who:with-html-output` - using the `htm` (link and explain `htm`)
+
+
+<pre><code class="lisp">(with-html-output (*standard-output* nil :indent t)
+  (loop for (link . title) 
+     in '((&quot;http://zappa.com/&quot; . &quot;Frank Zappa&quot;)
+          (&quot;http://marcusmiller.com/&quot; . &quot;Marcus Miller&quot;)
+          (&quot;http://www.milesdavis.com/&quot; . &quot;Miles Davis&quot;))
+     do (htm (:a :href link (:b (str title)))
+             :br)))
+</code></pre>
+
+
+</td>
+<td>
+
+
+<pre><code class="html">&lt;a href='http://zappa.com/'&gt;
+  &lt;b&gt;Frank Zappa
+  &lt;/b&gt;
+&lt;/a&gt;
+&lt;br /&gt;
+&lt;a href='http://marcusmiller.com/'&gt;
+  &lt;b&gt;Marcus Miller
+  &lt;/b&gt;
+&lt;/a&gt;
+&lt;br /&gt;
+&lt;a href='http://www.milesdavis.com/'&gt;
+  &lt;b&gt;Miles Davis
+  &lt;/b&gt;
+&lt;/a&gt;
+&lt;br /&gt;
+</code></pre>
+
+</td>
+</tr>
+
+<tr>
+<td>
+Use of `esc`, `str` and `fmt` (explain!). Also explain the use of macrolet!
+
+
+<pre><code class="lisp">(with-html-output (*standard-output* nil :indent t)
+  (:h4 &quot;Look at the character entities generated by this example&quot;)
+  (loop for i from 0
+     for string in '(&quot;Fête&quot; &quot;Sørensen&quot; &quot;naïve&quot; &quot;Hühner&quot; &quot;Straße&quot;)
+     do (htm
+         (:p :style (conc &quot;background-color:&quot; (case (mod i 3)
+                                                ((0) &quot;red&quot;)
+                                                ((1) &quot;orange&quot;)
+                                                ((2) &quot;blue&quot;)))
+             (htm (esc string))))))
+</code></pre>
+
+</td>
+
+<td>
+
+<pre><code class="html">&lt;h4&gt;Look at the character entities generated by this example
+&lt;/h4&gt;
+&lt;p style='background-color:red'&gt;F&amp;#xEA;te
+&lt;/p&gt;
+&lt;p style='background-color:orange'&gt;S&amp;#xF8;rensen
+&lt;/p&gt;
+&lt;p style='background-color:blue'&gt;na&amp;#xEF;ve
+&lt;/p&gt;
+&lt;p style='background-color:red'&gt;H&amp;#xFC;hner
+&lt;/p&gt;
+&lt;p style='background-color:orange'&gt;Stra&amp;#xDF;e
+&lt;/p&gt;
+</code></pre>
+
+</td>
+</tr>
+
+</table>
+
+<h2 id="configuration-variables">CONFIGURATION VARIABLES</h2>
+<h4 id="attribute-quote-char">*attribute-quote-char*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Quote character for attributes.</p>
+<h4 id="downcase-tokens-p">*downcase-tokens-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>If NIL, a keyword symbol representing a tag or attribute name will
+not be automatically converted to lowercase.  If T, the tag and
+attribute name will be converted to lowercase only if it is in the
+same case. This is useful when one needs to output case sensitive
+XML.</p>
+<h4 id="empty-attribute-syntax">*empty-attribute-syntax*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Set this to t to enable attribute minimization (also called
+'boolean attributes', or 'empty attribute syntax' according to the w3
+html standard). In XHTML attribute minimization is forbidden, and all
+attributes must have a value. Thus in XHTML boolean attributes must be
+defined as <input disabled='disabled' />. In HTML5 boolean attributes
+can be defined as <input disabled></p>
+<h4 id="escape-char-p">*escape-char-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Used by ESCAPE-STRING to test whether a character should be escaped.</p>
+<h4 id="html-empty-tag-aware-p">*html-empty-tag-aware-p*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Set this to NIL to if you want to use CL-WHO as a strict XML
+generator.  Otherwise, CL-WHO will only write empty tags listed
+in <em>HTML-EMPTY-TAGS</em> as <tag/> (XHTML mode) or <tag> (SGML
+mode and HTML5 mode).  For all other tags, it will always generate
+<tag></tag>.</p>
+<h4 id="html-empty-tags">*html-empty-tags*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The list of HTML tags that should be output as empty tags.
+See <em>HTML-EMPTY-TAG-AWARE-P</em>.</p>
+<h4 id="html-no-indent-tags">*html-no-indent-tags*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The list of HTML tags that should disable indentation inside them. The initial
+value is a list containing only :PRE and :TEXTAREA.</p>
+<h4 id="prologue">*prologue*</h4>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>This is the first line that'll be printed if the :PROLOGUE keyword
+argument is T</p>
+<h2 id="functions-and-macros">FUNCTIONS AND MACROS</h2>
+<h4 id="conc">conc</h4>
+<pre><code class="lisp">Function: (conc &amp;rest string-list)
+</code></pre>
+
+<p>Concatenates all arguments which should be string into one string.</p>
+<h4 id="convert-attributes">convert-attributes</h4>
+<pre><code class="lisp">Function: (convert-attributes attr-list)
+</code></pre>
+
+<p>Helper function for CONVERT-TAG-TO-STRING-LIST which converts the
+alist ATTR-LIST of attributes into a list of strings and/or Lisp
+forms.</p>
+<h4 id="esc">esc</h4>
+<h4 id="escape-char">escape-char</h4>
+<pre><code class="lisp">Function: (escape-char char &amp;key (test *escape-char-p*))
+</code></pre>
+
+<p>Returns an escaped version of the character CHAR if CHAR satisfies
+the predicate TEST.  Always returns a string.</p>
+<h4 id="escape-char-all">escape-char-all</h4>
+<pre><code class="lisp">Function: (escape-char-all char)
+</code></pre>
+
+<p>Escapes characters which aren't in the 7-bit ASCII character set.</p>
+<h4 id="escape-char-iso-8859-1">escape-char-iso-8859-1</h4>
+<pre><code class="lisp">Function: (escape-char-iso-8859-1 char)
+</code></pre>
+
+<p>Escapes characters that aren't defined in ISO-8859-9.</p>
+<h4 id="escape-char-minimal">escape-char-minimal</h4>
+<pre><code class="lisp">Function: (escape-char-minimal char)
+</code></pre>
+
+<p>Escapes only #&lt;, #&gt;, and #&amp; characters.</p>
+<h4 id="escape-char-minimal-plus-quotes">escape-char-minimal-plus-quotes</h4>
+<pre><code class="lisp">Function: (escape-char-minimal-plus-quotes char)
+</code></pre>
+
+<p>Like ESCAPE-CHAR-MINIMAL but also escapes quotes.</p>
+<h4 id="escape-string">escape-string</h4>
+<pre><code class="lisp">Function: (escape-string string &amp;key (test *escape-char-p*))
+</code></pre>
+
+<p>Escape all characters in STRING which pass TEST. This function is
+not guaranteed to return a fresh string.  Note that you can pass NIL
+for STRING which'll just be returned.</p>
+<h4 id="escape-string-all">escape-string-all</h4>
+<pre><code class="lisp">Function: (escape-string-all string)
+</code></pre>
+
+<p>Escapes all characters in STRING which aren't in the 7-bit ASCII
+character set.</p>
+<h4 id="escape-string-iso-8859-1">escape-string-iso-8859-1</h4>
+<pre><code class="lisp">Function: (escape-string-iso-8859-1 string)
+</code></pre>
+
+<p>Escapes all characters in STRING which aren't defined in ISO-8859-1.</p>
+<h4 id="escape-string-minimal">escape-string-minimal</h4>
+<pre><code class="lisp">Function: (escape-string-minimal string)
+</code></pre>
+
+<p>Escapes only #&lt;, #&gt;, and #&amp; in STRING.</p>
+<h4 id="escape-string-minimal-plus-quotes">escape-string-minimal-plus-quotes</h4>
+<pre><code class="lisp">Function: (escape-string-minimal-plus-quotes string)
+</code></pre>
+
+<p>Like ESCAPE-STRING-MINIMAL but also escapes quotes.</p>
+<h4 id="fmt">fmt</h4>
+<h4 id="htm">htm</h4>
+<h4 id="html-mode">html-mode</h4>
+<pre><code class="lisp">Function: (html-mode)
+</code></pre>
+
+<p>Returns the current HTML mode. :SGML for (SGML-)HTML, :XML for
+XHTML and :HTML5 for HTML5 (HTML syntax).</p>
+<h4 id="str">str</h4>
+<h4 id="with-html-output">with-html-output</h4>
+<pre><code class="lisp">Macro: (with-html-output (var &amp;optional stream &amp;rest rest &amp;key prologue indent) &amp;body body)
+</code></pre>
+
+<p>Transform the enclosed BODY consisting of HTML as s-expressions
+into Lisp code to write the corresponding HTML as strings to VAR -
+which should either hold a stream or which'll be bound to STREAM if
+supplied.</p>
+<h4 id="with-html-output-to-string">with-html-output-to-string</h4>
+<pre><code class="lisp">Macro: (with-html-output-to-string (var &amp;optional string-form &amp;key prologue
+                                    indent) &amp;body body)
+</code></pre>
+
+<p>Transform the enclosed BODY consisting of HTML as s-expressions
+into Lisp code which creates the corresponding HTML as a string.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../fiveam/" class="btn btn-neutral float-right" title="fiveam - Regression Testing Framework">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../cl-ppcre/" class="btn btn-neutral" title="cl-ppcre - Regular Expressions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../cl-ppcre/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../fiveam/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

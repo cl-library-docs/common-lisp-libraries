@@ -60,7 +60,7 @@
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">cl-ppcre - Regular Expressions</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">GETTING STARTED</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#using-perl-regex">Using perl regex</a>
     </li>
@@ -70,7 +70,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#functions-and-macros">Functions and Macros</a>
+    <li class="toctree-l2"><a class="reference internal" href="#functions-and-macros">FUNCTIONS AND MACROS</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#all-matches">all-matches</a>
     </li>
@@ -124,7 +124,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#configuration-variables">Configuration Variables</a>
+    <li class="toctree-l2"><a class="reference internal" href="#configuration-variables">CONFIGURATION VARIABLES</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#allow-named-registers">*allow-named-registers*</a>
     </li>
@@ -142,11 +142,11 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#support">Support</a>
+    <li class="toctree-l2"><a class="reference internal" href="#support">SUPPORT</a>
     </li>
     </ul>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
                     </li>
@@ -204,13 +204,13 @@
 Nickname: ppcre
 <br/>
 Repository: <a href="https://github.com/edicl/cl-ppcre">edicl/cl-ppcre - Github</a></p>
-<p><em>This documentation is modified to markdown from the <a href="https://edicl.github.io/cl-ppcre">excellent official documentation</a> as of 4th May 2020.</em></p>
+<p><em>This documentation is possible the <a href="https://edicl.github.io/cl-ppcre">excellent official documentation</a> as of 4th May 2020.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
 <hr />
-<p>CL-PPCRE is a Portable Perl-compatible Regular Expressions library for Common Lisp.
+<p>CL-PPCRE is a Portable Perl-Compatible Regular Expressions library for Common Lisp.
 This is also thread-safe, and allows specifying <a href="#using-s-expressions">regular expressions using
 S-expressions</a>.</p>
-<h2 id="getting-started">Getting Started</h2>
+<h2 id="getting-started">GETTING STARTED</h2>
 <h3 id="using-perl-regex">Using perl regex</h3>
 <p>Per the name, <code>cl-ppcre</code> is more or less compatible with perl 5.8 including
 extended features like non-greedy repetitions, positive and negative
@@ -334,12 +334,10 @@ Evaluation took:
   100.00% CPU
   2,463,959,814 processor cycles
   50,000,032 bytes consed
-  ```
+</code></pre>
 
-But still (more than) 5 times faster than python:
-
-```sh
-time python3 -c 'import re; x = re.search(&quot;([xy])*&quot;, &quot;x&quot;*50000000)'
+<p>But still (more than) 5 times faster than python:</p>
+<pre><code class="sh">time python3 -c 'import re; x = re.search(&quot;([xy])*&quot;, &quot;x&quot;*50000000)'
 
 real    0m7.458s
 user    0m4.563s
@@ -358,7 +356,7 @@ sys     0m0.036s
 - or copying the developments in the perl and/or python world.</p>
 <p>Perhaps, see the <a href="https://edicl.github.io/cl-ppcre/#blabla">manual</a> for hints on speeding things
 up.</p>
-<h2 id="functions-and-macros">Functions and Macros</h2>
+<h2 id="functions-and-macros">FUNCTIONS AND MACROS</h2>
 <h3 id="all-matches">all-matches</h3>
 <pre><code class="lisp">Function: (all-matches regex target-string
             &amp;key (start 0) (end (length target-string)))
@@ -666,7 +664,7 @@ equivalent), trailing empty strings are removed from the result list.
 If <code>regex</code> matches an empty string the scan is continued one position
 behind this match.  If <code>sharedp</code> is true, the substrings may share
 structure with <code>target-string</code>.</p>
-<h2 id="configuration-variables">Configuration Variables</h2>
+<h2 id="configuration-variables">CONFIGURATION VARIABLES</h2>
 <h3 id="allow-named-registers">*allow-named-registers*</h3>
 <p>Whether the parser should support AllegroCL's named registers
 <code>(?&lt;name&gt;"&lt;regex&gt;")</code> and back-reference \k<name> syntax.</p>
@@ -696,7 +694,7 @@ implementations like AllegroCL, CLISP, LispWorks, or SBCL.</p>
 <h3 id="use-bmh-matchers">*use-bmh-matchers*</h3>
 <p>Whether the scanners created by <a href="#create-scanner">create-scanner</a> should use the (fast
 but large) Boyer-Moore-Horspool matchers.</p>
-<h2 id="support">Support</h2>
+<h2 id="support">SUPPORT</h2>
 <p>The development version of cl-ppcre can be found <a href="https://github.com/edicl/cl-ppcre">on
 github</a>. Please use the github issue
 tracking system to submit bug reports. Patches are welcome, please use
@@ -710,7 +708,7 @@ first</a>.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../cl-who/" class="btn btn-neutral float-right" title="cl-who">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../cl-who/" class="btn btn-neutral float-right" title="cl-who - DSL for Markup">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../bordeaux-threads/" class="btn btn-neutral" title="bordeaux-threads - Threading"><span class="icon icon-circle-arrow-left"></span> Previous</a>

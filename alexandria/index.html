@@ -56,9 +56,9 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">alexandria - Commonly Used Utilities</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#alexandria">Alexandria</a>
+    <li class="toctree-l2"><a class="reference internal" href="#alexandria">ALEXANDRIA</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#1-hash-tables">1. Hash Tables</a>
+    <li class="toctree-l2"><a class="reference internal" href="#1-hash-tables">1. HASH TABLES</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#ensure-gethash">ensure-gethash</a>
     </li>
@@ -82,7 +82,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#2-data-and-control-flow">2.  Data and Control Flow</a>
+    <li class="toctree-l2"><a class="reference internal" href="#2-data-and-control-flow">2. DATA AND CONTROL FLOW</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#define-constant">define-constant</a>
     </li>
@@ -124,7 +124,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#3-conses">3. Conses</a>
+    <li class="toctree-l2"><a class="reference internal" href="#3-conses">3. CONSES</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#proper-list">proper-list</a>
     </li>
@@ -190,7 +190,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#4-sequences">4. Sequences</a>
+    <li class="toctree-l2"><a class="reference internal" href="#4-sequences">4. SEQUENCES</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#proper-sequence">proper-sequence</a>
     </li>
@@ -242,7 +242,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#6-macro-writing">6. Macro Writing</a>
+    <li class="toctree-l2"><a class="reference internal" href="#6-macro-writing">6. MACRO WRITING</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#once-only">once-only</a>
     </li>
@@ -258,7 +258,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#7-symbols">7. Symbols</a>
+    <li class="toctree-l2"><a class="reference internal" href="#7-symbols">7. SYMBOLS</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#ensure-symbol">ensure-symbol</a>
     </li>
@@ -274,7 +274,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#8-arrays">8. Arrays</a>
+    <li class="toctree-l2"><a class="reference internal" href="#8-arrays">8. ARRAYS</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#array-index">array-index</a>
     </li>
@@ -282,7 +282,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#9-types">9. Types</a>
+    <li class="toctree-l2"><a class="reference internal" href="#9-types">9. TYPES</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#string-designator">string-designator</a>
     </li>
@@ -294,7 +294,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#10-numbers">10. Numbers</a>
+    <li class="toctree-l2"><a class="reference internal" href="#10-numbers">10. NUMBERS</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#maxf">maxf</a>
     </li>
@@ -334,7 +334,7 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
                     </li>
@@ -393,7 +393,7 @@ Repository: <a href="https://gitlab.common-lisp.net/alexandria/alexandria">alexa
 <p><em>This documentation is modified to markdown from <a href="https://common-lisp.net/project/alexandria/draft/alexandria.html">here</a> on 01 March, 2020.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
 <hr />
-<h2 id="alexandria">Alexandria</h2>
+<h2 id="alexandria">ALEXANDRIA</h2>
 <p>Alexandria software and associated documentation are in the public
 domain:</p>
 <p>Authors dedicate this work to public domain, for the benefit of the
@@ -427,7 +427,7 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
 <hr />
-<h2 id="1-hash-tables">1. Hash Tables</h2>
+<h2 id="1-hash-tables">1. HASH TABLES</h2>
 <h3 id="ensure-gethash">ensure-gethash</h3>
 <pre><code class="lisp">Macro: (ensure-gethash key hash-table &amp;optional default)
 </code></pre>
@@ -497,7 +497,7 @@ using the <code>hash-table-initargs</code>.</p>
 and values of the property list <code>plist</code>. Hash table is initialized
 using the <code>hash-table-initargs</code>.</p>
 <hr />
-<h2 id="2-data-and-control-flow">2.  Data and Control Flow</h2>
+<h2 id="2-data-and-control-flow">2. DATA AND CONTROL FLOW</h2>
 <h3 id="define-constant">define-constant</h3>
 <pre><code class="lisp">Macro: (define-constant name initial-value &amp;key test documentation)
 </code></pre>
@@ -757,7 +757,7 @@ arguments it is called with to <code>function</code>.</p>
 <p>Returns a function that applies the arguments it
 is called with and <code>arguments</code> to <code>function</code>.</p>
 <hr />
-<h2 id="3-conses">3. Conses</h2>
+<h2 id="3-conses">3. CONSES</h2>
 <h3 id="proper-list">proper-list</h3>
 <p>Type designator for proper lists. Implemented
 as a <code>satisfies</code> type, hence not recommended for performance intensive
@@ -961,7 +961,7 @@ some element of <code>list1</code>. Otherwise returns false.</p>
 set, <code>nil</code> otherwise. A list denotes a set if each element of the list
 is unique under <code>key</code> and <code>test</code>.</p>
 <hr />
-<h2 id="4-sequences">4. Sequences</h2>
+<h2 id="4-sequences">4. SEQUENCES</h2>
 <h3 id="proper-sequence">proper-sequence</h3>
 <p>Type designator for proper sequences,
 that is proper lists and sequences that are not lists.</p>
@@ -1148,7 +1148,7 @@ denoted by <code>pathname</code> as a fresh string.</p>
 <p>Read <code>pathname</code> into a
 freshly allocated (unsigned-byte 8) vector.</p>
 <hr />
-<h2 id="6-macro-writing">6. Macro Writing</h2>
+<h2 id="6-macro-writing">6. MACRO WRITING</h2>
 <h3 id="once-only">once-only</h3>
 <pre><code class="lisp">Macro: (once-only specs &amp;body forms)
 </code></pre>
@@ -1243,7 +1243,7 @@ lambda-list, returning as multiple values:</p>
 
 <p>Signals a <code>program-error</code> is the lambda-list is malformed.</p>
 <hr />
-<h2 id="7-symbols">7. Symbols</h2>
+<h2 id="7-symbols">7. SYMBOLS</h2>
 <h3 id="ensure-symbol">ensure-symbol</h3>
 <pre><code class="lisp">Function: (ensure-symbol name &amp;optional package)
 </code></pre>
@@ -1296,7 +1296,7 @@ each generated as if with a call to <code>make-gensym</code>, using the second
 <p>Concatenate together the names of some
 strings and symbols, producing a symbol in the current package.</p>
 <hr />
-<h2 id="8-arrays">8. Arrays</h2>
+<h2 id="8-arrays">8. ARRAYS</h2>
 <h3 id="array-index">array-index</h3>
 <pre><code>Type designator for an index into array of
 `length:` an integer between `0` (inclusive) and `length` (exclusive).
@@ -1319,7 +1319,7 @@ adjustable)
 same fill-pointer and adjustability (if any) as the original, unless
 overridden by the keyword arguments.</p>
 <hr />
-<h2 id="9-types">9. Types</h2>
+<h2 id="9-types">9. TYPES</h2>
 <h3 id="string-designator">string-designator</h3>
 <p>A string designator type. A string
 designator is either a string, a symbol, or a character.</p>
@@ -1343,7 +1343,7 @@ returns true when its argument is of <code>type</code>.</p>
 type equality could be reliably determined: primary value of <code>nil</code> and
 secondary value of <code>t</code> indicates that the types are not equivalent.</p>
 <hr />
-<h2 id="10-numbers">10. Numbers</h2>
+<h2 id="10-numbers">10. NUMBERS</h2>
 <h3 id="maxf">maxf</h3>
 <pre><code class="lisp">Macro: (maxf place &amp;rest numbers env)
 </code></pre>

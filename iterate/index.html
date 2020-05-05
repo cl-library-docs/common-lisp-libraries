@@ -60,7 +60,7 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
                     </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
                     </li>
@@ -68,9 +68,9 @@
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">iterate - Psuedocodic Iteration</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#highlights">Highlights</a>
+    <li class="toctree-l2"><a class="reference internal" href="#highlights">HIGHLIGHTS</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#other-points">Other Points</a>
+    <li class="toctree-l2"><a class="reference internal" href="#other-points">OTHER POINTS</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#notes-for-myself-indications-of-incomplete-documentation">Notes for myself - indications of incomplete documentation</a>
     </li>
@@ -80,7 +80,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#api-clause-reference">API (Clause) Reference</a>
+    <li class="toctree-l2"><a class="reference internal" href="#api-clause-reference">API (CLAUSE) REFERENCE</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#accumulate">accumulate</a>
     </li>
@@ -190,9 +190,7 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#other-resources-on-iterate">Other Resources on Iterate</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#also-check-out">Also check out</a>
+    <li class="toctree-l2"><a class="reference internal" href="#other-resources-on-iterate">OTHER RESOURCES ON ITERATE</a>
     </li>
     </ul>
                     </li>
@@ -249,7 +247,7 @@ Repository: <a href="https://gitlab.common-lisp.net/iterate/iterate">iterate/ite
 <p><code>iterate</code> is a powerful iteration facility for Common Lisp, and a alternative to <code>loop</code>. As opposed to <code>loop</code>, <code>iterate</code> is more lispy, extensible, besides being more powerful.</p>
 <p>See <a href="https://common-lisp.net/project/iterate/index.html">The Iterate Manual</a> for a more detailed explanation of the various facilities.</p>
 <p>For a tutorial on looping in Common Lisp, check out <a href="http://lispcookbook.github.io/cl-cookbook/iteration.html">Loops, Iterate and Mapping - The Common Lisp Cookbook</a>.</p>
-<h2 id="highlights">Highlights</h2>
+<h2 id="highlights">HIGHLIGHTS</h2>
 <ul>
 <li><a href="#defclause-sequence">def*</a>: extensibility</li>
 <li><a href="#display-iterate-clauses">display-iterate-clauses</a>: quick help for clauses</li>
@@ -261,7 +259,7 @@ Repository: <a href="https://gitlab.common-lisp.net/iterate/iterate">iterate/ite
 <li><a href="#in">in</a>: <code>loop</code> equivalent can be quite verbose</li>
 <li>there's no support for "true" parallel assignment - see <a href="#with">with</a></li>
 </ul>
-<h2 id="other-points">Other Points</h2>
+<h2 id="other-points">OTHER POINTS</h2>
 <ul>
 <li><code>iterate</code> does not declare variables unless asked to. See <a href="https://common-lisp.net/project/iterate/doc/Types-and-Declarations.html">Types and Declarations</a>.</li>
 <li><code>into</code><em><code>var</code></em> stores the value into <em><code>var</code></em> instead of returning it.</li>
@@ -279,7 +277,7 @@ Repository: <a href="https://gitlab.common-lisp.net/iterate/iterate">iterate/ite
 <p>Otherwise <a href="https://common-lisp.net/project/iterate/index.html">head over here</a>.</p>
 <h3 id="accumulation-vs-reduction">Accumulation vs Reduction</h3>
 <p>The differences between accumulate and reducing are slight. One difference is that the functions take their arguments in a different order. Another is that in the absence of init-val, accumulate will use nil, whereas reducing will generate different code that avoids any dependence on the initial value. The reason for having both clauses is that one usually thinks of reductions (like sum) and accumulations (like collect) as different beasts.</p>
-<h2 id="api-clause-reference">API (Clause) Reference</h2>
+<h2 id="api-clause-reference">API (CLAUSE) REFERENCE</h2>
 <h3 id="accumulate">accumulate</h3>
 <p><code>accumulate</code><em><code>expr</code></em><code>by</code><em><code>func</code></em><code>&amp;optional initial-value</code><em><code>init-val</code></em><code>into</code><em><code>var</code></em></p>
 <p>This is a general-purpose accumulation clause. func should be a function of two arguments, the value of expr and the value accumulated so far in the iteration, and it should return the updated value. If no initial value is supplied, nil is used.</p>
@@ -783,15 +781,11 @@ CL-USER&gt; (iter (with i = 1)
 </code></pre>
 
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Variable-Binding-and-Setting.html">Variable Binding and Setting</a> and <a href="https://common-lisp.net/project/iterate/doc/Parallel-Binding-and-Stepping.html#Parallel-Binding-and-Stepping">Parallel Binding and Stepping</a>.</p>
-<h2 id="other-resources-on-iterate">Other Resources on Iterate</h2>
+<h2 id="other-resources-on-iterate">OTHER RESOURCES ON ITERATE</h2>
 <ul>
 <li><a href="https://common-lisp.net/project/iterate/index.html">The Iterate Manual</a></li>
 <li><a href="https://items.sjbach.com/211/comparing-loop-and-iterate">Comparing LOOP and ITERATE</a></li>
 <li><a href="https://sites.google.com/site/sabraonthehill/loop-v-iter">Loop v Iterate - SabraOnTheHill</a></li>
-</ul>
-<h2 id="also-check-out">Also check out</h2>
-<ul>
-<li></li>
 </ul>
 <hr />
 <p>[DLI]: appendix/Don't Loop, Iterate</p>

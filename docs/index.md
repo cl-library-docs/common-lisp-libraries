@@ -44,7 +44,7 @@ See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 - [alexandria](./alexandria/) - a utility library
 - [bordeaux-threads](./bordeaux-threads/) - library for threading 
 - [cl-ppcre](./cl-ppcre/) - regular expressions
-- [cl-who](./cl-who/) - DSL for HTML Markup
+- [cl-who](./cl-who/) - DSL for Markup
 - [hunchentoot](./hunchentoot/) - web server
 - [fiveam](./fiveam/) - regression testing framework
 - [iterate](./iterate/) - a lispy extensible alternative to `loop`

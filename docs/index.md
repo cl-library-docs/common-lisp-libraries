@@ -48,6 +48,7 @@ See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 - [hunchentoot](./hunchentoot/) - web server
 - [fiveam](./fiveam/) - regression testing framework
 - [iterate](./iterate/) - a lispy extensible alternative to `loop`
+- [postmodern](./postmodern/)
 
 #### Not yet defacto
 

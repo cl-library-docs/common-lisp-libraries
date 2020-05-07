@@ -16,6 +16,7 @@ nav:
       - fiveam.md
       - hunchentoot.md
       - iterate.md
+      - postmodern.md
     - Not yet defacto:
       - numcl.md
       - unix-opts.md

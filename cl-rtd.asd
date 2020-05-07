@@ -14,7 +14,7 @@
                (:file "utilities")
                (:file "variables")
                (:file "functions") ; functions, macros, generic functions
-               (:file "classes")
+               (:file "types")
                (:file "md-file")))
 
 ;;; Why didn't I use docparser or declt?

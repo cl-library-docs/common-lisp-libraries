@@ -1,5 +1,7 @@
 (in-package :cl-rtd)
 
+(reader:enable-reader-syntax 'lambda 'get-val)
+
 (defun split-and-clean-slots (slots-doc)
   (-<> (str:replace-all "    " "4SPACES" slots-doc)
     (str:split "  " <> :omit-nulls t)
@@ -130,7 +132,7 @@
                             "Class")
                            ((subtypep class (find-class 'condition))
                             "Condition")
-                           (t (error "Non-exhaustive cases: ~D" class))))
+                           (t (signal "Non-exhaustive cases: ~D" class))))
              (when docstring
                (conc (requote-with-backquote docstring)
                      #\newline

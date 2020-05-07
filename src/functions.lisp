@@ -3,14 +3,26 @@
 ;; This file gets the documentation of Functions, Macros and Generic Functions
 (reader:enable-reader-syntax 'lambda 'get-val)
 
+(defun arglist-symbols (arg-list)
+  (let ((special-symbols '(&optional &key)))
+    (iter 
+      (for elt in arg-list)
+      (for linear
+           initially nil
+           then (or linear (member elt special-symbols)))
+      (cond ((member elt special-symbols) nil)
+            (linear
+             (collect (etypecase elt
+                        (symbol elt)
+                        (list (car elt)))))
+            ((listp elt) (appending (arglist-symbols elt)))
+            (t (collect elt))))))
+
 (defmethod format-documentation ((slot (eql 'function)) symbol
                                  &optional (docstring (documentation symbol slot)))
   (when (fboundp symbol)
-    (let* ((args (swank/backend:arglist symbol))
-           (arg-symbols (mapcar λ(etypecase -
-                                   (symbol -)
-                                   (list (car -)))
-                                args)))
+    (let* ((arg-list (swank/backend:arglist symbol))
+           (arg-symbols (arglist-symbols arg-list)))
       (ppcre-let ((quote-args
                    (let ((symbol (subseq target-string [reg-starts 0] [reg-ends 0])))
                      (if (and (string-upcase-p symbol)
@@ -32,7 +44,7 @@
                                     (find-class 'standard-generic-function))
                              "Generic Function")
                             (t "Function"))
-                      (cons symbol args))
+                      (cons symbol arg-list))
               (when docstring          
                 (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,]*)" docstring #'quote-args)
                   ;; Usually, docstring contain symbols in upcase formats. However,

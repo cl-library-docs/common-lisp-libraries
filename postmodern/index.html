@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>postmodern - common-lisp.readthedocs</title>
+  <title>postmodern - PostgreSQL programming interace - common-lisp.readthedocs</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -18,7 +18,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "postmodern";
+    var mkdocs_page_name = "postmodern - PostgreSQL programming interace";
     var mkdocs_page_input_path = "postmodern.md";
     var mkdocs_page_url = null;
   </script>
@@ -68,7 +68,7 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
                     </li>
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">postmodern</a>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">postmodern - PostgreSQL programming interace</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#getting-started">GETTING STARTED</a>
         <ul>
@@ -108,7 +108,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#max-pool-size">*max-pool-size*</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#table-name">*table-name*</a>
+    <li class="toctree-l3"><a class="reference internal" href="#table-name">*table-name*,</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#table-symbol">*table-symbol*</a>
     </li>
@@ -128,13 +128,11 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#abort-hooks">abort-hooks</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#abort-logical-transaction">abort-logical-transaction</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#abort-transaction">abort-transaction</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#bigint">bigint</a>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#bloat-measurement">bloat-measurement</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#bytea">bytea</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#cache-hit-ratio">cache-hit-ratio</a>
     </li>
@@ -154,6 +152,8 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#commit-hooks">commit-hooks</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#commit-logical-transaction">commit-logical-transaction</a>
+    </li>
     <li class="toctree-l3"><a class="reference internal" href="#commit-transaction">commit-transaction</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#connect">connect</a>
@@ -164,13 +164,9 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#create-all-tables">create-all-tables</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#create-index">create-index</a>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#create-package-tables">create-package-tables</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#create-schema">create-schema</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#create-sequence">create-sequence</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#create-table">create-table</a>
     </li>
@@ -187,8 +183,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#dao-table-name">dao-table-name</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#database-connection">database-connection</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#database-connection-error">database-connection-error</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#database-error">database-error</a>
     </li>
@@ -211,8 +205,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#database-size">database-size</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#database-version">database-version</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#db-null">db-null</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#define-dao-finalization">define-dao-finalization</a>
     </li>
@@ -382,9 +374,7 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#set-search-path">set-search-path</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#smallint">smallint</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#split-fully-qualified-tablename">split-fully-qualified-tablename</a>
+    <li class="toctree-l3"><a class="reference internal" href="#split-fully-qualified-table-name">split-fully-qualified-table-name</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#sql">sql</a>
     </li>
@@ -403,8 +393,6 @@
     <li class="toctree-l3"><a class="reference internal" href="#table-size">table-size</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#terminate-backend">terminate-backend</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#text">text</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#unused-indexes">unused-indexes</a>
     </li>
@@ -465,7 +453,7 @@
         
       
     
-    <li>postmodern</li>
+    <li>postmodern - PostgreSQL programming interace</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -476,11 +464,13 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="postmodern">postmodern</h1>
+                <h1 id="postmodern-postgresql-programming-interace">postmodern - PostgreSQL programming interace</h1>
 <p>Version: 1.30
 <br/>
+Nickname: pomo
+<br/>
 Repository: <a href="https://github.com/marijnh/Postmodern">marijnh/Postmodern - Github</a></p>
-<p><em>This page was possible due to the excellent <a href="https://edicl.github.io/hunchentoot/">official documentation</a> as well as the page on <a href="http://lispcookbook.github.io/cl-cookbook/web.html">Web Development on The Common Lisp Cookbook</a>.</em></p>
+<p><em>This page was possible due to the excellent <a href="https://edicl.github.io/hunchentoot/">official documentation</a> as well as the page on <a href="https://marijnhaverbeke.nl/postmodern/postmodern.html">Web Development on The Common Lisp Cookbook</a>.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
 <hr />
 <p>Postmodern is a Common Lisp library for interacting with <a href="https://postgresql.org">PostgreSQL
@@ -820,17 +810,28 @@ See the <a href="https://marijnhaverbeke.nl/postmodern/s-sql.html">S-SQL referen
 <pre><code class="lisp">Variable
 </code></pre>
 
-<p>When set to t, ensured-prepared will overwrite prepared statements having
-the same name if the query statement itself in the postmodern meta connection
-is different than the query statement provided to ensure-prepared.</p>
+<p>When set to t, ensured-prepared will overwrite prepared statements
+having the same name if the query statement itself in the postmodern
+meta connection is different than the query statement provided to
+ensure-prepared.</p>
 <h3 id="current-logical-transaction">*current-logical-transaction*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>This is bound to the current transaction-handle or savepoint-handle
+instance representing the innermost open logical transaction.</p>
 <h3 id="database">*database*</h3>
 <pre><code class="lisp">Variable
 </code></pre>
 
-<p>Special holding the current database. Most functions and macros
-operating on a database assume this contains a connected database.</p>
+<p>Special variable holding the current database. Most functions and macros
+operating on a database assume this binds to a connected database.</p>
 <h3 id="default-use-ssl">*default-use-ssl*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The default for connect's use-ssl argument. This starts at :no. If you
+set it to anything else, be sure to also load the CL+SSL library.</p>
 <h3 id="escape-sql-names-p">*escape-sql-names-p*</h3>
 <pre><code class="lisp">Variable
 </code></pre>
@@ -841,18 +842,28 @@ only for reserved words. Setting it to :literal will cause to-sql-name to
 escape reserved words,but will not make other changes such as changing
 forward slash to underscore.</p>
 <h3 id="ignore-unknown-columns">*ignore-unknown-columns*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Normally, when get-dao, select-dao, or query-dao finds a column in the
+database that's not in the DAO class, it will raise an error. Setting
+this variable to a non-NIL will cause it to simply ignore the unknown
+column.</p>
 <h3 id="isolation-level">*isolation-level*</h3>
 <h3 id="max-pool-size">*max-pool-size*</h3>
 <pre><code class="lisp">Variable
 </code></pre>
 
-<p>The maximum amount of connection that will be kept in a single
-pool, or NIL for no maximum.</p>
-<h3 id="table-name">*table-name*</h3>
+<p>Set the maximum amount of connections kept in a single connection pool,
+where a pool consists of all the stored connections with the exact same
+connect arguments. Defaults to NIL, which means there is no maximum.</p>
+<h3 id="table-name">*table-name*,</h3>
 <pre><code class="lisp">Variable
 </code></pre>
 
-<p>Used inside <a href="#deftable">deftable</a> to find the name of the table being defined.</p>
+<p>These variables are bound to the relevant name and symbol while the
+forms of a table definition are evaluated. Can be used to define
+shorthands like the ones below.</p>
 <h3 id="table-symbol">*table-symbol*</h3>
 <pre><code class="lisp">Variable
 </code></pre>
@@ -863,27 +874,39 @@ pool, or NIL for no maximum.</p>
 <pre><code class="lisp">Function: (!dao-def)
 </code></pre>
 
-<p>Used inside a <a href="#deftable">deftable</a> form. Define this table using the
-corresponding DAO class' slots.</p>
+<p>Should only be used inside deftable's body. Adds the result of calling
+dao-table-definition on <strong>table-symbol</strong> to the definition.</p>
 <h3 id="foreign">!foreign</h3>
-<pre><code class="lisp">Function: (!foreign target fields &amp;rest target-fields/on-delete/on-update/deferrable/initially-deferred)
+<pre><code class="lisp">Function: (!foreign target fields &amp;rest
+ target-fields/on-delete/on-update/deferrable/initially-deferred)
 </code></pre>
 
-<p>Used inside a <a href="#deftable">deftable</a> form. Define a foreign key on this table.
-Pass a table the index refers to, a list of fields or single field in
-<em>this</em> table, and, if the fields have different names in the table
-referred to, another field or list of fields for the target table, or
-:primary-key to indicate that the other table's primary key should be
-referenced.</p>
+<p>Add a foreign key to the table being defined. target-table is the
+referenced table. columns is a list of column names or single name in
+this table, and, if the columns have different names in the referenced
+table, target-columns must be another list of column names or single
+column name of the target-table, or :primary-key to denote the column(s)
+of the target-table's primary key as referenced column(s).</p>
+<p>The on-delete and on-update arguments can be used to specify ON DELETE
+and ON UPDATE actions, as per the keywords allowed in create-table. In
+addition, the deferrable and initially-deferred arguments can be used to
+indicate whether constraint checking can be deferred until the current
+transaction completed, and whether this should be done by default. Note
+that none of these are really &amp;key arguments, but rather are picked out
+of a &amp;rest arg at runtime, so that they can be specified even when
+target-columns is not given.</p>
 <h3 id="index">!index</h3>
 <pre><code class="lisp">Function: (!index &amp;rest fields)
 </code></pre>
 
-<p>Used inside a <a href="#deftable">deftable</a> form. Define an index on the defined table.</p>
+<p>Define an index on the table being defined. The columns can be given as
+symbols or strings.</p>
 <h3 id="unique">!unique</h3>
 <pre><code class="lisp">Function: (!unique target-fields &amp;key deferrable initially-deferred)
 </code></pre>
 
+<p>Constrains one or more columns to only contain unique (combinations of)
+values, with deferrable and initially-deferred defined as in !foreign</p>
 <h3 id="unique-index">!unique-index</h3>
 <pre><code class="lisp">Function: (!unique-index &amp;rest fields)
 </code></pre>
@@ -891,171 +914,201 @@ referenced.</p>
 <p>Used inside a <a href="#deftable">deftable</a> form. Define a unique index on the defined table.</p>
 <h3 id="abort-hooks">abort-hooks</h3>
 <pre><code class="lisp">Generic Function: (abort-hooks object)
+Generic Function: (setf (abort-hooks object) ...)
 </code></pre>
 
-<pre><code class="lisp">Generic Function: (setf (abort-hooks object) ...)
+<p>An accessor for the transaction or savepoint's list of commit hooks,
+each of which should be a function with no required arguments. These
+functions will be executed when a transaction is committed or a
+savepoint released.</p>
+<h3 id="abort-logical-transaction">abort-logical-transaction</h3>
+<pre><code class="lisp">Generic Function: (abort-logical-transaction savepoint)
 </code></pre>
 
+<p>Roll back the given logical transaction, regardless of whether it is an
+actual transaction or a savepoint.</p>
 <h3 id="abort-transaction">abort-transaction</h3>
 <pre><code class="lisp">Function: (abort-transaction transaction)
 </code></pre>
 
-<p>Immediately abort an open transaction.</p>
-<h3 id="bigint">bigint</h3>
+<p>Roll back the given transaction.</p>
 <h3 id="bloat-measurement">bloat-measurement</h3>
 <pre><code class="lisp">Function: (bloat-measurement)
 </code></pre>
 
-<p>Bloat measurement of unvacuumed dead tuples. Borrowed from: https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/</p>
-<h3 id="bytea">bytea</h3>
+<p>→ list</p>
+<p>Bloat measurement of unvacuumed dead tuples. Borrowed from:
+<a href="https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/">https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/</a>
+who borrowed it from
+<a href="https://github.com/heroku/heroku-pg-extras/tree/master/commands">https://github.com/heroku/heroku-pg-extras/tree/master/commands</a>.</p>
 <h3 id="cache-hit-ratio">cache-hit-ratio</h3>
 <pre><code class="lisp">Function: (cache-hit-ratio)
 </code></pre>
 
-<p>The cache hit ratio shows data on serving the data from memory compared to how often you have to go to disk.
-This function returns a list of heapblocks read from disk, heapblocks hit from memory and the ratio of
-heapblocks hit from memory / total heapblocks hit.
-Borrowed from: https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/</p>
+<p>→ list</p>
+<p>The cache hit ratio shows data on serving the data from memory compared
+to how often you have to go to disk. This function returns a list of
+heapblocks read from disk, heapblocks hit from memory and the ratio of
+heapblocks hit from memory / total heapblocks hit. Borrowed from:
+<a href="https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/">https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/</a></p>
 <h3 id="call-with-connection">call-with-connection</h3>
 <pre><code class="lisp">Function: (call-with-connection spec thunk)
 </code></pre>
 
-<p>Binds *database* to a new connection, as specified by the spec
-argument, which should be a list of arguments that can be passed to
-connect, and runs the function given as a second argument with that
-database.</p>
+<p>The functional backend to with-connection. Binds *database* to a new
+connection as specified by spec, which should be a list that connect can
+be applied to, and runs the zero-argument function given as second
+argument in the new environment. When the function returns or throws,
+the new connection is disconnected.</p>
 <h3 id="cancel-backend">cancel-backend</h3>
 <pre><code class="lisp">Function: (cancel-backend pid &amp;optional (database *database*))
 </code></pre>
 
-<p>Polite way of terminating a query at the database (as opposed to calling close-database).
-Slower than (terminate-backend pid) and does not always work.</p>
+<p>Polite way of terminating a query at the database (as opposed to calling
+close-database). Slower than (terminate-backend pid) and does not always
+work.</p>
 <h3 id="change-toplevel-database">change-toplevel-database</h3>
 <pre><code class="lisp">Function: (change-toplevel-database new-database user password host)
 </code></pre>
 
+<p>→ string</p>
 <p>Just changes the database assuming you are using a toplevel connection.
-Recommended only for development work.</p>
+Recommended only for development work. Returns the name of the newly
+connected database as a string.</p>
 <h3 id="check-query-performance">check-query-performance</h3>
 <pre><code class="lisp">Function: (check-query-performance &amp;optional (ob nil) (num-calls 100) (limit 20))
 </code></pre>
 
-<p>This function requires that postgresql extension pg_stat_statements must be loaded via shared_preload_libraries.
-It is borrowed from https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/.
-Optional parameters <code>ob</code> allow order-by to be 'calls', 'total-time', 'rows-per' or 'time-per', defaulting to time-per.
-num-calls to require that the number of calls exceeds a certain threshold, and limit to limit the number of rows returned.
-It returns a list of lists, each row containing the query, number of calls, total_time, total_time/calls, stddev_time, rows,
-rows/calls and the cache hit percentage.</p>
+<p>→ list</p>
+<p>This function requires that postgresql extension pg_stat_statements
+must be loaded via shared_preload_libraries. It is borrowed from
+<a href="https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/">https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/</a>.
+Optional parameters OB allow order-by to be 'calls', 'total-time',
+'rows-per' or 'time-per', defaulting to time-per. num-calls to require
+that the number of calls exceeds a certain threshold, and limit to limit
+the number of rows returned. It returns a list of lists, each row
+containing the query, number of calls, total_time, total_time/calls,
+stddev_time, rows, rows/calls and the cache hit percentage.</p>
 <h3 id="clear-connection-pool">clear-connection-pool</h3>
 <pre><code class="lisp">Function: (clear-connection-pool)
 </code></pre>
 
-<p>Disconnect and remove all connections in the connection pool.</p>
+<p>Disconnect and remove all connections from the connection pools.</p>
 <h3 id="coalesce">coalesce</h3>
 <pre><code class="lisp">Function: (coalesce &amp;rest args)
 </code></pre>
 
-<p>Returns t if any argument is not nil or :null.</p>
+<p>→ value</p>
+<p>Returns the first non-NIL, non-NULL (as in :null) argument, or NIL if
+none are present. Useful for providing a fall-back value for the result
+of a query, or, when given only one argument, for transforming :nulls to
+NIL.</p>
 <h3 id="column-exists-p">column-exists-p</h3>
 <pre><code class="lisp">Function: (column-exists-p table-name column-name)
 </code></pre>
 
-<p>Determine if a particular column exists. Table name and column-name can be either strings or symbols.</p>
+<p>→ boolean</p>
+<p>Determine if a particular column exists. Table name and column-name can
+be either strings or symbols.</p>
 <h3 id="commit-hooks">commit-hooks</h3>
 <pre><code class="lisp">Generic Function: (commit-hooks object)
 </code></pre>
 
-<pre><code class="lisp">Generic Function: (setf (commit-hooks object) ...)
+<p>An accessor for the transaction or savepoint's list of commit hooks,
+each of which should be a function with no required arguments. These
+functions will be executed when a transaction is committed or a
+savepoint released.</p>
+<h3 id="commit-logical-transaction">commit-logical-transaction</h3>
+<pre><code class="lisp">Generic Function: (commit-logical-transaction savepoint)
 </code></pre>
 
+<p>[TODO] This symbol is not exported.</p>
+<p>Commit the given logical transaction, regardless of whether it is an
+actual transaction or a savepoint.</p>
 <h3 id="commit-transaction">commit-transaction</h3>
 <pre><code class="lisp">Function: (commit-transaction transaction)
 </code></pre>
 
-<p>Immediately commit an open transaction.</p>
+<p>Commit the given transaction.</p>
 <h3 id="connect">connect</h3>
-<pre><code class="lisp">Function: (connect database-name user password host
-            &amp;key (port 5432) pooled-p (use-ssl *default-use-ssl*) (service &quot;postgres&quot;))
+<pre><code class="lisp">Function: (connect database-name user password host &amp;key (port 5432) pooled-p
+ (use-ssl *default-use-ssl*) (service postgres))
 </code></pre>
 
-<p>Create and return a database connection.</p>
+<p>→ database-connection</p>
+<p>Create a new database connection for the given user and the database.
+Port will default to 5432, which is where most PostgreSQL servers are
+running. If pooled-p is T, a connection will be taken from a pool of
+connections of this type, if one is available there, and when the
+connection is disconnected it will be put back into this pool instead.
+use-ssl can be :no, :yes, or :try, as in open-database, and defaults to
+the value of *default-use-ssl*.</p>
 <h3 id="connect-toplevel">connect-toplevel</h3>
-<pre><code class="lisp">Function: (connect-toplevel database-name user password host
-            &amp;key (port 5432) (use-ssl *default-use-ssl*))
+<pre><code class="lisp">Function: (connect-toplevel database-name user password host &amp;key (port 5432)
+ (use-ssl *default-use-ssl*))
 </code></pre>
 
-<p>Set *database* to a new connection. Use this if you only need one
+<p>Bind the *database* to a new connection. Use this if you only need one
 connection, or if you want a connection for debugging from the REPL.</p>
 <h3 id="connected-p">connected-p</h3>
 <pre><code class="lisp">Function: (connected-p database)
 </code></pre>
 
-<p>Test whether a database connection is still connected.</p>
+<p>→ boolean</p>
+<p>Returns a boolean indicating whether the given connection is still
+connected to the server.</p>
 <h3 id="create-all-tables">create-all-tables</h3>
 <pre><code class="lisp">Function: (create-all-tables)
 </code></pre>
 
-<p>Create all defined tables.</p>
-<h3 id="create-index">create-index</h3>
-<pre><code class="lisp">Function: (create-index name &amp;key unique if-not-exists concurrently on using fields)
-</code></pre>
-
-<p>Create an index. Slightly less sophisticated than the query version because
-it does not have a where clause capability.</p>
+<p>Creates all defined tables.</p>
 <h3 id="create-package-tables">create-package-tables</h3>
 <pre><code class="lisp">Function: (create-package-tables package)
 </code></pre>
 
-<p>Create all tables whose identifying symbol is interned in the given
-package.</p>
+<p>Creates all tables identified by symbols interned in the given package.</p>
 <h3 id="create-schema">create-schema</h3>
 <pre><code class="lisp">Function: (create-schema schema)
 </code></pre>
 
-<p>Creating a non existing schema.
-   If the schema exists an error is raised.</p>
-<h3 id="create-sequence">create-sequence</h3>
-<pre><code class="lisp">Function: (create-sequence name &amp;key temp if-not-exists increment min-value max-value start cache)
-</code></pre>
-
-<p>Create a sequence. Available additional key parameters are
-:temp :if-not-exists :increment :min-value :max-value :start and :cache. See
-https://www.postgresql.org/docs/current/static/sql-createsequence.html for details on usage.</p>
+<p>Creates a new schema. Raises an error if the schema is already exists.</p>
 <h3 id="create-table">create-table</h3>
 <pre><code class="lisp">Function: (create-table name)
 </code></pre>
 
-<p>Create a defined table.</p>
+<p>Creates the table identified by symbol by executing all forms in its
+definition.</p>
 <h3 id="current-database">current-database</h3>
 <pre><code class="lisp">Function: (current-database)
 </code></pre>
 
+<p>→ string</p>
 <p>Returns the string name of the current database.</p>
 <h3 id="dao-class">dao-class</h3>
-<pre><code class="lisp">Class
+<pre><code class="lisp">: (dao-class)
 </code></pre>
 
-<p>DAO-class metaclass
+<p>Postmodern contains a simple system for defining CLOS classes that
+represent rows in the database. This is not intended as a full-fledged
+object-relational magic system ― while serious ORM systems have their
+place, they are notoriously hard to get right, and are outside of the
+scope of a humble SQL library like this.</p>
+<p>At the heart of Postmodern's DAO system is the dao-class metaclass. It
 allows you to define classes for your database-access objects as regular
-CLOS classes.</p>
-<ul>
-<li>To specify that a slot refers to a column, give it a
-<code>:col-type</code> option containing an S-SQL type expression (useful if you want
-to be able to derive a table definition from the class definition),</li>
-<li>or simply a <code>:column</code> option with value T.</li>
-<li>Such slots can also take a <code>:col-default</code> option, used to provide a database-side default value as an S-SQL expression.</li>
-<li>You can use the <code>:col-name</code> initarg (whose unevaluated
+CLOS classes. Some of the slots in these classes will refer to columns
+in the database. To specify that a slot refers to a column, give it a
+:col-type option containing an S-SQL type expression (useful if you want
+to be able to derive a table definition from the class definition), or
+simply a :column option with value T. Such slots can also take a
+:col-default option, used to provide a database-side default value as an
+S-SQL expression. You can use the :col-name initarg (whose unevaluated
 value will be passed to to-sql-name) to specify the slot's column's
-name.</li>
-</ul>
-<p>DAO class definitions support two extra class options:</p>
-<ul>
-<li><code>:table-name</code> to give the name of the table that the class refers to (defaults to the
-class name),</li>
-<li>and <code>:keys</code> to provide a set of primary keys for the table.</li>
-</ul>
-<p>When no primary keys are defined, operations such as <a href="#update-dao">update-dao</a> and
-<a href="#get-dao">get-dao</a> will not work.</p>
+name.</p>
+<p>DAO class definitions support two extra class options: :table-name to
+give the name of the table that the class refers to (defaults to the
+class name), and :keys to provide a set of primary keys for the table.
+When no primary keys are defined, operations such as update-dao and
+get-dao will not work.</p>
 <p>IMPORTANT: Class finalization for a dao class instance are wrapped with
 a thread lock. However, any time you are using threads and a class that
 inherits from other classes, you should ensure that classes are
@@ -1096,94 +1149,50 @@ table with (oids=true), and specify a slot like this:</p>
 <pre><code class="lisp">Generic Function: (dao-exists-p dao)
 </code></pre>
 
-<p>Return a boolean indicating whether the given dao
-  exists in the database.</p>
+<p>→ boolean</p>
+<p>Test whether a row with the same primary key as the given dao exists in
+the database. Will also return NIL when any of the key slots in the
+object are unbound.</p>
 <h3 id="dao-keys">dao-keys</h3>
 <pre><code class="lisp">Generic Function: (dao-keys class)
 </code></pre>
 
-<p>Returns list of slot names that are the primary key of DAO
-class. This is likely interesting if you have primary keys which are composed
-of more than one slot. Pay careful attention to situations where the primary
-key not only has more than one column, but they are actually in a different
-order than they are in the database table itself. You can check this with the
-find-primary-key-info function.</p>
+<p>→ list</p>
+<p>Returns list of slot names that are the primary key of DAO class. This
+is likely interesting if you have primary keys which are composed of
+more than one slot. Pay careful attention to situations where the
+primary key not only has more than one column, but they are actually in
+a different order than they are in the database table itself. You can
+check this with the find-primary-key-info function.</p>
+<pre><code class="commonlisp">(pomo:find-primary-key-info &quot;country1&quot;)
+
+((&quot;name&quot; &quot;text&quot;) (&quot;id&quot; &quot;integer&quot;))
+</code></pre>
+
+<p>→ list</p>
+<p>Returns list of values that are the primary key of dao.</p>
 <h3 id="dao-table-definition">dao-table-definition</h3>
 <pre><code class="lisp">Function: (dao-table-definition table)
 </code></pre>
 
-<p>Generate the appropriate CREATE <code>table</code> query for this class.</p>
+<p>→ string</p>
+<p>Given a DAO class, or the name of one, this will produce an SQL query
+string with a definition of the table. This is just the bare simple
+definition, so if you need any extra indices or or constraints, you'll
+have to write your own queries to add them, in which case look to
+s-sql's create-table function.</p>
 <h3 id="dao-table-name">dao-table-name</h3>
 <pre><code class="lisp">Function: (dao-table-name class)
 </code></pre>
 
+<p>→ string</p>
+<p>Get the name of the table associated with the given DAO class (or symbol
+naming such a class).</p>
 <h3 id="database-connection">database-connection</h3>
-<pre><code class="lisp">Class
+<pre><code class="lisp">: (database-connection)
 </code></pre>
 
-<p>Representation of a database connection. Contains
-login information in order to be able to automatically re-establish a
-connection when it is somehow closed.</p>
-<p><u><strong>Direct Slots</strong></u></p>
-<p><strong>cl-postgres::host</strong></p>
-<pre><code class="lisp">Initargs: :HOST
-Readers: CL-POSTGRES::CONNECTION-HOST
-</code></pre>
-
-<p><strong>cl-postgres::port</strong></p>
-<pre><code class="lisp">Initargs: :PORT
-Readers: CL-POSTGRES::CONNECTION-PORT
-</code></pre>
-
-<p><strong>cl-postgres::database</strong></p>
-<pre><code class="lisp">Initargs: :DB
-Readers: CL-POSTGRES::CONNECTION-DB
-</code></pre>
-
-<p><strong>cl-postgres::user</strong></p>
-<pre><code class="lisp">Initargs: :USER
-Readers: CL-POSTGRES::CONNECTION-USER
-</code></pre>
-
-<p><strong>cl-postgres::password</strong></p>
-<pre><code class="lisp">Initargs: :PASSWORD
-Readers: CL-POSTGRES::CONNECTION-PASSWORD
-</code></pre>
-
-<p><strong>cl-postgres::use-ssl</strong></p>
-<pre><code class="lisp">Initargs: :SSL
-Readers: CL-POSTGRES::CONNECTION-USE-SSL
-</code></pre>
-
-<p><strong>cl-postgres::service</strong></p>
-<pre><code class="lisp">Initargs: :SERVICE
-Readers: CL-POSTGRES::CONNECTION-SERVICE
-</code></pre>
-
-<p><strong>cl-postgres::socket</strong></p>
-<pre><code class="lisp">Initargs: :SOCKET
-Readers: CL-POSTGRES::CONNECTION-SOCKET
-</code></pre>
-
-<p><strong>cl-postgres::meta</strong></p>
-<pre><code class="lisp"></code></pre>
-
-<p><strong>cl-postgres::available</strong></p>
-<pre><code class="lisp"></code></pre>
-
-<p><strong>cl-postgres::parameters</strong></p>
-<pre><code class="lisp"></code></pre>
-
-<p><strong>cl-postgres::timestamp-format</strong></p>
-<pre><code class="lisp"></code></pre>
-
-<h3 id="database-connection-error">database-connection-error</h3>
-<pre><code class="lisp">Condition
-</code></pre>
-
-<p>Conditions of this type are signalled when an error
-occurs that breaks the connection socket. They offer a :reconnect
-restart.</p>
+<p>Objects of this type represent database connections.</p>
 <h3 id="database-error">database-error</h3>
 <pre><code class="lisp">Condition
 </code></pre>
@@ -1260,46 +1269,68 @@ extract the constraint name.</p>
 <pre><code class="lisp">Function: (database-exists-p database-name)
 </code></pre>
 
-<p>Determine if a particular database exists. </p>
+<p>→ boolean</p>
+<p>Checks to see if a particular database exists.</p>
 <h3 id="database-size">database-size</h3>
 <pre><code class="lisp">Function: (database-size &amp;optional (name nil))
 </code></pre>
 
-<p>Given the name of a database, will return the name, a pretty-print string of
-the size of the database and the size in bytes. If a database name is not provided,
-it will return the result for the currently connected database.</p>
+<p>→ list</p>
+<p>Given the name of a database, will return the name, a pretty-print
+string of the size of the database and the size in bytes. If a database
+name is not provided, it will return the result for the currently
+connected database.</p>
 <h3 id="database-version">database-version</h3>
 <pre><code class="lisp">Function: (database-version)
 </code></pre>
 
+<p>→ string</p>
 <p>Returns the version of the current postgresql database.</p>
-<h3 id="db-null">db-null</h3>
 <h3 id="define-dao-finalization">define-dao-finalization</h3>
 <pre><code class="lisp">Macro: (define-dao-finalization ((dao-name class) &amp;rest keyword-args) &amp;body body)
 </code></pre>
 
+<p>Create an :around-method for make-dao. The body is executed in a lexical
+environment where dao-name is bound to a freshly created and inserted
+DAO. The representation of the DAO in the database is then updated to
+reflect changes that body might have introduced. Useful for processing
+values of slots with the type serial, which are unknown before
+insert-dao.</p>
 <h3 id="defprepared">defprepared</h3>
 <pre><code class="lisp">Macro: (defprepared name query &amp;optional (format rows))
 </code></pre>
 
-<p>Like prepare, but gives the function a name instead of returning
-it. The name should not be a string but may be quoted.</p>
+<p>→ function</p>
+<p>This is the macro-style variant of prepare. It is like prepare, but
+gives the function a name which now becomes a top-level function for the
+prepared statement. The name should not be quoted or a string.</p>
 <h3 id="defprepared-with-names">defprepared-with-names</h3>
-<pre><code class="lisp">Macro: (defprepared-with-names name (&amp;rest args) (query &amp;rest query-args) &amp;optional (format
-                                                                                     rows))
+<pre><code class="lisp">Macro: (defprepared-with-names name (&amp;rest args) (query &amp;rest query-args) &amp;optional
+ (format rows))
 </code></pre>
 
-<p>Like defprepared, but with lambda list for statement arguments.</p>
+<p>Like defprepared, but allows to specify names of the function arguments
+as well as arguments supplied to the query.</p>
+<pre><code class="commonlisp">(defprepared-with-names user-messages (user &amp;key (limit 10))
+  (&quot;select * from messages
+    where user_id = $1
+    order by date desc
+    limit $2&quot; (user-id user) limit)
+  :plists)
+</code></pre>
+
 <h3 id="deftable">deftable</h3>
 <pre><code class="lisp">Macro: (deftable name &amp;body definitions)
 </code></pre>
 
-<p>Define a table. name can be either a symbol or a (symbol string)
-list. In the first case, the table name is derived from the symbol by
-S-SQL's rules, in the second case, the name is given explicitly. The
-body of definitions can contain anything that evaluates to a string,
-as well as S-SQL expressions. In this body, the variables <em>table-name</em>
-and <em>table-symbol</em> are bound to the relevant values.</p>
+<p>Define a table. name can be either a symbol or a (symbol string) list.
+In the first case, the table name is derived from the symbol's name by
+S-SQL's rules. In the second case, the name is given explicitly. The
+body of definitions can contain anything that evaluates to a string, as
+well as S-SQL expressions. The variables *table-name* and
+*table-symbol* are bound to the relevant values in the body. Note that
+the evaluation of the definition is ordered, so you'll generally want to
+create your table first and then define indices on it.</p>
 <h3 id="delete-dao">delete-dao</h3>
 <pre><code class="lisp">Generic Function: (delete-dao dao)
 </code></pre>
@@ -1309,53 +1340,73 @@ and <em>table-symbol</em> are bound to the relevant values.</p>
 <pre><code class="lisp">Function: (describe-constraint table-name constraint-name)
 </code></pre>
 
-<p>Return a list of alists of the descriptions a particular constraint given
-the table-name and the  constraint name using the information_schema
-table.</p>
+<p>→ list</p>
+<p>Return a list of alists of the descriptions a particular constraint
+given the table-name and the constraint name using the
+information_schema table.</p>
 <h3 id="describe-foreign-key-constraints">describe-foreign-key-constraints</h3>
 <pre><code class="lisp">Function: (describe-foreign-key-constraints)
 </code></pre>
 
+<p>→ list</p>
 <p>Generates a list of lists of information on the foreign key constraints</p>
 <h3 id="describe-views">describe-views</h3>
 <pre><code class="lisp">Function: (describe-views &amp;optional (schema public))
 </code></pre>
 
-<p>Describe the current views in the specified schema. Takes an optional schema
-name but defaults to public schema.</p>
+<p>→ list</p>
+<p>Describe the current views in the specified schema. Defaults to public
+schema.</p>
 <h3 id="disconnect">disconnect</h3>
 <pre><code class="lisp">Generic Function: (disconnect database)
 </code></pre>
 
-<p>Close a database connection. Returns it to a pool
-if it is a pooled connection.</p>
+<p>Disconnects a normal database connection, or moves a pooled connection
+into the pool.</p>
 <h3 id="disconnect-toplevel">disconnect-toplevel</h3>
 <pre><code class="lisp">Function: (disconnect-toplevel)
 </code></pre>
 
-<p>Disconnect *database*.</p>
+<p>Disconnect the *database*.</p>
 <h3 id="do-query-dao">do-query-dao</h3>
 <pre><code class="lisp">Macro: (do-query-dao ((type type-var) query) &amp;body body)
 </code></pre>
 
-<p>Like query-dao, but rather than returning a list of results,
-executes <code>body</code> once for each result, with <code>type-var</code> bound to the DAO
-representing that result.</p>
+<p>→ list</p>
+<p>Like query-dao, but iterates over the results rather than returning
+them. For each matching DAO, body is evaluated with type-var bound to
+the instance.</p>
+<pre><code class="commonlisp">(do-query-dao (('user user) (:order-by (:select '* :from 'user :where (:&gt; 'score 10000)) 'name))
+  (pushnew user high-scorers))
+</code></pre>
+
 <h3 id="do-select-dao">do-select-dao</h3>
 <pre><code class="lisp">Macro: (do-select-dao ((type type-var) &amp;optional (test) &amp;rest ordering) &amp;body body)
 </code></pre>
 
-<p>Like select-dao, but rather than returning a list of results,
-executes <code>body</code> once for each result, with <code>type-var</code> bound to the DAO
-representing that result.</p>
+<p>Like select-dao, but iterates over the results rather than returning
+them. For each matching DAO, body is evaluated with type-var bound to
+the DAO instance.</p>
+<pre><code class="commonlisp">(do-select-dao (('user user) (:&gt; 'score 10000) 'name)
+  (pushnew user high-scorers))
+</code></pre>
+
 <h3 id="doquery">doquery</h3>
 <pre><code class="lisp">Macro: (doquery query (&amp;rest names) &amp;body body)
 </code></pre>
 
-<p>Iterate over the rows in the result of a query, binding the given
-names to the results and executing body for every row. Query can be a
-string, an s-sql query, or a list starting with one of those, followed
-by the arguments to parameterize the query with.</p>
+<p>Execute the given query (a string or a list starting with a keyword),
+iterating over the rows in the result. The body will be executed with
+the values in the row bound to the symbols given in names. To iterate
+over a parameterised query, one can specify a list whose car is the
+query, and whose cdr contains the arguments. For example:</p>
+<pre><code class="commonlisp">(doquery (:select 'name 'score :from 'scores) (n s)
+  (incf (gethash n *scores*) s))
+
+(doquery ((:select 'name :from 'scores :where (:&gt; 'score '$1)) 100) (name)
+  (print name))
+</code></pre>
+
 <h3 id="double-precision">double-precision</h3>
 <h3 id="drop-index">drop-index</h3>
 <pre><code class="lisp">Function: (drop-index name &amp;key concurrently if-exists cascade)
@@ -1363,29 +1414,24 @@ by the arguments to parameterize the query with.</p>
 
 <p>Drop an index. Available keys are :concurrently, :if-exists, and :cascade.</p>
 <h3 id="drop-prepared-statement">drop-prepared-statement</h3>
-<pre><code class="lisp">Function: (drop-prepared-statement name &amp;key (location both) (database
-                                                              *database*) (remove-function
-                                                                           t))
+<pre><code class="lisp">Function: (drop-prepared-statement name &amp;key (location both) (database *database*)
+ (remove-function t))
 </code></pre>
 
 <p>Prepared statements are stored both in the meta slot in the postmodern
-connection and in postgresql session information. In the case of prepared
-statements generated with defprepared, there is also a lisp function with
-the same name.</p>
-<p>If you know the prepared statement name, you can delete the prepared statement
-from both locations (the default behavior), just from postmodern by passing
-:postmodern to the location key parameter or just from postgresql by passing
-:postgresql to the location key parameter.</p>
-<p>If you pass the name 'All' as the statement name, it will
-delete all prepared statements.</p>
-<p>The default behavior is to also remove any lisp function of the same name.
-This behavior is controlled by the remove-function key parameter.</p>
+connection and in postgresql session information. If you know the
+prepared statement name, you can delete the prepared statement from both
+locations (the default behavior), just from postmodern (passing
+:postmodern to the location key parameter) or just from postgresql
+(passing :postgresql to the location key parameter). If you pass the
+name 'All' as the statement name, it will delete all prepared
+statements. The statement name can be a string or quoted symbol.</p>
 <h3 id="drop-schema">drop-schema</h3>
 <pre><code class="lisp">Function: (drop-schema schema &amp;key (if-exists nil) (cascade nil))
 </code></pre>
 
-<p>Drops an existing database schema 'schema'
-A notice instead of an error is raised with the is-exists parameter.</p>
+<p>Removes a schema. Accepts :if-exists and/or :cascade arguments like
+:drop-table.</p>
 <h3 id="drop-sequence">drop-sequence</h3>
 <pre><code class="lisp">Function: (drop-sequence name &amp;key if-exists cascade)
 </code></pre>
@@ -1400,8 +1446,8 @@ A notice instead of an error is raised with the is-exists parameter.</p>
 <pre><code class="lisp">Macro: (ensure-transaction &amp;body body)
 </code></pre>
 
-<p>Executes body within a with-transaction form if and only if no
-transaction is already in progress.</p>
+<p>Ensures that body is executed within a transaction, but does not begin a
+new transaction if one is already in progress.</p>
 <h3 id="ensure-transaction-with-isolation-level">ensure-transaction-with-isolation-level</h3>
 <pre><code class="lisp">Macro: (ensure-transaction-with-isolation-level isolation-level &amp;body body)
 </code></pre>
@@ -1413,268 +1459,349 @@ level other than the current default</p>
 <pre><code class="lisp">Macro: (execute query &amp;rest args)
 </code></pre>
 
-<p>Execute a query, ignore the results.</p>
+<p>Like query called with format :none. Returns the amount of affected rows
+as its first returned value. (Also returns this amount as the second
+returned value, but use of this is deprecated.)</p>
 <h3 id="execute-file">execute-file</h3>
 <pre><code class="lisp">Function: (execute-file pathname &amp;optional (print nil))
 </code></pre>
 
-<p>Executes all queries in the provided SQL file. If print is set to t,
- format will print the count of query and the query.</p>
+<p>This function will execute sql queries stored in a file. Each sql
+statement in the file will be run independently, but if one statement
+fails, subsequent query statements will not be run, but any statement
+prior to the failing statement will have been commited.</p>
+<p>If you want the standard transction treatment such that all statements
+succeed or no statement succeeds, then ensure that the file starts with
+a "begin transaction" statement and finishes with an "end transaction"
+statement. See the test file test-execute-file-broken-transaction.sql as
+an example.</p>
+<p>For debugging purposes, if the optional print parameter is set to t,
+format will print the count of the query and the query to the REPL.</p>
+<p>IMPORTANT NOTE: This utility function assumes that the file containing
+the sql queries can be trusted and bypasses the normal postmodern
+parameterization of queries.</p>
 <h3 id="find-postgresql-prepared-statement">find-postgresql-prepared-statement</h3>
 <pre><code class="lisp">Function: (find-postgresql-prepared-statement name)
 </code></pre>
 
+<p>→ string</p>
 <p>Returns the specified named prepared statement (if any) that postgresql
 has for this session.</p>
 <h3 id="find-postmodern-prepared-statement">find-postmodern-prepared-statement</h3>
 <pre><code class="lisp">Function: (find-postmodern-prepared-statement name)
 </code></pre>
 
-<p>Returns the specified named prepared statement (if any) that postmodern has put in
-the meta slot in the connection.</p>
+<p>→ string</p>
+<p>Returns the specified named prepared statement (if any) that postmodern
+has put in the meta slot in the connection. Note that this is the
+statement itself, not the name.</p>
 <h3 id="find-primary-key-info">find-primary-key-info</h3>
 <pre><code class="lisp">Function: (find-primary-key-info table &amp;optional (just-key nil))
 </code></pre>
 
-<p>Returns a list of sublists where the sublist contains two strings.
-If a table primary key consists of only one column, such as 'id' there
-will be a single sublist where the first string is the name of the column
-and the second string is the string name for the datatype for that column.
-If the primary key for the table consists of more than one column, there
-will be a sublist for each column subpart of the key. The sublists will
-be in the order they are used in the key, not in the order they appear
-in the table. If just-key is set to t, the list being returned will
-contain just the column names in the primary key as string names
-with no sublists. If the table is not in the public schema, provide
-the fully qualified table name e.g. schema-name.table-name.</p>
+<p>→ list</p>
+<p>Returns a list of two strings. First the column name of the primary key
+of the table and second the string name for the datatype. Optionally,
+just-key can be set to t and it will return just the column name of the
+primary key as a string.</p>
 <h3 id="get-dao">get-dao</h3>
 <pre><code class="lisp">Generic Function: (get-dao type &amp;rest args)
 </code></pre>
 
-<p>Get the object corresponding to the given primary
-  key, or return nil if it does not exist.</p>
+<p>→ dao</p>
+<p>Select the DAO object from the row that has the given primary key
+values, or NIL if no such row exists. Objects created by this function
+will have initialize-instance called on them (after loading in the
+values from the database) without any arguments ― even :default-initargs
+are skipped. The same goes for select-dao and query-dao.</p>
 <h3 id="get-pid">get-pid</h3>
 <pre><code class="lisp">Function: (get-pid)
 </code></pre>
 
+<p>→ integer</p>
 <p>Get the process id used by postgresql for this connection.</p>
 <h3 id="get-pid-from-postmodern">get-pid-from-postmodern</h3>
 <pre><code class="lisp">Function: (get-pid-from-postmodern)
 </code></pre>
 
-<p>Get the process id used by postgresql for this connection,
-but get it from the postmodern connection parameters.</p>
+<p>→ integer</p>
+<p>Get the process id used by postgresql for this connection, but get it
+from the postmodern connection parameters.</p>
 <h3 id="get-search-path">get-search-path</h3>
 <pre><code class="lisp">Function: (get-search-path)
 </code></pre>
 
-<p>Returns the default schema search path for the current session.</p>
+<p>Retrieve the current search path.</p>
 <h3 id="index-exists-p">index-exists-p</h3>
 <pre><code class="lisp">Function: (index-exists-p index-name)
 </code></pre>
 
-<p>Check whether a index exists. Takes either a string or a symbol for
-the index name.</p>
+<p>→ boolean</p>
+<p>Tests whether an index with the given name exists. The name can be
+either a string or a symbol.</p>
 <h3 id="insert-dao">insert-dao</h3>
 <pre><code class="lisp">Generic Function: (insert-dao dao)
 </code></pre>
 
-<p>Insert the given object into the database.</p>
+<p>→ dao</p>
+<p>Insert the given dao into the database. Column slots of the object which
+are unbound implies the database defaults. Hence, if these columns has
+no defaults defined in the database, the the insertion of the dao will
+be failed. (This feature only works on PostgreSQL 8.2 and up.)</p>
 <h3 id="list-all-constraints">list-all-constraints</h3>
 <pre><code class="lisp">Function: (list-all-constraints table-name &amp;optional (strings-p))
 </code></pre>
 
-<p>Uses information_schema to list all the constraints in a table. Table-name
-can be either a string or quoted. Turns constraints into keywords if strings-p is not true.</p>
+<p>→ list</p>
+<p>Users information_schema to list all the constraints in a table.
+Table-name can be either a string or quoted.</p>
 <h3 id="list-available-extensions">list-available-extensions</h3>
 <pre><code class="lisp">Function: (list-available-extensions)
 </code></pre>
 
-<p>Returns available postgresql extensions per pg_available_extensions</p>
+<p>→ list</p>
+<p>List the postgresql extensions which are available in the system to the
+currently connected database. The extensions may or may not be
+installed.
+→ list</p>
+<p>Lists extensions that are available to be installed in the database.
+Returns a list of lists where each sublist has the name of the
+extension, the default version, the installed version (if any) and a
+comment string.</p>
 <h3 id="list-available-types">list-available-types</h3>
 <pre><code class="lisp">Function: (list-available-types)
 </code></pre>
 
+<p>→ list</p>
 <p>List the available types in this postgresql version.</p>
 <h3 id="list-columns">list-columns</h3>
 <pre><code class="lisp">Function: (list-columns table-name)
 </code></pre>
 
-<p>Returns a list of strings of just the column names in a table.
-Pulls info from the postmodern table-description function
-rather than directly.</p>
+<p>→ list</p>
+<p>Returns a list of strings of just the column names in a table. Pulls
+info from the postmodern table-description function rather than
+directly.</p>
 <h3 id="list-columns-with-types">list-columns-with-types</h3>
 <pre><code class="lisp">Function: (list-columns-with-types table-name)
 </code></pre>
 
-<p>Return a list of (name type) lists for the fields of a table. Goes directly to the pg-catalog tables.</p>
+<p>→ list</p>
+<p>Return a list of (name type) lists for the fields of a table. Goes
+directly to the pg-catalog tables.</p>
 <h3 id="list-connections">list-connections</h3>
 <pre><code class="lisp">Function: (list-connections)
 </code></pre>
 
-<p>Returns info from pg_stat_activity on open connections</p>
+<p>→ list</p>
+<p>List the current postgresql connections to the currently connected
+database.</p>
 <h3 id="list-database-functions">list-database-functions</h3>
 <pre><code class="lisp">Function: (list-database-functions)
 </code></pre>
 
-<p>Returns a list of the functions in the database from the information_schema.</p>
+<p>→ list</p>
+<p>Returns a list of the functions in the database from the
+information_schema.</p>
 <h3 id="list-database-users">list-database-users</h3>
 <pre><code class="lisp">Function: (list-database-users)
 </code></pre>
 
+<p>→ list</p>
 <p>List database users.</p>
 <h3 id="list-databases">list-databases</h3>
 <pre><code class="lisp">Function: (list-databases &amp;key (order-by-size nil) (size t))
 </code></pre>
 
+<p>→ list</p>
 <p>Returns a list of lists where each sub-list contains the name of the
-database, a pretty-print string of the size of that database and the size in bytes.
-The default order is by database name. Pass t as a parameter to :order-by-size for order by size.
-Setting size to nil will return just the database names in a single list
-ordered by name. This function excludes the template databases.</p>
+database, a pretty-print string of the size of that database and the
+size in bytes. The default order is by database name. Pass t as a
+parameter to :order-by-size for order by size. Setting size to nil will
+return just the database names in a single list ordered by name. This
+function excludes the template databases</p>
 <h3 id="list-detailed-triggers">list-detailed-triggers</h3>
 <pre><code class="lisp">Function: (list-detailed-triggers)
 </code></pre>
 
-<p>List detailed information on the triggers from the information_schema table.</p>
+<p>→ list</p>
+<p>List detailed information on the triggers from the information_schema
+table.</p>
 <h3 id="list-foreign-keys">list-foreign-keys</h3>
 <pre><code class="lisp">Function: (list-foreign-keys table schema)
 </code></pre>
 
+<p>→ list</p>
 <p>Returns a list of sublists of foreign key info in the form of
-   '((constraint-name local-table local-table-column
-     foreign-table-name foreign-column-name))</p>
+'((constraint-name local-table local-table-column foreign-table-name
+foreign-column-name))</p>
 <h3 id="list-index-definitions">list-index-definitions</h3>
 <pre><code class="lisp">Function: (list-index-definitions table-name)
 </code></pre>
 
-<p>Returns a list of the definitions used to create the current indexes for the table.</p>
+<p>→ list</p>
+<p>Returns a list of the definitions used to create the current indexes for
+the table</p>
 <h3 id="list-indexed-column-and-attributes">list-indexed-column-and-attributes</h3>
 <pre><code class="lisp">Function: (list-indexed-column-and-attributes table-name)
 </code></pre>
 
-<p>List the indexed columns and their attributes in a table. Includes primary key.</p>
+<p>→ list</p>
+<p>List the indexed columns and their attributes in a table. Includes
+primary key.</p>
 <h3 id="list-indices">list-indices</h3>
 <pre><code class="lisp">Function: (list-indices &amp;optional strings-p)
 </code></pre>
 
-<p>Return a list of the indexs in a database. Turn them into keywords if strings-p is not true.</p>
+<p>→ list</p>
+<p>Return a list of the indexs in a database. Turn them into keywords if
+strings-p is not true.</p>
 <h3 id="list-installed-extensions">list-installed-extensions</h3>
 <pre><code class="lisp">Function: (list-installed-extensions)
 </code></pre>
 
-<p>Returns postgresql extensions actually installed in the database per pg_available_extensions</p>
+<p>→ list</p>
+<p>List the postgresql extensions which are installed in the currently
+connected database.
+→ list</p>
+<p>Return a list of the installed extension</p>
 <h3 id="list-postmodern-prepared-statements">list-postmodern-prepared-statements</h3>
 <pre><code class="lisp">Function: (list-postmodern-prepared-statements &amp;optional (names-only nil))
 </code></pre>
 
+<p>→ list</p>
 <p>List the prepared statements that postmodern has put in the meta slot in
-the connection. It will return a list of alists of form:
-  ((:NAME . "SNY24")
-  (:STATEMENT . "(SELECT name, salary FROM employee WHERE (city = $1))")
-  (:PREPARE-TIME . #<TIMESTAMP 25-11-2018T15:36:43,385>)
-  (:PARAMETER-TYPES . "{text}") (:FROM-SQL).</p>
+the connection. It will return a list of alists of form: ((:NAME .
+SNY24) (:STATEMENT . (SELECT name, salary FROM employee WHERE (city =
+\$1))) (:PREPARE-TIME . #&lt;TIMESTAMP 25-11-2018T15:36:43,385&gt;)
+(:PARAMETER-TYPES . text) (:FROM-SQL)</p>
 <p>If the names-only parameter is set to t, it will only return a list of
 the names of the prepared statements.</p>
 <h3 id="list-prepared-statements">list-prepared-statements</h3>
-<pre><code class="lisp">Function: (list-prepared-statements &amp;optional (names-only nil))
+<pre><code class="lisp">: (list-prepared-statements (&amp;optional names-only))
 </code></pre>
 
-<p>Syntactic sugar. A query that lists the prepared statements
-in the session in which the function is run. If the optional
-names-only parameter is set to t, it will only return a list
-of the names of the prepared statements.</p>
+<p>→ list</p>
+<p>This is syntactic sugar. It runs a query that lists the prepared
+statements in the session in which the function is run. If the
+names-only parameter is set to t, it will only return a list of the
+names of the prepared statements.</p>
 <h3 id="list-roles">list-roles</h3>
 <pre><code class="lisp">Function: (list-roles &amp;optional (lt nil))
 </code></pre>
 
-<p>Returns a list of alists of rolenames, role attributes and membership in roles.
-See https://www.postgresql.org/docs/current/role-membership.html for an explanation.
-The optional parameter can be used to set the return list types to :alists or :plists.</p>
+<p>→ list</p>
+<p>Returns a list of alists of rolenames, role attributes and membership in
+roles. See
+<a href="https://www.postgresql.org/docs/current/role-membership.html">https://www.postgresql.org/docs/current/role-membership.html</a> for an
+explanation. Optionally passing :alists or :plists can be used to set
+the return list types to :alists or :plists. This is the same as the
+psql function \du.</p>
 <h3 id="list-schemas">list-schemas</h3>
 <pre><code class="lisp">Function: (list-schemas)
 </code></pre>
 
-<p>List schemas in the current database, excluding the pg_* system schemas.</p>
+<p>→ list</p>
+<p>List schemas in the current database, excluding the pg_* system
+schemas.</p>
 <h3 id="list-schemata">list-schemata</h3>
 <pre><code class="lisp">Function: (list-schemata)
 </code></pre>
 
-<p>List all existing user defined schemata.</p>
-<p>Note: The query uses the portable information_schema relations instead of pg_tables relations
-  SELECT schema_name FROM information_schema.schemata where schema_name !~ '(pg_*)|information_schema' ORDER BY schema_name ;</p>
+<p>→ list</p>
+<p>Returns list of the user defined schemata (as strings) and the quantity
+of existing schemata.</p>
 <h3 id="list-sequences">list-sequences</h3>
 <pre><code class="lisp">Function: (list-sequences &amp;optional strings-p)
 </code></pre>
 
-<p>Return a list of the sequences in a database. Turn them into
-keywords if strings-p is not true.</p>
+<p>→ list</p>
+<p>Returns a list of the sequences in the current database. When strings-p
+is T, the names will be given as strings, otherwise as keywords.</p>
 <h3 id="list-table-indices">list-table-indices</h3>
 <pre><code class="lisp">Function: (list-table-indices table-name &amp;optional strings-p)
 </code></pre>
 
-<p>List the index names and the related columns in a single table. Each index will be in a separate sublist.</p>
+<p>→ list</p>
+<p>List the index names and the related columns in a table. Returns a list
+of alists.</p>
 <h3 id="list-table-sizes">list-table-sizes</h3>
 <pre><code class="lisp">Function: (list-table-sizes &amp;key (schema public) (order-by-size nil) (size t))
 </code></pre>
 
-<p>Returns a list of lists (table-name, size in 8k pages) of tables in the current database.
-Providing a name to the schema parameter will return just the information for tables in that schema.
-It defaults to just the tables in the public schema. Setting schema to nil will return all tables, indexes etc
-in the database in descending order of size. This would include system tables, so there
-are a lot more than you would expect. If :size is set to nil, it returns only a flat list of table names.
-Setting order-by-size to t will return the result in order of size instead of by table name.</p>
+<p>→ list</p>
+<p>Returns a list of lists (table-name, size in 8k pages) of tables in the
+current database. Providing a name to the schema parameter will return
+just the information for tables in that schema. It defaults to just the
+tables in the public schema. Setting schema to nil will return all
+tables, indexes etc in the database in descending order of size. This
+would include system tables, so there are a lot more than you would
+expect. If :size is set to nil, it returns only a flat list of table
+names. Setting order-by-size to t will return the result in order of
+size instead of by table name.</p>
 <h3 id="list-tables">list-tables</h3>
 <pre><code class="lisp">Function: (list-tables &amp;optional strings-p)
 </code></pre>
 
-<p>Return a list of the tables in a database. Turn them into keywords
-if strings-p is not true.</p>
+<p>→ list</p>
+<p>Returns a list of the tables in the current database and schema. When
+strings-p is T, the names will be given as strings, otherwise as
+keywords.</p>
 <h3 id="list-tables-in-schema">list-tables-in-schema</h3>
 <pre><code class="lisp">Function: (list-tables-in-schema &amp;optional (schema-name public) lisp-strings-p)
 </code></pre>
 
-<p>Returns a list of tables in a particular schema, defaulting to public.</p>
+<p>→ list</p>
+<p>Returns a list of the tables in the current database and the specified
+schema. When strings-p is T,the names will be given as strings,
+otherwise as keywords.</p>
 <h3 id="list-tablespaces">list-tablespaces</h3>
 <pre><code class="lisp">Function: (list-tablespaces)
 </code></pre>
 
+<p>→ list</p>
 <p>Lists the tablespaces in the currently connected database.</p>
 <h3 id="list-triggers">list-triggers</h3>
 <pre><code class="lisp">Function: (list-triggers &amp;optional table-name)
 </code></pre>
 
-<p>List distinct trigger names from the information_schema table. Table-name can be either quoted or string.</p>
+<p>→ list</p>
+<p>List distinct trigger names from the information_schema table.
+Table-name can be either quoted or string.</p>
 <h3 id="list-unique-or-primary-constraints">list-unique-or-primary-constraints</h3>
 <pre><code class="lisp">Function: (list-unique-or-primary-constraints table-name &amp;optional (strings-p))
 </code></pre>
 
-<p>List constraints on a table. Table-name
-can be either a string or quoted. Turns constraints into keywords if strings-p is not true.</p>
+<p>→ list</p>
+<p>List constraints on a table.</p>
 <h3 id="list-views">list-views</h3>
 <pre><code class="lisp">Function: (list-views &amp;optional strings-p)
 </code></pre>
 
-<p>Return a list of the views in a database. Turn them into keywords
-if strings-p is not true.</p>
+<p>→ list</p>
+<p>Returns list of the user defined views in the current database. When
+strings-p is T, the names will be returned as strings, otherwise as
+keywords.</p>
 <h3 id="make-dao">make-dao</h3>
 <pre><code class="lisp">Generic Function: (make-dao type &amp;rest args &amp;key &amp;allow-other-keys)
 </code></pre>
 
-<p>Make the instance of the given class and insert it into the database</p>
+<p>→ dao</p>
+<p>Combines make-instance with insert-dao. Return the created dao.</p>
 <h3 id="more-table-info">more-table-info</h3>
 <pre><code class="lisp">Function: (more-table-info table-name)
 </code></pre>
 
-<p>Returns more table info than table-description. Table can be either a string or quoted.
-Specifically returns ordinal-position, column-name, data-type, character-maximum-length,
-modifier, whether it is not-null and the default value. </p>
+<p>→ list</p>
+<p>Returns more table info than table-description. Table can be either a
+string or quoted.</p>
 <h3 id="num-records-in-database">num-records-in-database</h3>
 <pre><code class="lisp">Function: (num-records-in-database)
 </code></pre>
 
-<p>Returns a list of lists with schema, table name and approximate number of records
-in the currently connected database.</p>
+<p>→ list</p>
+<p>Returns a list of lists with schema, table name and approximate number
+of records in the currently connected database.</p>
 <h3 id="numeric">numeric</h3>
 <h3 id="parse-queries">parse-queries</h3>
 <pre><code class="lisp">Function: (parse-queries file-content)
@@ -1685,25 +1812,46 @@ in the currently connected database.</p>
 <pre><code class="lisp">Macro: (prepare query &amp;optional (format rows))
 </code></pre>
 
-<p>Wraps a query into a function that will prepare it once for a
-connection, and then execute it with the given parameters. The query
-should contain a placeholder ($1, $2, etc) for every parameter.</p>
+<p>→ function</p>
+<p>Wraps a query into a function that can be used as the interface to a
+prepared statement. The given query (either a string or an S-SQL form)
+may contain placeholders, which look like \$1, \$2, etc. The resulting
+function takes one argument for every placeholder in the query, executes
+the prepared query, and returns the result in the format specified.
+(Allowed formats are the same as for query.)</p>
+<p>For queries that have to be run very often, especially when they are
+complex, it may help performance since the server only has to plan them
+once. See the <a href="http://www.postgresql.org/docs/current/static/sql-prepare.html">PostgreSQL
+manual</a>
+for details.</p>
+<p>In some cases, the server will complain about not being able to deduce
+the type of the arguments in a statement. In that case you should add
+type declarations (either with the PostgreSQL's CAST SQL-conforming
+syntax or historical :: syntax, or with S-SQL's :type construct) to help
+it out.</p>
+<p>Note that it will attempt to automatically reconnect if
+database-connection-error, or admin-shutdown. It will reset prepared
+statements triggering an invalid-sql-statement-name error. It will
+overwrite old prepared statements triggering a
+duplicate-prepared-statement error.</p>
 <h3 id="prepared-statement-exists-p">prepared-statement-exists-p</h3>
 <pre><code class="lisp">Function: (prepared-statement-exists-p name)
 </code></pre>
 
-<p>Returns t if the prepared statement exists in the current postgresql
-session, otherwise nil.</p>
+<p>→ boolean This returns t if the prepared statement exists in the current
+postgresql session, otherwise nil.</p>
 <h3 id="query">query</h3>
 <pre><code class="lisp">Macro: (query query &amp;rest args/format)
 </code></pre>
 
+<p>→ result</p>
 <p>Execute the given query, which can be either a string or an S-SQL form
-(list starting with a keyword). If the query contains placeholders ($1, $2, etc)
-their values can be given as extra arguments. If one of these arguments
-is a keyword occurring in the table below, it will not be used as a query
-argument, but will determine the format in which the results are returned
-instead. Any of the following formats can be used, with the default being <code>:rows</code>:</p>
+(list starting with a keyword). If the query contains placeholders (\$1,
+\$2, etc) their values can be given as extra arguments. If one of these
+arguments is a keyword occurring in the table below, it will not be used
+as a query argument, but will determine the format in which the results
+are returned instead. Any of the following formats can be used, with the
+default being :rows:</p>
 <pre><code>:none               | Ignore the result values.                                                                                                                                |
 :lists, :rows       | Return a list of lists, each list containing the values for a row.                                                                                     |
 :list, :row         | Return a single row as a list.                                                                                                                         |
@@ -1721,15 +1869,20 @@ instead. Any of the following formats can be used, with the default being <code>
 (:dao type :single) | Return a single DAO of the given type.                                                                                                                 |
 </code></pre>
 
-<p>If the database returns information about the amount rows that were affected,
-such as with updating or deleting queries, this is returned as a second value.</p>
+<p>If the database returns information about the amount rows that were
+affected, such as with updating or deleting queries, this is returned as
+a second value.</p>
 <h3 id="query-dao">query-dao</h3>
 <pre><code class="lisp">Macro: (query-dao type query &amp;rest args)
 </code></pre>
 
-<p>Execute a query and return the result as daos of the given type.
-The fields returned by the query must match the slots of the dao, both
-by type and by name.</p>
+<p>→ list</p>
+<p>Execute the given query (which can be either a string or an S-SQL
+expression) and return the result as DAOs of the given type. If the
+query contains placeholders (\$1, \$2, etc) their values can be given as
+extra arguments. The names of the fields returned by the query must
+either match slots in the DAO class, or be bound through
+with-column-writers.</p>
 <h3 id="read-queries">read-queries</h3>
 <pre><code class="lisp">Function: (read-queries filename)
 </code></pre>
@@ -1743,7 +1896,9 @@ by type and by name.</p>
 <pre><code class="lisp">Generic Function: (reconnect database)
 </code></pre>
 
-<p>Reconnect a database connection.</p>
+<p>Reconnect a disconnected database connection. This is not allowed for
+pooled connections ― after they are disconnected they might be in use by
+some other process, and should no longer be used.</p>
 <h3 id="register-sql-operators">register-sql-operators</h3>
 <pre><code class="lisp">Macro: (register-sql-operators arity &amp;rest names)
 </code></pre>
@@ -1761,67 +1916,90 @@ string.</p>
 <pre><code class="lisp">Function: (release-savepoint savepoint)
 </code></pre>
 
-<p>Immediately release a savepoint, commiting its results.</p>
+<p>Release the given savepoint.</p>
 <h3 id="reset-prepared-statement">reset-prepared-statement</h3>
 <pre><code class="lisp">Function: (reset-prepared-statement condition)
 </code></pre>
 
-<p>If you have received an invalid-prepared-statement error or a prepared-statement
-already exists error but the prepared statement is still in the meta slot in
-the postmodern connection, try to regenerate the prepared statement at the
+<p>→ restart</p>
+<p>If you have received an invalid-prepared-statement error but the
+prepared statement is still in the meta slot in the postmodern
+connection, this will try to regenerate the prepared statement at the
 database connection level and restart the connection.</p>
 <h3 id="rollback-savepoint">rollback-savepoint</h3>
 <pre><code class="lisp">Function: (rollback-savepoint savepoint)
 </code></pre>
 
-<p>Immediately roll back a savepoint, aborting it results.</p>
+<p>Roll back the given savepoint.</p>
 <h3 id="save-dao">save-dao</h3>
 <pre><code class="lisp">Function: (save-dao dao)
 </code></pre>
 
-<p>Try to insert the content of a <code>dao</code>. If this leads to a unique key
-violation, update it instead.</p>
+<p>→ boolean</p>
+<p>Tries to insert the given dao using insert-dao. If this raises a unique
+key violation error, it tries to update it by using update-dao instead.
+Be aware that there is a possible race condition here ― if some other
+process deletes the row at just the right moment, the update fails as
+well. Returns a boolean telling you whether a new row was inserted.</p>
+<p>This function is unsafe to use inside of a transaction ― when a row with
+the given keys already exists, the transaction will be aborted. Use
+save-dao/transaction instead in such a situation.</p>
+<p>See also: upsert-dao.</p>
 <h3 id="save-daotransaction">save-dao/transaction</h3>
 <pre><code class="lisp">Function: (save-dao/transaction dao)
 </code></pre>
 
+<p>→ boolean</p>
+<p>Acts exactly like save-dao, except that it protects its attempt to
+insert the object with a rollback point, so that a failure will not
+abort the transaction.</p>
+<p>See also: upsert-dao.</p>
 <h3 id="schema-exists-p">schema-exists-p</h3>
 <pre><code class="lisp">Function: (schema-exists-p name)
 </code></pre>
 
-<p>Predicate for schema existence. More consistent with naming scheme for other functions.</p>
+<p>→ boolean</p>
+<p>Tests the existence of a given schema. Returns T if the schema exists or
+NIL otherwise.</p>
 <h3 id="select-dao">select-dao</h3>
 <pre><code class="lisp">Macro: (select-dao type &amp;optional (test t) &amp;rest ordering)
 </code></pre>
 
-<p>Select daos for the rows in its table for which the given test
-holds, order them by the given criteria.</p>
+<p>→ list</p>
+<p>Select DAO objects for the rows in the associated table for which the
+given test (either an S-SQL expression or a string) holds. When sorting
+arguments are given, which can also be S-SQL forms or strings, these are
+used to sort the result.</p>
+<p>(Note that, if you want to sort, you have to pass the test argument.)</p>
+<pre><code class="commonlisp">(select-dao 'user (:&gt; 'score 10000) 'name)
+</code></pre>
+
 <h3 id="sequence-exists-p">sequence-exists-p</h3>
 <pre><code class="lisp">Function: (sequence-exists-p sequence)
 </code></pre>
 
-<p>Check whether a sequence exists. Takes either a string or a symbol
-for the sequence name.</p>
+<p>→ boolean</p>
+<p>Tests whether a sequence with the given name exists. The name can be
+either a string or a symbol.</p>
 <h3 id="sequence-next">sequence-next</h3>
 <pre><code class="lisp">Function: (sequence-next sequence)
 </code></pre>
 
-<p>Shortcut for getting the next value from a sequence.</p>
+<p>→ integer</p>
+<p>Get the next value from a sequence. The sequence identifier can be
+either a string or a symbol, in the latter case it will be converted to
+a string according to S-SQL rules.</p>
 <h3 id="set-search-path">set-search-path</h3>
 <pre><code class="lisp">Function: (set-search-path path)
 </code></pre>
 
-<p>This changes the postgresql runtime parameter controlling what order
-schemas are searched. You can always use fully qualified names [schema.table].
-By default, this function only changes the search path for the current session.</p>
-<h3 id="smallint">smallint</h3>
-<h3 id="split-fully-qualified-tablename">split-fully-qualified-tablename</h3>
-<pre><code class="lisp">Function: (split-fully-qualified-tablename name)
+<p>Sets the search path to the path. This function is used by with-schema.</p>
+<h3 id="split-fully-qualified-table-name">split-fully-qualified-table-name</h3>
+<pre><code class="lisp">: (split-fully-qualified-table-name)
 </code></pre>
 
-<p>Take a tablename of the form database.schema.table or schema.table
-and return the tablename and the schema name. The name can be a symbol
-or a string. Returns a list of form '(table schema database</p>
+<p>→ list Takes a name of the form database.schema.table or schema.table or
+just table and returns a list in the form '(table schema database)</p>
 <h3 id="sql">sql</h3>
 <pre><code class="lisp">Macro: (sql form)
 </code></pre>
@@ -1853,107 +2031,209 @@ can be used in a query.</p>
 <pre><code class="lisp">Function: (table-description table-name &amp;optional schema-name)
 </code></pre>
 
-<p>Return a list of (name type null-allowed) lists for the fields of a
-table.</p>
+<p>→ list</p>
+<p>Returns a list of the fields in the named table. Each field is
+represented by a list of three elements: the field name, the type, and a
+boolean indicating whether the field may be NULL. Optionally,
+schema-name can be specified to restrict the result to fields from the
+named schema. Without it, all fields in the table are returned,
+regardless of their schema.</p>
 <h3 id="table-exists-p">table-exists-p</h3>
 <pre><code class="lisp">Function: (table-exists-p table-name &amp;optional (schema-name nil))
 </code></pre>
 
-<p>Check whether a table exists in a particular schema. Defaults to the search path.
-Takes either a string or a symbol for the table name. The table-name can be fully
-qualified in the form of schema.table-name or database.schema.table-name. If
-the schema is specified either in a qualified table-name or in the optional
-schema-name parameter, we look directly to the information schema tables. Otherwise
-we use the search path which can be controlled by being within a with-schema form.</p>
+<p>→ boolean</p>
+<p>Tests whether a table with the given name exists. The name can be either
+a string or a symbol. It can also be qualified in the form of
+'schema.table or 'database.schema.table</p>
 <h3 id="table-size">table-size</h3>
 <pre><code class="lisp">Function: (table-size table-name)
 </code></pre>
 
-<p>Return the size of a postgresql table in k or m. Table-name can be either a string or quoted.</p>
+<p>→ list</p>
+<p>Return the size of a postgresql table in k or m. Table-name can be
+either a string or quoted.</p>
 <h3 id="terminate-backend">terminate-backend</h3>
 <pre><code class="lisp">Function: (terminate-backend pid &amp;optional (database *database*))
 </code></pre>
 
-<p>Less polite way of terminating at the database (as opposed to calling close-database).
-Faster than (cancel-backend pid) and more reliable.</p>
-<h3 id="text">text</h3>
-<pre><code class="lisp">Generic Function: (text condition)
-</code></pre>
-
+<p>Less polite way of terminating at the database (as opposed to calling
+close-database). Faster than (cancel-backend pid) and more reliable.</p>
 <h3 id="unused-indexes">unused-indexes</h3>
 <pre><code class="lisp">Function: (unused-indexes)
 </code></pre>
 
-<p>Returns a list of lists showing schema.table, indexname, index_size and number of scans. The code was borrowed from: https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/</p>
+<p>→ list</p>
+<p>Returns a list of lists showing schema.table, indexname, index_size and
+number of scans. The code was borrowed from:
+<a href="https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/">https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/</a></p>
 <h3 id="update-dao">update-dao</h3>
 <pre><code class="lisp">Generic Function: (update-dao dao)
 </code></pre>
 
-<p>Update the object's representation in the database
-  with the values in the given instance.</p>
+<p>→ dao</p>
+<p>Update the representation of the given dao in the database to the values
+in the object. This is not defined for tables that do not have any
+non-primary-key columns. Raises an error when no row matching the dao
+exists.</p>
 <h3 id="upsert-dao">upsert-dao</h3>
 <pre><code class="lisp">Generic Function: (upsert-dao dao)
 </code></pre>
 
-<p>Update or insert the given dao.  If its primary key
-  is already in the database and all slots are bound, an update will
-  occur.  Otherwise it tries to insert it.</p>
+<p>→ dao</p>
+<p>Like save-dao or save-dao/transaction but using a different method that
+doesn't involve a database exception. This is safe to use both in and
+outside a transaction, though it's advisable to always do it in a
+transaction to prevent a race condition. The way it works is:</p>
+<p>If the object contains unbound slots, we call insert-dao directly, thus
+the behavior is like save-dao.</p>
+<p>Otherwise we try to update a record with the same primary key. If the
+PostgreSQL returns a non-zero number of rows updated it treated as the
+record is already exists in the database, and we stop here.</p>
+<p>If the PostgreSQL returns a zero number of rows updated, it treated as
+the record does not exist and we call insert-dao.</p>
+<p>The race condition might occur at step 3 if there's no transaction: if
+UPDATE returns zero number of rows updated and another thread inserts
+the record at that moment, the insertion implied by step 3 will fail.</p>
+<p>Note, that triggers and rules may affect the number of inserted or
+updated rows returned by PostgreSQL, so zero or non-zero number of
+affected rows may not actually indicate the existence of record in the
+database.</p>
+<p>This method returns two values: the DAO object and a boolean (T if the
+object was inserted, NIL if it was updated).</p>
 <h3 id="varchar">varchar</h3>
 <h3 id="view-exists-p">view-exists-p</h3>
 <pre><code class="lisp">Function: (view-exists-p view)
 </code></pre>
 
-<p>Check whether a view exists. Takes either a string or a symbol for
-the view name.</p>
+<p>→ boolean</p>
+<p>Tests whether a view with the given name exists. The name can be either
+a string or a symbol.</p>
 <h3 id="with-column-writers">with-column-writers</h3>
 <pre><code class="lisp">Macro: (with-column-writers (&amp;rest defs) &amp;body body)
 </code></pre>
 
+<p>Provides control over the way get-dao, select-dao, and query-dao read
+values from the database. This is not commonly needed, but can be used
+to reduce the amount of queries a system makes. writers should be a list
+of alternating column names (strings or symbols) and writers, where
+writers are either symbols referring to a slot in the objects, or
+functions taking two arguments ― an instance and a value ― which can be
+used to somehow store the value in the new instance. When any
+DAO-fetching function is called in the body, and columns matching the
+given names are encountered in the result, the writers are used instead
+of the default behaviour (try and store the value in the slot that
+matches the column name).</p>
+<p>An example of using this is to add some non-column slots to a DAO class,
+and use query-dao within a with-column-writers form to pull in extra
+information about the objects, and immediately store it in the new
+instances.</p>
 <h3 id="with-connection">with-connection</h3>
 <pre><code class="lisp">Macro: (with-connection spec &amp;body body)
 </code></pre>
 
-<p>Locally establish a database connection, and bind *database* to it.</p>
+<p>Evaluates the body with *database* bound to a connection as specified
+by spec, which should be list that connect can be applied to.</p>
 <h3 id="with-logical-transaction">with-logical-transaction</h3>
 <pre><code class="lisp">Macro: (with-logical-transaction (&amp;optional (name) (isolation-level)) &amp;body body)
 </code></pre>
 
-<p>Executes the body within a with-transaction (if no transaction is
-already in progress) or a with-savepoint (if one is), binding the
-transaction or savepoint to <code>name</code> (if supplied)</p>
+<p>Executes body within a with-transaction form if no transaction is
+currently in progress, otherwise simulates a nested transaction by
+executing it within a with-savepoint form. The transaction or savepoint
+is bound to name if one is supplied. The isolation-level will set the
+isolation-level used by the transaction.</p>
+<p>You can specify the following isolation levels in postmodern
+transactions:</p>
+<ul>
+<li>:read-committed-rw (read committed with read and write)</li>
+<li>:read-committed-ro (read committed with read only)</li>
+<li>:repeatable-read-rw (repeatable read with read and write)</li>
+<li>:repeatable-read-ro (repeatable read with read only)</li>
+<li>:serializable (serializable with reand and write)</li>
+</ul>
+<p>Sample usage where "george" is just the name given to the transaction
+(not quoted or a string) and ... simply indicates other statements would
+be expected here:</p>
+<pre><code class="commonlisp">(with-logical-transaction ()
+  (execute (:insert-into 'test-data :set 'value 77))
+  ...)
+
+(with-logical-transaction (george)
+  (execute (:insert-into 'test-data :set 'value 22))
+  ...)
+
+(with-logical-transaction (george :read-committed-rw)
+  (execute (:insert-into 'test-data :set 'value 33))
+  ...)
+
+(with-logical-transaction (:serializable)
+  (execute (:insert-into 'test-data :set 'value 44))
+  ...)
+</code></pre>
+
 <h3 id="with-savepoint">with-savepoint</h3>
 <pre><code class="lisp">Macro: (with-savepoint name &amp;body body)
 </code></pre>
 
-<p>Execute the body within a savepoint, releasing savepoint when the
-body exits normally, and rolling back otherwise. <code>name</code> is both the
-variable that can be used to release or rolled back before the body
-unwinds, and the SQL name of the savepoint.</p>
+<p>Can only be used within a transaction. Establishes a savepoint with the
+given name at the start of body, and binds the same name to a handle for
+that savepoint. At the end of body, the savepoint is released, unless a
+condition is thrown, in which case it is rolled back.</p>
 <h3 id="with-schema">with-schema</h3>
 <pre><code class="lisp">Macro: (with-schema (schema &amp;key (strict) (if-not-exist) (drop-after)) &amp;body form)
 </code></pre>
 
-<p>A macro to set the schema search path of the postgresql
-   database to include as first entry a specified schema.</p>
-<p>calling with strict 't only the specified schema is set as current
-   search path. All other schema are then not searched any more.</p>
-<p>calling with if-not-exist set to :create the schema is created if
-   this schema did not exist.</p>
-<p>calling with drop-after set to 't the schema is removed after the
-   execution of the body form.</p>
-<p>example :
-     (with-schema (:schema-name :strict nil :drop-after nil :if-not-exist :error)
-            (foo 1)
-            (foo 2))</p>
+<p>Sets the current schema to namespace and executes the body. Before
+executing body the PostgreSQL's session variable search_path is set to
+the given namespace. After executing body the search_path variable is
+restored to the original value. If the keyword :strict is set to T then
+the namespace is only the scheme on the search path upon the body
+execution. Otherwise the namespace is just first schema on the search
+path upon the the body execution. If :if-not-exist is NIL, an error is
+signaled. If :drop-after is T the namespace is dropped from the database
+after the body execution.</p>
 <h3 id="with-transaction">with-transaction</h3>
 <pre><code class="lisp">Macro: (with-transaction (&amp;optional name isolation-level) &amp;body body)
 </code></pre>
 
-<p>Execute the body within a database transaction, committing when the
-body exits normally, and aborting otherwise. An optional name and/or
+<p>Execute the given body within a database transaction, committing it when
+the body exits normally, and aborting otherwise. An optional name and/or
 isolation-level can be given to the transaction. The name can be used to
 force a commit or abort before the body unwinds. The isolation-level
 will set the isolation-level used by the transaction.</p>
+<p>You can specify the following isolation levels in postmodern
+transactions:</p>
+<ul>
+<li>:read-committed-rw (read committed with read and write)</li>
+<li>:read-committed-ro (read committed with read only)</li>
+<li>:repeatable-read-rw (repeatable read with read and write)</li>
+<li>:repeatable-read-ro (repeatable read with read only)</li>
+<li>:serializable (serializable with reand and write)</li>
+</ul>
+<p>Sample usage where "george" is just the name given to the transaction
+(not quoted or a string) and ... simply indicates other statements would
+be expected here:</p>
+<pre><code class="commonlisp">(with-transaction ()
+  (execute (:insert-into 'test-data :set 'value 77))
+  ...)
+
+(with-transaction (george)
+  (execute (:insert-into 'test-data :set 'value 22))
+  ...)
+
+(with-transaction (george :read-committed-rw)
+  (execute (:insert-into 'test-data :set 'value 33))
+  (query (:select '* :from 'test-data))
+  ...)
+
+(with-transaction (:serializable)
+  (execute (:insert-into 'test-data :set 'value 44))
+  ...)
+</code></pre>
+
+<p>Further discussion of transactions and isolation levels can found
+<a href="isolation-notes.html">here</a>.</p>
               
             </div>
           </div>

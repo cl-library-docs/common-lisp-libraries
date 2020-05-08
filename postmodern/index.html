@@ -619,7 +619,6 @@ CL-USER&gt; (execute (dao-table-definition 'points))
 
 <p>(Note that you'd need to execute this form using <a href="#query">query</a> or <a href="#execute">execute</a>. Also see <a href="https://marijnhaverbeke.nl/postmodern/create-tables.html">this</a> for details and examples on using S-SQL for creating tables.)</p>
 <p>You can use <a href="#insert-dao">insert-dao</a> for inserting DAO-objects into the database. (Of course, you can use <code>query</code> to do all this using the usual SQL syntax.)</p>
-<p>[TODO] The behaviour of <code>(get-dao 'points :x 1)</code>: https://github.com/marijnh/Postmodern/issues/230</p>
 <pre><code class="lisp">CL-USER&gt; (insert-dao (make-instance 'points :x 0 :y 1 :value 10))
 #&lt;POINTS {10145AC1D3}&gt;
 CL-USER&gt; (insert-dao (make-instance 'points :x 1 :y 0 :value 15))
@@ -803,8 +802,6 @@ See the <a href="https://marijnhaverbeke.nl/postmodern/s-sql.html">S-SQL referen
 </ul>
 </li>
 </ul>
-<p><strong>Installation</strong></p>
-<p><a href="https://www.postgresql.org/download/linux/ubuntu/">Linux</a></p>
 <h2 id="configuration-variables">CONFIGURATION VARIABLES</h2>
 <h3 id="allow-overwriting-prepared-statements">*allow-overwriting-prepared-statements*</h3>
 <pre><code class="lisp">Variable

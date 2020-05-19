@@ -10,14 +10,13 @@
 
 ;; (ql:quickload '(:alexandria :str :iterate :reader :simple-arrows :closer-mop))
 
-;;; This file is more of a scratch pad than anything more serious.
-;;; Just open the file with SLIME or equivalent, and C-c C-c the
-;;; relevant forms for use in the REPL.
-
 (reader:enable-reader-syntax 'lambda 'get-val)
 (in-package :cl-rtd)
 
 ;;; Our main function is the md-file function below.
+;; Typical usage of the below function includes
+;; (let ((*blacklist-samedoc-symbols* '(thread lock timeout)))
+;;   (md-file :bordeaux-threads "~/ram-disk/bordeaux-threads.md"))
 
 (defun md-file (package-keyword &optional (output-file (format nil "~A.md" package-keyword)))
   (with-open-file (f (string-downcase output-file)
@@ -31,7 +30,8 @@
                                         (collect symbol))
                                   (sort λ(string< (symbol-name -)
                                                   (symbol-name --)))))
-              (*samedoc-symbol-list* sorted-symbols)
+              (*samedoc-symbols* (set-difference sorted-symbols *blacklist-samedoc-symbols*
+                                                 :test #'string=))
               (*package-name* (package-name package-keyword)))
          (iter (initially
                 (format t "~&# ~(~a~)~%" (-> package-keyword
@@ -45,7 +45,7 @@
                (for symbol in sorted-symbols)
                (unless (ignore-errors (typep (fdefinition symbol)
                                              (find-class 'standard-generic-function)))
-                 ;;; Excluding generic functions: why?
+                 ;; Excluding generic functions: why?
                  )
                (format t "### ~(~a~)~%" (let ((sym-name (symbol-name symbol)))
                                           (if (str:containsp "*" sym-name)

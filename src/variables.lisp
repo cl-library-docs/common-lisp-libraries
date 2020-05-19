@@ -6,6 +6,6 @@
           (conc (if (constantp symbol)
                     (format nil "~%```lisp~%Constant: ~A~%```~%~%" (symbol-value symbol))
                     (format nil "~%```lisp~%Variable~%```~%~%"))
-                docstring
+                (hyperlink-samedoc-symbols docstring symbol)
                 #\newline))
         #\newline))

@@ -18,26 +18,19 @@
             ((listp elt) (appending (arglist-symbols elt)))
             (t (collect elt))))))
 
+
 (defmethod format-documentation ((slot (eql 'function)) symbol
                                  &optional (docstring (documentation symbol slot)))
   (when (fboundp symbol)
     (let* ((arg-list (swank/backend:arglist symbol))
            (arg-symbols (arglist-symbols arg-list)))
-      (ppcre-let ((quote-args
-                   (let ((symbol (subseq target-string [reg-starts 0] [reg-ends 0])))
-                     (if (and (string-upcase-p symbol)
-                              (member (string-upcase symbol) arg-symbols
-                                      :test 'string=))
-                         (conc "`" (string-downcase symbol) "`")
-                         symbol)))
-                  (hyperlink-samedoc-symbols
-                   (let ((symbol (subseq target-string
-                                         (1+ [reg-starts 0])
-                                         (1- [reg-ends 0]))))
-                     (if (member (string-upcase symbol) *samedoc-symbol-list*
-                                 :test 'string=)
-                         (format nil "[~A](#~A)" symbol symbol)
-                         (subseq target-string [reg-starts 0] [reg-ends 0])))))
+      (ppcre-flet ((quote-args
+                    (let ((symbol-name (subseq target-string [reg-starts 0] [reg-ends 0])))
+                      (if (and (string-upcase-p symbol-name)
+                               (member (string-upcase symbol-name) arg-symbols
+                                       :test 'string=))
+                          (conc "`" (string-downcase symbol-name) "`")
+                          symbol-name))))
         (conc (format nil "~%```lisp~%~A: (~{~(~A~)~^ ~})~%```~%"
                       (cond ((macro-function symbol) "Macro")
                             ((typep (fdefinition symbol)
@@ -46,7 +39,7 @@
                             (t "Function"))
                       (cons symbol arg-list))
               (when docstring          
-                (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,]*)" docstring #'quote-args)
+                (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,^\;]*)" docstring #'quote-args)
                   ;; Usually, docstring contain symbols in upcase formats. However,
                   ;; quoted-and-downcased symbols "look nicer". 
                   ;; A docstring-ed symbol cannot contain a space and '(', ')' characters.
@@ -54,8 +47,9 @@
                   (requote-with-backquote <>)
                   ;; Some also contain symbols in `format'. We want them to be in `format`.
                   ;; Ideally they should be hyperlinked elsewhere around the world!
-                  ;; (ppcre:regex-replace-all "(\\`[^\\s^\(^\)]*\\`)" <>
-                  ;; #'hyperlink-samedoc-symbols) ; too many links!            
-                  ))
+                  (hyperlink-samedoc-symbols <> symbol)
+                  ;; Too many links? Control using *blacklist-samedoc-symbols*
+                  ;; These functions should be separated 
+                  (quote-self <> symbol)))
               #\newline)))))
 

@@ -8,5 +8,9 @@
 
 (defgeneric format-documentation (slot symbol &optional docstring))
 
-(defvar *samedoc-symbol-list* ()) ; could be used for hyperlinking
+(defvar *samedoc-symbols* ()
+  "List of symbols used for hyperlinking on the same page. This is bound in md-file.")
+(defvar *blacklist-samedoc-symbols* ()
+  "List of symbols users may want to exclude for hyperlinking. This list is subtracted
+from *SAMEDOC-SYMBOLS* to obtain the final list.")
 (defvar *package-name* "")

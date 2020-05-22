@@ -31,25 +31,32 @@
                                        :test 'string=))
                           (conc "`" (string-downcase symbol-name) "`")
                           symbol-name))))
-        (conc (format nil "~%```lisp~%~A: (~{~(~A~)~^ ~})~%```~%"
+        (conc (format nil "~%```lisp~%~A: ~D~%```~%~%"
                       (cond ((macro-function symbol) "Macro")
                             ((typep (fdefinition symbol)
                                     (find-class 'standard-generic-function))
                              "Generic Function")
                             (t "Function"))
-                      (cons symbol arg-list))
+                      (map-tree λ(typecase -
+                                   (keyword (string-downcase (format nil "~S" -)))
+                                   (string-designator (string-downcase -))
+                                   (t (write-to-string -)))
+                                (cons symbol arg-list)))
               (when docstring          
-                (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,^\;]*)" docstring #'quote-args)
-                  ;; Usually, docstring contain symbols in upcase formats. However,
-                  ;; quoted-and-downcased symbols "look nicer". 
-                  ;; A docstring-ed symbol cannot contain a space and '(', ')' characters.
-                  ;; Also assume, full-stops and commas are due to english.
-                  (requote-with-backquote <>)
-                  ;; Some also contain symbols in `format'. We want them to be in `format`.
-                  ;; Ideally they should be hyperlinked elsewhere around the world!
-                  (hyperlink-samedoc-symbols <> symbol)
-                  ;; Too many links? Control using *blacklist-samedoc-symbols*
-                  ;; These functions should be separated 
-                  (quote-self <> symbol)))
+                (restart-case
+                    (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,^\;]*)"
+                                                  docstring #'quote-args)
+                      ;; Usually, docstring contain symbols in upcase formats. However,
+                      ;; quoted-and-downcased symbols "look nicer". 
+                      ;; A docstring-ed symbol cannot contain a space and '(', ')' characters.
+                      ;; Also assume, full-stops and commas are due to english.
+                      (requote-with-backquote <>)
+                      ;; Some also contain symbols in `format'. We want them to be in `format`.
+                      ;; Ideally they should be hyperlinked elsewhere around the world!
+                      (hyperlink-samedoc-symbols <> symbol)
+                      ;; Too many links? Control using *blacklist-samedoc-symbols*
+                      ;; These functions should be separated 
+                      (quote-self <> symbol))
+                  (continue-ignoring-errors () (format t "Errors on ~D~%" symbol))))
               #\newline)))))
 

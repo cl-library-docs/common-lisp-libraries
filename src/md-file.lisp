@@ -24,7 +24,7 @@
                      :if-exists :supersede
                      :if-does-not-exist :create)
     (write-string 
-     (with-output-to-string (*standard-output*)
+     (with-output-to-string (s)
        (let* ((sorted-symbols (-> (iter (for symbol in-package package-keyword
                                              external-only t)
                                         (collect symbol))
@@ -34,20 +34,20 @@
                                                  :test #'string=))
               (*package-name* (package-name package-keyword)))
          (iter (initially
-                (format t "~&# ~(~a~)~%" (-> package-keyword
+                (format s "~&# ~(~a~)~%" (-> package-keyword
                                              (find-package)
                                              (package-name)))
-                (terpri)
-                (write-string (or (documentation (find-package package-keyword) t) ""))
-                (terpri)
-                (terpri))
+                (terpri s)
+                (write-string (or (documentation (find-package package-keyword) t) "") s)
+                (terpri s)
+                (terpri s))
                ;; (for i below 5)
                (for symbol in sorted-symbols)
                (unless (ignore-errors (typep (fdefinition symbol)
                                              (find-class 'standard-generic-function)))
                  ;; Excluding generic functions: why?
                  )
-               (format t "### ~(~a~)~%" (let ((sym-name (symbol-name symbol)))
+               (format s "### ~(~a~)~%" (let ((sym-name (symbol-name symbol)))
                                           (if (str:containsp "*" sym-name)
                                               (str:replace-all "*" "\\\*" sym-name)
                                               sym-name)))
@@ -56,7 +56,7 @@
                                     type))
                      (for docstring = (documentation symbol slot))
                      (when-let (doc (format-documentation slot symbol docstring))
-                       (write-string doc))))
+                       (write-string doc s))))
          (terpri)))
      f))
   t)

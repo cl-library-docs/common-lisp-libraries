@@ -2,6 +2,13 @@
 
 (reader:enable-reader-syntax 'lambda 'get-val)
 
+(defun map-tree (function tree)
+  (cond ((null tree) ())
+        ((listp tree)
+         (cons (map-tree function (car tree))
+               (map-tree function (cdr tree))))
+        (t (funcall function tree))))
+
 (defun string-upcase-p (string)
   (every (lambda (char)
            (or (not (alpha-char-p char))

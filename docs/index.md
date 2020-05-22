@@ -54,6 +54,7 @@ See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 
 - [numcl](./numcl/) - lispy clone of numpy
 - [unix-opts](./unix-opts/) - minimalistic command line options parser
+- [utilities](./utilities/) - a collection of some more utility libraries
 
 
 ## Previous Efforts

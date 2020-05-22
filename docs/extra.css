@@ -1,0 +1,18 @@
+.wy-side-scroll {
+		/* background-color:#b3d9ff; */
+		background:white;
+}
+
+.wy-menu-vertical a{
+		color:black;
+}
+
+
+
+/* .toctree-l1 .current > a.reference.internal.current{ */
+/* 		background:#2980B9; */
+/* } */
+
+.rst-versions .rst-current-version{
+		background-color:#2980B9;
+}

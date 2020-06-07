@@ -95,6 +95,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="postmodern/">postmodern - PostgreSQL programming interace</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="quicklisp/">quicklisp - Library Manager</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
@@ -144,11 +146,11 @@
 <p>Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have <em>some</em> objective component to it.</p>
 <h2 id="libraries">Libraries</h2>
 <h3 id="installation"><span id="defacto-installation">Installation</span></h3>
-<p>Each of the below libraries can be installed using quicklisp:</p>
+<p>Each of the below libraries can be installed using quicklisp (except quicklisp of course!):</p>
 <pre><code class="lisp">(ql:quickload &quot;alexandria&quot;) ; for example
 </code></pre>
 
-<p>See <a href="https://www.quicklisp.org/">quicklisp.org</a> for instructions on
+<p>See <a href="./quicklisp/#getting-started">quicklisp - Getting Started</a> for instructions on
 installing quicklisp.</p>
 <p>Optionally, you may want to use <code>trivial-package-local-nicknames</code> for, well, <a href="https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here">adding package local nicknames</a>.</p>
 <pre><code class="lisp">(ql:quickload :trivial-package-local-nicknames)
@@ -174,6 +176,7 @@ installing quicklisp.</p>
 <li><a href="./fiveam/">fiveam</a> - regression testing framework</li>
 <li><a href="./iterate/">iterate</a> - a lispy extensible alternative to <code>loop</code></li>
 <li><a href="./postmodern/">postmodern</a> - PostgreSQL programming interace</li>
+<li><a href="./quicklisp/">quicklisp</a> - library manager</li>
 </ul>
 <h4 id="not-yet-defacto">Not yet defacto</h4>
 <ul>
@@ -266,5 +269,5 @@ installing quicklisp.</p>
 
 <!--
 MkDocs version : 1.1
-Build Date UTC : 2020-05-22 15:17:59
+Build Date UTC : 2020-06-07 15:24:05
 -->

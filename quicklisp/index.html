@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>quicklisp - Library Manager - common-lisp.readthedocs</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "quicklisp - Library Manager";
+    var mkdocs_page_input_path = "quicklisp.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp.readthedocs</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../postmodern/">postmodern - PostgreSQL programming interace</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">quicklisp - Library Manager</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">GETTING STARTED</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#installation">Installation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#loading-after-installation">Loading after installation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-few-useful-functions-and-variables">A few useful functions and variables</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-note-on-quicklisp-dists">A note on quicklisp dists</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#more-reading">More reading</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#quicklisp-client-api-reference">quicklisp-client: API REFERENCE</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#local-project-directories">*local-project-directories*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quickload-prompt">*quickload-prompt*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quickload-verbose">*quickload-verbose*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#add-to-init-file">add-to-init-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-client-versions">available-client-versions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-dist-versions">available-dist-versions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bundle-systems">bundle-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#client-url">client-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#client-version">client-version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#config-value">config-value</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dist-url">dist-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dist-version">dist-version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#help">help</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#install-client">install-client</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#list-local-projects">list-local-projects</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#list-local-systems">list-local-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#local-projects-searcher">local-projects-searcher</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#provided-systems">provided-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#qmerge">qmerge</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#quickload">quickload</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#register-local-projects">register-local-projects</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#setup">setup</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-apropos">system-apropos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-apropos-list">system-apropos-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-list">system-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-not-found">system-not-found</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-not-found-name">system-not-found-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#uninstall">uninstall</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#uninstall-dist">uninstall-dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#update-all-dists">update-all-dists</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#update-client">update-client</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#update-dist">update-dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#use-only-quicklisp-systems">use-only-quicklisp-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#where-is-system">where-is-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#who-depends-on">who-depends-on</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#write-asdf-manifest-file">write-asdf-manifest-file</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ql-dist-api-reference">ql-dist: API Reference</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#dist-enumeration-functions">*dist-enumeration-functions*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#all-dists">all-dists</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#archive-content-sha1">archive-content-sha1</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#archive-md5">archive-md5</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#archive-size">archive-size</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#archive-url">archive-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-update">available-update</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-versions">available-versions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#available-versions-url">available-versions-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#badly-sized-local-archive">badly-sized-local-archive</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#base-directory">base-directory</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#canonical-distinfo-url">canonical-distinfo-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#check-local-archive-file">check-local-archive-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clean">clean</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dependency-tree">dependency-tree</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#disable">disable</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dist">dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#enable">enable</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#enabled-dists">enabled-dists</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#enabledp">enabledp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-installed">ensure-installed</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-local-archive-file">ensure-local-archive-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-asdf-system-file">find-asdf-system-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-dist">find-dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-dist-or-lose">find-dist-or-lose</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-release">find-release</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-release-in-dist">find-release-in-dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-system">find-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-system-in-dist">find-system-in-dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#forget-preference">forget-preference</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#inhibit-subscription">inhibit-subscription</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#initialize-release-index">initialize-release-index</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#initialize-system-index">initialize-system-index</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#install">install</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#install-dist">install-dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#install-metadata-file">install-metadata-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#installed-releases">installed-releases</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#installed-systems">installed-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#installedp">installedp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#invalid-local-archive">invalid-local-archive</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#invalid-local-archive-file">invalid-local-archive-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#invalid-local-archive-release">invalid-local-archive-release</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#local-archive-file">local-archive-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#metadata-name">metadata-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-local-archive">missing-local-archive</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#name">name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#new-version-available-p">new-version-available-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#preference">preference</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#preference-file">preference-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#preference-parent">preference-parent</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prefix">prefix</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#project-name">project-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#provided-releases">provided-releases</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#provided-systems_1">provided-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#relative-to">relative-to</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#release">release</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#release-index-url">release-index-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#required-systems">required-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#short-description">short-description</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#show-update-report">show-update-report</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#standard-dist-enumeration-function">standard-dist-enumeration-function</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#subscribe">subscribe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#subscribedp">subscribedp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#subscription-inhibited-p">subscription-inhibited-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#subscription-inhibition-file">subscription-inhibition-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#subscription-unavailable">subscription-unavailable</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#subscription-url">subscription-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system">system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-apropos_1">system-apropos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-apropos-list_1">system-apropos-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-definition-searcher">system-definition-searcher</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-file-name">system-file-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-files">system-files</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-index-url">system-index-url</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#uninhibit-subscription">uninhibit-subscription</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#uninstall_1">uninstall</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unknown-dist">unknown-dist</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unsubscribe">unsubscribe</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#update-in-place">update-in-place</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#update-release-differences">update-release-differences</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#version">version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-consistent-dists">with-consistent-dists</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of some more utility libraries</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp.readthedocs</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Defacto libraries &raquo;</li>
+        
+      
+    
+    <li>quicklisp - Library Manager</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="quicklisp-library-manager">quicklisp - Library Manager</h1>
+<p>Version: 2020-01-04
+<br/>
+Repository: <a href="https://github.com/quicklisp/quicklisp-client">quicklisp/quicklisp-client - Github</a></p>
+<p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
+<h2 id="getting-started">GETTING STARTED</h2>
+<h3 id="installation">Installation</h3>
+<p><strong>Download</strong></p>
+<p>Do the equivalent steps on Windows and Mac OS:</p>
+<pre><code class="sh">curl -O https://beta.quicklisp.org/quicklisp.lisp     # download quicklisp.lisp
+curl -O https://beta.quicklisp.org/quicklisp.lisp.asc # download the PGP signature file
+gpg --verify quicklisp.lisp.asc quicklisp.lisp        # verify it against the signing key
+</code></pre>
+
+<p>As of 07 June 2020, Quicklisp release signing key has a fingerprint of <code>D7A3 489D DEFE 32B7 D0E7 CC61 3079 65AB 028B 5FF7</code>, an id of <code>028B5FF7</code>, and an email of <code>release@quicklisp.org</code>. See <a href="https://www.quicklisp.org/beta/#installation">here</a> for the more recent details.</p>
+<p><strong>Installation</strong></p>
+<p>Load quicklisp.lisp: <code>sbcl --load quicklisp.lisp # or an equivalent command for your implementation</code> (optionally, you may want to <code>rlwrap sbcl --load quicklisp.lisp</code> for a better
+repl experience):</p>
+<pre><code class="lisp">(quicklisp-quickstart:install)
+(ql:add-to-init-file) ; to automatically load quicklisp at implementation startup
+;;; Note that ql acts as a nickname for the quicklisp-client package.
+</code></pre>
+
+<p><code>quicklisp-quickstart:install</code> also takes a couple keyword arguments (see <code>(describe 'quicklisp-quickstart:install)</code> - but unless you know what
+you are doing, it is recommended to leave them as they are.</p>
+<h3 id="loading-after-installation">Loading after installation</h3>
+<p><code>(ql:add-to-init-file)</code> adds instructions to your implementations init-file (<code>.sbclrc</code> or
+equivalent) to load quicklisp on implementation startup.</p>
+<p>However, some runtime options of the implementation may disable loading the init-file -
+<code>sbcl --script</code> for instance. For these cases, you might want to <code>alias</code> (or equivalent)
+<code>alias sbcl-ql='rlwrap sbcl --noinform --load $HOME/quicklisp/setup.lisp'</code> in your <code>.bashrc</code>
+(or equivalent).</p>
+<h3 id="a-few-useful-functions-and-variables">A few useful functions and variables</h3>
+<ul>
+<li><a href="#quickload">quickload</a>: <code>(ql:quickload '("alexandria" "bordeaux-threads"))</code> or <code>(ql:quickload "alexandria")</code>.</li>
+<li><a href="#system-apropos">system-apropos</a>: <code>(ql:system-apropos "postgres")</code></li>
+<li><a href="#where-is-system">where-is-system</a></li>
+<li><a href="#local-project-directories">*local-project-directories*</a>: you may either want to have this variable modified from implementation init-file, or symlink <code>~/quicklisp/local-projects</code> to wherever your projects directory is. This is the location - as the name suggests - where quicklisp searches for local projects.</li>
+<li><a href="#uninstall">uninstall</a></li>
+<li><a href="#update-client">update-client</a></li>
+</ul>
+<p>You may also need to run <code>(asdf:clear-configuration)</code> to have <a href="https://common-lisp.net/project/asdf/asdf.html">ASDF</a> reprocess its configuration files while loading a newer library. There is also the <a href="#register-local-projects">ql:register-local-projects</a> that can help with the same.</p>
+<h3 id="a-note-on-quicklisp-dists">A note on quicklisp dists</h3>
+<p>Besides being an ASDF system, quicklisp is also the name of a <a href="#dist">dist</a>. This distribution
+is released about once per month, with the guarantee that all systems in the distribution build together - note that this does not still imply that they <em>work</em> together. For these cases,
+you may want to <a href="http://blog.quicklisp.org/2011/08/going-back-in-dist-time.html">go back in dist time</a>. You might, additionally, want to learn about <a href="https://github.com/fukamachi/qlot">qlot</a> that helps with version pinning - however, given the stability of Common Lisp, that translates to the stability for its (old but gold) libraries, it may be an overkill. But, YMMV.</p>
+<p>Also worth a read is <a href="http://blog.quicklisp.org/2015/01/getting-library-into-quicklisp.html">getting libraries into quicklisp</a>. (Hope you took note of the blog!)</p>
+<p>The once-per-month release nature of quicklisp can be an issue if you need to work with
+bleeding edge packages - for these cases, there exists <a href="https://ultralisp.org/">Ultralisp</a> - which updates every 5 minutes! This is yet another distribution. Some useful functions for working with distributions include:</p>
+<ul>
+<li><a href="#install-dist">install-dist</a></li>
+<li><a href="#uninstall-dist">uninstall-dist</a></li>
+<li><a href="#update-dist">update-dist</a>: <code>(ql:update-dist "quicklisp")</code></li>
+<li><a href="#find-dist">find-dist</a></li>
+<li><a href="#enabled-dists">enabled-dists</a></li>
+<li><a href="#enable">enable</a></li>
+<li><a href="#disable">disable</a></li>
+</ul>
+<h3 id="more-reading">More reading</h3>
+<p>More reading about quicklisp is available on its <a href="https://www.quicklisp.org/beta/index.html">official page</a>.</p>
+<h2 id="quicklisp-client-api-reference">quicklisp-client: API REFERENCE</h2>
+<p>Nickname: ql
+<br/></p>
+<p>The Quicklisp client package, intended for end-user Quicklisp
+commands and configuration parameters.</p>
+<h3 id="local-project-directories">*local-project-directories*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>The default local projects directory.</p>
+<h3 id="quickload-prompt">*quickload-prompt*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>When NIL, quickload systems without prompting for enter to
+continue, otherwise proceed directly without user intervention.</p>
+<h3 id="quickload-verbose">*quickload-verbose*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>When NIL, show terse output when quickloading a system. Otherwise,
+show normal compile and load output.</p>
+<h3 id="add-to-init-file">add-to-init-file</h3>
+<pre><code class="lisp">Function: (add-to-init-file &amp;optional implementation-or-file)
+</code></pre>
+
+<p>Add forms to the Lisp implementation's init file that will load
+quicklisp at CL startup.</p>
+<h3 id="available-client-versions">available-client-versions</h3>
+<pre><code class="lisp">Function: (available-client-versions)
+</code></pre>
+
+<h3 id="available-dist-versions">available-dist-versions</h3>
+<pre><code class="lisp">Function: (available-dist-versions name)
+</code></pre>
+
+<h3 id="bundle-systems">bundle-systems</h3>
+<pre><code class="lisp">Function: (bundle-systems system-names &amp;key include-local-projects to
+                          (overwrite t))
+</code></pre>
+
+<p>In the directory <code>to</code>, construct a self-contained bundle of libraries
+based on <code>system-names</code>. For each system named, and its recursive
+required systems, unpack its release archive in TO/software/, and
+write a system index, compatible with the output of
+QL:<a href="#write-asdf-manifest-file">write-asdf-manifest-file</a>, to TO/system-index.txt. Write a loader
+script to TO/bundle.lisp that, when loaded via CL:LOAD, configures
+ASDF to load systems from the bundle before any other system.</p>
+<p><code>system-names</code> must name systems provided directly by Quicklisp.</p>
+<p>If <code>include-local-projects</code> is true, each directory in
+QL:<em>LOCAL-PROJECT-DIRECTORIES</em> is copied into the bundle and loaded
+before any of the other bundled systems.</p>
+<h3 id="client-url">client-url</h3>
+<pre><code class="lisp">Function: (client-url)
+</code></pre>
+
+<p>Return an URL suitable for passing as the :URL argument to
+<a href="#install-client">install-client</a> for the current local client installation.</p>
+<h3 id="client-version">client-version</h3>
+<pre><code class="lisp">Function: (client-version)
+</code></pre>
+
+<p>Return the version for the current local client installation. May
+or may not be suitable for passing as the :VERSION argument to
+<a href="#install-client">install-client</a>, depending on if it's a standard Quicklisp-provided
+client.</p>
+<h3 id="config-value">config-value</h3>
+<pre><code class="lisp">Function: (config-value path)
+</code></pre>
+
+<h3 id="dist-url">dist-url</h3>
+<pre><code class="lisp">Function: (dist-url name)
+</code></pre>
+
+<h3 id="dist-version">dist-version</h3>
+<pre><code class="lisp">Function: (dist-version name)
+</code></pre>
+
+<h3 id="help">help</h3>
+<pre><code class="lisp">Function: (help)
+</code></pre>
+
+<h3 id="install-client">install-client</h3>
+<pre><code class="lisp">Function: (install-client &amp;key url version)
+</code></pre>
+
+<h3 id="list-local-projects">list-local-projects</h3>
+<pre><code class="lisp">Function: (list-local-projects)
+</code></pre>
+
+<p>Return a list of pathnames to local project system files.</p>
+<h3 id="list-local-systems">list-local-systems</h3>
+<pre><code class="lisp">Function: (list-local-systems)
+</code></pre>
+
+<p>Return a list of local project system names.</p>
+<h3 id="local-projects-searcher">local-projects-searcher</h3>
+<pre><code class="lisp">Function: (local-projects-searcher system-name)
+</code></pre>
+
+<p>This function is added to ASDF:<em>SYSTEM-DEFINITION-SEARCH-FUNCTIONS</em>
+to use the local project directory and cache to find systems.</p>
+<h3 id="provided-systems">provided-systems</h3>
+<pre><code class="lisp">Generic Function: (provided-systems object)
+</code></pre>
+
+<p>Return a list of systems provided by <code>object</code>.</p>
+<h3 id="qmerge">qmerge</h3>
+<pre><code class="lisp">Function: (qmerge pathname)
+</code></pre>
+
+<p>Return <code>pathname</code> merged with the base Quicklisp directory.</p>
+<h3 id="quickload">quickload</h3>
+<pre><code class="lisp">Generic Function: (quickload systems &amp;key verbose silent prompt explain
+                   &amp;allow-other-keys)
+</code></pre>
+
+<p>Load <code>systems</code> the quicklisp way. <code>systems</code> is a designator for a list
+   of things to be loaded.</p>
+<h3 id="register-local-projects">register-local-projects</h3>
+<pre><code class="lisp">Function: (register-local-projects)
+</code></pre>
+
+<p>Force a scan of the local projects directory to create the system
+file index.</p>
+<h3 id="setup">setup</h3>
+<pre><code class="lisp">Function: (setup)
+</code></pre>
+
+<h3 id="system-apropos">system-apropos</h3>
+<pre><code class="lisp">Generic Function: (system-apropos term)
+</code></pre>
+
+<h3 id="system-apropos-list">system-apropos-list</h3>
+<pre><code class="lisp">Generic Function: (system-apropos-list term)
+</code></pre>
+
+<h3 id="system-list">system-list</h3>
+<pre><code class="lisp">Function: (system-list)
+</code></pre>
+
+<h3 id="system-not-found">system-not-found</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>This condition is signaled by QUICKLOAD when a
+  system given to load is not available via ASDF or a Quicklisp
+  dist.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>ql-dist:name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+Readers: SYSTEM-NOT-FOUND-NAME
+</code></pre>
+
+<h3 id="system-not-found-name">system-not-found-name</h3>
+<pre><code class="lisp">Generic Function: (system-not-found-name condition)
+</code></pre>
+
+<h3 id="uninstall">uninstall</h3>
+<pre><code class="lisp">Function: (uninstall system-name)
+</code></pre>
+
+<h3 id="uninstall-dist">uninstall-dist</h3>
+<pre><code class="lisp">Function: (uninstall-dist name)
+</code></pre>
+
+<h3 id="update-all-dists">update-all-dists</h3>
+<pre><code class="lisp">Function: (update-all-dists &amp;key (prompt t))
+</code></pre>
+
+<h3 id="update-client">update-client</h3>
+<pre><code class="lisp">Function: (update-client &amp;key (prompt t))
+</code></pre>
+
+<h3 id="update-dist">update-dist</h3>
+<pre><code class="lisp">Function: (update-dist dist &amp;key (prompt t))
+</code></pre>
+
+<h3 id="use-only-quicklisp-systems">use-only-quicklisp-systems</h3>
+<pre><code class="lisp">Function: (use-only-quicklisp-systems)
+</code></pre>
+
+<h3 id="where-is-system">where-is-system</h3>
+<pre><code class="lisp">Function: (where-is-system name)
+</code></pre>
+
+<p>Return the pathname to the source directory of ASDF system with the
+given <code>name</code>, or NIL if no system by that name can be found known.</p>
+<h3 id="who-depends-on">who-depends-on</h3>
+<pre><code class="lisp">Function: (who-depends-on system-name)
+</code></pre>
+
+<p>Return a list of names of systems that depend on <code>system-name</code>.</p>
+<h3 id="write-asdf-manifest-file">write-asdf-manifest-file</h3>
+<pre><code class="lisp">Function: (write-asdf-manifest-file output-file &amp;key
+           (if-exists :rename-and-delete) exclude-local-projects)
+</code></pre>
+
+<p>Write a list of system file pathnames to <code>output-file</code>, one per line,
+in order of descending QL-DIST:PREFERENCE.</p>
+<h2 id="ql-dist-api-reference">ql-dist: API Reference</h2>
+<p>Generic functions, variables, and classes for interacting with the
+   dist system. Documented, exported symbols are intended for public
+   use.</p>
+<h3 id="dist-enumeration-functions">*dist-enumeration-functions*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p><a href="#all-dists">all-dists</a> calls each function in this list with no arguments, and
+  appends the results into a list of dist objects, removing
+  duplicates. Functions might be called just once for a batch of
+  related operations; see <a href="#with-consistent-dists">with-consistent-dists</a>.</p>
+<h3 id="all-dists">all-dists</h3>
+<pre><code class="lisp">Function: (all-dists)
+</code></pre>
+
+<p>Return a list of all known dists.</p>
+<h3 id="archive-content-sha1">archive-content-sha1</h3>
+<pre><code class="lisp">Generic Function: (archive-content-sha1 object)
+</code></pre>
+
+<h3 id="archive-md5">archive-md5</h3>
+<pre><code class="lisp">Generic Function: (archive-md5 object)
+</code></pre>
+
+<h3 id="archive-size">archive-size</h3>
+<pre><code class="lisp">Generic Function: (archive-size object)
+</code></pre>
+
+<h3 id="archive-url">archive-url</h3>
+<pre><code class="lisp">Generic Function: (archive-url release)
+</code></pre>
+
+<p>Return the full URL for fetching the archive file of <code>release</code>.</p>
+<h3 id="available-update">available-update</h3>
+<pre><code class="lisp">Generic Function: (available-update dist)
+</code></pre>
+
+<p>If an update is available for <code>dist</code>, return the
+  update as an uninstalled dist object. Otherwise, return NIL.</p>
+<h3 id="available-versions">available-versions</h3>
+<pre><code class="lisp">Generic Function: (available-versions object)
+</code></pre>
+
+<p>Return a list of version information for <code>object</code>.</p>
+<h3 id="available-versions-url">available-versions-url</h3>
+<pre><code class="lisp">Generic Function: (available-versions-url object)
+</code></pre>
+
+<p>Return the URL for the available versions data file of <code>object</code>.</p>
+<h3 id="badly-sized-local-archive">badly-sized-local-archive</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="base-directory">base-directory</h3>
+<pre><code class="lisp">Generic Function: (base-directory object)
+</code></pre>
+
+<p>Return the base directory pathname of <code>object</code>.</p>
+<h3 id="canonical-distinfo-url">canonical-distinfo-url</h3>
+<pre><code class="lisp">Generic Function: (canonical-distinfo-url object)
+</code></pre>
+
+<h3 id="check-local-archive-file">check-local-archive-file</h3>
+<pre><code class="lisp">Generic Function: (check-local-archive-file release)
+</code></pre>
+
+<p>Check the local archive file of <code>release</code> for validity, including
+   size and signature checks. Signals errors in the case of invalid files.</p>
+<h3 id="clean">clean</h3>
+<pre><code class="lisp">Generic Function: (clean object)
+</code></pre>
+
+<p>Remove any unneeded files or directories related to
+  <code>object</code>.</p>
+<h3 id="dependency-tree">dependency-tree</h3>
+<pre><code class="lisp">Generic Function: (dependency-tree system)
+</code></pre>
+
+<h3 id="disable">disable</h3>
+<pre><code class="lisp">Generic Function: (disable object)
+</code></pre>
+
+<p>Disable <code>object</code>.</p>
+<h3 id="dist">dist</h3>
+<pre><code class="lisp">Generic Function: (dist object)
+</code></pre>
+
+<p>Return the dist of <code>object</code>.</p>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>base-directory</strong></p>
+<pre><code class="lisp">Initargs: :BASE-DIRECTORY
+Readers: BASE-DIRECTORY
+Writers: (SETF BASE-DIRECTORY)
+</code></pre>
+
+<p><strong>name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+Readers: NAME
+Writers: (SETF NAME)
+</code></pre>
+
+<p><strong>version</strong></p>
+<pre><code class="lisp">Initargs: :VERSION
+Readers: VERSION
+Writers: (SETF VERSION)
+</code></pre>
+
+<p><strong>system-index-url</strong></p>
+<pre><code class="lisp">Initargs: :SYSTEM-INDEX-URL
+Readers: SYSTEM-INDEX-URL
+Writers: (SETF SYSTEM-INDEX-URL)
+</code></pre>
+
+<p><strong>release-index-url</strong></p>
+<pre><code class="lisp">Initargs: :RELEASE-INDEX-URL
+Readers: RELEASE-INDEX-URL
+Writers: (SETF RELEASE-INDEX-URL)
+</code></pre>
+
+<p><strong>available-versions-url</strong></p>
+<pre><code class="lisp">Initargs: :AVAILABLE-VERSIONS-URL
+Readers: AVAILABLE-VERSIONS-URL
+Writers: (SETF AVAILABLE-VERSIONS-URL)
+</code></pre>
+
+<p><strong>canonical-distinfo-url</strong></p>
+<pre><code class="lisp">Initargs: :CANONICAL-DISTINFO-URL
+Readers: CANONICAL-DISTINFO-URL
+Writers: (SETF CANONICAL-DISTINFO-URL)
+</code></pre>
+
+<p><strong>provided-systems</strong></p>
+<pre><code class="lisp">Initargs: :PROVIDED-SYSTEMS
+Readers: PROVIDED-SYSTEMS
+Writers: (SETF PROVIDED-SYSTEMS)
+</code></pre>
+
+<p><strong>provided-releases</strong></p>
+<pre><code class="lisp">Initargs: :PROVIDED-RELEASES
+Readers: PROVIDED-RELEASES
+Writers: (SETF PROVIDED-RELEASES)
+</code></pre>
+
+<h3 id="enable">enable</h3>
+<pre><code class="lisp">Generic Function: (enable object)
+</code></pre>
+
+<p>Enable <code>object</code>.</p>
+<h3 id="enabled-dists">enabled-dists</h3>
+<pre><code class="lisp">Function: (enabled-dists)
+</code></pre>
+
+<p>Return a list of all known dists for which <a href="#enabledp">enabledp</a> returns true.</p>
+<h3 id="enabledp">enabledp</h3>
+<pre><code class="lisp">Generic Function: (enabledp object)
+</code></pre>
+
+<p>Return true if <code>object</code> is enabled.</p>
+<h3 id="ensure-installed">ensure-installed</h3>
+<pre><code class="lisp">Generic Function: (ensure-installed object)
+</code></pre>
+
+<p>Ensure that <code>object</code> is installed.</p>
+<h3 id="ensure-local-archive-file">ensure-local-archive-file</h3>
+<pre><code class="lisp">Generic Function: (ensure-local-archive-file release)
+</code></pre>
+
+<p>If the archive file for <code>release</code> is not available locally, fetch it
+   and return the pathname to it.</p>
+<h3 id="find-asdf-system-file">find-asdf-system-file</h3>
+<pre><code class="lisp">Function: (find-asdf-system-file name)
+</code></pre>
+
+<p>Return the ASDF system file in which the system named <code>name</code> is defined.</p>
+<h3 id="find-dist">find-dist</h3>
+<pre><code class="lisp">Function: (find-dist name)
+</code></pre>
+
+<h3 id="find-dist-or-lose">find-dist-or-lose</h3>
+<pre><code class="lisp">Function: (find-dist-or-lose name)
+</code></pre>
+
+<h3 id="find-release">find-release</h3>
+<pre><code class="lisp">Generic Function: (find-release name)
+</code></pre>
+
+<p>Return a release with the given <code>name</code>, or NIL if no system is
+   found. If multiple releases have the same name, the one with the
+   highest preference is returned.</p>
+<h3 id="find-release-in-dist">find-release-in-dist</h3>
+<pre><code class="lisp">Generic Function: (find-release-in-dist release-name dist)
+</code></pre>
+
+<p>Return a release with the given <a href="#name">name</a> in <code>dist</code>, or NIL if no release
+   is found.</p>
+<h3 id="find-system">find-system</h3>
+<pre><code class="lisp">Generic Function: (find-system name)
+</code></pre>
+
+<p>Return a system with the given <code>name</code>, or NIL if no system is
+   found. If multiple systems have the same name, the one with the
+   highest preference is returned.</p>
+<h3 id="find-system-in-dist">find-system-in-dist</h3>
+<pre><code class="lisp">Generic Function: (find-system-in-dist system-name dist)
+</code></pre>
+
+<p>Return a system with the given <a href="#name">name</a> in <code>dist</code>, or NIL if no system
+   is found.</p>
+<h3 id="forget-preference">forget-preference</h3>
+<pre><code class="lisp">Generic Function: (forget-preference object)
+</code></pre>
+
+<p>Remove specific preference information for <code>object</code>.</p>
+<h3 id="inhibit-subscription">inhibit-subscription</h3>
+<pre><code class="lisp">Generic Function: (inhibit-subscription object)
+</code></pre>
+
+<p>Inhibit subscription for <code>object</code>.</p>
+<h3 id="initialize-release-index">initialize-release-index</h3>
+<pre><code class="lisp">Generic Function: (initialize-release-index dist)
+</code></pre>
+
+<p>Initialize the release index of <code>dist</code>.</p>
+<h3 id="initialize-system-index">initialize-system-index</h3>
+<pre><code class="lisp">Generic Function: (initialize-system-index dist)
+</code></pre>
+
+<p>Initialize the system index of <code>dist</code>.</p>
+<h3 id="install">install</h3>
+<pre><code class="lisp">Generic Function: (install object)
+</code></pre>
+
+<p>Install <code>object</code>.</p>
+<h3 id="install-dist">install-dist</h3>
+<pre><code class="lisp">Function: (install-dist url &amp;key (prompt t) replace)
+</code></pre>
+
+<h3 id="install-metadata-file">install-metadata-file</h3>
+<pre><code class="lisp">Generic Function: (install-metadata-file object)
+</code></pre>
+
+<p>The pathname to a file describing the installation status of
+   <code>object</code>.</p>
+<h3 id="installed-releases">installed-releases</h3>
+<pre><code class="lisp">Generic Function: (installed-releases dist)
+</code></pre>
+
+<p>Return a list of all releases installed for <code>dist</code>.</p>
+<h3 id="installed-systems">installed-systems</h3>
+<pre><code class="lisp">Generic Function: (installed-systems dist)
+</code></pre>
+
+<p>Return a list of all systems installed for <code>dist</code>.</p>
+<h3 id="installedp">installedp</h3>
+<pre><code class="lisp">Generic Function: (installedp object)
+</code></pre>
+
+<p>Return true if <code>object</code> is installed.</p>
+<h3 id="invalid-local-archive">invalid-local-archive</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>release</strong></p>
+<pre><code class="lisp">Initargs: :RELEASE
+Readers: INVALID-LOCAL-ARCHIVE-RELEASE
+</code></pre>
+
+<h3 id="invalid-local-archive-file">invalid-local-archive-file</h3>
+<pre><code class="lisp">Generic Function: (invalid-local-archive-file condition)
+</code></pre>
+
+<h3 id="invalid-local-archive-release">invalid-local-archive-release</h3>
+<pre><code class="lisp">Generic Function: (invalid-local-archive-release condition)
+</code></pre>
+
+<h3 id="local-archive-file">local-archive-file</h3>
+<pre><code class="lisp">Generic Function: (local-archive-file release)
+</code></pre>
+
+<p>Return the pathname to where the archive file of <code>release</code> should be
+   stored.</p>
+<h3 id="metadata-name">metadata-name</h3>
+<pre><code class="lisp">Generic Function: (metadata-name object)
+</code></pre>
+
+<p>The metadata-name of an object is used to form the pathname for a
+   few different object metadata files.</p>
+<h3 id="missing-local-archive">missing-local-archive</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="name">name</h3>
+<pre><code class="lisp">Generic Function: (name object)
+</code></pre>
+
+<p>Return the name of <code>object</code>.</p>
+<h3 id="new-version-available-p">new-version-available-p</h3>
+<pre><code class="lisp">Generic Function: (new-version-available-p dist)
+</code></pre>
+
+<p>Return true if a new version of <code>dist</code> is available.</p>
+<h3 id="preference">preference</h3>
+<pre><code class="lisp">Generic Function: (preference object)
+</code></pre>
+
+<p>Returns a value used when comparing multiple systems or releases
+   with the same name. Objects with higher preference are returned by
+   <a href="#find-system">find-system</a> and <a href="#find-release">find-release</a>.</p>
+<h3 id="preference-file">preference-file</h3>
+<pre><code class="lisp">Generic Function: (preference-file object)
+</code></pre>
+
+<p>Return the file from which preference information is loaded for
+   <code>object</code>.</p>
+<h3 id="preference-parent">preference-parent</h3>
+<pre><code class="lisp">Generic Function: (preference-parent object)
+</code></pre>
+
+<p>Return a value suitable for checking if <code>object</code> has no specific
+   preference set.</p>
+<h3 id="prefix">prefix</h3>
+<pre><code class="lisp">Generic Function: (prefix object)
+</code></pre>
+
+<h3 id="project-name">project-name</h3>
+<pre><code class="lisp">Generic Function: (project-name object)
+</code></pre>
+
+<h3 id="provided-releases">provided-releases</h3>
+<pre><code class="lisp">Generic Function: (provided-releases object)
+</code></pre>
+
+<p>Return a list of releases provided by <code>object</code>.</p>
+<h3 id="provided-systems_1">provided-systems</h3>
+<pre><code class="lisp">Generic Function: (provided-systems object)
+</code></pre>
+
+<p>Return a list of systems provided by <code>object</code>.</p>
+<h3 id="relative-to">relative-to</h3>
+<pre><code class="lisp">Generic Function: (relative-to object pathname)
+</code></pre>
+
+<p>Merge <code>pathname</code> with the base-directory of <code>object</code>.</p>
+<h3 id="release">release</h3>
+<pre><code class="lisp">Generic Function: (release object)
+</code></pre>
+
+<p>Return the release of <code>object</code>.</p>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Instances of this class represent a snapshot of a project at some
+   point in time, which might be from version control, or from an
+   official release, or from some other source.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>project-name</strong></p>
+<pre><code class="lisp">Initargs: :PROJECT-NAME
+</code></pre>
+
+<p><strong>dist</strong></p>
+<pre><code class="lisp">Initargs: :DIST
+</code></pre>
+
+<p><strong>provided-systems</strong></p>
+<pre><code class="lisp">Initargs: :PROVIDED-SYSTEMS
+Readers: PROVIDED-SYSTEMS
+Writers: (SETF PROVIDED-SYSTEMS)
+</code></pre>
+
+<p><strong>archive-url</strong></p>
+<pre><code class="lisp">Initargs: :ARCHIVE-URL
+Readers: ARCHIVE-URL
+Writers: (SETF ARCHIVE-URL)
+</code></pre>
+
+<p><strong>archive-size</strong></p>
+<pre><code class="lisp">Initargs: :ARCHIVE-SIZE
+Readers: ARCHIVE-SIZE
+Writers: (SETF ARCHIVE-SIZE)
+</code></pre>
+
+<p><strong>archive-md5</strong></p>
+<pre><code class="lisp">Initargs: :ARCHIVE-MD5
+Readers: ARCHIVE-MD5
+Writers: (SETF ARCHIVE-MD5)
+</code></pre>
+
+<p><strong>archive-content-sha1</strong></p>
+<pre><code class="lisp">Initargs: :ARCHIVE-CONTENT-SHA1
+Readers: ARCHIVE-CONTENT-SHA1
+Writers: (SETF ARCHIVE-CONTENT-SHA1)
+</code></pre>
+
+<p><strong>prefix</strong></p>
+<pre><code class="lisp">Initargs: :PREFIX
+</code></pre>
+
+<p><strong>system-files</strong></p>
+<pre><code class="lisp">Initargs: :SYSTEM-FILES
+Readers: SYSTEM-FILES
+Writers: (SETF SYSTEM-FILES)
+</code></pre>
+
+<p><strong>metadata-name</strong></p>
+<pre><code class="lisp">Initargs: :METADATA-NAME
+Readers: METADATA-NAME
+Writers: (SETF METADATA-NAME)
+</code></pre>
+
+<h3 id="release-index-url">release-index-url</h3>
+<pre><code class="lisp">Generic Function: (release-index-url object)
+</code></pre>
+
+<p>Return the URL for the release index of <code>object</code>.</p>
+<h3 id="required-systems">required-systems</h3>
+<pre><code class="lisp">Generic Function: (required-systems object)
+</code></pre>
+
+<h3 id="short-description">short-description</h3>
+<pre><code class="lisp">Generic Function: (short-description object)
+</code></pre>
+
+<p>Return a short string describing <code>object</code>.</p>
+<h3 id="show-update-report">show-update-report</h3>
+<pre><code class="lisp">Generic Function: (show-update-report old-dist new-dist)
+</code></pre>
+
+<p>Display a description of the update from <code>old-dist</code>
+  to <code>new-dist</code>.</p>
+<h3 id="standard-dist-enumeration-function">standard-dist-enumeration-function</h3>
+<pre><code class="lisp">Function: (standard-dist-enumeration-function)
+</code></pre>
+
+<p>The default function used for producing a list of dist objects.</p>
+<h3 id="subscribe">subscribe</h3>
+<pre><code class="lisp">Generic Function: (subscribe object)
+</code></pre>
+
+<p>Subscribe to updates of <code>object</code>, if possible. If no
+  updates are available, a condition of type <a href="#subscription-unavailable">subscription-unavailable</a>
+  is raised.</p>
+<h3 id="subscribedp">subscribedp</h3>
+<pre><code class="lisp">Generic Function: (subscribedp object)
+</code></pre>
+
+<p>Return true if <code>object</code> is subscribed to updates.</p>
+<h3 id="subscription-inhibited-p">subscription-inhibited-p</h3>
+<pre><code class="lisp">Generic Function: (subscription-inhibited-p object)
+</code></pre>
+
+<p>Return T if subscription to <code>object</code> is inhibited.</p>
+<h3 id="subscription-inhibition-file">subscription-inhibition-file</h3>
+<pre><code class="lisp">Generic Function: (subscription-inhibition-file object)
+</code></pre>
+
+<p>The file whose presence indicates the inhibited
+  subscription status of <code>object</code>.</p>
+<h3 id="subscription-unavailable">subscription-unavailable</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="subscription-url">subscription-url</h3>
+<pre><code class="lisp">Generic Function: (subscription-url object)
+</code></pre>
+
+<h3 id="system">system</h3>
+<pre><code class="lisp">Generic Function: (system object)
+</code></pre>
+
+<p>Return the system of <code>object</code>.</p>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+</code></pre>
+
+<p><strong>system-file-name</strong></p>
+<pre><code class="lisp">Initargs: :SYSTEM-FILE-NAME
+Readers: SYSTEM-FILE-NAME
+Writers: (SETF SYSTEM-FILE-NAME)
+</code></pre>
+
+<p><strong>release</strong></p>
+<pre><code class="lisp">Initargs: :RELEASE
+</code></pre>
+
+<p><strong>dist</strong></p>
+<pre><code class="lisp">Initargs: :DIST
+Readers: DIST
+Writers: (SETF DIST)
+</code></pre>
+
+<p><strong>required-systems</strong></p>
+<pre><code class="lisp">Initargs: :REQUIRED-SYSTEMS
+Readers: REQUIRED-SYSTEMS
+Writers: (SETF REQUIRED-SYSTEMS)
+</code></pre>
+
+<p><strong>metadata-name</strong></p>
+<pre><code class="lisp">Initargs: :METADATA-NAME
+Readers: METADATA-NAME
+Writers: (SETF METADATA-NAME)
+</code></pre>
+
+<h3 id="system-apropos_1">system-apropos</h3>
+<pre><code class="lisp">Generic Function: (system-apropos term)
+</code></pre>
+
+<h3 id="system-apropos-list_1">system-apropos-list</h3>
+<pre><code class="lisp">Generic Function: (system-apropos-list term)
+</code></pre>
+
+<h3 id="system-definition-searcher">system-definition-searcher</h3>
+<pre><code class="lisp">Function: (system-definition-searcher name)
+</code></pre>
+
+<p>Like <a href="#find-asdf-system-file">find-asdf-system-file</a>, but this function can be used in
+ASDF:<em>SYSTEM-DEFINITION-SEARCH-FUNCTIONS</em>; it will only return system
+file names if they match <code>name</code>.</p>
+<h3 id="system-file-name">system-file-name</h3>
+<pre><code class="lisp">Generic Function: (system-file-name object)
+</code></pre>
+
+<h3 id="system-files">system-files</h3>
+<pre><code class="lisp">Generic Function: (system-files object)
+</code></pre>
+
+<h3 id="system-index-url">system-index-url</h3>
+<pre><code class="lisp">Generic Function: (system-index-url object)
+</code></pre>
+
+<p>Return the URL for the system index of <code>object</code>.</p>
+<h3 id="uninhibit-subscription">uninhibit-subscription</h3>
+<pre><code class="lisp">Generic Function: (uninhibit-subscription object)
+</code></pre>
+
+<p>Remove inhibition of subscription for <code>object</code>.</p>
+<h3 id="uninstall_1">uninstall</h3>
+<pre><code class="lisp">Generic Function: (uninstall object)
+</code></pre>
+
+<p>Uninstall <code>object</code>.</p>
+<h3 id="unknown-dist">unknown-dist</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+Readers: :UNKNOWN-DIST-NAME
+</code></pre>
+
+<h3 id="unsubscribe">unsubscribe</h3>
+<pre><code class="lisp">Generic Function: (unsubscribe object)
+</code></pre>
+
+<p>Unsubscribe from updates to <code>object</code>.</p>
+<h3 id="update-in-place">update-in-place</h3>
+<pre><code class="lisp">Generic Function: (update-in-place old-dist new-dist)
+</code></pre>
+
+<p>Update <code>old-dist</code> to <code>new-dist</code> in place.</p>
+<h3 id="update-release-differences">update-release-differences</h3>
+<pre><code class="lisp">Generic Function: (update-release-differences old-dist new-dist)
+</code></pre>
+
+<p>Compare <code>old-dist</code> to <code>new-dist</code> and return three lists
+  as multiple values: new releases (present in <code>new-dist</code> but not
+  <code>old-dist</code>), changed releases (present in both dists but different in
+  some way), and removed releases (present in <code>old-dist</code> but not
+  <code>new-dist</code>). The list of changed releases is a list of two-element
+  lists, with each two-element list having first the old release
+  object and then the new release object.</p>
+<h3 id="version">version</h3>
+<pre><code class="lisp">Generic Function: (version object)
+</code></pre>
+
+<h3 id="with-consistent-dists">with-consistent-dists</h3>
+<pre><code class="lisp">Macro: (with-consistent-dists &amp;body body)
+</code></pre>
+
+<p>See CALL-WITH-CONSISTENT-DISTS.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../numcl/" class="btn btn-neutral float-right" title="numcl - Lispy clone of numpy">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../postmodern/" class="btn btn-neutral" title="postmodern - PostgreSQL programming interace"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../postmodern/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../numcl/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

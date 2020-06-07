@@ -12,12 +12,12 @@ Common Lisp documentation - libraries or the HyperSpec - isn't known to be parti
 
 ### <span id="defacto-installation">Installation</span>
 
-Each of the below libraries can be installed using quicklisp:
+Each of the below libraries can be installed using quicklisp (except quicklisp of course!):
 
 ```lisp
 (ql:quickload "alexandria") ; for example
 ```
-See [quicklisp.org](https://www.quicklisp.org/) for instructions on
+See [quicklisp - Getting Started](./quicklisp/#getting-started) for instructions on
 installing quicklisp.
 
 Optionally, you may want to use `trivial-package-local-nicknames` for, well, [adding package local nicknames](https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here).
@@ -49,6 +49,7 @@ See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 - [fiveam](./fiveam/) - regression testing framework
 - [iterate](./iterate/) - a lispy extensible alternative to `loop`
 - [postmodern](./postmodern/) - PostgreSQL programming interace
+- [quicklisp](./quicklisp/) - library manager
 
 #### Not yet defacto
 

@@ -17,6 +17,7 @@ nav:
       - hunchentoot.md
       - iterate.md
       - postmodern.md
+      - quicklisp.md
     - Not yet defacto:
       - numcl.md
       - unix-opts.md

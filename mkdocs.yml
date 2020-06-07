@@ -5,6 +5,9 @@ theme:
     highlightjs: true
     hljs_languages:
         - lisp
+    navigation_depth: 4
+    sticky_navigation: false
+    prev_next_buttons_location: none
 include_search_page: true
 nav:
     - index: index.md

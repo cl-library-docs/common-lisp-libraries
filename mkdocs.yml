@@ -21,10 +21,10 @@ nav:
       - iterate.md
       - postmodern.md
       - quicklisp.md
+      - utilities.md
     - Not yet defacto:
       - numcl.md
       - unix-opts.md
-      - utilities.md
 plugins:
     - search
 extra_css: [extra.css]

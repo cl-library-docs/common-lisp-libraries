@@ -1,10 +1,12 @@
-# utilities - A collection of some more utility libraries
+# utilities - A collection of utility libraries
 
 A collection of smallish utility libraries.
 
-*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
 ***
+
+
 
 ## PARSE-NUMBER
 

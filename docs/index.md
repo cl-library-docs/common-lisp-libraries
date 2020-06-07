@@ -50,12 +50,12 @@ See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 - [iterate](./iterate/) - a lispy extensible alternative to `loop`
 - [postmodern](./postmodern/) - PostgreSQL programming interace
 - [quicklisp](./quicklisp/) - library manager
+- [utilities](./utilities/) - a collection of utility libraries
 
 #### Not yet defacto
 
 - [numcl](./numcl/) - lispy clone of numpy
 - [unix-opts](./unix-opts/) - minimalistic command line options parser
-- [utilities](./utilities/) - a collection of some more utility libraries
 
 
 ## Previous Efforts

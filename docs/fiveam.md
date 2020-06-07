@@ -8,7 +8,7 @@ Repository: [sionescu/fiveam - Github](https://github.com/sionescu/fiveam)
 
 *This documentation was possible due to [Tomek Kurez's tutorial on fiveam](http://turtleware.eu/posts/Tutorial-Working-with-FiveAM.html) and the [excellent official documentation](https://common-lisp.net/project/fiveam/docs/).*
 
-*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
 ***
 

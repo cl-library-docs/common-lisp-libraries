@@ -1,4 +1,4 @@
-site_name: common-lisp.readthedocs
+site_name: common-lisp-libraries
 theme:
     name: readthedocs
     collapse_by_default: false

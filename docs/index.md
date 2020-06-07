@@ -1,6 +1,6 @@
 # common-lisp.readthedocs
 
-*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
 ***
 
@@ -37,7 +37,7 @@ Optionally, you may want to use `trivial-package-local-nicknames` for, well, [ad
 
 See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 
-(See the [html version of this page](https://digikar99.github.io/common-lisp.readthedocs/), rather than the markdown version for the working links below.)
+(See the [html version of this page](https://common-lisp-libraries.readthedocs.io), rather than the markdown version for the working links below.)
 
 #### Defacto libraries
 

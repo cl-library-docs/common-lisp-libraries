@@ -8,7 +8,7 @@ Repository: [edicl/cl-ppcre - Github](https://github.com/edicl/cl-ppcre)
 
 *This documentation is possible the [excellent official documentation](https://edicl.github.io/cl-ppcre) as of 4th May 2020.*
 
-*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
 ***
 

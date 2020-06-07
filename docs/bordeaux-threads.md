@@ -6,7 +6,7 @@ Repository: [sionescu/bordeaux-threads - Github](https://github.com/sionescu/bor
 
 *This page was possible due to the [official documentation](https://trac.common-lisp.net/bordeaux-threads/wiki/ApiDocumentation), albeit its a bit outdated.*
 
-*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
 ***
 

@@ -6,7 +6,7 @@ Repository: [alexandria/alexandria - Gitlab](https://gitlab.common-lisp.net/alex
 
 *This documentation is modified to markdown from [here](https://common-lisp.net/project/alexandria/draft/alexandria.html) on 01 March, 2020.*
 
-*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
+*In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
 ***
 

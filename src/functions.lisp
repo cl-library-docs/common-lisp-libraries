@@ -18,6 +18,9 @@
             ((listp elt) (appending (arglist-symbols elt)))
             (t (collect elt))))))
 
+(defparameter *classes-are-significant* nil
+  "If T, generic functions are not documented separately.")
+;;; TODO: This should only disable listing accessors separately
 
 (defmethod format-documentation ((slot (eql 'function)) symbol
                                  &optional (docstring (documentation symbol slot)))

@@ -26,7 +26,7 @@
      ,@body))
 
 (defun conc (&rest strings/chars)
-  (apply 'concatenate
+  (apply #'concatenate
          'string
          (mapcar (lambda (elt)
                    (etypecase elt

@@ -6,7 +6,7 @@
   (-<> (str:replace-all "    " "4SPACES" slots-doc)
     (str:split "  " <> :omit-nulls t)
     (mapcar λ(str:replace-all "4SPACES" "    " -) <>)
-    (remove-if λ(str:starts-with-p (conc "UNIX-OPTS" "::") -) <>)))
+    (remove-if λ(str:starts-with-p (conc *package-name* "::") -) <>)))
 
 (defun class-documentation (class)
   ;; Only slots are documented currently.
@@ -46,7 +46,7 @@
         return-value
         ""))))
 
-(defparameter *slot-splitting-regex*
+(defun slot-splitting-regex ()
   `(:sequence
     (:flags :single-line-mode-p)
     (:register (:greedy-repetition 0 nil
@@ -71,7 +71,7 @@
                                 "Writers: "
                                 (:greedy-repetition
                                  0 nil
-                                 :non-whitespace-char-class)
+                                 (:inverted-char-class #\newline))
                                 #\newline))))
     (:greedy-repetition
      0 1 (:sequence "    "
@@ -81,14 +81,15 @@
                                  0 nil
                                  :everything)
                                 #\newline))))
-    (:alternation :void (:sequence "  " "UNIX-OPTS"))))
+    (:alternation :void (:sequence "  " ,*package-name*))))
 
 (defun format-slot-documentation (slot-doc-list)
   (if-let (processed-doc-list
-           (mapcar (lambda (slot-doc)
+           (mapcar (lambda (slot-doc)                     
+                     ;; (write-string slot-doc)
                      (with-output-to-string (s)
                        (ppcre:register-groups-bind (slot-name initarg reader writer)
-                           (*slot-splitting-regex*                      
+                           ((slot-splitting-regex)
                             (ppcre:regex-replace-all (conc "(?-i)" *package-name* #\:)
                                                      slot-doc
                                                      ""))

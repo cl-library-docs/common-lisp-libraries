@@ -12,6 +12,7 @@ include_search_page: true
 nav:
     - index: index.md
     - Defacto libraries:
+      - asdf.md
       - alexandria.md
       - bordeaux-threads.md
       - cl-ppcre.md

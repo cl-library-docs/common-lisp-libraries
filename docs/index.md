@@ -1,4 +1,4 @@
-# common-lisp.readthedocs
+# common-lisp-libraries.readthedocs.io
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
@@ -12,7 +12,7 @@ Common Lisp documentation - libraries or the HyperSpec - isn't known to be parti
 
 ### <span id="defacto-installation">Installation</span>
 
-Each of the below libraries can be installed using quicklisp (except quicklisp of course!):
+Each of the below libraries (except asdf and quicklisp) can be installed using quicklisp:
 
 ```lisp
 (ql:quickload "alexandria") ; for example
@@ -41,6 +41,7 @@ See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 
 #### Defacto libraries
 
+- [asdf](./asdf/) - build system for softwares (packages*)
 - [alexandria](./alexandria/) - a utility library
 - [bordeaux-threads](./bordeaux-threads/) - library for threading 
 - [cl-ppcre](./cl-ppcre/) - regular expressions
@@ -58,6 +59,9 @@ See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
 - [unix-opts](./unix-opts/) - minimalistic command line options parser
 
 
+\*What one might call packages in other languages are called systems in Common Lisp parlance. Instead, the word `package` in Common Lisp refers to a data structure providing namespacing
+for symbols. By contrast, a system is a tool to organize a bunch of files, in accordance with dependencies, and specifying how to perform certain actions on the system. A single system may contain multiple packages. See [this StackOverFlow answer](https://stackoverflow.com/questions/45642330/why-do-many-common-lisp-systems-use-a-single-packages-lisp-file/45643829#45643829) for a detailed discussion.
+
 ## Previous Efforts
 
 Documentation efforts have been made at:
@@ -66,7 +70,7 @@ Documentation efforts have been made at:
 
 - [Quickref](http://quickref.common-lisp.net/): Frankly, this is just too much. As a user, all I want to know is "What can this library do? And, how do I do it? (What functions, macros or anything is available?)" Therefore, for a user, the only good place I found was the Packages section here. It is, after all, a Reference Manual. Another excuse is, again, that I do want human intervention in documentation.
 
-- [common-lisp.net](http://common-lisp.net/): Ultimately, this seems to be the place for everything. And indeed, most of the work on the site you are reading is directly based on the official documentation. An attempt is made to "simplify" wherever need is felt.
+- [common-lisp.net](http://common-lisp.net/): Ultimately, this is the place for most everything Common Lisp. And indeed, most of the work here is based on the official documentation. An attempt is made to "simplify" wherever need is felt.
 
 - [CLiki](http://cliki.net/): Again, layout and "at a glance"!
 

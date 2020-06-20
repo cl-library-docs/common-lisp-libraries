@@ -1,12 +1,12 @@
 # postmodern - PostgreSQL programming interace
 
-Version: 1.30
-<br/>
+Version: 1.30 (note: as of this writing, postmodern was at version 1.32 at github but only 1.30 at quicklisp)
+
 Nickname: pomo
-<br/>
+
 Repository: [marijnh/Postmodern - Github](https://github.com/marijnh/Postmodern)
 
-*This page was possible due to the excellent [official documentation](https://edicl.github.io/hunchentoot/) as well as the page on [Web Development on The Common Lisp Cookbook](https://marijnhaverbeke.nl/postmodern/postmodern.html).*
+*This page was possible due to the excellent [official documentation](https://marijnhaverbeke.nl/postmodern/postmodern.html).*
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
 
@@ -33,33 +33,27 @@ like lispy SQL and database access objects in a quite different way.
 
 ### Starting the Postgres server
 
-[TODO] Someone more familiar with postgres or databases should review this section.
-
 Follow the [installation instructions](https://www.postgresql.org/download/) to install Postgres.
-Once done, you should have access to the `postgres`, `pg_ctl`, and optionally the `psql` commands on your command line / terminal.
+Once done, you should have access to the `postgres` (the actual database server daemon), `pg_ctl`, and the `psql` commands on your command line / terminal.
 
-Once done, [this page](https://www.postgresql.org/docs/10/server-start.html) elaborates
+Once done, [this page](https://www.postgresql.org/docs/current/server-start.html) elaborates
 the process of starting the database server and any issues that may arise. (You can select the postgresql version from top of the page.)
 
-- Initialize the directory: `pg_ctl init -D postmodern # see \`pg_ctl --help`\ from the options`.
-- Optionally, change `port` and `unix_socket_directories` from `postmodern/postgresql.conf`.
-- `pg_ctl start -D postmodern` to start the server.
+- Initialize the directory: `pg_ctl init -D postgres # see \`pg_ctl --help`\ from the options`.
+- Optionally, change `port` and `unix_socket_directories` from `postgres/postgresql.conf`.
+- `pg_ctl start -D postgres` to start the server.
 
 You should get a `server started` message; if not, the link above should help in debugging.
 Proceed to the next section once you successfully start the server.
 
-[This page](https://www.postgresql.org/docs/10/runtime-config-connection.html) elaborates on the configuration settings.
-
-In addition, you can list the databases by using
-`psql -p`*`PORT`*`-h`*`unix_socket_directories`*`-l`,
-replacing the italicized arguments appropriately. 
+[This page](https://www.postgresql.org/docs/current/runtime-config-connection.html) elaborates on the configuration settings.
 
 ### Connecting to the Postgres server
 
 We firstly connect to the default existing database. Create a new database for our
 purposes, and then disconnect and reconnect to this database.
 
-We also assume the server is started at 8080 and username is `"username"`.
+We also assume the database server is started at at the default port of 5432 and username is `"username"`.
 
 ```lisp
 CL-USER> (connect-toplevel "postgres" "username" "" "localhost" :port 8080)
@@ -68,28 +62,73 @@ CL-USER> (execute "create database testdb")
 0
 CL-USER> (disconnect-toplevel)
 NIL
-CL-USER> (connect-toplevel "testdb" "username" "" "localhost" :port 8080)
+CL-USER> (connect-toplevel "testdb" "username" "" "localhost")
 ; No value
 ```
+Connect-toplevel will maintain a single connection for the life of the session.
 
-[TODO] Distinguish why "exactly" connect and connect-toplevel are different? What goes on under the hood? Also, what role does `:pooled-p` play?
+If you have multiple roles connecting to one or more databases, i.e. 1:many or
+many:1, (in other words, changing connections) then with-connection form which establishes a connection with a lexical scope is more appropriate.
+
+
+    (with-connection '("testdb" "foucault" "surveiller" "localhost")
+      ...)
+
+For example, if you are creating a database, you need to have established a connection
+to a currently existing database (typically "postgres"). Assuming the foucault role
+is a superuser and you want to stay in a development connection with your new database
+afterwards, you would first use with-connection to connect to postgres, create the
+database and then switch to connect-toplevel for development ease.
+
+
+    (with-connection '("postgres" "foucault" "surveiller" "localhost")
+      (create-database 'testdb :limit-public-access t
+                         :comment "This database is for testing silly theories"))
+
+    (connect-toplevel "testdb" "foucault" "surveiller" "localhost")
+
+
+Note: (create-database) functionality is new to postmodern v. 1.32. Setting the
+:limit-public-access parameter to t will block connections to that database from
+anyone who you have not explicitly given permission (except other superusers).
+
+A word about Postgresql connections. Postgresql connections are not lightweight
+threads. They actually consume about 10 MB of memory per connection and Postgresql
+can be tuned to limit the number of connections allowed at any one time. In
+addition, any connections which require security (ssl or scram authentication)
+will take additiona time and create more overhead.
+
+If you have an application like a web app which will make many connections, you also
+generally do not want to create and drop connections for every query. The usual solution
+is to use connection pools so that the application is grabbing an already existing connection
+and returning it to the pool when finished, saving connection time and memory.
+
+To use postmodern's simple connection pooler, the with-connection call would look like:
+
+
+    (with-connection '("testdb" "foucault" "surveiller" "localhost" :pooled-p t)
+      ...)
+
+The maximum number of connections in the pool is set in the special variable
+\*max-pool-size\*, which defaults to nil (no maximum).
+
 
 Other things you may want to take a look at with regards to connection include:
 
 -   [database-connection](#database-connection)
 -   [connect](#connect)
 -   [\*default-use-ssl\*](#default-use-ssl)
--   [disconnect](#disconnect) 
--   [connected-p](#connected-p) 
--   [reconnect](#reconnect) 
+-   [disconnect](#disconnect)
+-   [connected-p](#connected-p)
+-   [reconnect](#reconnect)
 -   [\*database\*](#database)
--   [with-connection](#with-connection) 
--   [call-with-connection](#call-with-connection) 
--   [connect-toplevel](#connect-toplevel)        
--   [disconnect-toplevel](#disconnect-toplevel) 
--   [clear-connection-pool](#clear-connection-pool) 
+-   [with-connection](#with-connection)
+-   [call-with-connection](#call-with-connection)
+-   [connect-toplevel](#connect-toplevel)
+-   [disconnect-toplevel](#disconnect-toplevel)
+-   [clear-connection-pool](#clear-connection-pool)
 -   [\*max-pool-size\*](#max-pool-size)
--   [list-connections](#list-connections) 
+-   [list-connections](#list-connections)
 
 ### Executing arbitrary database commands
 
@@ -120,28 +159,28 @@ You do not have to pull in the whole result of a query at once, you can also ite
 
 The following things should be useful about querying:
 
--   [query](#query) 
+-   [query](#query)
 -   [execute](#execute)
--   [doquery](#doquery) 
--   [prepare](#prepare) 
+-   [doquery](#doquery)
+-   [prepare](#prepare)
 -   [defprepared](#defprepared)
 -   [defprepared-with-names](#defprepared-with-names)
 -   [with-transaction](#with-transaction)
--   [commit-transaction](#commit-transaction) 
--   [abort-transaction](#abort-transaction) 
--   [with-savepoint](#with-savepoint) 
--   [release-savepoint](#release-savepoint) 
--   [rollback-savepoint](#rollback-savepoint) 
--   [commit-hooks](#commit-hooks)        
--   [abort-hooks](#abort-hooks)        
+-   [commit-transaction](#commit-transaction)
+-   [abort-transaction](#abort-transaction)
+-   [with-savepoint](#with-savepoint)
+-   [release-savepoint](#release-savepoint)
+-   [rollback-savepoint](#rollback-savepoint)
+-   [commit-hooks](#commit-hooks)
+-   [abort-hooks](#abort-hooks)
 -   [with-logical-transaction](#with-logical-transaction)
 -   [abort-logical-transaction](#abort-logical-transaction)
--   [commit-logical-transaction](#commit-logical-transaction)        
+-   [commit-logical-transaction](#commit-logical-transaction)
 -   [\*current-logical-transaction\*](#current-logical-transaction)
--   [ensure-transaction](#ensure-transaction) 
+-   [ensure-transaction](#ensure-transaction)
 -   [with-schema](#with-schema)
--   [sequence-next](#sequence-next) 
--   [coalesce](#coalesce) 
+-   [sequence-next](#sequence-next)
+-   [coalesce](#coalesce)
 
 ### Database Access Class
 
@@ -218,24 +257,24 @@ CL-USER> (query (:select '* :from 'points))
 Here are the other useful constructs related to database access objects:
 
 -   [dao-class](#dao-class)
--   [dao-keys](#dao-keys) 
--   [dao-exists-p](#dao-exists-p) 
+-   [dao-keys](#dao-keys)
+-   [dao-exists-p](#dao-exists-p)
 -   [make-dao](#make-dao)
 -   [define-dao-finalization](#define-dao-finalization)
--   [get-dao](#get-dao) 
+-   [get-dao](#get-dao)
 -   [select-dao](#select-dao)
 -   [do-select-dao](#do-select-dao)
--   [query-dao](#query-dao) 
+-   [query-dao](#query-dao)
 -   [do-query-dao](#do-query-dao)
 -   [\*ignore-unknown-columns\*](#ignore-unknown-columns)
--   [insert-dao](#insert-dao) 
--   [update-dao](#update-dao) 
--   [save-dao](#save-dao) 
--   [save-dao/transaction](#save-dao/transaction) 
--   [upsert-dao](#upsert-dao) 
--   [delete-dao](#delete-dao) 
--   [dao-table-name](#dao-table-name) 
--   [dao-table-definition](#dao-table-definition) 
+-   [insert-dao](#insert-dao)
+-   [update-dao](#update-dao)
+-   [save-dao](#save-dao)
+-   [save-dao/transaction](#save-dao/transaction)
+-   [upsert-dao](#upsert-dao)
+-   [delete-dao](#delete-dao)
+-   [dao-table-name](#dao-table-name)
+-   [dao-table-definition](#dao-table-definition)
 -   [with-column-writers](#with-column-writers)
 
 
@@ -266,17 +305,17 @@ See the [S-SQL reference manual](https://marijnhaverbeke.nl/postmodern/s-sql.htm
 ### Prepared statements
 
 -   [\*allow-overwriting-prepared-statements\*](#allow-overwriting-prepared-statements)
--   [prepared-statement-exists-p](#prepared-statement-exists-p) 
+-   [prepared-statement-exists-p](#prepared-statement-exists-p)
 -   [list-prepared-statements](#list-prepared-statements)
 -   [drop-prepared-statement](#drop-prepared-statement)
--   [list-postmodern-prepared-statements](#list-postmodern-prepared-statements)        
--   [find-postgresql-prepared-statement](#find-postgresql-prepared-statement)        
--   [find-postmodern-prepared-statement](#find-postmodern-prepared-statement)        
--   [reset-prepared-statement](#reset-prepared-statement) 
--   [get-pid](#get-pid) 
--   [get-pid-from-postmodern](#get-pid-from-postmodern) 
--   [cancel-backend](#cancel-backend) 
--   [terminate-backend](#terminate-backend) 
+-   [list-postmodern-prepared-statements](#list-postmodern-prepared-statements)
+-   [find-postgresql-prepared-statement](#find-postgresql-prepared-statement)
+-   [find-postmodern-prepared-statement](#find-postmodern-prepared-statement)
+-   [reset-prepared-statement](#reset-prepared-statement)
+-   [get-pid](#get-pid)
+-   [get-pid-from-postmodern](#get-pid-from-postmodern)
+-   [cancel-backend](#cancel-backend)
+-   [terminate-backend](#terminate-backend)
 
 Example Usage:
 
@@ -288,86 +327,116 @@ CL-USER> (funcall (prepare (:select '* :from 'points
 1
 ```
 
--   [prepare](#prepare) 
+-   [prepare](#prepare)
 -   [defprepared](#defprepared)
 -   [defprepared-with-names](#defprepared-with-names)
 
-### Migration 
+### Migration
 
-[TODO] Groaking migrations needed for ELI5-cation. 
+The meaning of the term migration depends context. People can talk about migrating
+from Oracle to Postgresql or to Mssql or Mysql. In that context, migration means
+changing database structure and functions from one database implementation to another.
+
+To developers, the term migration normally means tracking and managing version
+changes of the database structure in the development process. This is often called
+schema migration. Of course development often continues after software has gone into
+production, in which case "migration' not only needs to deal with version controls
+of the database structure, but also how to ensure that such changes of the database
+do not result in lost production data. For example, renaming a column in a database
+table is a simple one command operation in development but at least four commands
+if there is actually data in the column.
+
+There are two different approaches taken to schema migration. The first and more
+typical approach is is writing scripts to manage changes, both forward and back.
+The second approach is to generate diff snapshots and determine the changes needed
+to move from one snapshot to another. Both have their pluses and minuses, particularly
+when it comes to how to manage the data that already exists in the database.
+
+The script writing approach requires the developer to write both the sql commands
+necessary to make the desired change and the requisite sql commands to undo that
+change. Typically these scripts are then saved in .sql files in a migration directory
+and a migration library is used to track dependencies which can get complicated if
+there are more than one developer on the team.
+
+Undoing migrations (sometimes called rollbacks) is difficult if production data
+exists on the database. There are schools of thought among DBAs that rollbacks
+should never be allowed because of the danger of losing critical production data.
+
+It may be obvious, but it is a good reminder that any migration should start with
+creating a backup which has been tested.
 
 ### Other useful constructs
 
 -   **Inspecting the database**
-    -   [list-tables](#list-tables) 
+    -   [list-tables](#list-tables)
     -   [list-tables-in-schema](#list-tables-in-schema)
-    -   [table-exists-p](#table-exists-p) 
+    -   [table-exists-p](#table-exists-p)
     -   [table-description](#table-description)
-    -   [list-sequences](#list-sequences) 
-    -   [sequence-exists-p](#sequence-exists-p) 
-    -   [list-views](#list-views) 
-    -   [view-exists-p](#view-exists-p) 
-    -   [list-schemata](#list-schemata) 
+    -   [list-sequences](#list-sequences)
+    -   [sequence-exists-p](#sequence-exists-p)
+    -   [list-views](#list-views)
+    -   [view-exists-p](#view-exists-p)
+    -   [list-schemata](#list-schemata)
     -   [schema-exist-p](#schema-exist-p)
-    -   [schema-exists-p](#schema-exists-p) 
-    -   [database-version](#database-version) 
-    -   [num-records-in-database](#num-records-in-database) 
-    -   [current-database](#current-database) 
-    -   [database-exists-p](#database-exists-p) 
-    -   [database-size](#database-size) 
+    -   [schema-exists-p](#schema-exists-p)
+    -   [database-version](#database-version)
+    -   [num-records-in-database](#num-records-in-database)
+    -   [current-database](#current-database)
+    -   [database-exists-p](#database-exists-p)
+    -   [database-size](#database-size)
     -   [list-databases](#list-databases)
     -   [list-schemas](#list-schemas)
-    -   [list-tablespaces](#list-tablespaces) 
-    -   [list-available-types](#list-available-types) 
+    -   [list-tablespaces](#list-tablespaces)
+    -   [list-available-types](#list-available-types)
     -   [list-table-sizes](#list-table-sizes)
-    -   [table-size](#table-size) 
-    -   [more-table-info](#more-table-info) 
-    -   [list-columns](#list-columns) 
-    -   [list-columns-with-types](#list-columns-with-types) 
-    -   [column-exists-p](#column-exists-p) 
+    -   [table-size](#table-size)
+    -   [more-table-info](#more-table-info)
+    -   [list-columns](#list-columns)
+    -   [list-columns-with-types](#list-columns-with-types)
+    -   [column-exists-p](#column-exists-p)
     -   [describe-views](#describe-views)
-    -   [list-database-functions](#list-database-functions) 
-    -   [list-indices](#list-indices) 
+    -   [list-database-functions](#list-database-functions)
+    -   [list-indices](#list-indices)
     -   [list-table-indices](#list-table-indices)
-    -   [index-exists-p](#index-exists-p) 
-    -   [list-indexed-column-and-attributes](#list-indexed-column-and-attributes)        
-    -   [list-index-definitions](#list-index-definitions) 
+    -   [index-exists-p](#index-exists-p)
+    -   [list-indexed-column-and-attributes](#list-indexed-column-and-attributes)
+    -   [list-index-definitions](#list-index-definitions)
     -   [find-primary-key-info](#find-primary-key-info)
-    -   [list-foreign-keys](#list-foreign-keys) 
-    -   [list-unique-or-primary-constraints](#list-unique-or-primary-constraints)        
-    -   [list-all-constraints](#list-all-constraints) 
+    -   [list-foreign-keys](#list-foreign-keys)
+    -   [list-unique-or-primary-constraints](#list-unique-or-primary-constraints)
+    -   [list-all-constraints](#list-all-constraints)
     -   [describe-constraint](#describe-constraint)
-    -   [describe-foreign-key-constraints](#describe-foreign-key-constraints) 
-    -   [list-triggers](#list-triggers) 
-    -   [list-detailed-triggers](#list-detailed-triggers) 
-    -   [list-database-users](#list-database-users) 
-    -   [list-roles](#list-roles) 
-    -   [list-available-extensions](#list-available-extensions) 
-    -   [list-installed-extensions](#list-installed-extensions) 
+    -   [describe-foreign-key-constraints](#describe-foreign-key-constraints)
+    -   [list-triggers](#list-triggers)
+    -   [list-detailed-triggers](#list-detailed-triggers)
+    -   [list-database-users](#list-database-users)
+    -   [list-roles](#list-roles)
+    -   [list-available-extensions](#list-available-extensions)
+    -   [list-installed-extensions](#list-installed-extensions)
     -   [change-toplevel-database](#change-toplevel-database)
 -   **Table definition and creation**
-    -   [deftable](#deftable) 
-    -   [!dao-def](#dao-def) 
+    -   [deftable](#deftable)
+    -   [!dao-def](#dao-def)
     -   [!index](#index)
     -   [!unique-index](#unique-index)
     -   [!foreign](#foreign)
     -   [!unique](#unique)
-    -   [create-table](#create-table) 
-    -   [create-all-tables](#create-all-tables) 
-    -   [create-package-tables](#create-package-tables) 
+    -   [create-table](#create-table)
+    -   [create-all-tables](#create-all-tables)
+    -   [create-package-tables](#create-package-tables)
     -   [\*table-name\*](#table-name)
     -   [\*table-symbol\*](#table-symbol)
 -   **Schemata**
-    -   [create-schema](#create-schema) 
+    -   [create-schema](#create-schema)
     -   [drop-schema](#drop-schema)
-    -   [get-search-path](#get-search-path) 
-    -   [set-search-path](#set-search-path) 
-    -   [split-fully-qualified-table-name](#split-fully-qualified-table-name) 
+    -   [get-search-path](#get-search-path)
+    -   [set-search-path](#set-search-path)
+    -   [split-fully-qualified-table-name](#split-fully-qualified-table-name)
 -   **Database Health Measurements**
-    -   [cache-hit-ratio](#cache-hit-ratio) 
-    -   [bloat-measurement](#bloat-measurement) 
-    -   [unused-indexes](#unused-indexes) 
-    -   [check-query-performance](#check-query-performance) 
+    -   [cache-hit-ratio](#cache-hit-ratio)
+    -   [bloat-measurement](#bloat-measurement)
+    -   [unused-indexes](#unused-indexes)
+    -   [check-query-performance](#check-query-performance)
 -   **Miscellaneous Utility Functions**
     -   [execute-file](#execute-file)
 

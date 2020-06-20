@@ -365,6 +365,9 @@ should never be allowed because of the danger of losing critical production data
 It may be obvious, but it is a good reminder that any migration should start with
 creating a backup which has been tested.
 
+[https://github.com/madnificent/database-migrations](https://github.com/madnificent/database-migrations)
+provides some simple migration tools for postmodern.
+
 ### Other useful constructs
 
 -   **Inspecting the database**

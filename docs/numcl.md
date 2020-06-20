@@ -2,6 +2,8 @@
 
 Version: 0.1
 <br/>
+Licence: LGPL
+<br/>
 Repository: [numcl/numcl - Github](https://github.com/numcl/numcl/)
 
 *This documentation was possible due to the excellent 

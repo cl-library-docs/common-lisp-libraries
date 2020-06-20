@@ -2,6 +2,8 @@
 
 Version: 2.1.1
 <br/>
+Licence: BSD
+<br/>
 Nickname: ppcre
 <br/>
 Repository: [edicl/cl-ppcre - Github](https://github.com/edicl/cl-ppcre)

@@ -2,6 +2,8 @@
 
 Version: 1.2.38
 <br/>
+Licence: BSD-2-Clause
+<br/>
 Repository: [edicl/hunchentoot - Github](https://github.com/edicl/hunchentoot/)
 
 *This page was possible due to the excellent [official documentation](https://edicl.github.io/hunchentoot/) as well as the page on [Web Development on The Common Lisp Cookbook](http://lispcookbook.github.io/cl-cookbook/web.html).*

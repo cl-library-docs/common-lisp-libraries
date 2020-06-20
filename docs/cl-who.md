@@ -4,6 +4,8 @@ Version: 1.1.4
 <br/>
 Nickname: who
 <br/>
+Licence: BSD
+<br/>
 Repository: [edicl/cl-who - Github](https://github.com/edicl/cl-who)
 
 *This documentation is possible due to the  [excellent official documentation](https://edicl.github.io/cl-who) as of 5th May 2020.*

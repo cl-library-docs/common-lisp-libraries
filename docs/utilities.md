@@ -12,6 +12,8 @@ A collection of smallish utility libraries.
 
 Version: 1.7
 <br/>
+Licence: BSD 3-Clause
+<br/>
 Repository: [sharplispers/parse-number - Github](https://github.com/sharplispers/parse-number)
 
 PARSE-NUMBER is a library of functions which accept an arbitrary
@@ -65,6 +67,8 @@ Function: (parse-real-number string &key (start 0) (end NIL) (radix 10)
 ## SPLIT-SEQUENCE
 
 Version: 2.0.0
+<br/>
+Licence: MIT
 <br/>
 Repository: [sharplispers/split-sequence](https://github.com/sharplispers/split-sequence)
 
@@ -131,6 +135,8 @@ stopped.
 ## TRIVIAL-TYPES
 
 Version: 0.1
+<br/>
+Licence: LLGPL
 <br/>
 Repository: [m2ym/trivial-types - Github](https://github.com/m2ym/trivial-types)
 <br/>
@@ -296,6 +302,8 @@ Returns true if `type-specifier` is a valid type specfiier.
 ## TRIVIAL-PACKAGE-LOCAL-NICKNAMES
 
 Version: 0.2
+<br/>
+Licence: Public Domain
 <br/>
 Repository: [phoe/trivial-package-local-nicknames](https://github.com/phoe/trivial-package-local-nicknames)
 

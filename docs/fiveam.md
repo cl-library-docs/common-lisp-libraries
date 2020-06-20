@@ -4,6 +4,8 @@ Version: 1.4.1
 <br/>
 Nickname: 5am
 <br/>
+Licence: BSD
+<br/>
 Repository: [sionescu/fiveam - Github](https://github.com/sionescu/fiveam)
 
 *This documentation was possible due to [Tomek Kurez's tutorial on fiveam](http://turtleware.eu/posts/Tutorial-Working-with-FiveAM.html) and the [excellent official documentation](https://common-lisp.net/project/fiveam/docs/).*

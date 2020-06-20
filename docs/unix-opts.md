@@ -2,6 +2,8 @@
 
 Version: 0.1.7
 <br/>
+Licence: MIT
+<br/>
 Nickname: opts
 
 *This documentation was possible due to the excellent [official documentation and

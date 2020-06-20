@@ -2,6 +2,8 @@
 
 Version: 3.3.1
 <br/>
+Licence: MIT-style
+<br/>
 Repository: [asdf/asdf - Gitlab](https://gitlab.common-lisp.net/asdf/asdf/)
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*

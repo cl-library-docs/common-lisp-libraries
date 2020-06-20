@@ -4,6 +4,8 @@ Version: 1.30
 <br/>
 Nickname: pomo
 <br/>
+Licence: zlib
+<br/>
 Repository: [marijnh/Postmodern - Github](https://github.com/marijnh/Postmodern)
 
 *This page was possible due to the excellent [official documentation](https://edicl.github.io/hunchentoot/) as well as the page on [Web Development on The Common Lisp Cookbook](https://marijnhaverbeke.nl/postmodern/postmodern.html).*

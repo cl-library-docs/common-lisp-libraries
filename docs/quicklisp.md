@@ -2,6 +2,8 @@
 
 Version: 2020-01-04
 <br/>
+Licence: BSD-style
+<br/>
 Repository: [quicklisp/quicklisp-client - Github](https://github.com/quicklisp/quicklisp-client)
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*

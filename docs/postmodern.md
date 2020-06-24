@@ -39,21 +39,27 @@ Once done, you should have access to the `postgres` (the actual database server 
 Once done, [this page](https://www.postgresql.org/docs/current/server-start.html) elaborates
 the process of starting the database server and any issues that may arise. (You can select the postgresql version from top of the page.)
 
-- Initialize the directory: `pg_ctl init -D postgres # see \`pg_ctl --help`\ from the options`.
-- Optionally, change `port` and `unix_socket_directories` from `postgres/postgresql.conf`.
-- `pg_ctl start -D postgres` to start the server.
+You can also initialize and run multiple postgresql servers from different directories and ports
+
+- Initialize the directory: `pg_ctl init -D postmodern # see \`pg_ctl --help`\ from the options`.
+- Optionally, change `port` and `unix_socket_directories` from `postmodern/postgresql.conf`.
+- `pg_ctl start -D postmodern` to start the server.
 
 You should get a `server started` message; if not, the link above should help in debugging.
 Proceed to the next section once you successfully start the server.
 
 [This page](https://www.postgresql.org/docs/current/runtime-config-connection.html) elaborates on the configuration settings.
 
+In addition, you can list the databases by using
+`psql -p`*`PORT`*`-h`*`unix_socket_directories`*`-l`,
+replacing the italicized arguments appropriately.
+
 ### Connecting to the Postgres server
 
 We firstly connect to the default existing database. Create a new database for our
 purposes, and then disconnect and reconnect to this database.
 
-We also assume the database server is started at at the default port of 5432 and username is `"username"`.
+Assume the database server is started at a non-standard port of 8000 and username is `"username"`.
 
 ```lisp
 CL-USER> (connect-toplevel "postgres" "username" "" "localhost" :port 8080)
@@ -62,7 +68,7 @@ CL-USER> (execute "create database testdb")
 0
 CL-USER> (disconnect-toplevel)
 NIL
-CL-USER> (connect-toplevel "testdb" "username" "" "localhost")
+CL-USER> (connect-toplevel "testdb" "username" "" "localhost" :port 8080)
 ; No value
 ```
 Connect-toplevel will maintain a single connection for the life of the session.

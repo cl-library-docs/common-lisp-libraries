@@ -1,6 +1,6 @@
 # postmodern - PostgreSQL programming interace
 
-Version: 1.30 (note: as of this writing, postmodern was at version 1.32 at github but only 1.30 at quicklisp)
+Version: 1.32 (The June 2020 Quicklisp dist contains version 1.30. 1.32 should be available post this. Everything except the constructs relevant to [Database Management](#database-management) and [Roles](#roles)  should work.)
 
 Nickname: pomo
 
@@ -34,15 +34,13 @@ like lispy SQL and database access objects in a quite different way.
 ### Starting the Postgres server
 
 Follow the [installation instructions](https://www.postgresql.org/download/) to install Postgres.
-Once done, you should have access to the `postgres` (the actual database server daemon), `pg_ctl`, and the `psql` commands on your command line / terminal.
+Once done, you should have access to the database server daemon `postgres` and the helper commands `pg_ctl` and `psql` on your command line / terminal.
 
 Once done, [this page](https://www.postgresql.org/docs/current/server-start.html) elaborates
-the process of starting the database server and any issues that may arise. (You can select the postgresql version from top of the page.)
-
-You can also initialize and run multiple postgresql servers from different directories and ports
+the process of starting the database server and any issues that may arise. (The postgresql version can be selected from the top of that page.)
 
 - Initialize the directory: `pg_ctl init -D postmodern # see \`pg_ctl --help`\ from the options`.
-- Optionally, change `port` and `unix_socket_directories` from `postmodern/postgresql.conf`.
+- Optionally, change `port` and `unix_socket_directories` from `postmodern/postgresql.conf`. (Simply search for lines starting with these terms.)
 - `pg_ctl start -D postmodern` to start the server.
 
 You should get a `server started` message; if not, the link above should help in debugging.
@@ -54,72 +52,50 @@ In addition, you can list the databases by using
 `psql -p`*`PORT`*`-h`*`unix_socket_directories`*`-l`,
 replacing the italicized arguments appropriately.
 
+A few things to note above include that you can run multiple postgres servers from different directories on different ports on a single machine. Note also that the directory name is independent of the database name.
+
 ### Connecting to the Postgres server
 
-We firstly connect to the default existing database. Create a new database for our
-purposes, and then disconnect and reconnect to this database.
+Postgres has a [connect-toplevel](#connect-toplevel) and [with-connection](#with-connection) besides a few other ways (see below) for establishing connections. The latter establishes connections with a lexical scope and can be useful in the case of multiple [roles](https://www.postgresql.org/docs/current/user-manag.html). See [connect](#connect) for the `spec` in `with-connection`.
 
-Assume the database server is started at a non-standard port of 8000 and username is `"username"`.
+Below, we firstly connect to the default existing database `postgres`. Create a new database `testdb` for our purpose, and then disconnect and reconnect to this new database. The first connection and disconnection is all carried out by the `with-connection`. Assume that "foucault" role is a superuser, and that the database server was started above at the non-default port 8080.
+
+(See `psql -p 8080 -h`*`unix_socket_directories`*`-c '\du' -d postgres` to list all the users.)
+
 
 ```lisp
-CL-USER> (connect-toplevel "postgres" "username" "" "localhost" :port 8080)
-; No value
-CL-USER> (execute "create database testdb")
-0
-CL-USER> (disconnect-toplevel)
-NIL
-CL-USER> (connect-toplevel "testdb" "username" "" "localhost" :port 8080)
-; No value
+(with-connection '("postgres" "foucault" "surveiller" "localhost" :port 8080)
+  (create-database 'testdb :limit-public-access t
+    :comment "This database is for testing silly theories"))
+
+(connect-toplevel "testdb" "foucault" "surveiller" "localhost" :port 8080)
 ```
+
 Connect-toplevel will maintain a single connection for the life of the session.
 
-If you have multiple roles connecting to one or more databases, i.e. 1:many or
-many:1, (in other words, changing connections) then with-connection form which establishes a connection with a lexical scope is more appropriate.
-
-
-    (with-connection '("testdb" "foucault" "surveiller" "localhost")
-      ...)
-
-For example, if you are creating a database, you need to have established a connection
-to a currently existing database (typically "postgres"). Assuming the foucault role
-is a superuser and you want to stay in a development connection with your new database
-afterwards, you would first use with-connection to connect to postgres, create the
-database and then switch to connect-toplevel for development ease.
-
-
-    (with-connection '("postgres" "foucault" "surveiller" "localhost")
-      (create-database 'testdb :limit-public-access t
-                         :comment "This database is for testing silly theories"))
-
-    (connect-toplevel "testdb" "foucault" "surveiller" "localhost")
-
-
-Note: (create-database) functionality is new to postmodern v. 1.32. Setting the
-:limit-public-access parameter to t will block connections to that database from
-anyone who you have not explicitly given permission (except other superusers).
-
-A word about Postgresql connections. Postgresql connections are not lightweight
+A word about Postgresql connections: Postgresql connections are not lightweight
 threads. They actually consume about 10 MB of memory per connection and Postgresql
 can be tuned to limit the number of connections allowed at any one time. In
 addition, any connections which require security (ssl or scram authentication)
-will take additiona time and create more overhead.
+will take additional time and create more overhead.
 
-If you have an application like a web app which will make many connections, you also
+If you have an application (web apps for instance) which will make many connections, you
 generally do not want to create and drop connections for every query. The usual solution
 is to use connection pools so that the application is grabbing an already existing connection
 and returning it to the pool when finished, saving connection time and memory.
 
-To use postmodern's simple connection pooler, the with-connection call would look like:
+To use postmodern's simple connection pooler, the `with-connection` call would look like:
+
+```lisp
+(with-connection '("testdb" "foucault" "surveiller" "localhost" :pooled-p t)
+  ...)
+```
+
+The maximum number of connections is determined by
+[\*max-pool-size\*](#max-pool-size).
 
 
-    (with-connection '("testdb" "foucault" "surveiller" "localhost" :pooled-p t)
-      ...)
-
-The maximum number of connections in the pool is set in the special variable
-\*max-pool-size\*, which defaults to nil (no maximum).
-
-
-Other things you may want to take a look at with regards to connection include:
+Things you may want to take a look at with regards to connection include:
 
 -   [database-connection](#database-connection)
 -   [connect](#connect)
@@ -339,7 +315,7 @@ CL-USER> (funcall (prepare (:select '* :from 'points
 
 ### Migration
 
-The meaning of the term migration depends context. People can talk about migrating
+The meaning of the term migration depends upon the context. People can talk about migrating
 from Oracle to Postgresql or to Mssql or Mysql. In that context, migration means
 changing database structure and functions from one database implementation to another.
 
@@ -347,7 +323,7 @@ To developers, the term migration normally means tracking and managing version
 changes of the database structure in the development process. This is often called
 schema migration. Of course development often continues after software has gone into
 production, in which case "migration' not only needs to deal with version controls
-of the database structure, but also how to ensure that such changes of the database
+of the database structure, but also needs to ensure that such changes of the database
 do not result in lost production data. For example, renaming a column in a database
 table is a simple one command operation in development but at least four commands
 if there is actually data in the column.
@@ -371,11 +347,14 @@ should never be allowed because of the danger of losing critical production data
 It may be obvious, but it is a good reminder that any migration should start with
 creating a backup which has been tested.
 
-[https://github.com/madnificent/database-migrations](https://github.com/madnificent/database-migrations)
+[madnificent/database-migrations](https://github.com/madnificent/database-migrations)
 provides some simple migration tools for postmodern.
 
 ### Other useful constructs
 
+-   **<span id='database-management'>Database Management</span>**
+    -   [create-database](#create-database)
+    -   [drop-database](#drop-database)
 -   **Inspecting the database**
     -   [list-tables](#list-tables)
     -   [list-tables-in-schema](#list-tables-in-schema)
@@ -435,6 +414,20 @@ provides some simple migration tools for postmodern.
     -   [create-package-tables](#create-package-tables)
     -   [\*table-name\*](#table-name)
     -   [\*table-symbol\*](#table-symbol)
+-   **<span id='roles'>Roles</span>**
+    -   [role-exists-p](#role-exists-p)
+    -   [create-role](#create-role)
+    -   [drop-role](#drop-role)
+    -   [alter-role-search-path](#alter-role-search-path)
+    -   [change-password](#change-password)
+    -   [grant-role-permissions](#grant-role-permissions)
+    -   [grant-readonly-permissions](#grant-readonly-permissions)
+    -   [grant-editor-permissions](#grant-editor-permissions)
+    -   [grant-admin-permissions](#grant-admin-permissions)
+    -   [revoke-all-on-table](#revoke-all-on-table)
+    -   [list-role-accessible-databases](#list-role-accessible-databases)
+    -   [list-roles](#list-roles)
+    -   [list-role-permissions](#list-role-permissions)
 -   **Schemata**
     -   [create-schema](#create-schema)
     -   [drop-schema](#drop-schema)

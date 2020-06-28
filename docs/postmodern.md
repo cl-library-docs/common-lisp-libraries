@@ -470,8 +470,9 @@ instance representing the innermost open logical transaction.
 Variable
 ```
 
-Special variable holding the current database. Most functions and macros
-operating on a database assume this binds to a connected database.
+Special variable holding the current database connection information.
+Most functions and macros operating on a database assume this binds to a
+connected database.
 
 ### \*default-use-ssl\*
 
@@ -488,11 +489,24 @@ set it to anything else, be sure to also load the CL+SSL library.
 Variable
 ```
 
-Setting this to T will make S-SQL add double quotes around
-identifiers in queries. Setting it :auto will turn on this behaviour
-only for reserved words. Setting it to :literal will cause to-sql-name to
-escape reserved words,but will not make other changes such as changing
-forward slash to underscore.
+Determines whether double quotes are added around column, table, and
+function names in queries. Valid values:
+
+-   T, in which case every name is escaped,
+-   NIL, in which case no name is escape,
+-   :auto, which causes only [reserved
+    words](http://www.postgresql.org/docs/current/static/sql-keywords-appendix.html)
+    to be escaped, or.
+-   :literal which is the same as :auto except it has added consequence
+    in [to-sql-name](#to-sql-name).
+
+The default value is :auto.
+
+Be careful when binding this with let and such ― since a lot of SQL
+compilation tends to happen at compile-time, the result might not be
+what you expect. Mixed case sensitivity is not currently well supported.
+Postgresql itself will downcase unquoted identifiers. This will be
+revisited in the future if requested.
 
 ### \*ignore-unknown-columns\*
 
@@ -505,8 +519,6 @@ database that's not in the DAO class, it will raise an error. Setting
 this variable to a non-NIL will cause it to simply ignore the unknown
 column.
 
-### \*isolation-level\*
-
 ### \*max-pool-size\*
 
 ```lisp
@@ -517,15 +529,13 @@ Set the maximum amount of connections kept in a single connection pool,
 where a pool consists of all the stored connections with the exact same
 connect arguments. Defaults to NIL, which means there is no maximum.
 
-### \*table-name\*,
+### \*table-name\*
 
 ```lisp
 Variable
 ```
 
-These variables are bound to the relevant name and symbol while the
-forms of a table definition are evaluated. Can be used to define
-shorthands like the ones below.
+Used inside [deftable](#deftable) to find the name of the table being defined.
 
 ### \*table-symbol\*
 

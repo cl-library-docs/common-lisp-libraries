@@ -1393,6 +1393,7 @@ If you want just the postgresql version number, use
 (cl-postgres:get-postgresql-version).
 
 ### db-null
+
 Type for representing NULL values. Use like (or integer db-null) for
 declaring a type to be an integer that may be null." '(eql :null)
 
@@ -2571,6 +2572,7 @@ as a query argument, but will determine the format in which the results
 are returned instead. Any of the following formats can be used, with the
 default being :rows:
 
+```
   --------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------
   :none                 Ignore the result values.
   :lists, :rows         Return a list of lists, each list containing the values for a row.
@@ -2588,6 +2590,7 @@ default being :rows:
   (:dao type)           Return a list of DAOs of the given type. The names of the fields returned by the query must match slots in the DAO class the same way as with query-dao.
   (:dao type :single)   Return a single DAO of the given type.
   --------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------
+```
 
 Some Examples:
 
@@ -3078,69 +3081,6 @@ Generic Function: (text condition)
 
 'string
 
-### to
-Postmodern's dao-class objects are not required to be tied down to a
-specific table. They can be used simply as classes to hold data for
-whatever purpose your application may use.
-
-For this introduction, we will use two sets of tables: (1) country-d and
-region-d and (2) country-n and region-n. In each case the country table
-will have a foreign key tied to a region.
-
-A foreign key is a "constraint" referencing a primary key in another
-table. The table containing the foreign key is the referencing or child
-table and the table referenced by the foreign key is the referenced or
-parent table. The foreign key enforces a requirement that the child
-table column refering to another table must refer to a row that exists
-in the other table. In other words, you cannot create a row in table
-country-d that references a region-d name "Transylvania" if the region-d
-name "Transylvania" does not yet exist in the region-d table. At the
-same time, you could not later delete the region-d row with
-"Transylvania" if the country-d row referencing it still exists.
-
-Do you remember the slightly more complicated version of country from
-earlier on the page?
-
-``` {.commonlisp}
-(defclass country ()
-  ((id :col-type integer :col-identity t :accessor id)
-   (name :col-type string :col-unique t :check (:<> 'name "")
-         :initarg :name :reader country-name)
-   (inhabitants :col-type integer :initarg :inhabitants
-                :accessor country-inhabitants)
-   (sovereign :col-type (or db-null string) :initarg :sovereign
-              :accessor country-sovereign)
-   (region-id :col-type integer :col-references ((regions id))
-              :initarg :region-id :accessor region-id))
-  (:documentation "Dao class for a countries record.")
-  (:metaclass dao-class)
-  (:table-name countries))
-```
-
-That one specified a foreign key reference in the region-id column, so
-we cannot insert the data from a country dao unless there is already a
-region table with an id column equal to the region-id in the country
-dao.
-
-Lets look at two slightly different ways of handling countries and
-regions.
-
-In our first set of tables, country-d will have a region column that
-references the name column in a region-d table (so the name column in
-region-d must be the primary key for region-d).
-
-This looks relatively straight forward and it is in this simple case.
-Things start getting more complicated if you start having to reference a
-table where there are many items with the same name. An example would be
-tracking library books. There may be multiple copies of a book title,
-but you need to know which book was checked out to which library patron.
-In these types of situations, the primary key cannot be the name of the
-region, it needs to reference some particular id.
-
-In our second set of tables, country-n will have a region-id column that
-references an id column in a region-d table (so the id column in
-region-d must be the primary key for region-d).
-
 ### to-sql-name
 
 ```lisp
@@ -3348,11 +3288,16 @@ Calling with :if-not-exist set to nil, an error is signaled.
 calling with drop-after set to 't the schema is removed after the
 execution of the body form.
 
-example : (with-schema (:schema-name :strict nil :drop-after nil
-:if-not-exist :error) (foo 1) (foo 2))
+example :
 
-example : (with-schema ('uniq :if-not-exist :create) ;; changing the
-search path (schema-exists-p 'uniq))
+```lisp
+(with-schema (:schema-name :strict nil :drop-after nil :if-not-exist :error) (foo 1) (foo 2))
+```
+
+example :
+```lisp
+(with-schema ('uniq :if-not-exist :create) ;; changing the search path (schema-exists-p 'uniq))
+```
 
 ### with-transaction
 

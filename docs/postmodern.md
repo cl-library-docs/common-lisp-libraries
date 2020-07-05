@@ -3,10 +3,11 @@
 Version: 1.32 (The June 2020 Quicklisp dist contains version 1.30. 1.32 should be available post this. Everything except the constructs relevant to [Database Management](#database-management) and [Roles](#roles)  should work.)
 
 Nickname: pomo
-
+<br/>
 Repository: [marijnh/Postmodern - Github](https://github.com/marijnh/Postmodern)
+<br/>
 
-*This page was possible due to the excellent [official documentation](https://marijnhaverbeke.nl/postmodern/postmodern.html).*
+*This page was possible due to the excellent [official documentation](https://marijnhaverbeke.nl/postmodern/postmodern.html). In fact, there are several sections [the manual](https://marijnhaverbeke.nl/postmodern/) goes into, which we do not go into below.*
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
 
@@ -519,6 +520,24 @@ database that's not in the DAO class, it will raise an error. Setting
 this variable to a non-NIL will cause it to simply ignore the unknown
 column.
 
+### \*isolation-level\*
+
+```lisp
+Variable
+```
+
+The transaction isolation level currently in use. Defaults to
+:read-committed-rw
+
+You can specify the following isolation levels in postmodern
+transactions:
+
+-   :read-committed-rw (read committed with read and write)
+-   :read-committed-ro (read committed with read only)
+-   :repeatable-read-rw (repeatable read with read and write)
+-   :repeatable-read-ro (repeatable read with read only)
+-   :serializable (serializable with reand and write)
+
 ### \*max-pool-size\*
 
 ```lisp
@@ -528,6 +547,14 @@ Variable
 Set the maximum amount of connections kept in a single connection pool,
 where a pool consists of all the stored connections with the exact same
 connect arguments. Defaults to NIL, which means there is no maximum.
+
+### \*table-name\*
+
+```lisp
+Variable
+```
+
+Used inside [deftable](#deftable) to find the name of the table being defined.
 
 ### \*table-name\*
 
@@ -553,7 +580,8 @@ Used inside [deftable](#deftable) to find the symbol naming the table being defi
 Function: (!dao-def)
 ```
 
-Should only be used inside deftable's body. Adds the result of calling
+Should only be used inside a [deftable](#deftable) form. Define this table using the
+corresponding DAO class' slots. Adds the result of calling
 dao-table-definition on **table-symbol** to the definition.
 
 ### !foreign
@@ -563,12 +591,13 @@ Function: (!foreign target fields &rest
  target-fields/on-delete/on-update/deferrable/initially-deferred)
 ```
 
-Add a foreign key to the table being defined. target-table is the
-referenced table. columns is a list of column names or single name in
-this table, and, if the columns have different names in the referenced
-table, target-columns must be another list of column names or single
-column name of the target-table, or :primary-key to denote the column(s)
-of the target-table's primary key as referenced column(s).
+Used insde a [deftable](#deftable) form. Add a foreign key to the table being
+defined. target-table is the referenced table. columns is a list of
+column names or single name in this table, and, if the columns have
+different names in the referenced table, target-columns must be another
+list of column names or single column name of the target-table, or
+:primary-key to denote the column(s) of the target-table's primary key
+as referenced column(s).
 
 The on-delete and on-update arguments can be used to specify ON DELETE
 and ON UPDATE actions, as per the keywords allowed in create-table. In
@@ -585,8 +614,8 @@ target-columns is not given.
 Function: (!index &rest fields)
 ```
 
-Define an index on the table being defined. The columns can be given as
-symbols or strings.
+Used inside a [deftable](#deftable) form. Define an index on the table being defined.
+The columns can be given as symbols or strings.
 
 ### !unique
 
@@ -604,7 +633,6 @@ Function: (!unique-index &rest fields)
 ```
 Used inside a [deftable](#deftable) form. Define a unique index on the defined table.
 
-
 ### abort-hooks
 
 ```lisp
@@ -612,15 +640,16 @@ Generic Function: (abort-hooks object)
 Generic Function: (setf (abort-hooks object) ...)
 ```
 
-An accessor for the transaction or savepoint's list of commit hooks,
-each of which should be a function with no required arguments. These
-functions will be executed when a transaction is committed or a
-savepoint released.
+An accessor for the transaction or savepoint's list of abort hooks, each
+of which should be a function with no required arguments. These
+functions will be executed when a transaction is aborted or a savepoint
+rolled back (whether via a non-local transfer of control or explicitly
+by either abort-transaction or rollback-savepoint).
 
 ### abort-logical-transaction
 
 ```lisp
-Generic Function: (abort-logical-transaction savepoint)
+Generic Function: (abort-logical-transaction obj)
 ```
 
 Roll back the given logical transaction, regardless of whether it is an
@@ -634,6 +663,48 @@ Function: (abort-transaction transaction)
 
 Roll back the given transaction.
 
+### add-comment
+
+```lisp
+Function: (add-comment type name comment &optional (second-name ))
+```
+
+Attempts to add a comment to a particular database object. The first
+parameter is a keyword for the type of database object. The second
+parameter is the name of the object. The third parameter is the comment
+itself. Some objects require an additional identifier. The names can be
+strings or symbols.
+
+Example usage would be:
+
+``` {.commonlisp}
+(add-comment :database 'my-database-name "Does anyone actually use this database?")
+
+(add-comment :column 'country-locations.name "Is what it looks like - the name of a country")
+
+(add-comment :column "country_locations.name" "Is what it looks like - the name of a country")
+```
+
+Example usage where two identifiers are required would be constraints:
+
+``` {.commonlisp}
+(add-comment :constraint 'constraint1  "Some kind of constraint descriptions here"
+             'country-locations)
+```
+
+### alter-role-search-path
+
+```lisp
+Function: (alter-role-search-path role search-path)
+```
+
+Changes the priority of where a role looks for tables (which schema
+first, second, etc. Role should be a string or symbol. Search-path could
+be a list of schema names either as strings or symbols.
+
+### bigint
+'(signed-byte 64)
+
 ### bloat-measurement
 
 ```lisp
@@ -646,6 +717,10 @@ Bloat measurement of unvacuumed dead tuples. Borrowed from:
 <https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/>
 who borrowed it from
 <https://github.com/heroku/heroku-pg-extras/tree/master/commands>.
+
+### bytea
+
+'(array (unsigned-byte 8))
 
 ### cache-hit-ratio
 
@@ -680,8 +755,21 @@ Function: (cancel-backend pid &optional (database *database*))
 ```
 
 Polite way of terminating a query at the database (as opposed to calling
-close-database). Slower than (terminate-backend pid) and does not always
-work.
+close-database). This is slower than (terminate-backend pid) and does
+not always work.
+
+### change-password
+
+```lisp
+Function: (change-password role password &optional expiration-date)
+```
+
+Alters a role's password. If the optional expiration-date parameter is
+provided, the password will expire at the stated date. A sample
+expiration date would be 'December 31, 2020'. If the expiration date is
+'infinity', it will never expire. The password will be encrypted in the
+system catalogs. This is automatic with postgresql versions 10 and
+above.
 
 ### change-toplevel-database
 
@@ -706,12 +794,16 @@ Function: (check-query-performance &optional (ob nil) (num-calls 100) (limit 20)
 This function requires that postgresql extension pg\_stat\_statements
 must be loaded via shared\_preload\_libraries. It is borrowed from
 <https://www.citusdata.com/blog/2019/03/29/health-checks-for-your-postgres-database/>.
-Optional parameters OB allow order-by to be 'calls', 'total-time',
-'rows-per' or 'time-per', defaulting to time-per. num-calls to require
-that the number of calls exceeds a certain threshold, and limit to limit
-the number of rows returned. It returns a list of lists, each row
-containing the query, number of calls, total\_time, total\_time/calls,
-stddev\_time, rows, rows/calls and the cache hit percentage.
+Optional parameters:
+
+OB allow order-by to be 'calls', 'total-time', 'rows-per' or 'time-per',
+defaulting to time-per.
+
+num-calls to require that the number of calls exceeds a certain
+threshold, and limit to limit the number of rows returned. It returns a
+list of lists, each row containing the query, number of calls,
+total\_time, total\_time/calls, stddev\_time, rows, rows/calls and the
+cache hit percentage.
 
 ### clear-connection-pool
 
@@ -737,18 +829,20 @@ NIL.
 ### column-exists-p
 
 ```lisp
-Function: (column-exists-p table-name column-name)
+Function: (column-exists-p table-name column-name &optional schema-name)
 ```
 
 → boolean
 
 Determine if a particular column exists. Table name and column-name can
-be either strings or symbols.
+be either strings or symbols. If the optional schema name is not given
+or the table-name is not fully qualified with a schema name, the schema
+will be assumed to be the public schema.
 
 ### commit-hooks
 
 ```lisp
-Generic Function: (commit-hooks object)
+Generic Function: (commit-hooks obj)
 ```
 
 An accessor for the transaction or savepoint's list of commit hooks,
@@ -759,10 +853,8 @@ savepoint released.
 ### commit-logical-transaction
 
 ```lisp
-Generic Function: (commit-logical-transaction savepoint)
+Generic Function: (commit-logical-transaction obj)
 ```
-
-[TODO] This symbol is not exported.
 
 Commit the given logical transaction, regardless of whether it is an
 actual transaction or a savepoint.
@@ -773,12 +865,12 @@ actual transaction or a savepoint.
 Function: (commit-transaction transaction)
 ```
 
-Commit the given transaction.
+Immediately commit an open transaction.
 
 ### connect
 
 ```lisp
-Function: (connect database-name user password host &key (port 5432) pooled-p
+Function: (connect database-name user-name password host &key (port 5432) pooled-p
  (use-ssl *default-use-ssl*) (service postgres))
 ```
 
@@ -790,16 +882,16 @@ running. If pooled-p is T, a connection will be taken from a pool of
 connections of this type, if one is available there, and when the
 connection is disconnected it will be put back into this pool instead.
 use-ssl can be :no, :yes, or :try, as in open-database, and defaults to
-the value of \*default-use-ssl\*.
+the value of [\*default-use-ssl\*](#default-use-ssl).
 
 ### connect-toplevel
 
 ```lisp
-Function: (connect-toplevel database-name user password host &key (port 5432)
+Function: (connect-toplevel database-name user-name password host &key (port 5432)
  (use-ssl *default-use-ssl*))
 ```
 
-Bind the \*database\* to a new connection. Use this if you only need one
+Bind the [\*database\*](#database) to a new connection. Use this if you only need one
 connection, or if you want a connection for debugging from the REPL.
 
 ### connected-p
@@ -821,6 +913,37 @@ Function: (create-all-tables)
 
 Creates all defined tables.
 
+### create-database
+
+```lisp
+Function: (create-database database-name &key (encoding utf8) (connection-limit -1) owner
+ limit-public-access comment collation template)
+```
+
+Creates a basic database. Besides the obvious database-name parameter,
+you can also use key parameters to set encoding (defaults to UTF8),
+owner, connection-limit (defaults to no limit)). If limit-public-access
+is set to t, then only superuser roles or roles with explicit access to
+this database will be able to access it. (See
+[Roles](#f2e31575-047f-4629-9ffc-52b792726fd1) below) If collation is
+set, the assumption is that template0 needs to be used as the base of
+the database rather than template1 which may contain encoding specific
+or locale specific data.
+
+``` {.commonlisp}
+(create-database 'testdb :limit-public-access t
+                         :comment "This database is for testing silly theories")
+```
+
+### create-index
+
+```lisp
+Function: (create-index name &key unique if-not-exists concurrently on using fields)
+```
+
+Create an index. Slightly less sophisticated than the query version
+because it does not have a where clause capability.
+
 ### create-package-tables
 
 ```lisp
@@ -829,13 +952,69 @@ Function: (create-package-tables package)
 
 Creates all tables identified by symbols interned in the given package.
 
+### create-role
+
+```lisp
+Function: (create-role name password &key (base-role readonly) (schema public)
+ (tables all) (databases current) (allow-whitespace nil) (allow-utf8 nil)
+ (allow-disallowed-names nil) (comment nil))
+```
+Keyword parameters: Base-role. Base-role should be one of :readonly,
+:editor, :admin, :standard or :superuser. A readonly user can only
+select existing data in the specified tables or databases. An editor has
+the ability to insert, update, delete or select data. An admin has all
+privileges on a database, but cannot create new databases, roles, or
+replicate the system. A standard user has no particular privileges other
+than connecting to databases.
+
+:schema defaults to :public but can be a list of schemas. User will not
+have access to any schemas not in the list.
+
+:tables defaults to :all but can be a list of tables. User will not have
+access to any tables not in the list.
+
+:databases defaults to :current but can be a list of databases. User
+will not have access to any databases not in the list.
+
+:allow-whitespace - Whitespace in either the name or password is not
+allowed by default.
+
+:allow-utf8 defaults to nil. If t, the name and password will be
+normalized. If nil, the name and password are limited to printable ascii
+characters. For fun reading on utf8 user names see
+<https://labs.spotify.com/2013/06/18/creative-usernames>. Also
+interesting reading is <https://github.com/flurdy/bad_usernames> and
+<https://github.com/dsignr/disallowed-usernames/blob/master/disallowed%20usernames.csv>,
+and <https://www.b-list.org/weblog/2018/feb/11/usernames/>
+
+:allow-disallowed-names defaults to nil. If nil, the user name will be
+checked against **disallowed-role-names**.
+
+As an aside, if allowing utf8 in names, you might want to think about
+whether you should second copy of the username in the original casing
+and normalized as NFC for display purposes as opposed to normalizing to
+NFKC. It might be viewed as culturally insensitive to change the display
+of the name.
+
 ### create-schema
 
 ```lisp
-Function: (create-schema schema)
+Function: (create-schema schema &optional authorization)
 ```
 
 Creates a new schema. Raises an error if the schema is already exists.
+
+### create-sequence
+
+```lisp
+Function: (create-sequence name &key temp if-not-exists increment min-value max-value
+ start cache)
+```
+
+Create a sequence. Available additional key parameters are :temp
+:if-not-exists :increment :min-value :max-value :start and :cache. See
+<https://www.postgresql.org/docs/current/static/sql-createsequence.html>
+for details on usage.
 
 ### create-table
 
@@ -843,8 +1022,9 @@ Creates a new schema. Raises an error if the schema is already exists.
 Function: (create-table name)
 ```
 
-Creates the table identified by symbol by executing all forms in its
-definition.
+Takes the name of a dao-class and creates the table identified by symbol
+by executing all forms in its definition as found in the **tables**
+list.
 
 ### current-database
 
@@ -859,32 +1039,36 @@ Returns the string name of the current database.
 ### dao-class
 
 ```lisp
-: (dao-class)
+Class
 ```
 
-Postmodern contains a simple system for defining CLOS classes that
-represent rows in the database. This is not intended as a full-fledged
-object-relational magic system ― while serious ORM systems have their
-place, they are notoriously hard to get right, and are outside of the
-scope of a humble SQL library like this.
+You can work directly with the database or you can use a simple
+database-access-class (aka dao) which would cover all the fields in a
+row.
 
-At the heart of Postmodern's DAO system is the dao-class metaclass. It
-allows you to define classes for your database-access objects as regular
-CLOS classes. Some of the slots in these classes will refer to columns
-in the database. To specify that a slot refers to a column, give it a
-:col-type option containing an S-SQL type expression (useful if you want
-to be able to derive a table definition from the class definition), or
-simply a :column option with value T. Such slots can also take a
-:col-default option, used to provide a database-side default value as an
-S-SQL expression. You can use the :col-name initarg (whose unevaluated
-value will be passed to to-sql-name) to specify the slot's column's
-name.
+Postmodern allows you to have a relatively simple but straight forward
+matching of clos classes to a database table. At the heart of
+Postmodern's DAO system is the dao-class metaclass. It allows you to
+define classes for your database-access objects as regular CLOS classes.
+Some of the slots in these classes will refer to columns in the
+database.
+
+To specify that a slot refers to a column, give it a :col-type option
+containing an S-SQL type expression (useful if you want to be able to
+derive a table definition from the class definition), or simply a
+:column option with value T. Such slots can also take a :col-default
+option, used to provide a database-side default value as an S-SQL
+expression. You can use the :col-name initarg (whose unevaluated value
+will be passed to to-sql-name) to specify the slot's column's name.
 
 DAO class definitions support two extra class options: :table-name to
 give the name of the table that the class refers to (defaults to the
-class name), and :keys to provide a set of primary keys for the table.
-When no primary keys are defined, operations such as update-dao and
-get-dao will not work.
+class name), and :keys to provide a set of primary keys for the table if
+they have not been specified in a single column. If more than one key is
+provided, this creates a multi-column primary key and all keys must be
+specified when using operations such as update-dao and get-dao. When no
+primary keys are defined, operations such as update-dao and get-dao will
+not work.
 
 IMPORTANT: Class finalization for a dao class instance are wrapped with
 a thread lock. However, any time you are using threads and a class that
@@ -892,19 +1076,98 @@ inherits from other classes, you should ensure that classes are
 finalized before you start generating threads that create new instances
 of that class.
 
+The (or db-null integer) form is used to indicate a column can have NULL
+values otherwise the column will be treated as NOT NULL.
+
 Simple example:
 
 ``` {.commonlisp}
-(defclass user ()
-  ((name :col-type string :initarg :name :accessor user-name)
+(defclass users ()
+  ((name :col-type string :initarg :name :accessor name)
    (creditcard :col-type (or db-null integer) :initarg :card :col-default :null)
-   (score :col-type bigint :col-default 0 :accessor user-score))
+   (score :col-type bigint :col-default 0 :accessor score))
   (:metaclass dao-class)
   (:keys name))
 ```
 
-The (or db-null integer) form is used to indicate a column can have NULL
-values.
+In this case the name of the users will be treated as the primary key
+and the database table is assumed to be users. (It might be worth noting
+that "user" is a reserved word for Postgresql and using reserved words,
+while possible using quotes, is generally not worth the additional
+trouble they cause.)
+
+The name and score slots cannot be null, but the creditcard slot can be
+null and actually defaults to null. The :col-default :null specification
+ensures that the default in the database for this field is null, but it
+does not bound the slot to a default form. Thus, making an instance of
+the class without initializing this slot will leave it in an unbound
+state.
+
+An example of a class where the keys are set as multiple column keys is
+here:
+
+``` {.commonlisp}
+(defclass points ()
+  ((x :col-type integer :initarg :x
+      :reader point-x)
+   (y :col-type integer :initarg :y
+      :reader point-y)
+   (value :col-type integer :initarg :value
+          :accessor value))
+  (:metaclass dao-class)
+  (:keys x y))
+```
+
+In this case, retrieving a points record would look like the following
+where 12 and 34 would be the values you are looking to find in the x
+column and y column respectively.:
+
+``` {.commonlisp}
+(get-dao 'points 12 34)
+```
+
+Now look at a slightly more complex example.
+
+``` {.commonlisp}
+(defclass country ()
+  ((id :col-type integer :col-identity t :accessor id)
+   (name :col-type string :col-unique t :check (:<> 'name "")
+         :initarg :name :reader country-name)
+   (inhabitants :col-type integer :initarg :inhabitants
+                :accessor country-inhabitants)
+   (sovereign :col-type (or db-null string) :initarg :sovereign
+              :accessor country-sovereign)
+   (region-id :col-type integer :col-references ((regions id))
+              :initarg :region-id :accessor region-id))
+  (:documentation "Dao class for a countries record.")
+  (:metaclass dao-class)
+  (:table-name countries))
+```
+
+In this example we have an id column which is specified to be an
+identity column. Postgresql will automatically generate a sequence of of
+integers and this will be the primary key.
+
+We have a name column which is specified as unique and is not null.
+
+We have a region-id column which references the id column in the regions
+table. This is a foreign key constraint and Postgresql will not accept
+inserting a country into the database unless there is an existing region
+table with an id that matches this number. Postgresql will also not
+allow deleting a region if there are countries that reference that
+region's id. If we wanted Postgresql to delete countries when regions
+are deleted, that column would be specified as:
+
+``` {.commonlisp}
+(region-id :col-type integer :col-references ((regions id) :cascade)
+  :initarg :region-id :accessor region-id)
+```
+
+Now you can see why the double parens.
+
+We also specified that the table name is not "country" but "countries".
+(Some style guides recommend that table names be plural and references
+to rows be singular.)
 
 When inheriting from DAO classes, a subclass' set of columns also
 contains all the columns of its superclasses. The primary key for such a
@@ -915,10 +1178,10 @@ use the dao-class metaclass themselves.
 When a DAO is created with make-instance, the :fetch-defaults keyword
 argument can be passed, which, when T, will cause a query to fetch the
 default values for all slots that refers to columns with defaults and
-were not bound through initargs. In some cases, such as serial columns,
-which have an implicit default, this will not work. You can work around
-this by creating your own sequence, e.g. "my\_sequence", and defining a
-(:nextval "my\_sequence") default.
+were not bound through initargs. In some cases, such as serial and
+identity columns, which have an implicit default, this will not work.
+You can work around this by creating your own sequence, e.g.
+"my\_sequence", and defining a (:nextval "my\_sequence") default.
 
 Finally, DAO class slots can have an option :ghost t to specify them as
 ghost slots. These are selected when retrieving instances, but not
@@ -955,10 +1218,11 @@ is likely interesting if you have primary keys which are composed of
 more than one slot. Pay careful attention to situations where the
 primary key not only has more than one column, but they are actually in
 a different order than they are in the database table itself. You can
-check this with the find-primary-key-info function.
+check this with the internal find-primary-key-info function. Obviously
+the table needs to have been defined. The class must be quoted.
 
 ``` {.commonlisp}
-(pomo:find-primary-key-info "country1")
+(pomo:find-primary-key-info 'country1)
 
 (("name" "text") ("id" "integer"))
 ```
@@ -994,115 +1258,109 @@ naming such a class).
 ### database-connection
 
 ```lisp
-: (database-connection)
+Class
 ```
 
-Objects of this type represent database connections.
+Representation of a database connection. Contains login information in
+order to be able to automatically re-establish a connection when it is
+somehow closed.
 
-### database-error
-
+### database-connection-error
 
 ```lisp
 Condition
 ```
 
-This is the condition type that will be used to
-signal virtually all database-related errors (though in some cases
-socket errors may be raised when a connection fails on the IP
-level).
+Conditions of this type are signalled when an error occurs that breaks
+the connection socket. They offer a :reconnect restart.
 
-<u>**Direct Slots**</u>
-
-**cl-postgres::error-code**
-```lisp
-Initargs: :CODE
-```
-**cl-postgres::message**
-```lisp
-Initargs: :MESSAGE
-Readers: CL-POSTGRES:DATABASE-ERROR-MESSAGE
-```
-**cl-postgres::detail**
-```lisp
-Initargs: :DETAIL
-```
-**cl-postgres::hint**
-```lisp
-Initargs: :HINT
-```
-**cl-postgres::context**
-```lisp
-Initargs: :CONTEXT
-```
-**cl-postgres::query**
-```lisp
-```
-**position**
-```lisp
-Initargs: :POSITION
-```
-**cl-postgres::cause**
-```lisp
-Initargs: :CAUSE
-```
-### database-error-cause
+### database-error
 
 ```lisp
-Generic Function: (database-error-cause condition)
+Condition
 ```
 
+This is the condition type that will be used to signal virtually all
+database-related errors (though in some cases socket errors may be
+raised when a connection fails on the IP level).
 
 ### database-error-code
 
 ```lisp
-Generic Function: (database-error-code condition)
+Generic Function: (database-error-constraint-name err)
 ```
 
 
-### database-error-constraint-name
+Code: the Postgresql SQLSTATE code for the error (see the Postgresql
+Manual Appendix A for their meaning). Not localizable. Always present.
+
+### database-error-message
 
 ```lisp
-Function: (database-error-constraint-name err)
+Generic Function: (database-error-constraint-name err)
 ```
-Given a database-error for an integrity violation, will attempt to
-extract the constraint name.
+
+
+Message: the primary human-readable error message. This should be
+accurate but terse (typically one line). Always present.
 
 ### database-error-detail
 
 ```lisp
-Generic Function: (database-error-detail condition)
+Generic Function: (database-error-constraint-name err)
 ```
 
+
+Detail: an optional secondary error message carrying more detail about
+the problem. Might run to multiple lines or NIL if none is available.
+
+### database-error-query
+
+```lisp
+Generic Function: (database-error-constraint-name err)
+```
+
+
+Query that led to the error, or NIL if no query was involved.
+
+### database-error-cause
+
+```lisp
+Generic Function: (database-error-constraint-name err)
+```
+
+
+The condition that caused this error, or NIL when it was not caused by
+another condition.
+
+### database-error-constraint-name
+
+```lisp
+Generic Function: (database-error-constraint-name err)
+```
+
+Given a database-error for an integrity violation, will attempt to
+extract the constraint name.
 
 ### database-error-extract-name
 
 ```lisp
 Function: (database-error-extract-name err)
 ```
-Given a database-error, will extract the critical name from the error message.
 
-### database-error-message
-
-```lisp
-Generic Function: (database-error-message condition)
-```
-
-
-### database-error-query
-
-```lisp
-Generic Function: (database-error-query condition)
-```
+Given a database-error, will extract the critical name from the error
+message.
 
 ### database-exists-p
 
 ```lisp
-Function: (database-exists-p database-name)
+Function: (database-exists-p database)
 ```
 
 → boolean
 
-Checks to see if a particular database exists.
+Checks to see if a particular database exists. Returns T if true, nil if
+not.
 
 ### database-size
 
@@ -1125,7 +1383,18 @@ Function: (database-version)
 
 → string
 
-Returns the version of the current postgresql database.
+DEPRECATED. This returns the postgresql server version number, not a
+version number from the currently connected database. The format of the
+return string is determined by the current postgresql server. E.g.
+"PostgreSQL 12.2 on x86\_64-pc-linux-gnu, compiled by gcc (Arch Linux
+9.3.0-1) 9.3.0, 64-bit".
+
+If you want just the postgresql version number, use
+(cl-postgres:get-postgresql-version).
+
+### db-null
+Type for representing NULL values. Use like (or integer db-null) for
+declaring a type to be an integer that may be null." '(eql :null)
 
 ### define-dao-finalization
 
@@ -1150,7 +1419,7 @@ Macro: (defprepared name query &optional (format rows))
 
 This is the macro-style variant of prepare. It is like prepare, but
 gives the function a name which now becomes a top-level function for the
-prepared statement. The name should not be quoted or a string.
+prepared statement. The name should not a string but may be quoted.
 
 ### defprepared-with-names
 
@@ -1160,7 +1429,7 @@ Macro: (defprepared-with-names name (&rest args) (query &rest query-args) &optio
 ```
 
 Like defprepared, but allows to specify names of the function arguments
-as well as arguments supplied to the query.
+in a lambda list as well as arguments supplied to the query.
 
 ``` {.commonlisp}
 (defprepared-with-names user-messages (user &key (limit 10))
@@ -1181,8 +1450,8 @@ Define a table. name can be either a symbol or a (symbol string) list.
 In the first case, the table name is derived from the symbol's name by
 S-SQL's rules. In the second case, the name is given explicitly. The
 body of definitions can contain anything that evaluates to a string, as
-well as S-SQL expressions. The variables \*table-name\* and
-\*table-symbol\* are bound to the relevant values in the body. Note that
+well as S-SQL expressions. The variables **table-name** and
+[\*table-symbol\*](#table-symbol) are bound to the relevant values in the body. Note that
 the evaluation of the definition is ordered, so you'll generally want to
 create your table first and then define indices on it.
 
@@ -1216,6 +1485,17 @@ Function: (describe-foreign-key-constraints)
 
 Generates a list of lists of information on the foreign key constraints
 
+### describe-triggers
+
+```lisp
+Function: (describe-triggers)
+```
+
+→ list
+
+List detailed information on the triggers from the information\_schema
+table.
+
 ### describe-views
 
 ```lisp
@@ -1224,8 +1504,9 @@ Function: (describe-views &optional (schema public))
 
 → list
 
-Describe the current views in the specified schema. Defaults to public
-schema.
+Describe the current views in the specified schema. Includes the select
+statements used to create the view. Takes an optional schema but
+defaults to public schema.
 
 ### disconnect
 
@@ -1242,7 +1523,7 @@ into the pool.
 Function: (disconnect-toplevel)
 ```
 
-Disconnect the \*database\*.
+Disconnect the [\*database\*](#database).
 
 ### do-query-dao
 
@@ -1256,6 +1537,8 @@ Like query-dao, but iterates over the results rather than returning
 them. For each matching DAO, body is evaluated with type-var bound to
 the instance.
 
+Example:
+
 ``` {.commonlisp}
 (do-query-dao (('user user) (:order-by (:select '* :from 'user :where (:> 'score 10000)) 'name))
   (pushnew user high-scorers))
@@ -1264,12 +1547,14 @@ the instance.
 ### do-select-dao
 
 ```lisp
-Macro: (do-select-dao ((type type-var) &optional (test) &rest ordering) &body body)
+Macro: (do-select-dao ((type type-var) &optional (test t) &rest ordering) &body body)
 ```
 
 Like select-dao, but iterates over the results rather than returning
 them. For each matching DAO, body is evaluated with type-var bound to
 the DAO instance.
+
+Example:
 
 ``` {.commonlisp}
 (do-select-dao (('user user) (:> 'score 10000) 'name)
@@ -1297,13 +1582,34 @@ query, and whose cdr contains the arguments. For example:
 ```
 
 ### double-precision
+'double-float
+
+### drop-database
+
+```lisp
+Function: (drop-database database)
+```
+
+Drop the specified database. The database parameter can be a string or a
+symbol. Note: Only the owner of a database (or superuser) can drop a
+database and there cannot be any current connections to the database.
+[See Database information below for information specific
+functions](#c6f7f5b5-8721-41b4-bf00-85811e189037)
+
+Postmodern contains a simple system for defining CLOS classes that
+represent rows in the database. This is not intended as a full-fledged
+object-relational magic system ― while serious ORM systems have their
+place, they are notoriously hard to get right, and are outside of the
+scope of a humble SQL library like this.
 
 ### drop-index
 
 ```lisp
 Function: (drop-index name &key concurrently if-exists cascade)
 ```
-Drop an index. Available keys are :concurrently, :if-exists, and :cascade.
+
+Drop an index. Available keys are :concurrently, :if-exists, and
+:cascade.
 
 ### drop-prepared-statement
 
@@ -1312,14 +1618,46 @@ Function: (drop-prepared-statement name &key (location both) (database *database
  (remove-function t))
 ```
 
+The statement name can be a string or quoted symbol.
+
 Prepared statements are stored both in the meta slot in the postmodern
-connection and in postgresql session information. If you know the
-prepared statement name, you can delete the prepared statement from both
-locations (the default behavior), just from postmodern (passing
-:postmodern to the location key parameter) or just from postgresql
-(passing :postgresql to the location key parameter). If you pass the
-name 'All' as the statement name, it will delete all prepared
-statements. The statement name can be a string or quoted symbol.
+connection and in postgresql session information. In the case of
+prepared statements generated with defprepared, there is also a lisp
+function with the same name.
+
+If you know the prepared statement name, you can delete the prepared
+statement from both locations (the default behavior), just from
+postmodern by passing :postmodern to the location key parameter or just
+from postgresql by passing :postgresql to the location key parameter.
+
+If you pass the name 'All' as the statement name, it will delete all
+prepared statements.
+
+The default behavior is to also remove any lisp function of the same
+name. This behavior is controlled by the remove-function key parameter.
+
+### drop-role
+
+```lisp
+Function: (drop-role role-name &optional (new-owner postgres) (database all))
+```
+
+→ boolean
+
+The role-name and optional new-owner name should be strings. If they are
+symbols, they will be converted to string and hyphens will be converted
+to underscores.
+
+Before dropping the role, you must drop all the objects it owns (or
+reassign their ownership) and revoke any privileges the role has been
+granted on other objects. If database is :all, drop-role will loop
+through all databases in the cluster ensuring that the role has no
+privileges or owned objects in every database. Otherwise drop-role will
+drop objects owned by a role in the current database.
+
+We will reassign ownership of the objects to the postgres role unless
+otherwise specified in the optional second parameter. Returns t if
+successful. Will not drop the postgres role.
 
 ### drop-schema
 
@@ -1327,22 +1665,29 @@ statements. The statement name can be a string or quoted symbol.
 Function: (drop-schema schema &key (if-exists nil) (cascade nil))
 ```
 
-Removes a schema. Accepts :if-exists and/or :cascade arguments like
-:drop-table.
+Drops an existing database schema. Accepts :if-exists and/or :cascade
+arguments like :drop-table. A notice instead of an error is raised with
+the is-exists parameter.
 
 ### drop-sequence
 
 ```lisp
 Function: (drop-sequence name &key if-exists cascade)
 ```
-Drop a sequence. Name should be quoted. Available key parameters are :if-exists and :cascade
+
+→ list
+
+Drop a sequence. Name should be quoted. Available key parameters are
+:if-exists and :cascade.
 
 ### drop-table
 
 ```lisp
-Function: (drop-table name &key if-exists cascade)
+Function: (drop-table table-name &key if-exists cascade)
 ```
-Drop a table. Available additional key parameters are :if-exists and :cascade.
+
+If a table exists, drop a table. Available additional key parameters are
+:if-exists and :cascade.
 
 ### ensure-transaction
 
@@ -1358,9 +1703,10 @@ new transaction if one is already in progress.
 ```lisp
 Macro: (ensure-transaction-with-isolation-level isolation-level &body body)
 ```
+
 Executes body within a with-transaction form if and only if no
-transaction is already in progress. This adds the ability to specify an isolatin
-level other than the current default
+transaction is already in progress. This adds the ability to specify an
+isolation level other than the current default
 
 ### execute
 
@@ -1368,9 +1714,10 @@ level other than the current default
 Macro: (execute query &rest args)
 ```
 
-Like query called with format :none. Returns the amount of affected rows
-as its first returned value. (Also returns this amount as the second
-returned value, but use of this is deprecated.)
+Execute a query, ignore the results. So, in effect, Like a query called
+with format :none. Returns the amount of affected rows as its first
+returned value. (Also returns this amount as the second returned value,
+but use of this is deprecated.)
 
 ### execute-file
 
@@ -1405,7 +1752,7 @@ Function: (find-postgresql-prepared-statement name)
 → string
 
 Returns the specified named prepared statement (if any) that postgresql
-has for this session.
+has for this session and placed in the meta slot in the connection.
 
 ### find-postmodern-prepared-statement
 
@@ -1427,10 +1774,26 @@ Function: (find-primary-key-info table &optional (just-key nil))
 
 → list
 
-Returns a list of two strings. First the column name of the primary key
-of the table and second the string name for the datatype. Optionally,
-just-key can be set to t and it will return just the column name of the
-primary key as a string.
+Returns a list of sublists where the sublist contains two strings. If a
+table primary key consists of only one column, such as 'id' there will
+be a single sublist where the first string is the name of the column and
+the second string is the string name for the datatype for that column.
+If the primary key for the table consists of more than one column, there
+will be a sublist for each column subpart of the key. The sublists will
+be in the order they are used in the key, not in the order they appear
+in the table. If just-key is set to t, the list being returned will
+contain just the column names in the primary key as string names with no
+sublists. If the table is not in the public schema, provide the fully
+qualified table name e.g. schema-name.table-name.
+
+### from-sql-name
+
+```lisp
+Function: (from-sql-name str)
+```
+
+Convert a string to a symbol, upcasing and replacing underscores with
+hyphens.
 
 ### get-dao
 
@@ -1440,11 +1803,39 @@ Generic Function: (get-dao type &rest args)
 
 → dao
 
-Select the DAO object from the row that has the given primary key
+Get the single DAO object from the row that has the given primary key
 values, or NIL if no such row exists. Objects created by this function
 will have initialize-instance called on them (after loading in the
 values from the database) without any arguments ― even :default-initargs
 are skipped. The same goes for select-dao and query-dao.
+
+``` {.commonlisp}
+(get-dao 'country "The Netherlands")
+#<COUNTRY {1010F0DCF3}>
+```
+
+From an sql perspective, the standard call to get-dao translates as:
+
+``` {.sql}
+select * from table
+```
+
+NOTE: if you have added fields to the database table without updating
+the class definition, get-dao and select-dao will throw errors. This may
+cause your application to appear to hang unless you have the necessary
+condition handling in your code. Usually this will only happen during
+development, so throwing an error is not a bad idea. If you want to
+ignore the errors, set **ignore-unknown-columns** to t.
+
+### get-database-comment
+
+```lisp
+Function: (get-database-comment database-name)
+```
+
+→ string
+
+Returns the comment, if any, attached to a database.
 
 ### get-pid
 
@@ -1473,7 +1864,92 @@ from the postmodern connection parameters.
 Function: (get-search-path)
 ```
 
-Retrieve the current search path.
+Returns the default schema search path for the current session.
+
+### get-table-comment
+
+```lisp
+Function: (get-table-comment table-name &optional schema-name)
+```
+
+→ string
+
+Retrieves the comment, if any attached to the table.
+
+### get-table-oid
+
+```lisp
+Function: (get-table-oid table-name &optional schema-name)
+```
+
+→ integer
+
+Retrieves the oid identifier for a particular table from postgresql.
+Works for tables in all schemas.
+
+### grant-admin-permissions
+
+```lisp
+Function: (grant-admin-permissions schema-name role-name &optional (table-name nil))
+```
+
+Grants all privileges to a role for the named schema. If the optional
+table-name parameter is provided, the privileges are only granted with
+respect to that table.
+
+### grant-editor-permissions
+
+```lisp
+Function: (grant-editor-permissions schema-name role-name &optional (table-name nil))
+```
+
+Grants select, insert, update and delete privileges to a role for the
+named schema. If the optional table-name parameter is provided, the
+privileges are only granted with respect to that table. Note that we are
+giving some function execute permissions if table-name is nil, but if
+the table-name is specified, those are not provided. Your mileage may
+vary on how many privileges you want to provide to a editor role with
+access to only a limited number of tables.
+
+### grant-readonly-permissions
+
+```lisp
+Function: (grant-readonly-permissions schema-name role-name &optional (table-name nil))
+```
+
+Grants select privileges to a role for the named schema. If the optional
+table-name parameter is provided, the privileges are only granted with
+respect to that table. Note that we are giving some function execute
+permissions if table-name is nil, but if the table-name is specified,
+those are not provided. Your mileage may vary on how many privileges you
+want to provide to a read-only role with access to only a limited number
+of tables.
+
+### grant-role-permissions
+
+```lisp
+Function: (grant-role-permissions role-type name &key (schema public) (tables all)
+ (databases all))
+```
+
+Grant-role-permissions assumes that a role has already been created, but
+permissions need to be granted or revoked on a particular database.
+
+A :superuser can create databases, roles, replication, etc. Returns nil.
+A :standard user has no particular privileges or restrictions. Returns
+nil. An :admin user can edit existing data, insert new data and create
+new tables in the specified databases/schemas/tables. An :editor user
+can update fields or insert new records but cannot create new tables in
+the specified tables or databases. A :readonly role can only read
+existing data in the specified schemas, tables or databases. Schema,
+tables or databases can be :all or a list of schemas, tables or
+databases to be granted permission.
+
+Granting :all provides access to all future items of that type as well.
+
+Note that the schema and table rights and revocations granted are
+limited to the connected database at the time of execution of this
+function.
 
 ### index-exists-p
 
@@ -1508,7 +1984,38 @@ Function: (list-all-constraints table-name &optional (strings-p))
 → list
 
 Users information\_schema to list all the constraints in a table.
-Table-name can be either a string or quoted.
+Table-name can be either a string or quoted. Turns constraints into
+keywords if strings-p is not true.
+
+### list-all-tables
+
+```lisp
+Function: (list-all-tables &optional (fully-qualified-names-only nil))
+```
+
+→ list
+
+If fully-qualified-names-only is set to t, returns a flattened list of
+all schema.table names other than pg\_catalog or the
+information\_schema.
+
+Otherwise returns the following info:
+
+schema-name, table-name, table-owner, tablespace, hasindexes, hasrules,
+hastriggers and rowsecurity(&optional strings-p).
+
+### list-available-collations
+
+```lisp
+Function: (list-available-collations)
+```
+
+→ list
+
+Get a list of the collations available from the current database
+cluster. Collations are a mess as different operating systems provide
+different collations. We might get some sanity if Postgresql can use ICU
+as the default. See <https://wiki.postgresql.org/wiki/Collations>.
 
 ### list-available-extensions
 
@@ -1521,12 +2028,6 @@ Function: (list-available-extensions)
 List the postgresql extensions which are available in the system to the
 currently connected database. The extensions may or may not be
 installed.
-→ list
-
-Lists extensions that are available to be installed in the database.
-Returns a list of lists where each sublist has the name of the
-extension, the default version, the installed version (if any) and a
-comment string.
 
 ### list-available-types
 
@@ -1536,7 +2037,9 @@ Function: (list-available-types)
 
 → list
 
-List the available types in this postgresql version.
+List the available data types in the connected postgresql version, It
+returns a list of lists, each sublist containing the oid (object
+identifier number) and the name of the data types. E.g. (21 "smallint")
 
 ### list-columns
 
@@ -1548,7 +2051,9 @@ Function: (list-columns table-name)
 
 Returns a list of strings of just the column names in a table. Pulls
 info from the postmodern table-description function rather than
-directly.
+directly. The table-name can be a string or quoted. Any table-name that
+is not fully qualified with the schema will be assumed to be in the
+public schema.
 
 ### list-columns-with-types
 
@@ -1558,8 +2063,12 @@ Function: (list-columns-with-types table-name)
 
 → list
 
-Return a list of (name type) lists for the fields of a table. Goes
-directly to the pg-catalog tables.
+Returns a list of (name type) lists for the fields of a table. Returns a
+list of strings of just the column names and their sql data types in a
+table. Pulls info from the postmodern table-description function rather
+than directly. The table-name can be a string or quoted. Any table-name
+that is not fully qualified with the schema will be assumed to be in the
+public schema.
 
 ### list-connections
 
@@ -1570,7 +2079,22 @@ Function: (list-connections)
 → list
 
 List the current postgresql connections to the currently connected
-database.
+database. It does this by returningo info from pg\_stat\_activity on
+open connections.
+
+### list-database-access-rights
+
+```lisp
+Function: (list-database-access-rights &optional database-name)
+```
+
+→ list
+
+If the database parameter is specifed, this returns an list of lists
+where each sublist is a role name and whether they have access rights (t
+or nil) to that particular database. If the database-name is not
+provided, the sublist is a database name, a role name and whether they
+have access rights (t or nil). This excludes the template databases.
 
 ### list-database-functions
 
@@ -1583,6 +2107,9 @@ Function: (list-database-functions)
 Returns a list of the functions in the database from the
 information\_schema.
 
+DEPRECATED FOR DESCRIBE-TRIGGERS. List detailed information on the
+triggers from the information\_schema table.
+
 ### list-database-users
 
 ```lisp
@@ -1591,12 +2118,12 @@ Function: (list-database-users)
 
 → list
 
-List database users.
+List database users (actually 'roles' in Postgresql terminology).
 
 ### list-databases
 
 ```lisp
-Function: (list-databases &key (order-by-size nil) (size t))
+Function: (list-databases &key (order-by-size nil) (size t) (names-only nil))
 ```
 
 → list
@@ -1615,9 +2142,6 @@ Function: (list-detailed-triggers)
 ```
 
 → list
-
-List detailed information on the triggers from the information\_schema
-table.
 
 ### list-foreign-keys
 
@@ -1674,9 +2198,6 @@ Function: (list-installed-extensions)
 
 List the postgresql extensions which are installed in the currently
 connected database.
-→ list
-
-Return a list of the installed extension
 
 ### list-postmodern-prepared-statements
 
@@ -1698,7 +2219,7 @@ the names of the prepared statements.
 ### list-prepared-statements
 
 ```lisp
-: (list-prepared-statements (&optional names-only))
+Function: (list-prepared-statements &optional (names-only nil))
 ```
 
 → list
@@ -1707,6 +2228,30 @@ This is syntactic sugar. It runs a query that lists the prepared
 statements in the session in which the function is run. If the
 names-only parameter is set to t, it will only return a list of the
 names of the prepared statements.
+
+### list-role-accessible-databases
+
+```lisp
+Function: (list-role-accessible-databases role-name)
+```
+
+→ list
+
+Returns a list of the databases to which the specified role can connect.
+
+### list-role-permissions
+
+```lisp
+Function: (list-role-permissions &optional role)
+```
+
+→ list
+
+This returns a list of sublists of the permissions granted within the
+currently connected database. If an optional role is provided, the
+result is limited to that role. The sublist returned will be in the form
+of role-name, schema-name, table-name and then a string containing all
+the rights of that role on that table in that schema.
 
 ### list-roles
 
@@ -1735,15 +2280,19 @@ List schemas in the current database, excluding the pg\_\* system
 schemas.
 
 ### list-schemata
-
-```lisp
-Function: (list-schemata)
-```
-
 → list
 
-Returns list of the user defined schemata (as strings) and the quantity
-of existing schemata.
+List all existing user defined schemata.
+
+Note: The query uses the portable information\_schema relations instead
+of pg\_tables relations.
+
+``` {.sql}
+select schema_name
+from information_schema.schemata
+where schema_name !~ '(pg_*)|information_schema'
+order by schema_name ;
+```
 
 ### list-sequences
 
@@ -1764,8 +2313,8 @@ Function: (list-table-indices table-name &optional strings-p)
 
 → list
 
-List the index names and the related columns in a table. Returns a list
-of alists.
+List the index names and the related columns in a single table. Each
+index will be in a separate sublist.
 
 ### list-table-sizes
 
@@ -1788,26 +2337,29 @@ size instead of by table name.
 ### list-tables
 
 ```lisp
-Function: (list-tables &optional strings-p)
+Function: (list-tables &optional (strings-p nil))
 ```
 
 → list
 
-Returns a list of the tables in the current database and schema. When
-strings-p is T, the names will be given as strings, otherwise as
-keywords.
+DEPRECATED FOR LIST-ALL-TABLES. Return a list of the tables in the
+public schema of a database. By default the table names are returned as
+keywords. They will be returned as lowercase strings if strings-p is
+true.
 
 ### list-tables-in-schema
 
 ```lisp
-Function: (list-tables-in-schema &optional (schema-name public) lisp-strings-p)
+Function: (list-tables-in-schema &optional (schema-name public) (strings-p nil))
 ```
 
 → list
 
-Returns a list of the tables in the current database and the specified
-schema. When strings-p is T,the names will be given as strings,
-otherwise as keywords.
+Returns a list of tables in a particular schema, defaulting to public.
+If schema-name is :all, it will return all the non-system tables in the
+database in fully qualified form: e.g. 'public.test\_table'. If string-p
+is t, the names will be returned as strings with underscores converted
+to hyphens.
 
 ### list-tablespaces
 
@@ -1817,7 +2369,37 @@ Function: (list-tablespaces)
 
 → list
 
-Lists the tablespaces in the currently connected database.
+Lists the tablespaces in the currently connected database. What are
+tablespace you ask? Per the Postgresql documentation
+<https://www.postgresql.org/docs/current/manage-ag-tablespaces.html>:
+Tablespaces in PostgreSQL allow database administrators to define
+locations in the file system where the files representing database
+objects can be stored. Once created, a tablespace can be referred to by
+name when creating database objects.
+
+By using tablespaces, an administrator can control the disk layout of a
+PostgreSQL installation. This is useful in at least two ways. First, if
+the partition or volume on which the cluster was initialized runs out of
+space and cannot be extended, a tablespace can be created on a different
+partition and used until the system can be reconfigured.
+
+Second, tablespaces allow an administrator to use knowledge of the usage
+pattern of database objects to optimize performance. For example, an
+index which is very heavily used can be placed on a very fast, highly
+available disk, such as an expensive solid state device. At the same
+time a table storing archived data which is rarely used or not
+performance critical could be stored on a less expensive, slower disk
+system.
+
+### list-templates
+
+```lisp
+Function: (list-templates)
+```
+
+→ list
+
+Returns a list of existing database template names.
 
 ### list-triggers
 
@@ -1828,7 +2410,11 @@ Function: (list-triggers &optional table-name)
 → list
 
 List distinct trigger names from the information\_schema table.
-Table-name can be either quoted or string.
+Table-name can be either quoted or string. (A trigger is a specification
+that the database should automatically execute a particular function
+whenever a certain type of operation is performed. Triggers can be
+attached to tables (partitioned or not), views, and foreign tables. See
+<https://www.postgresql.org/docs/current/trigger-definition.html>)
 
 ### list-unique-or-primary-constraints
 
@@ -1838,7 +2424,8 @@ Function: (list-unique-or-primary-constraints table-name &optional (strings-p))
 
 → list
 
-List constraints on a table.
+List constraints on a table. Table-name can be either a string or
+quoted. Turns constraints into keywords if strings-p is not true.
 
 ### list-views
 
@@ -1860,18 +2447,8 @@ Generic Function: (make-dao type &rest args &key &allow-other-keys)
 
 → dao
 
-Combines make-instance with insert-dao. Return the created dao.
-
-### more-table-info
-
-```lisp
-Function: (more-table-info table-name)
-```
-
-→ list
-
-Returns more table info than table-description. Table can be either a
-string or quoted.
+Combines make-instance with insert-dao. Make the instance of the given
+class and insert it into the database, returning the created dao.
 
 ### num-records-in-database
 
@@ -1883,15 +2460,58 @@ Function: (num-records-in-database)
 
 Returns a list of lists with schema, table name and approximate number
 of records in the currently connected database.
+→ list
+
+Returns a list of lists with schema, table name and approximate number
+of records in the currently connected database.
 
 ### numeric
+(declare (ignore precision/scale scale)) 'number
 
 ### parse-queries
 
 ```lisp
 Function: (parse-queries file-content)
 ```
-read SQL queries in given string and split them, returns a list
+
+→ list
+
+Read SQL queries in given string and split them, returns a list.
+
+### postgres-array-string-to-array
+
+```lisp
+Function: (postgres-array-string-to-array str)
+```
+
+"Takes a postgresql array in the form of a string like
+wol=CTc/wol,a=c/wol,b=c/wol" and returns a lisp list like (wol=CTc/wol"
+ä=c/wol" b=c/wol)."
+
+### postgres-array-string-to-list
+
+```lisp
+Function: (postgres-array-string-to-list str)
+```
+
+→ array
+
+Takes a postgresql array in the form of a string like
+"{wol=CTc/wol,a=c/wol,b=c/wol}" and returns a lisp array like
+\#("wol=CTc/wol" "a=c/wol" "b=c/wol")
+
+### postgresql-version
+
+```lisp
+Function: (postgresql-version)
+```
+
+→ string
+
+Returns the version string provided by postgresql of the current
+postgresql server. E.g. "PostgreSQL 12.2 on x86\_64-pc-linux-gnu,
+compiled by gcc (Arch Linux 9.3.0-1) 9.3.0, 64-bit". If you want just
+the postgresql version number, use (cl-postgres:get-postgresql-version).
 
 ### prepare
 
@@ -1951,22 +2571,67 @@ as a query argument, but will determine the format in which the results
 are returned instead. Any of the following formats can be used, with the
 default being :rows:
 
-```
-:none	            | Ignore the result values.                                                                                                                                |
-:lists, :rows       | Return a list of lists, each list containing the values for a row.                                                                                     |
-:list, :row         | Return a single row as a list.                                                                                                                         |
-:alists	            | Return a list of alists which map column names to values, with the names represented as keywords.                                                        |
-:alist	            | Return a single row as an alist.                                                                                                                         |
-:array-hash         | Return an array of hashtables which map column names to hash table keys                                                                                  |
-:str-alists         | Like :alists, but use the original column names.                                                                                                       |
-:str-alist	        | Return a single row as an alist, with strings for names.                                                                                                 |
-:plists	            | Return a list of plists which map column names to values,with the names represented as keywords.                                                         |
-:plist	            | Return a single row as a plist.                                                                                                                          |
-:column	            | Return a single column as a list.                                                                                                                        |
-:single	            | Return a single value.                                                                                                                                   |
-:single!	        | Like :single, but raise an error when the number of selected rows is not equal to 1.                                                                     |
-(:dao type)	        | Return a list of DAOs of the given type. The names of the fields returned by the query must match slots in the DAO class the same way as with query-dao. |
-(:dao type :single) | Return a single DAO of the given type.                                                                                                                 |
+  --------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------
+  :none                 Ignore the result values.
+  :lists, :rows         Return a list of lists, each list containing the values for a row.
+  :list, :row           Return a single row as a list.
+  :alists               Return a list of alists which map column names to values, with the names represented as keywords.
+  :alist                Return a single row as an alist.
+  :array-hash           Return an array of hashtables which map column names to hash table keys
+  :str-alists           Like :alists, but use the original column names.
+  :str-alist            Return a single row as an alist, with strings for names.
+  :plists               Return a list of plists which map column names to values,with the names represented as keywords.
+  :plist                Return a single row as a plist.
+  :column               Return a single column as a list.
+  :single               Return a single value.
+  :single!              Like :single, but raise an error when the number of selected rows is not equal to 1.
+  (:dao type)           Return a list of DAOs of the given type. The names of the fields returned by the query must match slots in the DAO class the same way as with query-dao.
+  (:dao type :single)   Return a single DAO of the given type.
+  --------------------- ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Some Examples:
+
+``` {.commonlisp}
+(query (:select '* :from 'country :where (:= 'name "Croatia")))
+(("Croatia" 4400000 :NULL))
+
+(query (:select 'inhabitants :from 'country :where (:= 'name "Croatia")) :single)
+4400000
+
+(query (:select '* :from 'country :where (:= 'name "Croatia")) :alist)
+((:NAME . "Croatia") (:INHABITANTS . 4400000) (:SOVEREIGN . :NULL))
+
+(query (:select '* :from 'country :where (:= 'name "Croatia")) :str-alist)
+(("name" . "Croatia") ("inhabitants" . 4400000) ("sovereign" . :NULL))
+
+(query (:select '* :from 'country :where (:= 'name "Croatia")) :plist)
+(:NAME "Croatia" :INHABITANTS 4400000 :SOVEREIGN :NULL)
+
+(query (:select '* :from 'country :where (:= 'name "Croatia")) :list)
+("Croatia" 4400000 :NULL)
+
+(query (:select '* :from 'country :where (:= 'name "Croatia")) :lists)
+(("Croatia" 4400000 :NULL))
+
+(query (:select '* :from 'country) :lists)
+(("The Netherlands" 16800000 "Willem-Alexander") ("Croatia" 4400000 :NULL))
+
+(query (:select '* :from 'country) :alists)
+(((:NAME . "The Netherlands") (:INHABITANTS . 16800000)
+  (:SOVEREIGN . "Willem-Alexander"))
+ ((:NAME . "Croatia") (:INHABITANTS . 4400000) (:SOVEREIGN . :NULL)))
+
+(query (:select '* :from 'country :where (:= 'name "Croatia")) :array-hash)
+#(#<HASH-TABLE :TEST EQUAL :COUNT 3 {10106CA323}>)
+
+(query (:select '* :from 'country :where (:= 'name "Croatia")) (:dao country))
+(#<COUNTRY {1010688943}>)
+
+(query (:select '* :from 'country) (:dao country))
+(#<COUNTRY {1010464023}> #<COUNTRY {1010465CB3}>)
+
+(query (:select 'inhabitants :from 'country :where (:= 'name "Croatia")) :column)
+(4400000)
 ```
 
 If the database returns information about the amount rows that were
@@ -1993,14 +2658,12 @@ with-column-writers.
 ```lisp
 Function: (read-queries filename)
 ```
-read SQL queries in given file and split them, returns a list
+
+Read SQL queries in a given file and split them, returns a list.
 
 ### real
 
-
-```lisp
-NIL
-```
+'float
 
 ### reconnect
 
@@ -2017,15 +2680,15 @@ some other process, and should no longer be used.
 ```lisp
 Macro: (register-sql-operators arity &rest names)
 ```
-Define simple operators. Arity is one of :unary (like
-'not'), :unary-postfix (the operator comes after the operand),
-:n-ary (like '+': the operator falls away when there is only one
-operand), :2+-ary (like '=', which is meaningless for one operand),
-or :n-or-unary (like '-', where the operator is kept in the unary
-case). After the arity follow any number of operators, either just a
-keyword, in which case the downcased symbol name is used as the
-operator, or a two-element list containing a keyword and a name
-string.
+
+Define simple operators. Arity is one of :unary (like 'not'),
+:unary-postfix (the operator comes after the operand), :n-ary (like \+ :
+the operator falls away when there is only one operand), :2+-ary (like
+'=', which is meaningless for one operand), or :n-or-unary (like '-',
+where the operator is kept in the unary case). After the arity follow
+any number of operators, either just a keyword, in which case the
+downcased symbol name is used as the operator, or a two-element list
+containing a keyword and a name string.
 
 ### release-savepoint
 
@@ -2033,7 +2696,7 @@ string.
 Function: (release-savepoint savepoint)
 ```
 
-Release the given savepoint.
+Immediately release a savepoint, commiting its results.
 
 ### reset-prepared-statement
 
@@ -2048,13 +2711,35 @@ prepared statement is still in the meta slot in the postmodern
 connection, this will try to regenerate the prepared statement at the
 database connection level and restart the connection.
 
+### revoke-all-on-table
+
+```lisp
+Function: (revoke-all-on-table table-name role-name)
+```
+
+Takes a table-name which could be a string, symbol or list of strings or
+symbols of tables names, a role name and revokes all privileges that
+role-name may have with that/those tables. This is limited to the
+currently connected database and can only revoke the privileges granted
+by the caller of the function.
+
+### role-exists-p
+
+```lisp
+Function: (role-exists-p role-name)
+```
+
+→ boolean
+
+Does the named role exist in this database cluster? Returns t or nil.
+
 ### rollback-savepoint
 
 ```lisp
 Function: (rollback-savepoint savepoint)
 ```
 
-Roll back the given savepoint.
+Immediately roll back a savepoint, aborting the results.
 
 ### save-dao
 
@@ -2084,6 +2769,13 @@ Function: (save-dao/transaction dao)
 
 → boolean
 
+The transaction safe version of save-dao. Tries to insert the given dao
+using insert-dao. If this raises a unique key violation error, it tries
+to update it by using update-dao instead. Be aware that there is a
+possible race condition here ― if some other process deletes the row at
+just the right moment, the update fails as well. Returns a boolean
+telling you whether a new row was inserted.
+
 Acts exactly like save-dao, except that it protects its attempt to
 insert the object with a rollback point, so that a failure will not
 abort the transaction.
@@ -2099,7 +2791,8 @@ Function: (schema-exists-p name)
 → boolean
 
 Tests the existence of a given schema. Returns T if the schema exists or
-NIL otherwise.
+NIL otherwise. The name provided can be either a string or quoted
+symbol.
 
 ### select-dao
 
@@ -2117,7 +2810,37 @@ used to sort the result.
 (Note that, if you want to sort, you have to pass the test argument.)
 
 ``` {.commonlisp}
-(select-dao 'user (:> 'score 10000) 'name)
+(select-dao 'country)
+(#<COUNTRY {101088F6F3}> #<COUNTRY {101088FAA3}>)
+2
+
+(select-dao 'country (:> 'inhabitants 50000000))
+NIL
+0
+
+(select-dao 'country (:> 'inhabitants 5000000))
+(#<COUNTRY {10108AD293}>)
+1
+
+(select-dao 'country (:> 'inhabitants 5000))
+(#<COUNTRY {10108CA773}> #<COUNTRY {10108CAB23}>)
+2
+
+(select-dao 'country (:> 'inhabitants 5000) 'name) ;sorted by name
+(#<COUNTRY {10108EF423}> #<COUNTRY {10108EF643}>)
+
+(mapcar 'country-name (select-dao 'country (:> 'inhabitants 5000) 'name))
+("Croatia" "The Netherlands")
+
+(mapcar 'country-name (select-dao 'country (:> 'inhabitants 5000)))
+("The Netherlands" "Croatia")
+```
+
+If for some reason, you wanted the list in reverse alphabetical order,
+then:
+
+``` {.commonlisp}
+(select-dao 'country (:> 'id  0) (:desc 'name))
 ```
 
 ### sequence-exists-p
@@ -2139,9 +2862,15 @@ Function: (sequence-next sequence)
 
 → integer
 
-Get the next value from a sequence. The sequence identifier can be
-either a string or a symbol, in the latter case it will be converted to
-a string according to S-SQL rules.
+Shortcut for getting the next value from a sequence. The sequence
+identifier can be either a string or a symbol, in the latter case it
+will be converted to a string according to S-SQL rules.
+
+### serial
+'integer
+
+### serial8
+'integer
 
 ### set-search-path
 
@@ -2149,23 +2878,50 @@ a string according to S-SQL rules.
 Function: (set-search-path path)
 ```
 
-Sets the search path to the path. This function is used by with-schema.
+This changes the postgresql runtime parameter controlling what order
+schemas are searched. You can always use fully qualified names
+\[schema.table\]. By default, this function only changes the search path
+for the current session. This function is used by with-schema.
 
-### split-fully-qualified-table-name
+### smallint
+'(signed-byte 16)
+
+### split-fully-qualified-tablename
 
 ```lisp
-: (split-fully-qualified-table-name)
+Function: (split-fully-qualified-tablename name)
 ```
 
-→ list Takes a name of the form database.schema.table or schema.table or
-just table and returns a list in the form '(table schema database)
+→ list Take a tablename of the form database.schema.table or
+schema.table or table and return the tablename and the schema name. The
+name can be a symbol or a string. Returns a list of form '(table schema
+database. If the tablename is not fully qualified, it will assume that
+the schema should be public.
 
 ### sql
 
 ```lisp
 Macro: (sql form)
 ```
-Compile form to a sql expression as far as possible.
+
+→ string
+
+Convert the given form (a list starting with a keyword) to an SQL query
+string at compile time, according to the rules described here. For
+example:
+
+``` {.commonlisp}
+(sql (:select '* :from 'country :where (:= 'a 1)))
+ "(SELECT * FROM country WHERE (a = 1))"
+```
+
+but
+
+``` {.commonlisp}
+(sql '(:select '* :from 'country :where (:= 'a 1)))
+```
+
+would throw an error. For the later case you need to use sql-compile.
 
 ### sql-compile
 
@@ -2173,6 +2929,26 @@ Compile form to a sql expression as far as possible.
 Function: (sql-compile form)
 ```
 
+→ string
+
+This is the run-time variant of the sql macro. It converts the given
+list to an SQL query, with the same rules except that symbols in this
+list do not have to be quoted to be interpreted as identifiers. For
+example:
+
+``` {.commonlisp}
+(sql-compile '(:select '* :from 'country :where (:= 'a 1)))
+
+ \"(SELECT * FROM country WHERE (a = 1))\"
+```
+
+but
+
+``` {.commonlisp}
+(sql (:select '* :from 'country :where (:= 'a 1)))
+```
+
+would throw an error. For the later case you need to use sql.
 
 ### sql-error
 
@@ -2180,26 +2956,49 @@ Function: (sql-compile form)
 Function: (sql-error control &rest args)
 ```
 
-
-
-```lisp
-Condition
-```
+No documentation provided.
 
 ### sql-escape
 
 ```lisp
 Generic Function: (sql-escape arg)
 ```
-Get the representation of a Lisp value so that it
-can be used in a query.
+
+A generalisation of sql-escape-string looks at the type of the value
+passed, and properly writes it out it for inclusion in an SQL query.
+Symbols will be converted to SQL names. Examples:
+
+``` {.commonlisp}
+(sql-escape "tr'-x")
+
+"E'tr''-x'"
+
+(sql-escape (/ 1 13))
+
+"0.0769230769230769230769230769230769230"
+
+(sql-escape #("Baden-Wurttemberg" "Bavaria" "Berlin" "Brandenburg"))
+
+"ARRAY[E'Baden-Wurttemberg', E'Bavaria', E'Berlin', E'Brandenburg']"
+```
 
 ### sql-escape-string
 
 ```lisp
 Function: (sql-escape-string string &optional prefix)
 ```
-Escape string data so it can be used in a query.
+
+→ string
+
+[Escapes](http://www.postgresql.org/docs/current/static/sql-syntax-lexical.html#SQL-SYNTAX-STRINGS)
+a string for inclusion in a PostgreSQL query. Example:
+
+``` {.commonlisp}
+(sql-escape-string \"Puss in 'Boots'\")
+
+\"E'Puss in ''Boots'''\"
+
+```
 
 ### table-description
 
@@ -2211,22 +3010,45 @@ Function: (table-description table-name &optional schema-name)
 
 Returns a list of the fields in the named table. Each field is
 represented by a list of three elements: the field name, the type, and a
-boolean indicating whether the field may be NULL. Optionally,
-schema-name can be specified to restrict the result to fields from the
-named schema. Without it, all fields in the table are returned,
-regardless of their schema.
+boolean indicating whether the field may be NULL.
+
+Table can be either a string or quoted. Table-names can be fully
+qualified with the schema or not. If the table-name is not fully
+qualified and a schema name is not provided, the table will be assumed
+to be in the public schema.
+
+### table-description-plus
+
+```lisp
+Function: (table-description-plus table-name &optional schema-name)
+```
+
+→ list
+
+Returns more table info than table-description. Specifically returns
+ordinal-position, column-name, data-type, character-maximum-length,
+modifier, whether it is not-null and the default value.
+
+Table can be either a string or quoted. Table-names can be fully
+qualified with the schema or not. If the table-name is not fully
+qualified and a schema name is not provided, the table will be assumed
+to be in the public schema.
 
 ### table-exists-p
 
 ```lisp
-Function: (table-exists-p table-name &optional (schema-name nil))
+Function: (table-exists-p table-name &optional schema-name)
 ```
 
 → boolean
 
-Tests whether a table with the given name exists. The name can be either
-a string or a symbol. It can also be qualified in the form of
-'schema.table or 'database.schema.table
+Check whether a table exists in a particular schema. Defaults to the
+search path. Takes either a string or a symbol for the table name. The
+table-name can be fully qualified in the form of schema.table-name or
+database.schema.table-name. If the schema is specified either in a
+qualified table-name or in the optional schema-name parameter, we look
+directly to the information schema tables. Otherwise we use the search
+path which can be controlled by being within a with-schema form.
 
 ### table-size
 
@@ -2236,7 +3058,7 @@ Function: (table-size table-name)
 
 → list
 
-Return the size of a postgresql table in k or m. Table-name can be
+Return the size of a given postgresql table in k or m. Table-name can be
 either a string or quoted.
 
 ### terminate-backend
@@ -2248,12 +3070,97 @@ Function: (terminate-backend pid &optional (database *database*))
 Less polite way of terminating at the database (as opposed to calling
 close-database). Faster than (cancel-backend pid) and more reliable.
 
-### unused-indexes
+### text
 
 ```lisp
-Function: (unused-indexes)
+Generic Function: (text condition)
 ```
 
+'string
+
+### to
+Postmodern's dao-class objects are not required to be tied down to a
+specific table. They can be used simply as classes to hold data for
+whatever purpose your application may use.
+
+For this introduction, we will use two sets of tables: (1) country-d and
+region-d and (2) country-n and region-n. In each case the country table
+will have a foreign key tied to a region.
+
+A foreign key is a "constraint" referencing a primary key in another
+table. The table containing the foreign key is the referencing or child
+table and the table referenced by the foreign key is the referenced or
+parent table. The foreign key enforces a requirement that the child
+table column refering to another table must refer to a row that exists
+in the other table. In other words, you cannot create a row in table
+country-d that references a region-d name "Transylvania" if the region-d
+name "Transylvania" does not yet exist in the region-d table. At the
+same time, you could not later delete the region-d row with
+"Transylvania" if the country-d row referencing it still exists.
+
+Do you remember the slightly more complicated version of country from
+earlier on the page?
+
+``` {.commonlisp}
+(defclass country ()
+  ((id :col-type integer :col-identity t :accessor id)
+   (name :col-type string :col-unique t :check (:<> 'name "")
+         :initarg :name :reader country-name)
+   (inhabitants :col-type integer :initarg :inhabitants
+                :accessor country-inhabitants)
+   (sovereign :col-type (or db-null string) :initarg :sovereign
+              :accessor country-sovereign)
+   (region-id :col-type integer :col-references ((regions id))
+              :initarg :region-id :accessor region-id))
+  (:documentation "Dao class for a countries record.")
+  (:metaclass dao-class)
+  (:table-name countries))
+```
+
+That one specified a foreign key reference in the region-id column, so
+we cannot insert the data from a country dao unless there is already a
+region table with an id column equal to the region-id in the country
+dao.
+
+Lets look at two slightly different ways of handling countries and
+regions.
+
+In our first set of tables, country-d will have a region column that
+references the name column in a region-d table (so the name column in
+region-d must be the primary key for region-d).
+
+This looks relatively straight forward and it is in this simple case.
+Things start getting more complicated if you start having to reference a
+table where there are many items with the same name. An example would be
+tracking library books. There may be multiple copies of a book title,
+but you need to know which book was checked out to which library patron.
+In these types of situations, the primary key cannot be the name of the
+region, it needs to reference some particular id.
+
+In our second set of tables, country-n will have a region-id column that
+references an id column in a region-d table (so the id column in
+region-d must be the primary key for region-d).
+
+### to-sql-name
+
+```lisp
+Function: (to-sql-name name &optional (escape-p *escape-sql-names-p*)
+ (ignore-reserved-words nil))
+```
+
+Convert a symbol or string into a name that can be a sql table, column,
+or operation name. Add quotes when escape-p is true, or escape-p is
+:auto and the name contains reserved words. Quoted or delimited
+identifiers can be used by passing :literal as the value of escape-p. If
+escape-p is :literal, and the name is a string then the string is still
+escaped but the symbol or string is not downcased, regardless of the
+setting for **downcase-symbols** and the hyphen and forward slash
+characters are not replaced with underscores.
+
+Ignore-reserved-words is only used internally for column names which are
+allowed to be reserved words, but it is not recommended.
+
+### unused-indexes
 → list
 
 Returns a list of lists showing schema.table, indexname, index\_size and
@@ -2309,6 +3216,7 @@ This method returns two values: the DAO object and a boolean (T if the
 object was inserted, NIL if it was updated).
 
 ### varchar
+(declare (ignore length)) \`string)
 
 ### view-exists-p
 
@@ -2318,8 +3226,8 @@ Function: (view-exists-p view)
 
 → boolean
 
-Tests whether a view with the given name exists. The name can be either
-a string or a symbol.
+Tests whether a view with the given name exists. Takes either a string
+or a symbol for the view name.
 
 ### with-column-writers
 
@@ -2350,13 +3258,14 @@ instances.
 Macro: (with-connection spec &body body)
 ```
 
-Evaluates the body with \*database\* bound to a connection as specified
+Evaluates the body with **database** bound to a connection as specified
 by spec, which should be list that connect can be applied to.
 
 ### with-logical-transaction
 
 ```lisp
-Macro: (with-logical-transaction (&optional (name) (isolation-level)) &body body)
+Macro: (with-logical-transaction
+ (&optional (name nil) (isolation-level *isolation-level*)) &body body)
 ```
 
 Executes body within a with-transaction form if no transaction is
@@ -2373,6 +3282,8 @@ transactions:
 -   :repeatable-read-rw (repeatable read with read and write)
 -   :repeatable-read-ro (repeatable read with read only)
 -   :serializable (serializable with reand and write)
+
+For more information see [isolation-notes](isolation-notes.html)
 
 Sample usage where "george" is just the name given to the transaction
 (not quoted or a string) and ... simply indicates other statements would
@@ -2404,24 +3315,44 @@ Macro: (with-savepoint name &body body)
 
 Can only be used within a transaction. Establishes a savepoint with the
 given name at the start of body, and binds the same name to a handle for
-that savepoint. At the end of body, the savepoint is released, unless a
-condition is thrown, in which case it is rolled back.
+that savepoint. The body is executed and, at the end of body, the
+savepoint is released, unless a condition is thrown, in which case it is
+rolled back. Execute the body within a savepoint, releasing savepoint
+when the body exits normally, and rolling back otherwise. NAME is both
+the variable that can be used to release or rolled back before the body
+unwinds, and the SQL name of the savepoint.
 
 ### with-schema
 
 ```lisp
-Macro: (with-schema (schema &key (strict) (if-not-exist) (drop-after)) &body form)
+Macro: (with-schema (schema &key (strict t) (if-not-exist create) (drop-after nil))
+ &body form)
 ```
 
-Sets the current schema to namespace and executes the body. Before
-executing body the PostgreSQL's session variable search\_path is set to
-the given namespace. After executing body the search\_path variable is
-restored to the original value. If the keyword :strict is set to T then
-the namespace is only the scheme on the search path upon the body
-execution. Otherwise the namespace is just first schema on the search
-path upon the the body execution. If :if-not-exist is NIL, an error is
-signaled. If :drop-after is T the namespace is dropped from the database
-after the body execution.
+A macro to set the schema search path (namespace) of the postgresql
+database to include as first entry a specified schema and then executes
+the body. Before executing body the PostgreSQL's session variable
+search\_path is set to the given namespace. After executing body the
+search\_path variable is restored to the original value.
+
+Calling with :strict 't only the specified schema is set as current
+search path. All other schema are then not searched any more. If strict
+is nil, the namespace is just first schema on the search path upon the
+the body execution.
+
+Calling with :if-not-exist set to :create the schema is created if this
+schema did not exist.
+
+Calling with :if-not-exist set to nil, an error is signaled.
+
+calling with drop-after set to 't the schema is removed after the
+execution of the body form.
+
+example : (with-schema (:schema-name :strict nil :drop-after nil
+:if-not-exist :error) (foo 1) (foo 2))
+
+example : (with-schema ('uniq :if-not-exist :create) ;; changing the
+search path (schema-exists-p 'uniq))
 
 ### with-transaction
 
@@ -2467,5 +3398,6 @@ be expected here:
   ...)
 ```
 
-Further discussion of transactions and isolation levels can found
-[here](isolation-notes.html).
+Further discussion of transactions and isolation levels can found at
+[isolation-notes.html](isolation-notes.html) in the doc directory.
+

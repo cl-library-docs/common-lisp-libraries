@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>local-time - common-lisp-libraries</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "local-time";
+    var mkdocs_page_input_path = "local-time.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp-libraries</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../asdf/">asdf - Build System</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../postmodern/">postmodern - PostgreSQL programming interace</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp-libraries</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>local-time</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="local-time">local-time</h1>
+<h3 id="clock">*clock*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Use the `<em>clock</em>' special variable if you need to define your own idea of the current time.</p>
+<p>The value of this variable should have the methods <code>local-time::clock-now', and</code>local-time::clock-today'. The currently supported values in local-time are:
+  t - use the standard clock
+  local-time:leap-second-adjusted - use a clock which adjusts for leap seconds using the information in <em>default-timezone</em>.</p>
+<h3 id="rfc-1123-format">+rfc-1123-format+</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>See the RFC 1123 for the details about the possible values of the timezone field.</p>
+<h3 id="adjust-timestamp">adjust-timestamp</h3>
+<pre><code class="lisp">Macro: (adjust-timestamp timestamp &amp;body changes)
+</code></pre>
+
+<h3 id="adjust-timestamp_1">adjust-timestamp!</h3>
+<pre><code class="lisp">Macro: (adjust-timestamp! timestamp &amp;body changes)
+</code></pre>
+
+<h3 id="astronomical-julian-date">astronomical-julian-date</h3>
+<pre><code class="lisp">Function: (astronomical-julian-date timestamp)
+</code></pre>
+
+<p>Returns the astronomical julian date referred to by the timestamp.</p>
+<h3 id="clock-now">clock-now</h3>
+<pre><code class="lisp">Generic Function: (clock-now clock)
+</code></pre>
+
+<p>Returns a timestamp for the current time given a clock.</p>
+<h3 id="clock-today">clock-today</h3>
+<pre><code class="lisp">Generic Function: (clock-today clock)
+</code></pre>
+
+<p>Returns a timestamp for the current date given a
+  clock.  The date is encoded by convention as a timestamp with the
+  time set to 00:00:00UTC.</p>
+<h3 id="clone-timestamp">clone-timestamp</h3>
+<pre><code class="lisp">Function: (clone-timestamp timestamp)
+</code></pre>
+
+<h3 id="day-of">day-of</h3>
+<pre><code class="lisp">Generic Function: (day-of object)
+</code></pre>
+
+<h3 id="days-in-month">days-in-month</h3>
+<pre><code class="lisp">Function: (days-in-month month year)
+</code></pre>
+
+<p>Returns the number of days in the given month of the specified year.</p>
+<h3 id="decode-timestamp">decode-timestamp</h3>
+<pre><code class="lisp">Function: (decode-timestamp timestamp &amp;key (timezone *default-timezone*) offset)
+</code></pre>
+
+<p>Returns the decoded time as multiple values: nsec, ss, mm, hh, day, month, year, day-of-week</p>
+<h3 id="define-timezone">define-timezone</h3>
+<pre><code class="lisp">Macro: (define-timezone zone-name zone-file &amp;key (load NIL))
+</code></pre>
+
+<p>Define zone-name (a symbol or a string) as a new timezone, lazy-loaded from zone-file (a pathname designator relative to the zoneinfo directory on this system.  If load is true, load immediately.</p>
+<h3 id="enable-read-macros">enable-read-macros</h3>
+<pre><code class="lisp">Function: (enable-read-macros)
+</code></pre>
+
+<p>Enables the local-time reader macros for literal timestamps and universal time.</p>
+<h3 id="encode-timestamp">encode-timestamp</h3>
+<pre><code class="lisp">Function: (encode-timestamp nsec sec minute hour day month year &amp;key
+           (timezone *default-timezone*) offset into)
+</code></pre>
+
+<p>Return a new <a href="#timestamp">timestamp</a> instance corresponding to the specified time
+elements.</p>
+<h3 id="find-timezone-by-location-name">find-timezone-by-location-name</h3>
+<pre><code class="lisp">Function: (find-timezone-by-location-name name)
+</code></pre>
+
+<h3 id="format-rfc1123-timestring">format-rfc1123-timestring</h3>
+<pre><code class="lisp">Function: (format-rfc1123-timestring destination timestamp &amp;key
+           (timezone *default-timezone*))
+</code></pre>
+
+<h3 id="format-rfc3339-timestring">format-rfc3339-timestring</h3>
+<pre><code class="lisp">Function: (format-rfc3339-timestring destination timestamp &amp;key omit-date-part
+           omit-time-part (omit-timezone-part omit-time-part) (use-zulu t)
+           (timezone *default-timezone*))
+</code></pre>
+
+<p>Formats a timestring in the RFC 3339 format, a restricted form of the ISO-8601 timestring specification for Internet timestamps.</p>
+<h3 id="format-timestring">format-timestring</h3>
+<pre><code class="lisp">Function: (format-timestring destination timestamp &amp;key
+           (format +iso-8601-format+) (timezone *default-timezone*))
+</code></pre>
+
+<p>Constructs a string representation of <code>timestamp</code> according
+to <code>format</code> and returns it.
+If destination is T, the string is written to <em>standard-output</em>.
+If destination is a stream, the string is written to the stream.</p>
+<p><code>format</code> is a list containing one or more of strings, characters,
+and keywords. Strings and characters are output literally,
+while keywords are replaced by the values here:</p>
+<p>:YEAR              <em>year
+  :MONTH             </em>numeric month
+  :DAY               <em>day of month
+  :HOUR              </em>hour
+  :MIN               <em>minutes
+  :SEC               </em>seconds
+  :WEEKDAY           <em>numeric day of week starting from index 0, which means Sunday
+  :MSEC              </em>milliseconds
+  :USEC              <em>microseconds
+  :NSEC              </em>nanoseconds
+  :ISO-WEEK-YEAR     <em>year for ISO week date (can be different from regular calendar year)
+  :ISO-WEEK-NUMBER   </em>ISO week number (i.e. 1 through 53)
+  :ISO-WEEK-DAY      <em>ISO compatible weekday number (monday=1, sunday=7)
+  :LONG-WEEKDAY      long form of weekday (e.g. Sunday, Monday)
+  :SHORT-WEEKDAY     short form of weekday (e.g. Sun, Mon)
+  :MINIMAL-WEEKDAY   minimal form of weekday (e.g. Su, Mo)
+  :SHORT-YEAR        short form of year (last 2 digits, e.g. 41, 42 instead of 2041, 2042)
+  :LONG-MONTH        long form of month (e.g. January, February)
+  :SHORT-MONTH       short form of month (e.g. Jan, Feb)
+  :HOUR12            </em>hour on a 12-hour clock
+  :AMPM              am/pm marker in lowercase
+  :GMT-OFFSET        the gmt-offset of the time, in +00:00 form
+  :GMT-OFFSET-OR-Z   like :GMT-OFFSET, but is Z when UTC
+  :GMT-OFFSET-HHMM   like :GMT-OFFSET, but in +0000 form
+  :TIMEZONE          timezone abbrevation for the time</p>
+<p>Elements marked by * can be placed in a list in the form
+  (:keyword padding &amp;optional (padchar #\0))</p>
+<p>The string representation of the value will be padded with the padchar.</p>
+<p>You can see examples in +ISO-8601-FORMAT+, +ASCTIME-FORMAT+, and +RFC-1123-FORMAT+.</p>
+<h3 id="invalid-timestring">invalid-timestring</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="make-timestamp">make-timestamp</h3>
+<pre><code class="lisp">Macro: (make-timestamp &amp;rest args)
+</code></pre>
+
+<h3 id="modified-julian-date">modified-julian-date</h3>
+<pre><code class="lisp">Function: (modified-julian-date timestamp)
+</code></pre>
+
+<p>Returns the modified julian date referred to by the timestamp.</p>
+<h3 id="now">now</h3>
+<pre><code class="lisp">Function: (now)
+</code></pre>
+
+<p>Returns a timestamp representing the present moment.</p>
+<h3 id="nsec-of">nsec-of</h3>
+<pre><code class="lisp">Generic Function: (nsec-of object)
+</code></pre>
+
+<h3 id="parse-rfc3339-timestring">parse-rfc3339-timestring</h3>
+<pre><code class="lisp">Function: (parse-rfc3339-timestring timestring &amp;key (fail-on-error t)
+           (allow-missing-time-part NIL))
+</code></pre>
+
+<h3 id="parse-timestring">parse-timestring</h3>
+<pre><code class="lisp">Function: (parse-timestring timestring &amp;key start end (fail-on-error t)
+           (time-separator :) (date-separator -) (date-time-separator t)
+           (allow-missing-elements t)
+           (allow-missing-date-part allow-missing-elements)
+           (allow-missing-time-part allow-missing-elements)
+           (allow-missing-timezone-part allow-missing-elements) (offset 0))
+</code></pre>
+
+<p>Parse a timestring and return the corresponding <a href="#timestamp">timestamp</a>.
+See split-timestring for details. Unspecified fields in the
+timestring are initialized to their lowest possible value,
+and timezone offset is 0 (UTC) unless explicitly specified
+in the input string.</p>
+<h3 id="reread-timezone-repository">reread-timezone-repository</h3>
+<pre><code class="lisp">Function: (reread-timezone-repository &amp;key
+           (timezone-repository *default-timezone-repository-path*))
+</code></pre>
+
+<h3 id="sec-of">sec-of</h3>
+<pre><code class="lisp">Generic Function: (sec-of object)
+</code></pre>
+
+<h3 id="timestamp">timestamp</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<h3 id="timestamp_1">timestamp+</h3>
+<pre><code class="lisp">Function: (timestamp+ time amount unit &amp;optional (timezone *default-timezone*)
+           offset)
+</code></pre>
+
+<h3 id="timestamp-">timestamp-</h3>
+<pre><code class="lisp">Function: (timestamp- time amount unit &amp;optional (timezone *default-timezone*)
+           offset)
+</code></pre>
+
+<h3 id="timestamp-century">timestamp-century</h3>
+<pre><code class="lisp">Function: (timestamp-century timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<p>Returns the ordinal century upon which the timestamp falls.</p>
+<h3 id="timestamp-day">timestamp-day</h3>
+<pre><code class="lisp">Function: (timestamp-day timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<p>Returns the day of the month upon which the timestamp falls.</p>
+<h3 id="timestamp-day-of-week">timestamp-day-of-week</h3>
+<pre><code class="lisp">Function: (timestamp-day-of-week timestamp &amp;key (timezone *default-timezone*)
+           offset)
+</code></pre>
+
+<h3 id="timestamp-decade">timestamp-decade</h3>
+<pre><code class="lisp">Function: (timestamp-decade timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<p>Returns the cardinal decade upon which the timestamp falls.</p>
+<h3 id="timestamp-difference">timestamp-difference</h3>
+<pre><code class="lisp">Function: (timestamp-difference time-a time-b)
+</code></pre>
+
+<p>Returns the difference between <code>time-a</code> and <code>time-b</code> in seconds</p>
+<h3 id="timestamp-hour">timestamp-hour</h3>
+<pre><code class="lisp">Function: (timestamp-hour timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<h3 id="timestamp-maximize-part">timestamp-maximize-part</h3>
+<pre><code class="lisp">Function: (timestamp-maximize-part timestamp part &amp;key
+           (timezone *default-timezone*) into)
+</code></pre>
+
+<h3 id="timestamp-maximum">timestamp-maximum</h3>
+<pre><code class="lisp">Function: (timestamp-maximum time &amp;rest times)
+</code></pre>
+
+<p>Returns the latest timestamp</p>
+<h3 id="timestamp-microsecond">timestamp-microsecond</h3>
+<pre><code class="lisp">Function: (timestamp-microsecond timestamp)
+</code></pre>
+
+<h3 id="timestamp-millennium">timestamp-millennium</h3>
+<pre><code class="lisp">Function: (timestamp-millennium timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<p>Returns the ordinal millennium upon which the timestamp falls.</p>
+<h3 id="timestamp-millisecond">timestamp-millisecond</h3>
+<pre><code class="lisp">Function: (timestamp-millisecond timestamp)
+</code></pre>
+
+<h3 id="timestamp-minimize-part">timestamp-minimize-part</h3>
+<pre><code class="lisp">Function: (timestamp-minimize-part timestamp part &amp;key
+           (timezone *default-timezone*) into)
+</code></pre>
+
+<h3 id="timestamp-minimum">timestamp-minimum</h3>
+<pre><code class="lisp">Function: (timestamp-minimum time &amp;rest times)
+</code></pre>
+
+<p>Returns the earliest timestamp</p>
+<h3 id="timestamp-minute">timestamp-minute</h3>
+<pre><code class="lisp">Function: (timestamp-minute timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<h3 id="timestamp-month">timestamp-month</h3>
+<pre><code class="lisp">Function: (timestamp-month timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<p>Returns the month upon which the timestamp falls.</p>
+<h3 id="timestamp-second">timestamp-second</h3>
+<pre><code class="lisp">Function: (timestamp-second timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<h3 id="timestamp-subtimezone">timestamp-subtimezone</h3>
+<pre><code class="lisp">Function: (timestamp-subtimezone timestamp timezone)
+</code></pre>
+
+<p>Return as multiple values the time zone as the number of seconds east of UTC, a boolean daylight-saving-p, and the customary abbreviation of the timezone.</p>
+<h3 id="timestamp-to-universal">timestamp-to-universal</h3>
+<pre><code class="lisp">Function: (timestamp-to-universal timestamp)
+</code></pre>
+
+<p>Return the UNIVERSAL-TIME corresponding to the <code>timestamp</code></p>
+<h3 id="timestamp-to-unix">timestamp-to-unix</h3>
+<pre><code class="lisp">Function: (timestamp-to-unix timestamp)
+</code></pre>
+
+<p>Return the Unix time corresponding to the <code>timestamp</code></p>
+<h3 id="timestamp-whole-year-difference">timestamp-whole-year-difference</h3>
+<pre><code class="lisp">Function: (timestamp-whole-year-difference time-a time-b)
+</code></pre>
+
+<p>Returns the number of whole years elapsed between time-a and time-b (hint: anniversaries).</p>
+<h3 id="timestamp-year">timestamp-year</h3>
+<pre><code class="lisp">Function: (timestamp-year timestamp &amp;key (timezone *default-timezone*))
+</code></pre>
+
+<p>Returns the cardinal year upon which the timestamp falls.</p>
+<h3 id="timestamp_2">timestamp/=</h3>
+<pre><code class="lisp">Function: (timestamp/= &amp;rest timestamps)
+</code></pre>
+
+<p>Returns T if no pair of timestamps is equal. Otherwise return NIL.</p>
+<h3 id="timestamp_3">timestamp&lt;</h3>
+<pre><code class="lisp">Function: (timestamp&lt; &amp;rest times)
+</code></pre>
+
+<h3 id="timestamp_4">timestamp&lt;=</h3>
+<pre><code class="lisp">Function: (timestamp&lt;= &amp;rest times)
+</code></pre>
+
+<h3 id="timestamp_5">timestamp=</h3>
+<pre><code class="lisp">Function: (timestamp= &amp;rest times)
+</code></pre>
+
+<h3 id="timestamp_6">timestamp&gt;</h3>
+<pre><code class="lisp">Function: (timestamp&gt; &amp;rest times)
+</code></pre>
+
+<h3 id="timestamp_7">timestamp&gt;=</h3>
+<pre><code class="lisp">Function: (timestamp&gt;= &amp;rest times)
+</code></pre>
+
+<h3 id="to-rfc1123-timestring">to-rfc1123-timestring</h3>
+<pre><code class="lisp">Function: (to-rfc1123-timestring timestamp)
+</code></pre>
+
+<h3 id="to-rfc3339-timestring">to-rfc3339-timestring</h3>
+<pre><code class="lisp">Function: (to-rfc3339-timestring timestamp)
+</code></pre>
+
+<h3 id="today">today</h3>
+<pre><code class="lisp">Function: (today)
+</code></pre>
+
+<p>Returns a timestamp representing the present day.</p>
+<h3 id="universal-to-timestamp">universal-to-timestamp</h3>
+<pre><code class="lisp">Function: (universal-to-timestamp universal &amp;key (nsec 0))
+</code></pre>
+
+<p>Returns a timestamp corresponding to the given universal time.</p>
+<h3 id="unix-to-timestamp">unix-to-timestamp</h3>
+<pre><code class="lisp">Function: (unix-to-timestamp unix &amp;key (nsec 0))
+</code></pre>
+
+<p>Return a <a href="#timestamp">timestamp</a> corresponding to <code>unix</code>, which is the number of seconds since the unix epoch, 1970-01-01T00:00:00Z.</p>
+<h3 id="with-decoded-timestamp">with-decoded-timestamp</h3>
+<pre><code class="lisp">Macro: (with-decoded-timestamp
+        (&amp;key nsec sec minute hour day month year day-of-week daylight-p
+         timezone offset)
+        timestamp &amp;body forms)
+</code></pre>
+
+<p>This macro binds variables to the decoded elements of <code>timestamp</code>. The <code>timezone</code> argument is used for decoding the timestamp, and is not bound by the macro. The value of <code>day-of-week</code> starts from 0 which means Sunday.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(false);
+        };
+    </script>
+
+</body>
+</html>

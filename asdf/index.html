@@ -9,7 +9,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>asdf - common-lisp-libraries</title>
+  <title>asdf - Build System - common-lisp-libraries</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
@@ -19,7 +19,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "asdf";
+    var mkdocs_page_name = "asdf - Build System";
     var mkdocs_page_input_path = "asdf.md";
     var mkdocs_page_url = null;
   </script>
@@ -54,7 +54,461 @@
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Defacto libraries</span></p>
-                <ul>
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">asdf - Build System</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#trivial-system-definition">Trivial System Definition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operations">Operations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#a-note-on-systems-and-packages">A note on Systems and Packages</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#more-reading">More Reading</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#api-reference">API REFERENCE</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#central-registry">*central-registry*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-file-failure-behaviour">*compile-file-failure-behaviour*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-file-warnings-behaviour">*compile-file-warnings-behaviour*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#default-encoding">*default-encoding*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#default-source-registries">*default-source-registries*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#encoding-detection-hook">*encoding-detection-hook*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#encoding-external-format-hook">*encoding-external-format-hook*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#resolve-symlinks">*resolve-symlinks*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-definition-search-functions">*system-definition-search-functions*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-cache">*user-cache*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#utf-8-external-format">*utf-8-external-format*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#warnings-file-type">*warnings-file-type*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#action-description">action-description</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#additional-input-files">additional-input-files</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#already-loaded-systems">already-loaded-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#apply-output-translations">apply-output-translations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#asdf-message">asdf-message</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#asdf-version">asdf-version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bad-system-name">bad-system-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#basic-compile-bundle-op">basic-compile-bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#build-op">build-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bundle-op">bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#c-source-file">c-source-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#child-component">child-component</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#circular-dependency">circular-dependency</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cl-source-file">cl-source-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cl-source-filecl">cl-source-file.cl</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cl-source-filelsp">cl-source-file.lsp</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clear-configuration">clear-configuration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clear-output-translations">clear-output-translations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clear-source-registry">clear-source-registry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#clear-system">clear-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#coerce-name">coerce-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-bundle-op">compile-bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-concatenated-source-op">compile-concatenated-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-condition">compile-condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-error">compile-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-failed">compile-failed</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-failed-error">compile-failed-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-failed-warning">compile-failed-warning</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-file">compile-file*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-file-error">compile-file-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-file-pathname">compile-file-pathname*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-op">compile-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-system">compile-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-warned">compile-warned</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-warned-error">compile-warned-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compile-warned-warning">compile-warned-warning</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compiled-file">compiled-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component">component</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-children">component-children</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-children-by-name">component-children-by-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-depends-on">component-depends-on</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-encoding">component-encoding</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-external-format">component-external-format</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-find-path">component-find-path</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-load-dependencies">component-load-dependencies</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-loaded-p">component-loaded-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-name">component-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-parent">component-parent</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-pathname">component-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-property">component-property</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-relative-pathname">component-relative-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-sideway-dependencies">component-sideway-dependencies</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-system">component-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#component-version">component-version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#compute-source-registry">compute-source-registry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#concatenate-source-op">concatenate-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#define-op">define-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#defsystem">defsystem</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deliver-asd-op">deliver-asd-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#disable-deferred-warnings-check">disable-deferred-warnings-check</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#disable-output-translations">disable-output-translations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dll-op">dll-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#doc-file">doc-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#downward-operation">downward-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#duplicate-names">duplicate-names</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#enable-asdf-binary-locations-compatibility">enable-asdf-binary-locations-compatibility</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#enable-deferred-warnings-check">enable-deferred-warnings-check</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-output-translations">ensure-output-translations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ensure-source-registry">ensure-source-registry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#error-component">error-component</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#error-name">error-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#error-operation">error-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#error-pathname">error-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#explain">explain</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#file-component">file-component</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#file-type">file-type</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-component">find-component</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-operation">find-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#find-system">find-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hostname">hostname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#html-file">html-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#image-op">image-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implementation-identifier">implementation-identifier</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#implementation-type">implementation-type</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#initialize-output-translations">initialize-output-translations</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#initialize-source-registry">initialize-source-registry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#input-files">input-files</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#java-source-file">java-source-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#lib-op">lib-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-asd">load-asd</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-bundle-op">load-bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-compiled-concatenated-source-op">load-compiled-concatenated-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-concatenated-source-op">load-concatenated-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-op">load-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-source-op">load-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-system">load-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-system-definition-error">load-system-definition-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-systems">load-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#load-systems_1">load-systems*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#locate-system">locate-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make">make</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-operation">make-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-plan">make-plan</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#map-systems">map-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-component">missing-component</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-component-of-version">missing-component-of-version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-dependency">missing-dependency</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#missing-dependency-of-version">missing-dependency-of-version</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#module">module</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#module-components">module-components</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-bundle-op">monolithic-bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-compile-bundle-op">monolithic-compile-bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-compile-concatenated-source-op">monolithic-compile-concatenated-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-concatenate-source-op">monolithic-concatenate-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-deliver-asd-op">monolithic-deliver-asd-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-dll-op">monolithic-dll-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-lib-op">monolithic-lib-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-load-bundle-op">monolithic-load-bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-load-compiled-concatenated-source-op">monolithic-load-compiled-concatenated-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#monolithic-load-concatenated-source-op">monolithic-load-concatenated-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#needed-in-image-p">needed-in-image-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#non-propagating-operation">non-propagating-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#non-system-system">non-system-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#non-toplevel-system">non-toplevel-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#oos">oos</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operate">operate</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation">operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-definition-error">operation-definition-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-definition-warning">operation-definition-warning</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-done-p">operation-done-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-error">operation-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-monolithic-p">operation-monolithic-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-on-failure">operation-on-failure</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-on-warnings">operation-on-warnings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#output-file">output-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#output-files">output-files</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#package-inferred-system">package-inferred-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#package-inferred-system-missing-package-error">package-inferred-system-missing-package-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#package-system">package-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#parent-component">parent-component</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#perform">perform</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#perform-plan">perform-plan</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#perform-with-restarts">perform-with-restarts</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#precompiled-system">precompiled-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prepare-bundle-op">prepare-bundle-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prepare-op">prepare-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#prepare-source-op">prepare-source-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#primary-system-name">primary-system-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#process-source-registry">process-source-registry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#program-op">program-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#program-system">program-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#register-immutable-system">register-immutable-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#register-preloaded-system">register-preloaded-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#register-system-packages">register-system-packages</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#registered-system">registered-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#registered-systems">registered-systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#require-system">require-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#required-components">required-components</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#resolve-location">resolve-location</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run-shell-command">run-shell-command</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#search-for-system-definition">search-for-system-definition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#selfward-operation">selfward-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sequential-plan">sequential-plan</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sideway-operation">sideway-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#source-file">source-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#source-file-type">source-file-type</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#static-file">static-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sysdef-immutable-system-search">sysdef-immutable-system-search</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sysdef-preloaded-system-search">sysdef-preloaded-system-search</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system">system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-author">system-author</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-bug-tracker">system-bug-tracker</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-definition-error">system-definition-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-definition-pathname">system-definition-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-defsystem-depends-on">system-defsystem-depends-on</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-depends-on">system-depends-on</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-description">system-description</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-homepage">system-homepage</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-licence">system-licence</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-license">system-license</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-long-description">system-long-description</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-long-name">system-long-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-mailto">system-mailto</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-maintainer">system-maintainer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-out-of-date">system-out-of-date</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-output-translations-directory-pathname">system-output-translations-directory-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-output-translations-pathname">system-output-translations-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-registered-p">system-registered-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-relative-pathname">system-relative-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-source-control">system-source-control</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-source-directory">system-source-directory</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-source-file">system-source-file</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-source-registry">system-source-registry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-source-registry-directory">system-source-registry-directory</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#system-weakly-depends-on">system-weakly-depends-on</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test-op">test-op</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#test-system">test-system</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#traverse">traverse</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upgrade-asdf">upgrade-asdf</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upward-operation">upward-operation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-output-translations-directory-pathname">user-output-translations-directory-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-output-translations-pathname">user-output-translations-pathname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-source-registry">user-source-registry</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#user-source-registry-directory">user-source-registry-directory</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#version-satisfies">version-satisfies</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
@@ -73,14 +527,14 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of some more utility libraries</a>
                     </li>
                 </ul>
       </div>
@@ -103,8 +557,12 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Defacto libraries &raquo;</li>
+        
+      
     
-    <li>asdf</li>
+    <li>asdf - Build System</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -115,107 +573,1968 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="asdf">asdf</h1>
-<p>ASDF (Another System Definition Facility) is the de facto standard building and loading software in Common Lisp. Your Lisp implementation probably contains a copy of ASDF, which you can load using (require "asdf"). (See <a href="supported-implementations">Supported Implementations</a> for the list.)</p>
-<p>ASDF 3 is the current successor to Daniel Barlow's ASDF (created on August 1st 2001) and François-René Rideau's ASDF 2 (released May 31st 2010). It was rewritten for improved portability, robustness, usability, extensibility, configurability, internal consistency, and the ability to deliver standalone executables, all while maintaining substantial backward compatibility. </p>
-<p>ASDF will not download missing software components. For this, you will want to use <a href="http://quicklisp.org/">Quicklisp</a>, that builds upon ASDF. Also see the value of <code>ql:*local-project-directories*</code> in quicklisp.</p>
-<p>ASDF 3 contains two parts: asdf/defsystem and uiop.</p>
-<h2 id="asdfdefsystem">asdf/defsystem</h2>
-<p>asdf/defsystem is the part that people usually refer to as ASDF, with uiop being only a supporting library, that happens to be distributed at the same time, by necessity. </p>
-<p>asdf/defsystem is a tool to describe how Lisp source code is organized in systems, and how to build and load these systems. Typical actions consist in compiling a Lisp source file (unless already up to date) and loading the resulting compilation output (unless both already loaded and up to date). And you must typically compile and load files that define packages, macros, variables, before you may compile and load other files that use them.</p>
-<p>If you come from the C/C++ world, ASDF covers a bit of what each of make, autoconf, dlopen and libc do for C programs: it orchestrates the compilation and dependency management, handles some of the portability issues, dynamically finds and loads code, and offers some portable system access library (see uiop below for the latter). Except everything is different in Common Lisp, and ultimately much simpler overall, though it does require acquiring some basic concepts that do not exactly match those of the C and Unix world. Importantly, ASDF builds all software in the current Lisp image, as opposed to building software into separate processes.</p>
-<h2 id="uiop">uiop</h2>
-<p>The Utilities for Implementation- and OS- Portability, formerly known as asdf/driver, is a Common Lisp portability library and runtime support system that helps you write Common Lisp software in a portable way*</p>
-<hr />
-<p>In addition to many general-purpose Lisp utilities, it notably provides portable abstractions to gloss over implementation quirks, support hot-upgrade of code, manipulate pathnames, create programs, use command-line arguments, access the environment, use the filesystem, call other programs and parse their output, compile Lisp code, muffle conditions, or configure Lisp software. See its README.md for an overview, and the documentation as extracted from its docstrings by Declt or HEΛP (NB: in HEΛP, you can, though it's not obvious, scroll the list of packages with a scrollbar on the right of the top-left pane, and then click on the package you're interested in to browse its symbols).</p>
-<p>uiop is distributed as part of ASDF: its source code is transcluded in the single-file asdf.lisp being distributed and the precompiled fasls provided by Lisp implementations. ASDF relies heavily on it for its portability layer and runtime support, particularly so as to handle pathnames and filesystem access. uiop is useful on its own and can also be compiled and distributed separately.</p>
-<p>What it is not</p>
-<p>If you're unsatisfied with ASDF, beside helping with our TODO list, you might be interested in other build systems for Common-Lisp:</p>
-<p>Google's deterministic and scalable build system Bazel, for which Lisp support is available: bazelisp.
-Alastair Bridgewater's small and simple one-package-per-file quick-build (also reimplemented as the ASDF extension asdf-package-system, now part of ASDF 3; similar to faslpath below).
-François-René Rideau's XCVB (building object and image files deterministically and in parallel, but not actively maintained and bitrotten since 2012; a hypothetical ASDF 4 could conceivably be evolved to support these features thanks to the groundwork laid by ASDF 3; or you could use Bazel).
-Drew McDermott's YTools (the polar opposite of XCVB, trying to maintain coherence of the current Lisp image at a fine grain).
-Dmitriy Ivanov's ASDlite (a somewhat improved incompatible variant of ASDF 1, much less featureful, robust or portable than ASDF 3),
-Mark Kantrowitz's mk-defsystem (free software successor of the old proprietary DEFSYSTEM's and predecessor of ASDF, obsolete),
-Sean Ross's mudballs (an attempt at making things cleaner than in ASDF 2, aborted),
-Peter von Etter's faslpath (a much simpler system establishing a mapping between packages and files, abandoned but see asdf-package-system and quick-build above),
-Alexander Kahl's evol (a reimplementation in Lisp of the GNU autotools stack, abandoned).
-There are probably more. However, none of these systems seems to ever have had the traction of ASDF, probably because none was technically superior and/or portable enough (if at all) to compensate for the first mover advantage.
-Supported Implementations
-ASDF 3 now supports all CL implementations that seem to have any current user base, and then some. But ASDF does not magically turn broken implementations into working ones, and some ASDF or UIOP features may not work on less-maintained implementations that do not support them (see below).</p>
-<p>Most implementations provide ASDF as a module, and you can simply (require "asdf"). (All of them but CLISP also accept :asdf, "ASDF" or 'asdf as an argument.) All these implementations provide ASDF 3.1 or later in their latest version, but your software distribution might have an older version.</p>
-<p>As for remaining implementations, they are obsolete and/or mostly unmaintained; ASDF was made to run with each of them at some point, but some hacking is probably required to make the latest ASDF work well with the latest release of these implementations:</p>
-<p>CLISP is generally well-tested with ASDF, though it has a few minor bugs. The implementation has received only minimal maintenance since 2010, and the last official release doesn't ship with ASDF, or often has antique version of ASDF tucked on it. However, ASDF has been recently updated in its source control system, and there is hope of a new release some day soon. If needs be, you can replace CLISP's provided ASDF with a newer one, or use an upgrade on top of that.
-CormanLisp was recently open-sourced. Its bundled ASDF has not yet been updated from 1.x; ASDF 3 should work fine with it, but several features were disabled because CormanLisp was insufficiently compliant with the CLHS, and requires some work in this regard. Ask the new CormanLisp maintainers for updates.
-ECL is generally well-tested with ASDF, but its bytecode compiler doesn't support the bundle operations, and support for Windows seems to be less stable. For instance, as of January 2017, cl:require and ext:system (and thus uiop:run-program) seem not to be working correctly on Windows.
-GCL is somewhat maintained but its maintainer doesn't seem to care about ASDF, and hasn't replied for years to requests for bug fixes or for providing ASDF via (require "asdf")
-Genera was never open-source and never bundled ASDF, but should otherwise just work with a recent ASDF 3, if you somehow have a license and a working version. There are rumors of people doing active development with it and having minor patches to improve ASDF on it.
-MCL similarly was open-sourced, but never bundled ASDF; ASDF 3 should work just fine with it, but Rosetta is not supported in the latest versions of MacOS X, so a lot of work is required to make something out of it — at which point, you might just use CCL.
-Mocl has its own heavily modified variant of ASDF2, and is the only implementation not currently supported by ASDF3. To make it work with ASDF 3 would require ASDF to be taught about natively supporting cross-compilation.
-SCL was seemingly abandoned and never open-sourced. It never bundled ASDF, but otherwise should just work with a recent ASDF 3, if you somehow have a license and a working version.
-XCL is now an abandoned experiment. It provides some old ASDF 2; but you can replace it with ASDF 3, which works well with it, inasmuch as anything works at all with XCL.
-Provide ASDF 3.1 or later   No ASDF Unmaintained
-Free    ABCL, CCL, Clasp, CLISP, CMUCL, ECL, Mezzano, MKCL, SBCL    CormanLisp, GCL, MCL    XCL
-Proprietary Allegro, LispWorks      Genera, mocl, SCL
-To deal with an implementation that does not yet provide ASDF 3.1 or later, we provide a script that will install the ASDF from your git checkout to where your implementation goes looking for it when you (require "asdf").</p>
-<p>Note that upgrading from an old version of ASDF 2 or earlier is possible, but quite complex to do right in a robust way, and we do not recommend it. Also note that mocl only supports a heavily modified variant of ASDF 2, and will require robust cross-compilation support to be added to ASDF before it is actually supported.</p>
-<p>If there is an old or new implementation that we are missing, it shouldn't be hard to adapt ASDF to support it. Ask us!</p>
-<p>Examples
-Download any of the many packages available through Quicklisp to see as many examples.</p>
-<p>Documentation
-You can read our manual:</p>
-<p>ASDF
-as one HTML file
-split into one HTML file per section
-as a PDF document
-as texinfo source
-UIOP
-as one HTML file
-as a PDF document
-The first few sections, Loading ASDF, Configuring ASDF and Using ASDF will get you started as a simple user.</p>
-<p>If you want to define your own systems, further read the section Defining systems with defsystem.</p>
-<p>There is now also a Best Practices document explaining recommended usage patterns when writing .asd files, and detailing common pitfalls or deprecated practices to avoid.</p>
-<p>About the latest developments in ASDF 3.2 and ASDF 3.3, see our demo Delivering Common Lisp Applications with ASDF 3.3 (2-page PDF, slides, git). Regarding the internal design of ASDF in general, and the work we did on ASDF 3, see the extended version (26 pages) of our paper ASDF 3, or Why Lisp is Now an Acceptable Scripting Language (PDF, git). The shorter version (8 pages), presented at ELS 2014, focuses on ASDF 3 and misses historical and technical information (PDF, HTML). Regarding ASDF 3, see also the slides of the ASDF 3 tutorial presented at ELS 2013, and for an introduction to the source code, this video: ASDF 3.1 walkthrough. For details about our previous work on ASDF 2, see our paper presented at ILC 2010, Evolving ASDF: More Cooperation, Less Coordination (git).</p>
-<p>Finally, while the manual covers all the basics, some advanced or new features remain underdocumented. Please contact our mailing-list (see below) regarding any feature that isn't well-documented enough.</p>
-<p>Until we write more documentation on the further innovations of ASDF, the documentation strings, the source code, the changelog and the git log are unfortunately your best chances for discovering the available functionality.</p>
-<p>Getting it
-Though they may lag behind the version here, ASDF comes bundled with most Lisps. To get the greatest and latest, you can:</p>
-<p>download just the latest release source for asdf.lisp;
-download the latest release tarball to get all bells and whistles;
-pull the latest development tree from our git repository
-git clone https://gitlab.common-lisp.net/asdf/asdf.git
-(note that our "master" branch is for current development; get our "release" branch for the latest stable release. Run make to create build/asdf.lisp);
-browse the latest development tree from our git repository: gitlab
-download the tarball of a past release: archives
-Extensions
-Known extensions to ASDF include:</p>
-<p>asdf-dependency-grovel, to compute the actual dependencies in a big ASDF system.
-asdf-encodings, to compile Lisp source files with character encodings other than UTF-8.
-asdf-finalizers, to allow macros to include code to be evaluated at the end of a file being compiled.
-asdf-flv, to bind file-local variables around the compilation of some files.
-asdf-system-connections, lets you specify systems that are automatically loaded when two other systems are loaded, to connect them.
-cffi, lets you interface between functions and datastructures written in C and functions written in Lisp, including support for automatically detecting constants from C macros, linking to dynamic (and now also static) libraries, and writing your own wrapper code in C.
-poiu, to compile a system in parallel on a multiprocessor machine.
-Former extensions, now superseded, include:</p>
-<p>asdf-binary-locations used to allow one to redirect where ASDF 1 created its output files, so they don't clash between implementations and don't pollute source directories. It is superseded by asdf/defsystem's builtin asdf-output-translations mechanism; a limited compatibility mode is available to easily convert your former ABL configuration into an AOT configuration. common-lisp-controller and cl-launch used to provide similar mechanisms, and have also been superseded by asdf-output-translations (built into ASDF 2 and later).
-asdf-bundle, née asdf-ecl, allowed you to create a single-file bundle out of a system, for easier delivery. It is now a builtin part of asdf/defsystem, and allows users to deliver a single FASL for a system, a standalone executable program (on supported implementations), or an image containing your system precompiled.
-asdf-condition-control, initially part of XCVB's xcvb-driver, allowed you to muffle uninteresting conditions during compilation. Is now superseded by equivalent functionality in uiop.
-asdf-contrib, an empty package that used to collect dependencies on other systems in the list above and below.
-asdf-package-system, to compile Lisp source files with one package per file that also determines dependencies, in the style of quick-build or faslpath (this functionality is built into recent versions of ASDF 3.1 and later, but this package exists for backward compatibility with earlier versions of ASDF 3; search the manual for package-inferred-system).
-asdf-utils was a collection of utilities that originated with ASDF. It is now superseded by uiop, aka asdf/driver, which is part of ASDF, and exports its functionality in its own package uiop.
-Contributing
-Join our mailing list, check the code out from git, send questions, ideas and patches!</p>
-<p>Reporting Bugs
-To report bugs, you can use our common-lisp.net project. If you're unsure about the bug or want to discuss how to fix it, you can send email to the project mailing-list below.</p>
-<p>Note that the most valuable thing you can send this way are test cases, if possible as .script files readily runnable by our test system. If you're courageous, send us merge requests on gitlab.</p>
-<p>While bug fixes are useful, they are not usually as valuable as test cases: small easy fixes will be obvious from the test case, and large fixes written by someone who isn't either a maintainer or working tightly with one will probably not be correct and not fit the codebase: any modification at one point is likely to have repercussions at other unobvious places in the codebase, for the code to be correct in a wider variety of scenarios than casual developers usually think about. Now, if you're willing to become a maintainer, you're welcome to join the team!</p>
-<p>Mailing Lists
-asdf-devel A list for questions, suggestions, bug reports, patches, and so on. It's for everyone and everything. Please join the conversation! asdf-devel mailman site to subscribe
-asdf-announce A low-volume mailing-list for announcements only, mostly regarding new releases. Posting is restricted to project administrators and to important notices. Please subscribe to it if you're a Lisp implementation or distribution vendor, who needs to know when to upgrade the ASDF you distribute, but are otherwise not interested in day to day design and development. asdf-announce mailman site to subscribe
-Contributing
-Join our mailing list, check the code out from git, send questions, ideas and patches!</p>
-<p>What is happening
-For a detailed description of changes see our Changelog</p>
+                <h1 id="asdf-build-system">asdf - Build System</h1>
+<p>Version: 3.3.1
+<br/>
+Repository: <a href="https://gitlab.common-lisp.net/asdf/asdf/">asdf/asdf - Gitlab</a></p>
+<p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
+<p>ASDF, or Another System Definition Facility, is a build system: a tool for specifying how systems of Common Lisp software are made up of components (sub-systems and files), and how to operate on these components in the right order so that they can be compiled, loaded, tested, etc.</p>
+<p>ASDF also includes UIOP, currently not documented here.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>All actively maintained lisp implementations these days include a copy of ASDF 3 that can be simply loaded using <code>(require "asdf")</code> - in fact, loading <a href="../quicklisp/">quicklisp</a> takes care of <code>require</code>-ing asdf. <code>(asdf:asdf-version)</code> will inform you of the version (should be &gt;3). For details, you may want to refer to the section on <a href="https://common-lisp.net/project/asdf/asdf.html#Loading-ASDF">Loading ASDF</a> in the manual.</p>
+<p>ASDF must be configured to find the <code>.asd</code> files containing the system definition. If you are using quicklisp - and we recommend you do - for your own projects, you only need to consider <a href="../quicklisp/#local-project-directories">ql:*local-project-directories*</a>. For details, see the section on <a href="https://common-lisp.net/project/asdf/asdf.html#Configuring-ASDF">Configuring ASDF</a> in the manual.</p>
+<h3 id="trivial-system-definition">Trivial System Definition</h3>
+<pre><code class="lisp">(defsystem &quot;foobar&quot;
+  :description &quot;A system definition to demonstrate ASDF&quot;
+  :version &quot;0.1.0&quot;
+  :serial t
+  :license &quot;BSD&quot;
+  :pathname &quot;src/&quot;
+  :depends-on (&quot;alexandria&quot;
+               (:version &quot;some-new-system&quot; &quot;0.7.3&quot;))
+  :components ((:file &quot;foo&quot;)                         ; .lisp is implicit for :file
+               (:file &quot;baz&quot;)                         ; this lies in src/
+               (:module &quot;bar&quot; 
+                        :components ((:file &quot;bar-1&quot;) ; this lies in src/bar/
+                                      (:file &quot;bar-2&quot;)))
+               (:static-file &quot;LICENCE&quot; :pathname #P&quot;LICENCE&quot;))
+  :in-order-to ((test-op (test-op &quot;foobar/tests&quot;)))
+  ;; The following is not recommended - for demonstration of :perform
+  ;; and operations (see next section) only.
+  :perform (load-op (o c) (format t &quot;Loading foobar&quot;))) 
+
+(defsystem &quot;foobar/tests&quot;
+  :depends-on (&quot;foobar&quot; &quot;fiveam&quot;)
+  :components ((:file &quot;foobar-tests&quot;))
+  :perform (test-op (o c) (uiop:symbol-call :fiveam '#:run! :foobar)))
+</code></pre>
+
+<p>These definitions should go inside a file named <code>"foobar.asd"</code>, located somewhere quicklisp/ASDF can find (see previous section). As of ASDF 3.1, the depends-on version translates to 0.7.3+. (TODO: What about ASDF 3.3? Will this ever change in future?) Usually, you'd be basing yourself on a particular version of <a href="../quicklisp/#a-note-on-quicklisp-dists">quicklisp dist</a>. However, if you actually need it, <a href="https://github.com/fukamachi/qlot">qlot</a> should be helpful.</p>
+<p>The <code>:serial t</code> states that each item in the <code>:components</code> depends on all of the previous items.
+When efficiency is a concern, you may want to explicitly specify the list of dependencies a particular component depends on <code>(:file "baz" :depends-on ("foo"))</code>.</p>
+<p>Thus, the way things are defined, the system "foobar" can simply be tested by calling <code>(asdf:test-system "foobar")</code>.</p>
+<p>Finally, a note on naming: system names are recommended to be named using lower-cased strings without underscores. There exist what are known as primary systems - with the system name being same as the filename without the .asd extension - and secondary systems. Here, "foobar" is the primary system. "foobar/tests" is a secondary system. The primary system of a secondary system  can be found by noting the <code>/</code> as delimiters. A (secondary) system "foo/bar" would be looked up in the file "foo.asd".</p>
+<h3 id="operations">Operations</h3>
+<p>ASDF has the concept of an <em>operation</em> that can act upon a system (or a smaller component thereof).
+Typical operations that matter to end-users include:</p>
+<ul>
+<li><a href="#load-op">load-op</a> for loading a system in the current Lisp image, as used by <a href="#load-system">asdf:load-system</a>,</li>
+<li><a href="#test-op">test-op</a> for running tests associated to the system, as used by <a href="#test-system">asdf:test-system</a>,</li>
+<li><a href="#build-op">build-op</a> for doing whatever build operation is associated to the system,
+    (which by default is <a href="#load-op">load-op</a> if the system didn't override it),
+    as used by <a href="#make">asdf:make</a>.</li>
+</ul>
+<p>Further operations of interest to users include:</p>
+<ul>
+<li><a href="#compile-op">compile-op</a><ul>
+<li>ensure the system is compiled, without necessarily loading all of it, or any bit of it,</li>
+</ul>
+</li>
+<li><a href="#load-source-op">load-source-op</a><ul>
+<li>load the system from source without compiling,</li>
+</ul>
+</li>
+<li><a href="#compile-bundle-op">compile-bundle-op</a><ul>
+<li>create a single fasl for the entire system, for delivery,</li>
+</ul>
+</li>
+<li><a href="#monolithic-compile-bundle-op">monolithic-compile-bundle-op</a><ul>
+<li>create a single fasl for the entire system <em>and all its transitive dependencies</em>, for delivery,</li>
+</ul>
+</li>
+<li><a href="#image-op">image-op</a><ul>
+<li>create a development image with this system already loaded, for fast startup,</li>
+</ul>
+</li>
+<li><a href="#program-op">program-op</a><ul>
+<li>create a standalone application, which we will see below, etc.</li>
+</ul>
+</li>
+</ul>
+<p>Whichever operation you want, <a href="#operate">asdf:operate</a> (<code>(asdf:operate</code><em>operation</em> <em>system</em><code>)</code>)
+will ensure this operation is performed on that system
+(after all the necessary dependencies of such an action).
+A short-hand <code>asdf:oos</code> acts as an acronym for <code>asdf:operate</code>.</p>
+<p>The operation is typically specified as a symbol that names the operation class.
+Since ASDF 3, you can also use a keyword to specify an action in the ASDF package.
+Thus, <code>(asdf:oos :load-op :foobar)</code> is equivalent to <code>(asdf:load-system :foobar)</code>.</p>
+<p>Whichever operation a system is intended to be used with can be invoked with <a href="#make">make</a>: <code>(asdf:make :foo)</code> and specified with <a href="#build-op">build-op</a>. (TODO: Confirm <code>make</code> invokes load-op before invoking build-op if both are defined. Why? What's going on under the hood? There is also the concept of dependency between operations.)</p>
+<p>TODO: Are there other ways to specify what an operation should do other than <code>:perform</code> clause?
+TODO: What exactly is the utility of a static file? Perhaps, for bundling data files. Data can then be read from such a file by getting <a href="#component-pathname">asdf:component-pathname</a>. But what happens if you bundle the system into an image?</p>
+<h3 id="a-note-on-systems-and-packages">A note on Systems and Packages</h3>
+<p>What one might call packages in other languages are called systems in Common Lisp parlance. Instead, the word <code>package</code> in Common Lisp refers to a data structure providing namespacing
+for symbols. By contrast, a system is a tool to organize a bunch of files, in accordance with dependencies, and specifying how to perform certain actions on the system. A single system may contain multiple packages. See <a href="https://stackoverflow.com/questions/45642330/why-do-many-common-lisp-systems-use-a-single-packages-lisp-file/45643829#45643829">this StackOverFlow answer</a> for a detailed discussion.</p>
+<p>ASDF also provides <a href="https://github.com/fare/asdf/blob/master/doc/best_practices.md#package_inferred">package-inferred-system</a> to make the "one file, one package, one system" style easier to use. However, most systems in the wild usually have one main system, several packages, each package spanning several files; each file packing together some relevant functionality. Your IDE (often SLIME) should be the one telling you who calls/sets/macroexpands/etc something. Of use also are <code>M-.</code> (slime-edit-definition) and <code>M-,</code> (slime-pop-find-definition-stack).</p>
+<h3 id="more-reading">More Reading</h3>
+<ul>
+<li><a href="https://github.com/fare/asdf/blob/master/doc/best_practices.md">ASDF Best Practices</a></li>
+<li><a href="https://common-lisp.net/project/asdf/asdf.html">ASDF Manual</a></li>
+<li><a href="http://lispcookbook.github.io/cl-cookbook/scripting.html#building-a-self-contained-executable">Building self-contained executables - The Common Lisp Cookbook</a></li>
+</ul>
+<h2 id="api-reference">API REFERENCE</h2>
+<h3 id="central-registry">*central-registry*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>A list of 'system directory designators' ASDF uses to find systems.</p>
+<p>A 'system directory designator' is a pathname or an expression
+which evaluates to a pathname. For example:</p>
+<pre><code class="lisp">(setf asdf:*central-registry*
+(list '*default-pathname-defaults*
+#p&quot;/home/me/cl/systems/&quot;
+#p&quot;/usr/share/common-lisp/systems/&quot;))
+</code></pre>
+
+<p>This variable is for backward compatibility.
+Going forward, we recommend new users should be using the source-registry.</p>
+<h3 id="compile-file-failure-behaviour">*compile-file-failure-behaviour*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>How should ASDF react if it encounters a failure (per the ANSI spec of COMPILE-FILE)
+when compiling a file, which includes any non-style-warning warning.
+Valid values are :error, :warn, and :ignore.
+Note that ASDF ALWAYS raises an error if it fails to create an output file when compiling.</p>
+<h3 id="compile-file-warnings-behaviour">*compile-file-warnings-behaviour*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>How should ASDF react if it encounters a warning when compiling a file?
+Valid values are :error, :warn, and :ignore.</p>
+<h3 id="default-encoding">*default-encoding*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Default encoding for source files.
+The default value :utf-8 is the portable thing.
+The legacy behavior was :default.
+If you (asdf:load-system :asdf-encodings) then
+you will have autodetection via <em>encoding-detection-hook</em> below,
+reading emacs-style -<em>- coding: utf-8 -</em>- specifications,
+and falling back to utf-8 or latin1 if nothing is specified.</p>
+<h3 id="default-source-registries">*default-source-registries*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>List of default source registries</p>
+<h3 id="encoding-detection-hook">*encoding-detection-hook*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Hook for an extension to define a function to automatically detect a file's encoding</p>
+<h3 id="encoding-external-format-hook">*encoding-external-format-hook*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Hook for an extension (e.g. ASDF-ENCODINGS) to define a better mapping
+from non-default encodings to and implementation-defined external-format's</p>
+<h3 id="resolve-symlinks">*resolve-symlinks*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Determine whether or not ASDF resolves symlinks when defining systems.
+Defaults to T.</p>
+<h3 id="system-definition-search-functions">*system-definition-search-functions*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>A list that controls the ways that ASDF looks for system definitions.
+It contains symbols to be funcalled in order, with a requested system name as argument,
+until one returns a non-NIL result (if any), which must then be a fully initialized system object
+with that name.</p>
+<h3 id="user-cache">*user-cache*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>A specification as per <a href="#resolve-location">resolve-location</a> of where the user keeps his FASL cache</p>
+<h3 id="utf-8-external-format">*utf-8-external-format*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Default :external-format argument to pass to CL:OPEN and also
+CL:LOAD or CL:COMPILE-FILE to best process a UTF-8 encoded file.
+On modern implementations, this will decode UTF-8 code points as CL characters.
+On legacy implementations, it may fall back on some 8-bit encoding,
+with non-ASCII code points being read as several CL characters;
+hopefully, if done consistently, that won't affect program behavior too much.</p>
+<h3 id="warnings-file-type">*warnings-file-type*</h3>
+<pre><code class="lisp">Variable
+</code></pre>
+
+<p>Pathname type for warnings files, or NIL if disabled</p>
+<h3 id="action-description">action-description</h3>
+<pre><code class="lisp">Generic Function: (action-description operation component)
+</code></pre>
+
+<p>returns a phrase that describes performing this operation
+on this component, e.g. "loading /a/b/c".
+You can put together sentences using this phrase.</p>
+<h3 id="additional-input-files">additional-input-files</h3>
+<pre><code class="lisp">Generic Function: (additional-input-files operation component)
+</code></pre>
+
+<p>Additional input files for the operation on this
+component.  These are files that are inferred, rather than
+explicitly specified, and these are typically NOT files that
+undergo operations directly.  Instead, they are files that it is
+important for ASDF to know about in order to compute operation times,etc.</p>
+<h3 id="already-loaded-systems">already-loaded-systems</h3>
+<pre><code class="lisp">Function: (already-loaded-systems)
+</code></pre>
+
+<p>return a list of the names of the systems that have been successfully loaded so far</p>
+<h3 id="apply-output-translations">apply-output-translations</h3>
+<pre><code class="lisp">Function: (apply-output-translations path)
+</code></pre>
+
+<h3 id="asdf-message">asdf-message</h3>
+<pre><code class="lisp">Function: (asdf-message format-string &amp;rest format-args)
+</code></pre>
+
+<h3 id="asdf-version">asdf-version</h3>
+<pre><code class="lisp">Function: (asdf-version)
+</code></pre>
+
+<p>Exported interface to the version of ASDF currently installed. A string.
+You can compare this string with e.g.: (ASDF:<a href="#version-satisfies">version-satisfies</a> (ASDF:<code>asdf-version</code>) "3.4.5.67").</p>
+<h3 id="bad-system-name">bad-system-name</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+Readers: ASDF/COMPONENT:COMPONENT-NAME
+</code></pre>
+
+<p><strong>asdf/component:source-file</strong></p>
+<pre><code class="lisp">Initargs: :SOURCE-FILE
+Readers: ASDF/SYSTEM:SYSTEM-SOURCE-FILE
+</code></pre>
+
+<h3 id="basic-compile-bundle-op">basic-compile-bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Base class for compiling into a bundle</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle::gather-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/bundle:bundle-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="build-op">build-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Since ASDF3, BUILD-OP is the recommended 'master' operation,
+to operate by default on a system or component, via the function BUILD.
+Its meaning is configurable via the :BUILD-OPERATION option of a component.
+which typically specifies the name of a specific operation to which to delegate the build,
+as a symbol or as a string later read as a symbol (after loading the defsystem-depends-on);
+if NIL is specified (the default), BUILD-OP falls back to LOAD-OP,
+that will load the system in the current image.</p>
+<h3 id="bundle-op">bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>base class for operations that bundle outputs from multiple components</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle:bundle-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="c-source-file">c-source-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="child-component">child-component</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A CHILD-COMPONENT is a COMPONENT that may be part of
+a PARENT-COMPONENT.</p>
+<h3 id="circular-dependency">circular-dependency</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action::actions</strong></p>
+<pre><code class="lisp">Initargs: :ACTIONS
+Readers: ASDF/ACTION:CIRCULAR-DEPENDENCY-ACTIONS
+</code></pre>
+
+<h3 id="cl-source-file">cl-source-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Component class for a Common Lisp source file (using type "lisp")</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="cl-source-filecl">cl-source-file.cl</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Component class for a Common Lisp source file using type "cl"</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="cl-source-filelsp">cl-source-file.lsp</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Component class for a Common Lisp source file using type "lsp"</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="clear-configuration">clear-configuration</h3>
+<pre><code class="lisp">Function: (clear-configuration)
+</code></pre>
+
+<p>Call the functions in <em>CLEAR-CONFIGURATION-HOOK</em></p>
+<h3 id="clear-output-translations">clear-output-translations</h3>
+<pre><code class="lisp">Function: (clear-output-translations)
+</code></pre>
+
+<p>Undoes any initialization of the output translations.</p>
+<h3 id="clear-source-registry">clear-source-registry</h3>
+<pre><code class="lisp">Function: (clear-source-registry)
+</code></pre>
+
+<p>Undoes any initialization of the source registry.</p>
+<h3 id="clear-system">clear-system</h3>
+<pre><code class="lisp">Function: (clear-system system)
+</code></pre>
+
+<p>Clear the entry for a <code>system</code> in the database of systems previously defined.
+However if the system was registered as PRELOADED (which it is if it is IMMUTABLE),
+then a new system with the same name will be defined and registered in its place
+from which build details will have been cleared.
+Note that this does NOT in any way cause any of the code of the system to be unloaded.
+Returns T if system was or is now undefined, NIL if a new preloaded system was redefined.</p>
+<h3 id="coerce-name">coerce-name</h3>
+<pre><code class="lisp">Function: (coerce-name name)
+</code></pre>
+
+<p>Given a designator for a component <code>name</code>, return the name as a string.
+The designator can be a <a href="#component">component</a> (designing its name; note that a <a href="#system">system</a> is a component),
+a SYMBOL (designing its name, downcased), or a STRING (designing itself).</p>
+<h3 id="compile-bundle-op">compile-bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>This operator is an alternative to COMPILE-OP. Build a system
+and all of its dependencies, but build only a single ("monolithic") FASL, instead
+of one per source file, which may be more resource efficient.  That monolithic
+FASL should be loaded with LOAD-BUNDLE-OP, rather than LOAD-OP.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="compile-concatenated-source-op">compile-concatenated-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to compile the result of concatenate-source-op</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="compile-condition">compile-condition</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>uiop/lisp-build::context-format</strong></p>
+<pre><code class="lisp">Initargs: :CONTEXT-FORMAT
+</code></pre>
+
+<p><strong>uiop/lisp-build::context-arguments</strong></p>
+<pre><code class="lisp">Initargs: :CONTEXT-ARGUMENTS
+</code></pre>
+
+<p><strong>uiop/lisp-build::description</strong></p>
+<pre><code class="lisp">Initargs: :DESCRIPTION
+</code></pre>
+
+<h3 id="compile-error">compile-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compile-failed">compile-failed</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compile-failed-error">compile-failed-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compile-failed-warning">compile-failed-warning</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compile-file">compile-file*</h3>
+<pre><code class="lisp">Function: (compile-file* input-file &amp;rest keys &amp;key
+                         (compile-check *compile-check*) output-file warnings-file emit-cfasl
+                         &amp;allow-other-keys)
+</code></pre>
+
+<p>This function provides a portable wrapper around COMPILE-FILE.
+It ensures that the <code>output-file</code> value is only returned and
+the file only actually created if the compilation was successful,
+even though your implementation may not do that. It also checks an optional
+user-provided consistency function <code>compile-check</code> to determine success;
+it will call this function if not NIL at the end of the compilation
+with the arguments sent to COMPILE-FILE<em>, except with :<a href="#output-file">output-file</a> TMP-FILE
+where TMP-FILE is the name of a temporary output-file.
+It also checks two flags (with legacy british spelling from ASDF1),
+</em>COMPILE-FILE-FAILURE-BEHAVIOUR<em> and </em>COMPILE-FILE-WARNINGS-BEHAVIOUR*
+with appropriate implementation-dependent defaults,
+and if a failure (respectively warnings) are reported by COMPILE-FILE,
+it will consider that an error unless the respective behaviour flag
+is one of :SUCCESS :WARN :IGNORE.
+If <code>warnings-file</code> is defined, deferred warnings are saved to that file.
+On ECL or MKCL, it creates both the linkable object and loadable fasl files.
+On implementations that erroneously do not recognize standard keyword arguments,
+it will filter them appropriately.</p>
+<h3 id="compile-file-error">compile-file-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compile-file-pathname">compile-file-pathname*</h3>
+<pre><code class="lisp">Function: (compile-file-pathname* input-file &amp;rest keys &amp;key output-file
+                                  &amp;allow-other-keys)
+</code></pre>
+
+<p>Variant of COMPILE-FILE-PATHNAME that works well with COMPILE-FILE*</p>
+<h3 id="compile-op">compile-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation for compiling a Lisp file to a FASL</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="compile-system">compile-system</h3>
+<pre><code class="lisp">Function: (compile-system system &amp;rest args &amp;key force force-not verbose
+                          version &amp;allow-other-keys)
+</code></pre>
+
+<p>Shorthand for <code>(asdf:operate 'asdf:compile-op system)</code>. See <a href="#operate">operate</a> for details.</p>
+<h3 id="compile-warned">compile-warned</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compile-warned-error">compile-warned-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compile-warned-warning">compile-warned-warning</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="compiled-file">compiled-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Class for a file that is already compiled,
+e.g. as part of the implementation, of an outer build system that calls into ASDF,
+or of opaque libraries shipped along the source code.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="component">component</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Base class for all components of a build</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:name</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/component:version</strong></p>
+<pre><code class="lisp">Initargs: :VERSION
+Readers: ASDF/COMPONENT:COMPONENT-VERSION
+Writers: (SETF ASDF/COMPONENT:COMPONENT-VERSION)
+</code></pre>
+
+<p><strong>asdf/component:description</strong></p>
+<pre><code class="lisp">Initargs: :DESCRIPTION
+Readers: ASDF/COMPONENT:COMPONENT-DESCRIPTION
+Writers: (SETF ASDF/COMPONENT:COMPONENT-DESCRIPTION)
+</code></pre>
+
+<p><strong>asdf/component:long-description</strong></p>
+<pre><code class="lisp">Initargs: :LONG-DESCRIPTION
+Readers: ASDF/COMPONENT:COMPONENT-LONG-DESCRIPTION
+Writers: (SETF ASDF/COMPONENT:COMPONENT-LONG-DESCRIPTION)
+</code></pre>
+
+<p><strong>asdf/component:sideway-dependencies</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/component:if-feature</strong></p>
+<pre><code class="lisp">Initargs: :IF-FEATURE
+Readers: ASDF/COMPONENT:COMPONENT-IF-FEATURE
+Writers: (SETF ASDF/COMPONENT:COMPONENT-IF-FEATURE)
+</code></pre>
+
+<p><strong>asdf/component:in-order-to</strong></p>
+<pre><code class="lisp">Initargs: :IN-ORDER-TO
+Readers: ASDF/COMPONENT:COMPONENT-IN-ORDER-TO
+Writers: (SETF ASDF/COMPONENT:COMPONENT-IN-ORDER-TO)
+</code></pre>
+
+<p><strong>asdf/component:inline-methods</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/component:relative-pathname</strong></p>
+<pre><code class="lisp">Initargs: :PATHNAME
+</code></pre>
+
+<p><strong>asdf/component:absolute-pathname</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/component:operation-times</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/component:around-compile</strong></p>
+<pre><code class="lisp">Initargs: :AROUND-COMPILE
+</code></pre>
+
+<p><strong>asdf/component:properties</strong></p>
+<pre><code class="lisp">Initargs: :PROPERTIES
+Readers: ASDF/COMPONENT:COMPONENT-PROPERTIES
+Writers: (SETF ASDF/COMPONENT:COMPONENT-PROPERTIES)
+</code></pre>
+
+<p><strong>asdf/component:%encoding</strong></p>
+<pre><code class="lisp">Initargs: :ENCODING
+Readers: ASDF/COMPONENT::%COMPONENT-ENCODING
+Writers: (SETF ASDF/COMPONENT::%COMPONENT-ENCODING)
+</code></pre>
+
+<p><strong>asdf/component:parent</strong></p>
+<pre><code class="lisp">Initargs: :PARENT
+Readers: ASDF/COMPONENT:COMPONENT-PARENT
+</code></pre>
+
+<p><strong>asdf/component::build-operation</strong></p>
+<pre><code class="lisp">Initargs: :BUILD-OPERATION
+Readers: ASDF/COMPONENT:COMPONENT-BUILD-OPERATION
+</code></pre>
+
+<p><strong>asdf/component::additional-input-files</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="component-children">component-children</h3>
+<pre><code class="lisp">Generic Function: (component-children object)
+</code></pre>
+
+<h3 id="component-children-by-name">component-children-by-name</h3>
+<pre><code class="lisp">Generic Function: (component-children-by-name object)
+</code></pre>
+
+<h3 id="component-depends-on">component-depends-on</h3>
+<pre><code class="lisp">Generic Function: (component-depends-on operation component)
+</code></pre>
+
+<p>Returns a list of dependencies needed by the component to perform
+the operation.  A dependency has one of the following forms:</p>
+<p>(<operation> <component>*), where <operation> is an operation designator
+with respect to <a href="#find-operation">find-operation</a> in the context of the <code>operation</code> argument,
+and each <component> is a component designator with respect to
+<a href="#find-component">find-component</a> in the context of the <code>component</code> argument,
+and means that the component depends on
+<operation> having been performed on each <component>;</p>
+<p>[Note: an <operation> is an operation designator -- it can be either an
+operation name or an operation object.  Similarly, a <component> may be
+a component name or a component object.  Also note that, the degenerate
+case of (<operation>) is a no-op.]</p>
+<p>Methods specialized on subclasses of existing component types
+should usually append the results of CALL-NEXT-METHOD to the list.</p>
+<h3 id="component-encoding">component-encoding</h3>
+<pre><code class="lisp">Generic Function: (component-encoding component)
+</code></pre>
+
+<p>The encoding of the <code>component</code>. By default, only :utf-8 is supported.
+Use asdf-encodings to support more encodings.</p>
+<h3 id="component-external-format">component-external-format</h3>
+<pre><code class="lisp">Generic Function: (component-external-format component)
+</code></pre>
+
+<p>The external-format of the <code>component</code>.
+By default, deduced from the <a href="#component-encoding">component-encoding</a>.</p>
+<h3 id="component-find-path">component-find-path</h3>
+<pre><code class="lisp">Function: (component-find-path component)
+</code></pre>
+
+<p>Return a path from a root system to the <code>component</code>.
+The return value is a list of component NAMES; a list of strings.</p>
+<h3 id="component-load-dependencies">component-load-dependencies</h3>
+<pre><code class="lisp">Function: (component-load-dependencies component)
+</code></pre>
+
+<p>DEPRECATED. Please use <a href="#component-sideway-dependencies">component-sideway-dependencies</a> instead; or better,
+define your operations with proper use of <a href="#sideway-operation">sideway-operation</a>, <a href="#selfward-operation">selfward-operation</a>,
+or define methods on <a href="#prepare-op">prepare-op</a>, etc.</p>
+<h3 id="component-loaded-p">component-loaded-p</h3>
+<pre><code class="lisp">Function: (component-loaded-p component)
+</code></pre>
+
+<p>Has the given <code>component</code> been successfully loaded in the current image (yet)?
+Note that this returns true even if the component is not up to date.</p>
+<h3 id="component-name">component-name</h3>
+<pre><code class="lisp">Generic Function: (component-name component)
+</code></pre>
+
+<p>Name of the <code>component</code>, unique relative to its parent</p>
+<h3 id="component-parent">component-parent</h3>
+<pre><code class="lisp">Generic Function: (component-parent component)
+</code></pre>
+
+<p>The parent of a child <code>component</code>,
+or NIL for top-level components (a.k.a. systems)</p>
+<h3 id="component-pathname">component-pathname</h3>
+<pre><code class="lisp">Generic Function: (component-pathname component)
+</code></pre>
+
+<p>Pathname of the <code>component</code> if any, or NIL.</p>
+<h3 id="component-property">component-property</h3>
+<pre><code class="lisp">Generic Function: (component-property component property)
+</code></pre>
+
+<h3 id="component-relative-pathname">component-relative-pathname</h3>
+<pre><code class="lisp">Generic Function: (component-relative-pathname component)
+</code></pre>
+
+<p>Specified pathname of the <code>component</code>,
+intended to be merged with the pathname of that component's parent if any, using merged-pathnames*.
+Despite the function's name, the return value can be an absolute pathname, in which case the merge
+will leave it unmodified.</p>
+<h3 id="component-sideway-dependencies">component-sideway-dependencies</h3>
+<pre><code class="lisp">Generic Function: (component-sideway-dependencies object)
+</code></pre>
+
+<h3 id="component-system">component-system</h3>
+<pre><code class="lisp">Generic Function: (component-system component)
+</code></pre>
+
+<p>Top-level system containing the <code>component</code></p>
+<h3 id="component-version">component-version</h3>
+<pre><code class="lisp">Generic Function: (component-version component)
+</code></pre>
+
+<p>Return the version of a <code>component</code>, which must be a string of dot-separated
+natural numbers, or NIL.</p>
+<h3 id="compute-source-registry">compute-source-registry</h3>
+<pre><code class="lisp">Function: (compute-source-registry &amp;optional
+           (parameter *source-registry-parameter*) (registry *source-registry*))
+</code></pre>
+
+<h3 id="concatenate-source-op">concatenate-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to concatenate all sources in a system into a single file</p>
+<h3 id="define-op">define-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>An operation to record dependencies on loading a .asd file.</p>
+<h3 id="defsystem">defsystem</h3>
+<pre><code class="lisp">Macro: (defsystem name &amp;body options)
+</code></pre>
+
+<h3 id="deliver-asd-op">deliver-asd-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>produce an asd file for delivering the system as a single fasl</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="disable-deferred-warnings-check">disable-deferred-warnings-check</h3>
+<pre><code class="lisp">Function: (disable-deferred-warnings-check)
+</code></pre>
+
+<p>Disable the saving of deferred warnings</p>
+<h3 id="disable-output-translations">disable-output-translations</h3>
+<pre><code class="lisp">Function: (disable-output-translations)
+</code></pre>
+
+<p>Initialize output translations in a way that maps every file to itself,
+effectively disabling the output translation facility.</p>
+<h3 id="dll-op">dll-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Compile the system and produce a dynamic loadable library (.so/.dll)
+for all the linkable object files associated with the system. Compare with LIB-OP.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle::gather-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/bundle:bundle-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="doc-file">doc-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<h3 id="downward-operation">downward-operation</h3>
+<pre><code class="lisp">Generic Function: (downward-operation object)
+</code></pre>
+
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A DOWNWARD-OPERATION's dependencies propagate down the component hierarchy.
+I.e., if O is a DOWNWARD-OPERATION and its DOWNWARD-OPERATION slot designates operation D, then
+the action (O . M) of O on module M will depends on each of (D . C) for each child C of module M.
+The default value for slot DOWNWARD-OPERATION is NIL, which designates the operation O itself.
+E.g. in order for a MODULE to be loaded with LOAD-OP (resp. compiled with COMPILE-OP), all the
+children of the MODULE must have been loaded with LOAD-OP (resp. compiled with COMPILE-OP.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:downward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="duplicate-names">duplicate-names</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+Readers: ASDF/COMPONENT::DUPLICATE-NAMES-NAME
+</code></pre>
+
+<h3 id="enable-asdf-binary-locations-compatibility">enable-asdf-binary-locations-compatibility</h3>
+<pre><code class="lisp">Function: (enable-asdf-binary-locations-compatibility &amp;key
+           (centralize-lisp-binaries NIL)
+           (default-toplevel-directory
+            (subpathname (user-homedir-pathname) .fasls/))
+           (include-per-user-information NIL) (map-all-source-files (or NIL))
+           (source-to-target-mappings NIL)
+           (file-types
+            (quasiquote
+             (,(UIOP/LISP-BUILD:COMPILE-FILE-TYPE) build-report cfasl
+              sbcl-warnings))))
+</code></pre>
+
+<p>DEPRECATED. Use asdf-output-translations instead.</p>
+<h3 id="enable-deferred-warnings-check">enable-deferred-warnings-check</h3>
+<pre><code class="lisp">Function: (enable-deferred-warnings-check)
+</code></pre>
+
+<p>Enable the saving of deferred warnings</p>
+<h3 id="ensure-output-translations">ensure-output-translations</h3>
+<pre><code class="lisp">Function: (ensure-output-translations)
+</code></pre>
+
+<h3 id="ensure-source-registry">ensure-source-registry</h3>
+<pre><code class="lisp">Function: (ensure-source-registry &amp;optional parameter)
+</code></pre>
+
+<h3 id="error-component">error-component</h3>
+<pre><code class="lisp">Generic Function: (error-component condition)
+</code></pre>
+
+<h3 id="error-name">error-name</h3>
+<pre><code class="lisp">Generic Function: (error-name condition)
+</code></pre>
+
+<h3 id="error-operation">error-operation</h3>
+<pre><code class="lisp">Generic Function: (error-operation condition)
+</code></pre>
+
+<h3 id="error-pathname">error-pathname</h3>
+<pre><code class="lisp">Generic Function: (error-pathname condition)
+</code></pre>
+
+<h3 id="explain">explain</h3>
+<pre><code class="lisp">Generic Function: (explain operation component)
+</code></pre>
+
+<p>Display a message describing an action.</p>
+<p>DEPRECATED. Use ASDF:<a href="#action-description">action-description</a> and/or ASDF::FORMAT-ACTION instead.</p>
+<h3 id="file-component">file-component</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>a COMPONENT that represents a file</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp">Initargs: :TYPE
+Readers: ASDF/COMPONENT:FILE-TYPE
+Writers: (SETF ASDF/COMPONENT:FILE-TYPE)
+</code></pre>
+
+<h3 id="file-type">file-type</h3>
+<pre><code class="lisp">Generic Function: (file-type object)
+</code></pre>
+
+<h3 id="find-component">find-component</h3>
+<pre><code class="lisp">Generic Function: (find-component base path &amp;key registered)
+</code></pre>
+
+<p>Find a component by resolving the <code>path</code> starting from <code>base</code> parent.
+If <code>registered</code> is true, only search currently registered systems.</p>
+<h3 id="find-operation">find-operation</h3>
+<pre><code class="lisp">Generic Function: (find-operation context spec)
+</code></pre>
+
+<p>Find an operation by resolving the <code>spec</code> in the <code>context</code></p>
+<h3 id="find-system">find-system</h3>
+<pre><code class="lisp">Generic Function: (find-system system &amp;optional error-p)
+</code></pre>
+
+<p>Given a system designator, find the actual corresponding system object.
+If no system is found, then signal an error if <code>error-p</code> is true (the default), or else return NIL.
+A system designator is usually a string (conventionally all lowercase) or a symbol, designating
+the same system as its downcased name; it can also be a system object (designating itself).</p>
+<h3 id="hostname">hostname</h3>
+<pre><code class="lisp">Function: (hostname)
+</code></pre>
+
+<p>return the hostname of the current host</p>
+<h3 id="html-file">html-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="image-op">image-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>create an image file from the system and its dependencies</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle:bundle-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/bundle::gather-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="implementation-identifier">implementation-identifier</h3>
+<pre><code class="lisp">Function: (implementation-identifier)
+</code></pre>
+
+<p>Return a string that identifies the ABI of the current implementation,
+suitable for use as a directory name to segregate Lisp FASLs, C dynamic libraries, etc.</p>
+<h3 id="implementation-type">implementation-type</h3>
+<pre><code class="lisp">Function: (implementation-type)
+</code></pre>
+
+<p>The type of Lisp implementation used, as a short UIOP-standardized keyword</p>
+<h3 id="initialize-output-translations">initialize-output-translations</h3>
+<pre><code class="lisp">Function: (initialize-output-translations &amp;optional
+           (parameter *output-translations-parameter*))
+</code></pre>
+
+<p>read the configuration, initialize the internal configuration variable,
+return the configuration</p>
+<h3 id="initialize-source-registry">initialize-source-registry</h3>
+<pre><code class="lisp">Function: (initialize-source-registry &amp;optional
+           (parameter *source-registry-parameter*))
+</code></pre>
+
+<h3 id="input-files">input-files</h3>
+<pre><code class="lisp">Generic Function: (input-files operation component)
+</code></pre>
+
+<p>A list of input files corresponding to this action.</p>
+<p>Methods on <a href="#perform">perform</a> <em>must</em> call this function to determine where their inputs are located.
+They may rely on the order of the files to discriminate between inputs.</p>
+<h3 id="java-source-file">java-source-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="lib-op">lib-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Compile the system and produce a linkable static library (.a/.lib)
+for all the linkable object files associated with the system. Compare with DLL-OP.</p>
+<p>On most implementations, these object files only include extensions to the runtime
+written in C or another language with a compiler producing linkable object files.
+On CLASP, ECL, MKCL, these object files <em>also</em> include the contents of Lisp files
+themselves. In any case, this operation will produce what you need to further build
+a static runtime for your system, or a dynamic library to load in an existing runtime.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle::gather-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/bundle:bundle-type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="load-asd">load-asd</h3>
+<pre><code class="lisp">Function: (load-asd pathname &amp;key name)
+</code></pre>
+
+<p>Load system definitions from <code>pathname</code>.
+<code>name</code> if supplied is the name of a system expected to be defined in that file.</p>
+<p>Do NOT try to load a .asd file directly with CL:LOAD. Always use ASDF:<code>load-asd</code>.</p>
+<h3 id="load-bundle-op">load-bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>This operator is an alternative to LOAD-OP. Build a system
+and all of its dependencies, using COMPILE-BUNDLE-OP. The difference with
+respect to LOAD-OP is that it builds only a single FASL, which may be
+faster and more resource efficient.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="load-compiled-concatenated-source-op">load-compiled-concatenated-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to load the result of compile-concatenated-source-op</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="load-concatenated-source-op">load-concatenated-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to load the result of concatenate-source-op as source</p>
+<h3 id="load-op">load-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation for loading the compiled FASL for a Lisp file</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: '(ASDF/LISP-ACTION:PREPARE-OP
+            ASDF/LISP-ACTION:COMPILE-OP)
+</code></pre>
+
+<h3 id="load-source-op">load-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation for loading a Lisp file as source.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/LISP-ACTION:PREPARE-SOURCE-OP
+</code></pre>
+
+<h3 id="load-system">load-system</h3>
+<pre><code class="lisp">Function: (load-system system &amp;rest keys &amp;key force force-not verbose version
+           &amp;allow-other-keys)
+</code></pre>
+
+<p>Shorthand for <code>(operate 'asdf:load-op system)</code>. See <a href="#operate">operate</a> for details.</p>
+<h3 id="load-system-definition-error">load-system-definition-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+Readers: ASDF/FIND-SYSTEM:ERROR-NAME
+</code></pre>
+
+<p><strong>pathname</strong></p>
+<pre><code class="lisp">Initargs: :PATHNAME
+Readers: ASDF/FIND-SYSTEM:ERROR-PATHNAME
+</code></pre>
+
+<p><strong>condition</strong></p>
+<pre><code class="lisp">Initargs: :CONDITION
+Readers: ASDF/FIND-SYSTEM:ERROR-CONDITION
+</code></pre>
+
+<h3 id="load-systems">load-systems</h3>
+<pre><code class="lisp">Function: (load-systems &amp;rest systems)
+</code></pre>
+
+<p>Loading multiple systems at once.</p>
+<h3 id="load-systems_1">load-systems*</h3>
+<pre><code class="lisp">Function: (load-systems* systems &amp;rest keys)
+</code></pre>
+
+<p>Loading multiple systems at once.</p>
+<h3 id="locate-system">locate-system</h3>
+<pre><code class="lisp">Function: (locate-system name)
+</code></pre>
+
+<p>Given a system <code>name</code> designator, try to locate where to load the system from.
+Returns five values: FOUNDP FOUND-SYSTEM PATHNAME PREVIOUS PREVIOUS-TIME
+FOUNDP is true when a system was found,
+either a new unregistered one or a previously registered one.
+FOUND-SYSTEM when not null is a <a href="#system">system</a> object that may be REGISTER-SYSTEM'ed.
+PATHNAME when not null is a path from which to load the system,
+either associated with FOUND-SYSTEM, or with the PREVIOUS system.
+PREVIOUS when not null is a previously loaded <a href="#system">system</a> object of same name.
+PREVIOUS-TIME when not null is the time at which the PREVIOUS system was loaded.</p>
+<h3 id="make">make</h3>
+<pre><code class="lisp">Function: (make system &amp;rest keys)
+</code></pre>
+
+<p>The recommended way to interact with ASDF3.1 is via (ASDF:<code>make</code> :FOO).
+It will build system FOO using the operation <a href="#build-op">build-op</a>,
+the meaning of which is configurable by the system, and
+defaults to <a href="#load-op">load-op</a>, to load it in current image.</p>
+<h3 id="make-operation">make-operation</h3>
+<pre><code class="lisp">Function: (make-operation operation-class)
+</code></pre>
+
+<p>This function creates and memoizes an instance of <code>operation-class</code>.
+All operation instances MUST be created through this function.</p>
+<p>Use of INITARGS is not supported at this time.</p>
+<h3 id="make-plan">make-plan</h3>
+<pre><code class="lisp">Generic Function: (make-plan plan-class operation component &amp;key
+                   &amp;allow-other-keys)
+</code></pre>
+
+<p>Generate and return a plan for performing <code>operation</code> on <code>component</code>.</p>
+<h3 id="map-systems">map-systems</h3>
+<pre><code class="lisp">Function: (map-systems fn)
+</code></pre>
+
+<p>Apply <code>fn</code> to each defined system.</p>
+<p><code>fn</code> should be a function of one argument. It will be
+called with an object of type asdf:system.</p>
+<h3 id="missing-component">missing-component</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/find-component::requires</strong></p>
+<pre><code class="lisp">Initargs: :REQUIRES
+</code></pre>
+
+<p><strong>asdf/component:parent</strong></p>
+<pre><code class="lisp">Initargs: :PARENT
+</code></pre>
+
+<h3 id="missing-component-of-version">missing-component-of-version</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:version</strong></p>
+<pre><code class="lisp">Initargs: :VERSION
+</code></pre>
+
+<h3 id="missing-dependency">missing-dependency</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/find-component::required-by</strong></p>
+<pre><code class="lisp">Initargs: :REQUIRED-BY
+Readers: ASDF/FIND-COMPONENT:MISSING-REQUIRED-BY
+</code></pre>
+
+<h3 id="missing-dependency-of-version">missing-dependency-of-version</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="module">module</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A module is a intermediate component with both a parent and children,
+typically but not necessarily representing the files in a subdirectory of the build source.</p>
+<h3 id="module-components">module-components</h3>
+<pre><code class="lisp">Generic Function: (module-components object)
+</code></pre>
+
+<h3 id="monolithic-bundle-op">monolithic-bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>operations that are both monolithic-op and bundle-op</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle:prologue-code</strong></p>
+<pre><code class="lisp">Readers: ASDF/BUNDLE:PROLOGUE-CODE
+Writers: (SETF ASDF/BUNDLE:PROLOGUE-CODE)
+</code></pre>
+
+<p><strong>asdf/bundle:epilogue-code</strong></p>
+<pre><code class="lisp">Readers: ASDF/BUNDLE:EPILOGUE-CODE
+Writers: (SETF ASDF/BUNDLE:EPILOGUE-CODE)
+</code></pre>
+
+<h3 id="monolithic-compile-bundle-op">monolithic-compile-bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Create a single fasl for the system and its dependencies.</p>
+<h3 id="monolithic-compile-concatenated-source-op">monolithic-compile-concatenated-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to compile the result of monolithic-concatenate-source-op</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/CONCATENATE-SOURCE:MONOLITHIC-CONCATENATE-SOURCE-OP
+</code></pre>
+
+<h3 id="monolithic-concatenate-source-op">monolithic-concatenate-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to concatenate all sources in a system and its dependencies
+into a single file</p>
+<h3 id="monolithic-deliver-asd-op">monolithic-deliver-asd-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>produce fasl and asd files for combined system and dependencies.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: '(ASDF/BUNDLE:MONOLITHIC-COMPILE-BUNDLE-OP)
+</code></pre>
+
+<h3 id="monolithic-dll-op">monolithic-dll-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Compile the system and produce a dynamic loadable library (.so/.dll)
+for all the linkable object files associated with the system or its dependencies. See LIB-OP</p>
+<h3 id="monolithic-lib-op">monolithic-lib-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Compile the system and produce a linkable static library (.a/.lib)
+for all the linkable object files associated with the system or its dependencies. See LIB-OP.</p>
+<h3 id="monolithic-load-bundle-op">monolithic-load-bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Load a single fasl for the system and its dependencies.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/BUNDLE:MONOLITHIC-COMPILE-BUNDLE-OP
+</code></pre>
+
+<h3 id="monolithic-load-compiled-concatenated-source-op">monolithic-load-compiled-concatenated-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to load the result of monolithic-compile-concatenated-source-op</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/CONCATENATE-SOURCE:MONOLITHIC-COMPILE-CONCATENATED-SOURCE-OP
+</code></pre>
+
+<h3 id="monolithic-load-concatenated-source-op">monolithic-load-concatenated-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation to load the result of monolithic-concatenate-source-op as source</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/CONCATENATE-SOURCE:MONOLITHIC-CONCATENATE-SOURCE-OP
+</code></pre>
+
+<h3 id="needed-in-image-p">needed-in-image-p</h3>
+<pre><code class="lisp">Generic Function: (needed-in-image-p operation component)
+</code></pre>
+
+<p>Is the action of <code>operation</code> on <code>component</code> needed in the current image
+to be meaningful, or could it just as well have been done in another Lisp image?</p>
+<h3 id="non-propagating-operation">non-propagating-operation</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A NON-PROPAGATING-OPERATION is an operation that propagates
+no dependencies whatsoever.  It is supplied in order that the programmer be able
+to specify that s/he is intentionally specifying an operation which invokes no
+dependencies.</p>
+<h3 id="non-system-system">non-system-system</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+</code></pre>
+
+<p><strong>class-name</strong></p>
+<pre><code class="lisp">Initargs: :CLASS-NAME
+</code></pre>
+
+<h3 id="non-toplevel-system">non-toplevel-system</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:parent</strong></p>
+<pre><code class="lisp">Initargs: :PARENT
+</code></pre>
+
+<p><strong>asdf/component:name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+</code></pre>
+
+<h3 id="oos">oos</h3>
+<pre><code class="lisp">Function: (oos operation component &amp;rest args &amp;key &amp;allow-other-keys)
+</code></pre>
+
+<p>Short for <em>operate on system</em> and an alias for the <a href="#operate">operate</a> function.</p>
+<p>Operate does mainly four things for the user:</p>
+<ol>
+<li>Resolves the <code>operation</code> designator into an operation object.
+   <code>operation</code> is typically a symbol denoting an operation class, instantiated with <a href="#make-operation">make-operation</a>.</li>
+<li>Resolves the <code>component</code> designator into a component object.
+   <code>component</code> is typically a string or symbol naming a system, loaded from disk using <a href="#find-system">find-system</a>.</li>
+<li>It then calls <a href="#make-plan">make-plan</a> with the operation and system as arguments.</li>
+<li>Finally calls <a href="#perform-plan">perform-plan</a> on the resulting plan to actually build the system.</li>
+</ol>
+<p>The entire computation is wrapped in WITH-COMPILATION-UNIT and error handling code.
+If a <a href="#version">version</a> argument is supplied, then operate also ensures that the system found satisfies it
+using the <a href="#version-satisfies">version-satisfies</a> method.
+If a PLAN-CLASS argument is supplied, that class is used for the plan.
+If a PLAN-OPTIONS argument is supplied, the options are passed to the plan.</p>
+<p>The :FORCE or :FORCE-NOT argument to <a href="#operate">operate</a> can be:
+  T to force the inside of the specified system to be rebuilt (resp. not),
+    without recursively forcing the other systems we depend on.
+  :ALL to force all systems including other systems we depend on to be rebuilt (resp. not).
+  (<a href="#system">system</a>1 <a href="#system">system</a>2 ... SYSTEMN) to force systems named in a given list
+:FORCE-NOT has precedence over :FORCE; builtin systems cannot be forced.</p>
+<p>For backward compatibility, all keyword arguments are passed to <a href="#make-operation">make-operation</a>
+when instantiating a new operation, that will in turn be inherited by new operations.
+But do NOT depend on it, for this is deprecated behavior.</p>
+<h3 id="operate">operate</h3>
+<pre><code class="lisp">Generic Function: (operate operation component &amp;key plan-class plan-options
+                   version verbose on-warnings on-failure &amp;allow-other-keys)
+</code></pre>
+
+<p>Operate does mainly four things for the user:</p>
+<ol>
+<li>Resolves the <code>operation</code> designator into an operation object.
+   <code>operation</code> is typically a symbol denoting an operation class, instantiated with <a href="#make-operation">make-operation</a>.</li>
+<li>Resolves the <code>component</code> designator into a component object.
+   <code>component</code> is typically a string or symbol naming a system, loaded from disk using <a href="#find-system">find-system</a>.</li>
+<li>It then calls <a href="#make-plan">make-plan</a> with the operation and system as arguments.</li>
+<li>Finally calls <a href="#perform-plan">perform-plan</a> on the resulting plan to actually build the system.</li>
+</ol>
+<p>The entire computation is wrapped in WITH-COMPILATION-UNIT and error handling code.
+If a <code>version</code> argument is supplied, then operate also ensures that the system found satisfies it
+using the <a href="#version-satisfies">version-satisfies</a> method.
+If a <code>plan-class</code> argument is supplied, that class is used for the plan.
+If a <code>plan-options</code> argument is supplied, the options are passed to the plan.</p>
+<p>The :FORCE or :FORCE-NOT argument to <code>operate</code> can be:
+  T to force the inside of the specified system to be rebuilt (resp. not),
+    without recursively forcing the other systems we depend on.
+  :ALL to force all systems including other systems we depend on to be rebuilt (resp. not).
+  (<a href="#system">system</a>1 <a href="#system">system</a>2 ... SYSTEMN) to force systems named in a given list
+:FORCE-NOT has precedence over :FORCE; builtin systems cannot be forced.</p>
+<p>For backward compatibility, all keyword arguments are passed to <a href="#make-operation">make-operation</a>
+when instantiating a new operation, that will in turn be inherited by new operations.
+But do NOT depend on it, for this is deprecated behavior.</p>
+<h3 id="operation">operation</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>The base class for all ASDF operations.</p>
+<p>ASDF does NOT and never did distinguish between multiple operations of the same class.
+Therefore, all slots of all operations MUST have :allocation :class and no initargs. No exceptions.</p>
+<h3 id="operation-definition-error">operation-definition-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>Error condition related to definition of incorrect OPERATION objects.</p>
+<h3 id="operation-definition-warning">operation-definition-warning</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>Warning condition related to definition of obsolete OPERATION objects.</p>
+<h3 id="operation-done-p">operation-done-p</h3>
+<pre><code class="lisp">Generic Function: (operation-done-p operation component)
+</code></pre>
+
+<p>Returns a boolean which is NIL if the action must be performed (again).</p>
+<h3 id="operation-error">operation-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:component</strong></p>
+<pre><code class="lisp">Initargs: :COMPONENT
+Readers: ASDF/BACKWARD-INTERFACE:ERROR-COMPONENT
+</code></pre>
+
+<p><strong>asdf/operation:operation</strong></p>
+<pre><code class="lisp">Initargs: :OPERATION
+Readers: ASDF/BACKWARD-INTERFACE:ERROR-OPERATION
+</code></pre>
+
+<h3 id="operation-monolithic-p">operation-monolithic-p</h3>
+<pre><code class="lisp">Function: (operation-monolithic-p op)
+</code></pre>
+
+<h3 id="operation-on-failure">operation-on-failure</h3>
+<pre><code class="lisp">Generic Function: (operation-on-failure operation)
+</code></pre>
+
+<p>DEPRECATED. Please use UIOP:<em>COMPILE-FILE-FAILURE-BEHAVIOUR</em> instead.</p>
+<h3 id="operation-on-warnings">operation-on-warnings</h3>
+<pre><code class="lisp">Generic Function: (operation-on-warnings operation)
+</code></pre>
+
+<p>DEPRECATED. Please use UIOP:<em>COMPILE-FILE-WARNINGS-BEHAVIOUR</em> instead.</p>
+<h3 id="output-file">output-file</h3>
+<pre><code class="lisp">Function: (output-file operation component)
+</code></pre>
+
+<p>The unique output file of performing <code>operation</code> on <code>component</code></p>
+<h3 id="output-files">output-files</h3>
+<pre><code class="lisp">Generic Function: (output-files operation component)
+</code></pre>
+
+<p>Methods for this function return two values: a list of output files
+corresponding to this action, and a boolean indicating if they have already been subjected
+to relevant output translations and should not be further translated.</p>
+<p>Methods on <a href="#perform">perform</a> <em>must</em> call this function to determine where their outputs are to be located.
+They may rely on the order of the files to discriminate between outputs.</p>
+<h3 id="package-inferred-system">package-inferred-system</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Class for primary systems for which secondary systems are automatically
+in the one-file, one-file, one-system style: system names are mapped to files under the primary
+system's system-source-directory, dependencies are inferred from the first defpackage form in
+every such file</p>
+<h3 id="package-inferred-system-missing-package-error">package-inferred-system-missing-package-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/system:system</strong></p>
+<pre><code class="lisp">Initargs: :SYSTEM
+</code></pre>
+
+<p><strong>pathname</strong></p>
+<pre><code class="lisp">Initargs: :PATHNAME
+</code></pre>
+
+<h3 id="package-system">package-system</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<h3 id="parent-component">parent-component</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A PARENT-COMPONENT is a component that may have children.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:children</strong></p>
+<pre><code class="lisp">Initargs: :COMPONENTS
+</code></pre>
+
+<p><strong>asdf/component:children-by-name</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<p><strong>asdf/component:default-component-class</strong></p>
+<pre><code class="lisp">Initargs: :DEFAULT-COMPONENT-CLASS
+Readers: ASDF/COMPONENT:MODULE-DEFAULT-COMPONENT-CLASS
+Writers: (SETF ASDF/COMPONENT:MODULE-DEFAULT-COMPONENT-CLASS)
+</code></pre>
+
+<h3 id="perform">perform</h3>
+<pre><code class="lisp">Generic Function: (perform operation component)
+</code></pre>
+
+<p><code>perform</code> an action, consuming its input-files and building its output-files</p>
+<h3 id="perform-plan">perform-plan</h3>
+<pre><code class="lisp">Generic Function: (perform-plan plan &amp;key)
+</code></pre>
+
+<p>Actually perform a plan and build the requested actions</p>
+<h3 id="perform-with-restarts">perform-with-restarts</h3>
+<pre><code class="lisp">Generic Function: (perform-with-restarts operation component)
+</code></pre>
+
+<p><a href="#perform">perform</a> an action in a context where suitable restarts are in place.</p>
+<h3 id="precompiled-system">precompiled-system</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Class For a system that is delivered as a precompiled fasl</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/system:build-pathname</strong></p>
+<pre><code class="lisp">Initargs: :FASL, :FASB
+</code></pre>
+
+<h3 id="prepare-bundle-op">prepare-bundle-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation class for loading the bundles of a system's dependencies</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:sideway-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/LISP-ACTION:LOAD-OP
+</code></pre>
+
+<h3 id="prepare-op">prepare-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Load the dependencies for the COMPILE-OP or LOAD-OP of a given COMPONENT.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:sideway-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/LISP-ACTION:LOAD-OP
+</code></pre>
+
+<h3 id="prepare-source-op">prepare-source-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation for loading the dependencies of a Lisp file as source.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:sideway-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/LISP-ACTION:LOAD-SOURCE-OP
+</code></pre>
+
+<h3 id="primary-system-name">primary-system-name</h3>
+<pre><code class="lisp">Function: (primary-system-name system-designator)
+</code></pre>
+
+<p>Given a system designator NAME, return the name of the corresponding primary system,
+after which the .asd file is named. That's the first component when dividing the name
+as a string by / slashes. A component designates its system.</p>
+<h3 id="process-source-registry">process-source-registry</h3>
+<pre><code class="lisp">Generic Function: (process-source-registry spec &amp;key inherit register)
+</code></pre>
+
+<h3 id="program-op">program-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>create an executable file from the system and its dependencies</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle:bundle-type</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: :PROGRAM
+</code></pre>
+
+<h3 id="program-system">program-system</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/bundle:prologue-code</strong></p>
+<pre><code class="lisp">Initargs: :PROLOGUE-CODE
+Readers: ASDF/BUNDLE:PROLOGUE-CODE
+</code></pre>
+
+<p><strong>asdf/bundle:epilogue-code</strong></p>
+<pre><code class="lisp">Initargs: :EPILOGUE-CODE
+Readers: ASDF/BUNDLE:EPILOGUE-CODE
+</code></pre>
+
+<p><strong>asdf/bundle::no-uiop</strong></p>
+<pre><code class="lisp">Initargs: :NO-UIOP
+</code></pre>
+
+<p><strong>asdf/bundle::prefix-lisp-object-files</strong></p>
+<pre><code class="lisp">Initargs: :PREFIX-LISP-OBJECT-FILES
+</code></pre>
+
+<p><strong>asdf/bundle::postfix-lisp-object-files</strong></p>
+<pre><code class="lisp">Initargs: :POSTFIX-LISP-OBJECT-FILES
+</code></pre>
+
+<p><strong>asdf/bundle::extra-object-files</strong></p>
+<pre><code class="lisp">Initargs: :EXTRA-OBJECT-FILES
+</code></pre>
+
+<p><strong>asdf/bundle::extra-build-args</strong></p>
+<pre><code class="lisp">Initargs: :EXTRA-BUILD-ARGS
+</code></pre>
+
+<h3 id="register-immutable-system">register-immutable-system</h3>
+<pre><code class="lisp">Function: (register-immutable-system system-name &amp;rest keys)
+</code></pre>
+
+<p>Register <code>system-name</code> as preloaded and immutable.
+It will automatically be considered as passed to FORCE-NOT in a plan.</p>
+<h3 id="register-preloaded-system">register-preloaded-system</h3>
+<pre><code class="lisp">Function: (register-preloaded-system system-name &amp;rest keys &amp;key (version t)
+           &amp;allow-other-keys)
+</code></pre>
+
+<p>Register a system as being preloaded. If the system has not been loaded from the filesystem
+yet, or if its build information is later cleared with <a href="#clear-system">clear-system</a>, a dummy system will be
+registered without backing filesystem information, based on <code>keys</code> (e.g. to provide a <code>version</code>).
+If <code>version</code> is the default T, and a system was already loaded, then its version will be preserved.</p>
+<h3 id="register-system-packages">register-system-packages</h3>
+<pre><code class="lisp">Function: (register-system-packages system packages)
+</code></pre>
+
+<p>Register <code>system</code> as providing <code>packages</code>.</p>
+<h3 id="registered-system">registered-system</h3>
+<pre><code class="lisp">Function: (registered-system name)
+</code></pre>
+
+<p>Return a system of given <code>name</code> that was registered already,
+if such a system exists.  <code>name</code> is a system designator, to be
+normalized by <a href="#coerce-name">coerce-name</a>. The value returned is a system object,
+or NIL if not found.</p>
+<h3 id="registered-systems">registered-systems</h3>
+<pre><code class="lisp">Function: (registered-systems)
+</code></pre>
+
+<p>Return a list of the names of every registered system.</p>
+<h3 id="require-system">require-system</h3>
+<pre><code class="lisp">Function: (require-system system &amp;rest keys &amp;key &amp;allow-other-keys)
+</code></pre>
+
+<p>Ensure the specified <code>system</code> is loaded, passing the <code>keys</code> to <a href="#operate">operate</a>, but do not update the
+system or its dependencies if it has already been loaded.</p>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A SYSTEM subclass whose processing is handled by
+the implementation's REQUIRE rather than by internal ASDF mechanisms.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:module</strong></p>
+<pre><code class="lisp">Initargs: :MODULE
+</code></pre>
+
+<h3 id="required-components">required-components</h3>
+<pre><code class="lisp">Function: (required-components system &amp;rest keys &amp;key
+           (goal-operation (quote load-op)) &amp;allow-other-keys)
+</code></pre>
+
+<p>Given a <code>system</code> and a <code>goal-operation</code> (default <a href="#load-op">load-op</a>), traverse the dependencies and
+return a list of the components involved in building the desired action.</p>
+<h3 id="resolve-location">resolve-location</h3>
+<pre><code class="lisp">Function: (resolve-location x &amp;key ensure-directory wilden directory)
+</code></pre>
+
+<p>Resolve location designator <code>x</code> into a PATHNAME</p>
+<h3 id="run-shell-command">run-shell-command</h3>
+<pre><code class="lisp">Function: (run-shell-command control-string &amp;rest args)
+</code></pre>
+
+<p>PLEASE DO NOT USE. This function is not just DEPRECATED, but also dysfunctional.
+Please use UIOP:RUN-PROGRAM instead.</p>
+<h3 id="search-for-system-definition">search-for-system-definition</h3>
+<pre><code class="lisp">Function: (search-for-system-definition system)
+</code></pre>
+
+<h3 id="selfward-operation">selfward-operation</h3>
+<pre><code class="lisp">Generic Function: (selfward-operation object)
+</code></pre>
+
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A SELFWARD-OPERATION depends on another operation on the same component.
+I.e., if O is a SELFWARD-OPERATION, and its SELFWARD-OPERATION designates a list of operations L,
+then the action (O . C) of O on component C depends on each (S . C) for S in L.
+E.g. before a component may be loaded by LOAD-OP, it must have been compiled by COMPILE-OP.
+A operation-designator designates a singleton list of the designated operation;
+a list of operation-designators designates the list of designated operations;
+NIL is not a valid operation designator in that context.  Note that any dependency
+ordering between the operations in a list of SELFWARD-OPERATION should be specified separately
+in the respective operation's COMPONENT-DEPENDS-ON methods so that they be scheduled properly.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Type: (OR ASDF/ACTION::OPERATION-DESIGNATOR LIST)
+Allocation: :CLASS
+Readers: ASDF/ACTION:SELFWARD-OPERATION
+</code></pre>
+
+<h3 id="sequential-plan">sequential-plan</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Simplest, default plan class, accumulating a sequence of actions</p>
+<h3 id="sideway-operation">sideway-operation</h3>
+<pre><code class="lisp">Generic Function: (sideway-operation object)
+</code></pre>
+
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>A SIDEWAY-OPERATION has dependencies that propagate "sideway" to siblings
+that a component depends on. I.e. if O is a SIDEWAY-OPERATION, and its SIDEWAY-OPERATION slot
+designates operation S (where NIL designates O itself), then the action (O . C) of O on component C
+depends on each of (S . D) where D is a declared dependency of C.
+E.g. in order for a COMPONENT to be prepared for loading or compiling with PREPARE-OP,
+each of its declared dependencies must first be loaded as by LOAD-OP.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:sideway-operation</strong></p>
+<pre><code class="lisp">Type: ASDF/ACTION::OPERATION-DESIGNATOR
+Allocation: :CLASS
+Readers: ASDF/ACTION:SIDEWAY-OPERATION
+</code></pre>
+
+<h3 id="source-file">source-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp">Readers: ASDF/COMPONENT:SOURCE-FILE-EXPLICIT-TYPE
+Writers: (SETF ASDF/COMPONENT:SOURCE-FILE-EXPLICIT-TYPE)
+</code></pre>
+
+<h3 id="source-file-type">source-file-type</h3>
+<pre><code class="lisp">Generic Function: (source-file-type component system)
+</code></pre>
+
+<p>DEPRECATED. Use the <a href="#file-type">file-type</a> of a <code>component</code> instead.</p>
+<h3 id="static-file">static-file</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Component for a file to be included as is in the build output</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>type</strong></p>
+<pre><code class="lisp"></code></pre>
+
+<h3 id="sysdef-immutable-system-search">sysdef-immutable-system-search</h3>
+<pre><code class="lisp">Function: (sysdef-immutable-system-search requested)
+</code></pre>
+
+<h3 id="sysdef-preloaded-system-search">sysdef-preloaded-system-search</h3>
+<pre><code class="lisp">Function: (sysdef-preloaded-system-search requested)
+</code></pre>
+
+<p>If <code>requested</code> names a system registered as preloaded, return a new system
+with its registration information.</p>
+<h3 id="system">system</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>SYSTEM is the base class for top-level components that users may request
+ASDF to build.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:description</strong></p>
+<pre><code class="lisp">Readers: ASDF/SYSTEM:SYSTEM-DESCRIPTION
+Writers: (SETF ASDF/SYSTEM:SYSTEM-DESCRIPTION)
+</code></pre>
+
+<p><strong>asdf/component:long-description</strong></p>
+<pre><code class="lisp">Readers: ASDF/SYSTEM:SYSTEM-LONG-DESCRIPTION
+Writers: (SETF ASDF/SYSTEM:SYSTEM-LONG-DESCRIPTION)
+</code></pre>
+
+<p><strong>asdf/component:author</strong></p>
+<pre><code class="lisp">Initargs: :AUTHOR
+Readers: ASDF/SYSTEM:SYSTEM-AUTHOR
+Writers: (SETF ASDF/SYSTEM:SYSTEM-AUTHOR)
+</code></pre>
+
+<p><strong>asdf/component:maintainer</strong></p>
+<pre><code class="lisp">Initargs: :MAINTAINER
+Readers: ASDF/SYSTEM:SYSTEM-MAINTAINER
+Writers: (SETF ASDF/SYSTEM:SYSTEM-MAINTAINER)
+</code></pre>
+
+<p><strong>asdf/component:licence</strong></p>
+<pre><code class="lisp">Initargs: :LICENSE, :LICENCE
+Readers: ASDF/SYSTEM:SYSTEM-LICENSE, ASDF/SYSTEM:SYSTEM-LICENCE
+Writers: (SETF ASDF/SYSTEM:SYSTEM-LICENSE), (SETF ASDF/SYSTEM:SYSTEM-LICENCE)
+</code></pre>
+
+<p><strong>asdf/system:homepage</strong></p>
+<pre><code class="lisp">Initargs: :HOMEPAGE
+Readers: ASDF/SYSTEM:SYSTEM-HOMEPAGE
+Writers: (SETF ASDF/SYSTEM:SYSTEM-HOMEPAGE)
+</code></pre>
+
+<p><strong>asdf/system:bug-tracker</strong></p>
+<pre><code class="lisp">Initargs: :BUG-TRACKER
+Readers: ASDF/SYSTEM:SYSTEM-BUG-TRACKER
+Writers: (SETF ASDF/SYSTEM:SYSTEM-BUG-TRACKER)
+</code></pre>
+
+<p><strong>asdf/system:mailto</strong></p>
+<pre><code class="lisp">Initargs: :MAILTO
+Readers: ASDF/SYSTEM:SYSTEM-MAILTO
+Writers: (SETF ASDF/SYSTEM:SYSTEM-MAILTO)
+</code></pre>
+
+<p><strong>asdf/system:long-name</strong></p>
+<pre><code class="lisp">Initargs: :LONG-NAME
+Readers: ASDF/SYSTEM:SYSTEM-LONG-NAME
+Writers: (SETF ASDF/SYSTEM:SYSTEM-LONG-NAME)
+</code></pre>
+
+<p><strong>asdf/system:source-control</strong></p>
+<pre><code class="lisp">Initargs: :SOURCE-CONTROL
+Readers: ASDF/SYSTEM:SYSTEM-SOURCE-CONTROL
+Writers: (SETF ASDF/SYSTEM:SYSTEM-SOURCE-CONTROL)
+</code></pre>
+
+<p><strong>asdf/system:builtin-system-p</strong></p>
+<pre><code class="lisp">Initargs: :BUILTIN-SYSTEM-P
+Readers: ASDF/SYSTEM:BUILTIN-SYSTEM-P
+Writers: (SETF ASDF/SYSTEM:BUILTIN-SYSTEM-P)
+</code></pre>
+
+<p><strong>asdf/system:build-pathname</strong></p>
+<pre><code class="lisp">Initargs: :BUILD-PATHNAME
+Readers: ASDF/SYSTEM:COMPONENT-BUILD-PATHNAME
+Writers: (SETF ASDF/SYSTEM:COMPONENT-BUILD-PATHNAME)
+</code></pre>
+
+<p><strong>asdf/system:entry-point</strong></p>
+<pre><code class="lisp">Initargs: :ENTRY-POINT
+Readers: ASDF/SYSTEM:COMPONENT-ENTRY-POINT
+Writers: (SETF ASDF/SYSTEM:COMPONENT-ENTRY-POINT)
+</code></pre>
+
+<p><strong>asdf/component:source-file</strong></p>
+<pre><code class="lisp">Initargs: :SOURCE-FILE
+Readers: ASDF/SYSTEM:SYSTEM-SOURCE-FILE
+Writers: (SETF ASDF/SYSTEM:SYSTEM-SOURCE-FILE)
+</code></pre>
+
+<p><strong>asdf/component:defsystem-depends-on</strong></p>
+<pre><code class="lisp">Initargs: :DEFSYSTEM-DEPENDS-ON
+Readers: ASDF/SYSTEM:SYSTEM-DEFSYSTEM-DEPENDS-ON
+</code></pre>
+
+<p><strong>asdf/system::depends-on</strong></p>
+<pre><code class="lisp">Initargs: :DEFSYSTEM-DEPENDS-ON
+Readers: ASDF/SYSTEM:SYSTEM-DEFSYSTEM-DEPENDS-ON
+</code></pre>
+
+<p><strong>asdf/system::weakly-depends-on</strong></p>
+<pre><code class="lisp">Readers: ASDF/SYSTEM:SYSTEM-WEAKLY-DEPENDS-ON
+</code></pre>
+
+<h3 id="system-author">system-author</h3>
+<pre><code class="lisp">Generic Function: (system-author object)
+</code></pre>
+
+<h3 id="system-bug-tracker">system-bug-tracker</h3>
+<pre><code class="lisp">Generic Function: (system-bug-tracker object)
+</code></pre>
+
+<h3 id="system-definition-error">system-definition-error</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<h3 id="system-definition-pathname">system-definition-pathname</h3>
+<pre><code class="lisp">Function: (system-definition-pathname x)
+</code></pre>
+
+<p>DEPRECATED. This function used to expose ASDF internals with subtle
+differences with respect to user expectations, that have been refactored
+away since. We recommend you use ASDF:<a href="#system-source-file">system-source-file</a> instead for a
+mostly compatible replacement that we're supporting, or even
+ASDF:<a href="#system-source-directory">system-source-directory</a> or ASDF:<a href="#system-relative-pathname">system-relative-pathname</a>
+if that's whay you mean.</p>
+<h3 id="system-defsystem-depends-on">system-defsystem-depends-on</h3>
+<pre><code class="lisp">Generic Function: (system-defsystem-depends-on object)
+</code></pre>
+
+<h3 id="system-depends-on">system-depends-on</h3>
+<pre><code class="lisp">Generic Function: (system-depends-on object)
+</code></pre>
+
+<h3 id="system-description">system-description</h3>
+<pre><code class="lisp">Generic Function: (system-description object)
+</code></pre>
+
+<h3 id="system-homepage">system-homepage</h3>
+<pre><code class="lisp">Generic Function: (system-homepage object)
+</code></pre>
+
+<h3 id="system-licence">system-licence</h3>
+<pre><code class="lisp">Generic Function: (system-licence object)
+</code></pre>
+
+<h3 id="system-license">system-license</h3>
+<pre><code class="lisp">Generic Function: (system-license object)
+</code></pre>
+
+<h3 id="system-long-description">system-long-description</h3>
+<pre><code class="lisp">Generic Function: (system-long-description object)
+</code></pre>
+
+<h3 id="system-long-name">system-long-name</h3>
+<pre><code class="lisp">Generic Function: (system-long-name object)
+</code></pre>
+
+<h3 id="system-mailto">system-mailto</h3>
+<pre><code class="lisp">Generic Function: (system-mailto object)
+</code></pre>
+
+<h3 id="system-maintainer">system-maintainer</h3>
+<pre><code class="lisp">Generic Function: (system-maintainer object)
+</code></pre>
+
+<h3 id="system-out-of-date">system-out-of-date</h3>
+<pre><code class="lisp">Condition
+</code></pre>
+
+<p>condition signaled when a system is detected as being out of date</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/component:name</strong></p>
+<pre><code class="lisp">Initargs: :NAME
+Readers: ASDF/COMPONENT:COMPONENT-NAME
+</code></pre>
+
+<h3 id="system-output-translations-directory-pathname">system-output-translations-directory-pathname</h3>
+<pre><code class="lisp">Function: (system-output-translations-directory-pathname &amp;key
+           (direction :input))
+</code></pre>
+
+<h3 id="system-output-translations-pathname">system-output-translations-pathname</h3>
+<pre><code class="lisp">Function: (system-output-translations-pathname &amp;key (direction :input))
+</code></pre>
+
+<h3 id="system-registered-p">system-registered-p</h3>
+<pre><code class="lisp">Function: (system-registered-p name)
+</code></pre>
+
+<p>DEPRECATED. Return a generalized boolean that is true if a system of given <code>name</code> was registered already.
+<code>name</code> is a system designator, to be normalized by <a href="#coerce-name">coerce-name</a>.
+The value returned if true is a pair of a timestamp and a system object.</p>
+<h3 id="system-relative-pathname">system-relative-pathname</h3>
+<pre><code class="lisp">Function: (system-relative-pathname system name &amp;key type)
+</code></pre>
+
+<p>Given a <code>system</code>, and a (Unix-style relative path) <code>name</code> of a file (or directory) of given <code>type</code>,
+return the absolute pathname of a corresponding file under that system's source code pathname.</p>
+<h3 id="system-source-control">system-source-control</h3>
+<pre><code class="lisp">Generic Function: (system-source-control object)
+</code></pre>
+
+<h3 id="system-source-directory">system-source-directory</h3>
+<pre><code class="lisp">Function: (system-source-directory system-designator)
+</code></pre>
+
+<p>Return a pathname object corresponding to the directory
+in which the system specification (.asd file) is located.</p>
+<h3 id="system-source-file">system-source-file</h3>
+<pre><code class="lisp">Generic Function: (system-source-file system)
+</code></pre>
+
+<p>Return the source file in which system is defined.</p>
+<h3 id="system-source-registry">system-source-registry</h3>
+<pre><code class="lisp">Function: (system-source-registry &amp;key (direction :input))
+</code></pre>
+
+<h3 id="system-source-registry-directory">system-source-registry-directory</h3>
+<pre><code class="lisp">Function: (system-source-registry-directory &amp;key (direction :input))
+</code></pre>
+
+<h3 id="system-weakly-depends-on">system-weakly-depends-on</h3>
+<pre><code class="lisp">Generic Function: (system-weakly-depends-on object)
+</code></pre>
+
+<h3 id="test-op">test-op</h3>
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>Operation for running the tests for system.
+If the tests fail, an error will be signaled.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:selfward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Initform: 'ASDF/LISP-ACTION:LOAD-OP
+</code></pre>
+
+<h3 id="test-system">test-system</h3>
+<pre><code class="lisp">Function: (test-system system &amp;rest args &amp;key force force-not verbose version
+           &amp;allow-other-keys)
+</code></pre>
+
+<p>Shorthand for <code>(asdf:operate 'asdf:test-op system)</code>. See <a href="#operate">operate</a> for details.</p>
+<h3 id="traverse">traverse</h3>
+<pre><code class="lisp">Generic Function: (traverse operation component &amp;key plan-class
+                   &amp;allow-other-keys)
+</code></pre>
+
+<p>DEPRECATED. Use <a href="#make-plan">make-plan</a> and PLAN-ACTIONS, or <a href="#required-components">required-components</a>,
+or some other supported interface instead.</p>
+<p>Generate and return a plan for performing <code>operation</code> on <code>component</code>.</p>
+<p>The plan returned is a list of dotted-pairs. Each pair is the CONS
+of ASDF operation object and a <code>component</code> object. The pairs will be
+processed in order by <a href="#operate">operate</a>.</p>
+<h3 id="upgrade-asdf">upgrade-asdf</h3>
+<pre><code class="lisp">Function: (upgrade-asdf)
+</code></pre>
+
+<p>Try to upgrade of ASDF. If a different version was used, return T.
+   We need do that before we operate on anything that may possibly depend on ASDF.</p>
+<h3 id="upward-operation">upward-operation</h3>
+<pre><code class="lisp">Generic Function: (upward-operation object)
+</code></pre>
+
+<pre><code class="lisp">Class
+</code></pre>
+
+<p>An UPWARD-OPERATION has dependencies that propagate up the component hierarchy.
+I.e., if O is an instance of UPWARD-OPERATION, and its UPWARD-OPERATION slot designates operation U,
+then the action (O . C) of O on a component C that has the parent P will depends on (U . P).
+The default value for slot UPWARD-OPERATION is NIL, which designates the operation O itself.
+E.g. in order for a COMPONENT to be prepared for loading or compiling with PREPARE-OP, its PARENT
+must first be prepared for loading or compiling with PREPARE-OP.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>asdf/action:upward-operation</strong></p>
+<pre><code class="lisp">Allocation: :CLASS
+Readers: ASDF/ACTION:UPWARD-OPERATION
+</code></pre>
+
+<h3 id="user-output-translations-directory-pathname">user-output-translations-directory-pathname</h3>
+<pre><code class="lisp">Function: (user-output-translations-directory-pathname &amp;key (direction :input))
+</code></pre>
+
+<h3 id="user-output-translations-pathname">user-output-translations-pathname</h3>
+<pre><code class="lisp">Function: (user-output-translations-pathname &amp;key (direction :input))
+</code></pre>
+
+<h3 id="user-source-registry">user-source-registry</h3>
+<pre><code class="lisp">Function: (user-source-registry &amp;key (direction :input))
+</code></pre>
+
+<h3 id="user-source-registry-directory">user-source-registry-directory</h3>
+<pre><code class="lisp">Function: (user-source-registry-directory &amp;key (direction :input))
+</code></pre>
+
+<h3 id="version-satisfies">version-satisfies</h3>
+<pre><code class="lisp">Generic Function: (version-satisfies component version)
+</code></pre>
+
+<p>Check whether a <code>component</code> satisfies the constraint of being at least as recent
+as the specified <code>version</code>, which must be a string of dot-separated natural numbers, or NIL.</p>
               
             </div>
           </div>
@@ -243,6 +2562,10 @@ For a detailed description of changes see our Changelog</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../alexandria/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
@@ -251,7 +2574,7 @@ For a detailed description of changes see our Changelog</p>
       <script src="../search/main.js" defer></script>
     <script defer>
         window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
+            SphinxRtdTheme.Navigation.enable(false);
         };
     </script>
 

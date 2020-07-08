@@ -79,6 +79,8 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Defacto libraries</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="asdf/">asdf - Build System</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="alexandria/">alexandria - Commonly Used Utilities</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="bordeaux-threads/">bordeaux-threads - Threading</a>
@@ -97,14 +99,14 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="utilities/">utilities - A collection of utility libraries</a>
+                    </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
                     <li class="toctree-l1"><a class="reference internal" href="numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="unix-opts/">unix-opts - cmd line argument parser</a>
-                    </li>
-                    <li class="toctree-l1"><a class="reference internal" href="utilities/">utilities - A collection of some more utility libraries</a>
                     </li>
                 </ul>
       </div>
@@ -139,14 +141,14 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="common-lispreadthedocs">common-lisp.readthedocs</h1>
+                <h1 id="common-lisp-librariesreadthedocsio">common-lisp-libraries.readthedocs.io</h1>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
 <hr />
 <h2 id="introduction">Introduction</h2>
 <p>Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have <em>some</em> objective component to it.</p>
 <h2 id="libraries">Libraries</h2>
 <h3 id="installation"><span id="defacto-installation">Installation</span></h3>
-<p>Each of the below libraries can be installed using quicklisp (except quicklisp of course!):</p>
+<p>Each of the below libraries (except asdf and quicklisp) can be installed using quicklisp:</p>
 <pre><code class="lisp">(ql:quickload &quot;alexandria&quot;) ; for example
 </code></pre>
 
@@ -168,6 +170,7 @@ installing quicklisp.</p>
 <p>(See the <a href="https://common-lisp-libraries.readthedocs.io">html version of this page</a>, rather than the markdown version for the working links below.)</p>
 <h4 id="defacto-libraries">Defacto libraries</h4>
 <ul>
+<li><a href="./asdf/">asdf</a> - build system for softwares (packages*)</li>
 <li><a href="./alexandria/">alexandria</a> - a utility library</li>
 <li><a href="./bordeaux-threads/">bordeaux-threads</a> - library for threading </li>
 <li><a href="./cl-ppcre/">cl-ppcre</a> - regular expressions</li>
@@ -177,13 +180,15 @@ installing quicklisp.</p>
 <li><a href="./iterate/">iterate</a> - a lispy extensible alternative to <code>loop</code></li>
 <li><a href="./postmodern/">postmodern</a> - PostgreSQL programming interace</li>
 <li><a href="./quicklisp/">quicklisp</a> - library manager</li>
+<li><a href="./utilities/">utilities</a> - a collection of utility libraries</li>
 </ul>
 <h4 id="not-yet-defacto">Not yet defacto</h4>
 <ul>
 <li><a href="./numcl/">numcl</a> - lispy clone of numpy</li>
 <li><a href="./unix-opts/">unix-opts</a> - minimalistic command line options parser</li>
-<li><a href="./utilities/">utilities</a> - a collection of some more utility libraries</li>
 </ul>
+<p>*What one might call packages in other languages are called systems in Common Lisp parlance. Instead, the word <code>package</code> in Common Lisp refers to a data structure providing namespacing
+for symbols. By contrast, a system is a tool to organize a bunch of files, in accordance with dependencies, and specifying how to perform certain actions on the system. A single system may contain multiple packages. See <a href="https://stackoverflow.com/questions/45642330/why-do-many-common-lisp-systems-use-a-single-packages-lisp-file/45643829#45643829">this StackOverFlow answer</a> for a detailed discussion.</p>
 <h2 id="previous-efforts">Previous Efforts</h2>
 <p>Documentation efforts have been made at:</p>
 <ul>
@@ -194,7 +199,7 @@ installing quicklisp.</p>
 <p><a href="http://quickref.common-lisp.net/">Quickref</a>: Frankly, this is just too much. As a user, all I want to know is "What can this library do? And, how do I do it? (What functions, macros or anything is available?)" Therefore, for a user, the only good place I found was the Packages section here. It is, after all, a Reference Manual. Another excuse is, again, that I do want human intervention in documentation.</p>
 </li>
 <li>
-<p><a href="http://common-lisp.net/">common-lisp.net</a>: Ultimately, this seems to be the place for everything. And indeed, most of the work on the site you are reading is directly based on the official documentation. An attempt is made to "simplify" wherever need is felt.</p>
+<p><a href="http://common-lisp.net/">common-lisp.net</a>: Ultimately, this is the place for most everything Common Lisp. And indeed, most of the work here is based on the official documentation. An attempt is made to "simplify" wherever need is felt.</p>
 </li>
 <li>
 <p><a href="http://cliki.net/">CLiki</a>: Again, layout and "at a glance"!</p>
@@ -221,13 +226,6 @@ installing quicklisp.</p>
           </div>
           <footer>
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="alexandria/" class="btn btn-neutral float-right" title="alexandria - Commonly Used Utilities">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-    </div>
-  
 
   <hr/>
 
@@ -251,7 +249,7 @@ installing quicklisp.</p>
       
       
       
-        <span style="margin-left: 15px"><a href="alexandria/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="asdf/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
@@ -260,7 +258,7 @@ installing quicklisp.</p>
       <script src="search/main.js" defer></script>
     <script defer>
         window.onload = function () {
-            SphinxRtdTheme.Navigation.enable(true);
+            SphinxRtdTheme.Navigation.enable(false);
         };
     </script>
 
@@ -269,5 +267,5 @@ installing quicklisp.</p>
 
 <!--
 MkDocs version : 1.1
-Build Date UTC : 2020-06-07 18:37:43
+Build Date UTC : 2020-07-08 07:55:22
 -->

@@ -25,10 +25,20 @@ databases](https://postgresql.org). The focus has been on:
 
 The biggest differences between this library and
 [clsql](http://quickdocs.org/clsql/) or
-[cl-dbi](https://github.com/fukamachi/cl-dbi) are that Postmodern has no
+[cl-dbi](https://github.com/fukamachi/cl-dbi) or to some extent,
+[mito](https://github.com/fukamachi/mito), are that Postmodern has no
 intention of being portable across different SQL implementations (it
 embraces non-standard PostgreSQL features), and approaches extensions
 like lispy SQL and database access objects in a quite different way.
+
+In addition, there is no builtin support for [migrations](#migrations), for which, you may want to use other libraries -
+
+- [cl-migratum](https://github.com/dnaeon/cl-migratum)
+- [database-migrations](https://github.com/madnificent/database-migrations)
+- [postmodern-passenger-pigeon](https://github.com/fisxoj/postmodern-passenger-pigeon/)
+- [cl-migrations](https://github.com/m-creations/cl-migrations)
+
+[mito](https://github.com/fukamachi/mito), along with being an ORM, also provides support for migrations.
 
 ## GETTING STARTED
 
@@ -347,9 +357,6 @@ should never be allowed because of the danger of losing critical production data
 
 It may be obvious, but it is a good reminder that any migration should start with
 creating a backup which has been tested.
-
-[madnificent/database-migrations](https://github.com/madnificent/database-migrations)
-provides some simple migration tools for postmodern.
 
 ### Other useful constructs
 

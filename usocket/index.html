@@ -431,12 +431,14 @@ helloworld
 <p>See <a href="http://lispcookbook.github.io/cl-cookbook/sockets.html">the Cookbook</a>.</p>
 <h3 id="conventions">Conventions</h3>
 <p>Specification of a <code>host</code> or <code>local-host</code> parameter
-A <code>host</code> or <code>local-host</code> parameter may be any one of
--   32-bit positive integer,
--   A four element integer list representing IPv4 address, i.e.
-    <code>#(127 0 0 1)</code>
--   a string containing an IP addres in dotted notation, or
--   a host name to be resolved through DNS lookup.</p>
+A <code>host</code> or <code>local-host</code> parameter may be any one of</p>
+<ul>
+<li>32-bit positive integer,</li>
+<li>A four element integer list representing IPv4 address, i.e.
+    <code>#(127 0 0 1)</code></li>
+<li>a string containing an IP addres in dotted notation, or</li>
+<li>a host name to be resolved through DNS lookup.</li>
+</ul>
 <h3 id="sockets-and-servers">Sockets and Servers</h3>
 <p>The system consists of two subsystems <code>usocket</code> and <code>usocket-server</code>. Loading <code>usocket</code>
 avoids loading the server related functions and helps keeps the core small.
@@ -477,10 +479,6 @@ in the ASDF file. Both these work with the <code>:usocket</code> package.</p>
 <p>The following are available in the <code>usocket</code> package after loading both <code>usocket</code> and <code>usocket-server</code> systems.</p>
 <ul>
 <li><a href="#socket-server">socket-server</a>
-<br/>
-<br/></li>
-<li><a href="#udp-event-loop">udp-event-loop</a></li>
-<li><a href="#tcp-event-loop">tcp-event-loop</a>
 <br/>
 <br/></li>
 <li><a href="#echo-tcp-handler">echo-tcp-handler</a>

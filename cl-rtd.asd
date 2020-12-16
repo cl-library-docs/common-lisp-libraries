@@ -1,14 +1,15 @@
 (asdf:defsystem "cl-rtd"
-  :depends-on (:alexandria
-               :str
-               :iterate
-               :reader
-               :simple-arrows
-               ;; simple-arrows: https://github.com/digikar99/simple-arrows
-               :closer-mop
-               ;; we are also using swank/backend; but that leads to some
-               ;; not-yet-debugged-by-me errors
-               :trivial-package-local-nicknames)
+  :depends-on ("alexandria"
+               "arrows"
+               "cl-interpol"
+               "closer-mop"
+               "introspect-environment"
+               "iterate"
+               "str"
+               "reader+swank"
+               "trivial-types"
+               #-swank "swank"
+               "trivial-package-local-nicknames")
   :pathname #P"src/"
   :components ((:file "package")
                (:file "utilities")

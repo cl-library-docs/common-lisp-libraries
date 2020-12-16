@@ -1,6 +1,6 @@
 (in-package :cl-rtd)
 
-(reader:enable-reader-syntax 'lambda 'get-val)
+(reader:enable-reader-syntax 'get-val)
 
 (defun map-tree (function tree)
   (cond ((null tree) ())
@@ -35,11 +35,23 @@
                      (null "")))
                  strings/chars)))
 
+(defmacro lm (&rest body-vars)
+  `(lambda ,(butlast body-vars)
+     ,@(last body-vars)))
+
 (define-constant +lisp-symbol-regex+
     `(:sequence (:register
                  (:greedy-repetition 1 nil
                                      (:alternation (:CHAR-CLASS (:RANGE #\A #\Z))
                                                    #\-))))
+  :test 'equal)
+
+(define-constant +quoted-lisp-symbol-regex+
+    `(:sequence #\`
+                (:register (:greedy-repetition 1 nil
+                                               (:alternation (:CHAR-CLASS (:RANGE #\a #\z))
+                                                             #\-)))
+                #\`)
   :test 'equal)
 
 (defun requote-with-backquote (string)
@@ -49,7 +61,7 @@
     (ppcre:regex-replace-all "(\\`[^\\s^\(^\)]*')" string #'%requote-with-backquote)))
 
 (defun hyperlink-samedoc-symbols (string current-symbol)
-  "Converts SYMBOL to [symbol](#symbol) if SYMBOL is in *SAMEDOC-SYMBOLS*."
+  "Converts SYMBOL or `symbol` to [symbol](#symbol) if SYMBOL is in *SAMEDOC-SYMBOLS*."
   (ppcre-flet ((%hyperlink-samedoc-symbols
                 (let* ((symbol-name (subseq target-string [reg-starts 0] [reg-ends 0]))
                        (downcased (string-downcase symbol-name)))
@@ -60,6 +72,8 @@
                       (format nil "[~A](#~A)" downcased downcased)
                       symbol-name))))
     (ppcre:regex-replace-all +lisp-symbol-regex+ string
+                             #'%hyperlink-samedoc-symbols)
+    (ppcre:regex-replace-all +quoted-lisp-symbol-regex+ string
                              #'%hyperlink-samedoc-symbols)))
 
 (defun quote-self (string current-symbol)

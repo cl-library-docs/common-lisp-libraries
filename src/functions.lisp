@@ -1,11 +1,11 @@
 (in-package :cl-rtd)
 
 ;; This file gets the documentation of Functions, Macros and Generic Functions
-(reader:enable-reader-syntax 'lambda 'get-val)
+(reader:enable-reader-syntax 'get-val)
 
 (defun arglist-symbols (arg-list)
   (let ((special-symbols '(&optional &key)))
-    (iter 
+    (iter
       (for elt in arg-list)
       (for linear
            initially nil
@@ -34,32 +34,34 @@
                                        :test 'string=))
                           (conc "`" (string-downcase symbol-name) "`")
                           symbol-name))))
-        (conc (format nil "~%```lisp~%~A: ~D~%```~%~%"
-                      (cond ((macro-function symbol) "Macro")
-                            ((typep (fdefinition symbol)
-                                    (find-class 'standard-generic-function))
-                             "Generic Function")
-                            (t "Function"))
-                      (map-tree λ(typecase -
-                                   (keyword (string-downcase (format nil "~S" -)))
-                                   (string-designator (string-downcase -))
-                                   (t (write-to-string -)))
-                                (cons symbol arg-list)))
-              (when docstring          
-                (restart-case
-                    (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,^\;]*)"
-                                                  docstring #'quote-args)
-                      ;; Usually, docstring contain symbols in upcase formats. However,
-                      ;; quoted-and-downcased symbols "look nicer". 
-                      ;; A docstring-ed symbol cannot contain a space and '(', ')' characters.
-                      ;; Also assume, full-stops and commas are due to english.
-                      (requote-with-backquote <>)
-                      ;; Some also contain symbols in `format'. We want them to be in `format`.
-                      ;; Ideally they should be hyperlinked elsewhere around the world!
-                      (hyperlink-samedoc-symbols <> symbol)
-                      ;; Too many links? Control using *blacklist-samedoc-symbols*
-                      ;; These functions should be separated 
-                      (quote-self <> symbol))
-                  (continue-ignoring-errors () (format t "Errors on ~D~%" symbol))))
-              #\newline)))))
+        (apply #'conc
+               (format nil "~%```lisp~%~A: ~A~%```~%"
+                       (cond ((macro-function symbol) "Macro")
+                             ((typep (fdefinition symbol)
+                                     (find-class 'standard-generic-function))
+                              "Generic Function")
+                             (t "Function"))
+                       (map-tree (lm elt (typecase elt
+                                           (keyword (string-downcase (format nil "~S" elt)))
+                                           (string-designator (string-downcase elt))
+                                           (t (write-to-string elt))))
+                                 (cons symbol arg-list)))
+               (when docstring
+                 (list #\newline
+                       (restart-case
+                           (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,^\;]*)"
+                                                         docstring #'quote-args)
+                             ;; Usually, docstring contain symbols in upcase formats. However,
+                             ;; quoted-and-downcased symbols "look nicer".
+                             ;; A docstring-ed symbol cannot contain a space and '(', ')' characters.
+                             ;; Also assume, full-stops and commas are due to english.
+                             (requote-with-backquote <>)
+                             ;; Some also contain symbols in `format'. We want them to be in `format`.
+                             ;; Ideally they should be hyperlinked elsewhere around the world!
+                             (hyperlink-samedoc-symbols <> symbol)
+                             ;; Too many links? Control using *blacklist-samedoc-symbols*
+                             ;; These functions should be separated
+                             (quote-self <> symbol))
+                         (continue-ignoring-errors () (format t "Errors on ~D~%" symbol)))
+                       #\newline)))))))
 

@@ -1,12 +1,12 @@
 (in-package :cl-rtd)
 
-(reader:enable-reader-syntax 'lambda 'get-val)
-
 (defun split-and-clean-slots (slots-doc)
   (-<> (str:replace-all "    " "4SPACES" slots-doc)
     (str:split "  " <> :omit-nulls t)
-    (mapcar λ(str:replace-all "4SPACES" "    " -) <>)
-    (remove-if λ(str:starts-with-p (conc *package-name* "::") -) <>)))
+    (mapcar (lm - (str:replace-all "4SPACES" "    " -))
+            <>)
+    (remove-if (lm - (str:starts-with-p (conc *package-name* "::") -))
+               <>)))
 
 (defun class-documentation (class)
   ;; Only slots are documented currently.
@@ -15,7 +15,7 @@
          (conc "<u>**Direct Slots**</u>" #\newline #\newline
                (with-output-to-string (s)
                  (ppcre:do-register-groups (slot-name initarg reader writer)
-                     (*slot-splitting-regex*                      
+                     (*slot-splitting-regex*
                       (ppcre:regex-replace-all (conc "(?-i)" *package-keyword* #\:)
                                                slots
                                                ""))
@@ -85,7 +85,7 @@
 
 (defun format-slot-documentation (slot-doc-list)
   (if-let (processed-doc-list
-           (mapcar (lambda (slot-doc)                     
+           (mapcar (lambda (slot-doc)
                      ;; (write-string slot-doc)
                      (with-output-to-string (s)
                        (ppcre:register-groups-bind (slot-name initarg reader writer)
@@ -124,23 +124,28 @@
 
 (defmethod format-documentation ((slot (eql 'type)) symbol
                                  &optional (docstring (documentation symbol slot)))
-  (when-let (class (ignore-errors (find-class symbol)))
-    (funcall 'conc
-             (format nil "~%```lisp~%~A~%```~%~%"
-                     (cond ((typep class (find-class 'structure-class))
-                            "Structure")
-                           ((typep class (find-class 'standard-class))
-                            "Class")
-                           ((subtypep class (find-class 'condition))
-                            "Condition")
-                           (t (signal "Non-exhaustive cases: ~D" class))))
-             (when docstring
-               (conc (requote-with-backquote docstring)
-                     #\newline
-                     #\newline))
-             (-> class
-                 (direct-slots-documentation)
-                 (split-and-clean-slots)
-                 (format-slot-documentation)))))
+  (let ((class (ignore-errors (find-class symbol))))
+    (when (trivial-types:type-specifier-p symbol)
+      (funcall 'conc
+               (format nil "~%```lisp~%~A~%```~%~%"
+                       (cond ((null class)
+                              "Type")
+                             ((typep class (find-class 'structure-class))
+                              "Structure")
+                             ((typep class (find-class 'standard-class))
+                              "Class")
+                             ((subtypep class (find-class 'condition))
+                              "Condition")
+                             (t (error "Non-exhaustive cases: ~D" class))))
+               (when docstring
+                 (conc (requote-with-backquote docstring)
+                       #\newline
+                       #\newline))
+               (when class
+                 (-> class
+                   direct-slots-documentation
+                   split-and-clean-slots
+                   format-slot-documentation
+                   (hyperlink-samedoc-symbols symbol)))))))
 
 

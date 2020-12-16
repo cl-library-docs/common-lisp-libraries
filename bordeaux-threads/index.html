@@ -151,11 +151,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
@@ -200,7 +204,11 @@
                 <h1 id="bordeaux-threads-threading">bordeaux-threads - Threading</h1>
 <p>Version: 0.8.7
 <br/>
-Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bordeaux-threads - Github</a></p>
+Licence: MIT
+<br/>
+Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bordeaux-threads - Github</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#parallelism-and-concurrency">awesome-cl#parallelism-and-concurrency</a></p>
 <p><em>This page was possible due to the <a href="https://trac.common-lisp.net/bordeaux-threads/wiki/ApiDocumentation">official documentation</a>, albeit its a bit outdated.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
 <hr />
@@ -248,9 +256,8 @@ Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bor
   Implementations and/or users may also make them visible or exported
   in other more traditionally named packages.</p>
 <h3 id="default-special-bindings">*default-special-bindings*</h3>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>This variable holds an alist associating special variable symbols
   to forms to evaluate. Special variables named in this list will
   be locally bound in the new thread before it begins executing user code.</p>
@@ -260,19 +267,16 @@ Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bor
   the same symbol, so defaults may be overridden by consing to the
   head of the list.</p>
 <h3 id="standard-io-bindings">*standard-io-bindings*</h3>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Standard bindings of printer/reader control variables as per CL:WITH-STANDARD-IO-SYNTAX.</p>
 <h3 id="supports-threads-p">*supports-threads-p*</h3>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>This should be set to T if the running instance has thread support.</p>
 <h3 id="acquire-lock">acquire-lock</h3>
-<pre><code class="lisp">Function: (acquire-lock lock &amp;optional (wait-p t))
+<pre><code class="language-lisp">Function: (acquire-lock lock &amp;optional (wait-p t))
 </code></pre>
-
 <p>Acquire the lock <code>lock</code> for the calling thread.
   <code>wait-p</code> governs what happens if the lock is not available: if <code>wait-p</code>
   is true, the calling thread will wait until the lock is available
@@ -284,20 +288,17 @@ Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bor
   that require locks to be safe when acquired recursively, see instead
   <a href="#make-recursive-lock">make-recursive-lock</a> and friends.</p>
 <h3 id="acquire-recursive-lock">acquire-recursive-lock</h3>
-<pre><code class="lisp">Function: (acquire-recursive-lock lock)
+<pre><code class="language-lisp">Function: (acquire-recursive-lock lock)
 </code></pre>
-
 <p>As for <a href="#acquire-lock">acquire-lock</a>, but for recursive locks.</p>
 <h3 id="all-threads">all-threads</h3>
-<pre><code class="lisp">Function: (all-threads)
+<pre><code class="language-lisp">Function: (all-threads)
 </code></pre>
-
 <p>Returns a sequence of all of the threads. This may not
   be freshly-allocated, so the caller should not modify it.</p>
 <h3 id="condition-notify">condition-notify</h3>
-<pre><code class="lisp">Function: (condition-notify condition-variable)
+<pre><code class="language-lisp">Function: (condition-notify condition-variable)
 </code></pre>
-
 <p>Notify at least one of the threads waiting for
   <code>condition-variable</code>. It is implementation-dependent whether one or
   more than one (and possibly all) threads are woken, but if the
@@ -308,9 +309,8 @@ Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bor
 <p><code>condition-notify</code> has no useful return value. In an implementation
   that does not support multiple threads, it has no effect.</p>
 <h3 id="condition-wait">condition-wait</h3>
-<pre><code class="lisp">Function: (condition-wait condition-variable lock &amp;key timeout)
+<pre><code class="language-lisp">Function: (condition-wait condition-variable lock &amp;key timeout)
 </code></pre>
-
 <p>Atomically release <code>lock</code> and enqueue the calling
   thread waiting for <code>condition-variable</code>. The thread will resume when
   another thread has notified it using <a href="#condition-notify">condition-notify</a>; it may also
@@ -335,75 +335,65 @@ Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bor
 <p>In an implementation that does not support multiple threads, this
   function signals an error.</p>
 <h3 id="current-thread">current-thread</h3>
-<pre><code class="lisp">Function: (current-thread)
+<pre><code class="language-lisp">Function: (current-thread)
 </code></pre>
-
 <p>Returns the thread object for the calling
   thread. This is the same kind of object as would be returned by
   <a href="#make-thread">make-thread</a>.</p>
 <h3 id="destroy-thread">destroy-thread</h3>
-<pre><code class="lisp">Function: (destroy-thread thread)
+<pre><code class="language-lisp">Function: (destroy-thread thread)
 </code></pre>
-
 <p>Terminates the thread <code>thread</code>, which is an object
   as returned by <a href="#make-thread">make-thread</a>. This should be used with caution: it is
   implementation-defined whether the thread runs cleanup forms or
   releases its locks first.</p>
 <p>Destroying the calling thread is an error.</p>
 <h3 id="interrupt-thread">interrupt-thread</h3>
-<pre><code class="lisp">Function: (interrupt-thread thread function &amp;rest args)
+<pre><code class="language-lisp">Function: (interrupt-thread thread function &amp;rest args)
 </code></pre>
-
 <p>Interrupt <code>thread</code> and cause it to evaluate <code>function</code>
   before continuing with the interrupted path of execution. This may
   not be a good idea if <code>thread</code> is holding locks or doing anything
   important. On systems that do not support multiple threads, this
   function signals an error.</p>
 <h3 id="join-thread">join-thread</h3>
-<pre><code class="lisp">Function: (join-thread thread)
+<pre><code class="language-lisp">Function: (join-thread thread)
 </code></pre>
-
 <p>Wait until <code>thread</code> terminates. If <code>thread</code> has already terminated,
   return immediately. The return values of the thread function are
   returned.</p>
 <h3 id="lock">lock</h3>
 <h3 id="lock-p">lock-p</h3>
-<pre><code class="lisp">Function: (lock-p object)
+<pre><code class="language-lisp">Function: (lock-p object)
 </code></pre>
-
 <p>Returns T if <code>object</code> is a lock; returns NIL otherwise.</p>
 <h3 id="make-condition-variable">make-condition-variable</h3>
-<pre><code class="lisp">Function: (make-condition-variable &amp;key name)
+<pre><code class="language-lisp">Function: (make-condition-variable &amp;key name)
 </code></pre>
-
 <p>Returns a new condition-variable object for use
   with <a href="#condition-wait">condition-wait</a> and <a href="#condition-notify">condition-notify</a>.</p>
 <h3 id="make-lock">make-lock</h3>
-<pre><code class="lisp">Function: (make-lock &amp;optional name)
+<pre><code class="language-lisp">Function: (make-lock &amp;optional name)
 </code></pre>
-
 <p>Creates a lock (a mutex) whose name is <code>name</code>. If the system does not
   support multiple threads this will still return some object, but it
   may not be used for very much.</p>
 <h3 id="make-recursive-lock">make-recursive-lock</h3>
-<pre><code class="lisp">Function: (make-recursive-lock &amp;optional name)
+<pre><code class="language-lisp">Function: (make-recursive-lock &amp;optional name)
 </code></pre>
-
 <p>Create and return a recursive lock whose name is <code>name</code>. A recursive
   lock differs from an ordinary lock in that a thread that already
   holds the recursive lock can acquire it again without blocking. The
   thread must then release the lock twice before it becomes available
   for another thread.</p>
 <h3 id="make-semaphore">make-semaphore</h3>
-<pre><code class="lisp">Function: (make-semaphore &amp;key name (count 0))
+<pre><code class="language-lisp">Function: (make-semaphore &amp;key name (count 0))
 </code></pre>
-
 <p>Create a semaphore with the supplied <code>name</code> and initial counter value <code>count</code>.</p>
 <h3 id="make-thread">make-thread</h3>
-<pre><code class="lisp">Function: (make-thread function &amp;key name (initial-bindings
+<pre><code class="language-lisp">Function: (make-thread function &amp;key name (initial-bindings
                                            *default-special-bindings*))
 </code></pre>
-
 <p>Creates and returns a thread named <code>name</code>, which will call the
   function <code>function</code> with no arguments: when <code>function</code> returns, the
   thread terminates. <code>name</code> defaults to "Anonymous thread" if unsupplied.</p>
@@ -435,84 +425,72 @@ Repository: <a href="https://github.com/sionescu/bordeaux-threads/">sionescu/bor
 </ul>
 <h3 id="recursive-lock">recursive-lock</h3>
 <h3 id="recursive-lock-p">recursive-lock-p</h3>
-<pre><code class="lisp">Function: (recursive-lock-p object)
+<pre><code class="language-lisp">Function: (recursive-lock-p object)
 </code></pre>
-
 <p>Returns T if <code>object</code> is a recursive lock; returns NIL otherwise.</p>
 <h3 id="release-lock">release-lock</h3>
-<pre><code class="lisp">Function: (release-lock lock)
+<pre><code class="language-lisp">Function: (release-lock lock)
 </code></pre>
-
 <p>Release <code>lock</code>. It is an error to call this unless
   the lock has previously been acquired (and not released) by the same
   thread. If other threads are waiting for the lock, the
   <a href="#acquire-lock">acquire-lock</a> call in one of them will now be able to continue.</p>
 <p>This function has no interesting return value.</p>
 <h3 id="release-recursive-lock">release-recursive-lock</h3>
-<pre><code class="lisp">Function: (release-recursive-lock lock)
+<pre><code class="language-lisp">Function: (release-recursive-lock lock)
 </code></pre>
-
 <p>Release the recursive <code>lock</code>. The lock will only
   become free after as many Release operations as there have been
   Acquire operations. See <a href="#release-lock">release-lock</a> for other information.</p>
 <h3 id="semaphore">semaphore</h3>
 <h3 id="semaphore-p">semaphore-p</h3>
-<pre><code class="lisp">Function: (semaphore-p object)
+<pre><code class="language-lisp">Function: (semaphore-p object)
 </code></pre>
-
 <p>Returns T if <code>object</code> is a semaphore; returns NIL otherwise.</p>
 <h3 id="signal-semaphore">signal-semaphore</h3>
-<pre><code class="lisp">Function: (signal-semaphore semaphore &amp;key (count 1))
+<pre><code class="language-lisp">Function: (signal-semaphore semaphore &amp;key (count 1))
 </code></pre>
-
 <p>Increment <code>semaphore</code> by <code>count</code>. If there are threads waiting on this
 semaphore, then <code>count</code> of them are woken up.</p>
 <h3 id="start-multiprocessing">start-multiprocessing</h3>
-<pre><code class="lisp">Function: (start-multiprocessing)
+<pre><code class="language-lisp">Function: (start-multiprocessing)
 </code></pre>
-
 <p>If the host implementation uses user-level threads, start the
 scheduler and multiprocessing, otherwise do nothing.
 It is safe to call repeatedly.</p>
 <h3 id="thread">thread</h3>
 <h3 id="thread-alive-p">thread-alive-p</h3>
-<pre><code class="lisp">Function: (thread-alive-p thread)
+<pre><code class="language-lisp">Function: (thread-alive-p thread)
 </code></pre>
-
 <p>Returns true if <code>thread</code> is alive, that is, if
   <a href="#destroy-thread">destroy-thread</a> has not been called on it.</p>
 <h3 id="thread-name">thread-name</h3>
-<pre><code class="lisp">Function: (thread-name thread)
+<pre><code class="language-lisp">Function: (thread-name thread)
 </code></pre>
-
 <p>Returns the name of the thread, as supplied to <a href="#make-thread">make-thread</a>.</p>
 <h3 id="thread-yield">thread-yield</h3>
-<pre><code class="lisp">Function: (thread-yield)
+<pre><code class="language-lisp">Function: (thread-yield)
 </code></pre>
-
 <p>Allows other threads to run. It may be necessary or desirable to
   call this periodically in some implementations; others may schedule
   threads automatically. On systems that do not support
   multi-threading, this does nothing.</p>
 <h3 id="threadp">threadp</h3>
-<pre><code class="lisp">Function: (threadp object)
+<pre><code class="language-lisp">Function: (threadp object)
 </code></pre>
-
 <p>Returns true if object is a thread, otherwise NIL.</p>
 <h3 id="timeout">timeout</h3>
 <h3 id="wait-on-semaphore">wait-on-semaphore</h3>
-<pre><code class="lisp">Function: (wait-on-semaphore semaphore &amp;key timeout)
+<pre><code class="language-lisp">Function: (wait-on-semaphore semaphore &amp;key timeout)
 </code></pre>
-
 <p>Decrement the count of <code>semaphore</code> by 1 if the count would not be negative.</p>
 <p>Else blocks until the semaphore can be decremented. Returns generalized boolean
 T on success.</p>
 <p>If <code>timeout</code> is given, it is the maximum number of seconds to wait. If the count
 cannot be decremented in that time, returns NIL without decrementing the count.</p>
 <h3 id="with-lock-held">with-lock-held</h3>
-<pre><code class="lisp">Macro: (with-lock-held (place) &amp;body body)
+<pre><code class="language-lisp">Macro: (with-lock-held (place) &amp;body body)
 </code></pre>
-
 <p>Evaluates <code>body</code> with the lock named by <code>place</code>, the value of which
   is a lock created by <a href="#make-lock">make-lock</a>. Before the forms in <code>body</code> are
   evaluated, the lock is acquired as if by using <a href="#acquire-lock">acquire-lock</a>. After the
@@ -523,14 +501,13 @@ cannot be decremented in that time, returns NIL without decrementing the count.<
   lock is released at debugger entry or at debugger exit when execution
   is restarted.</p>
 <h3 id="with-recursive-lock-held">with-recursive-lock-held</h3>
-<pre><code class="lisp">Macro: (with-recursive-lock-held (place) &amp;body body)
+<pre><code class="language-lisp">Macro: (with-recursive-lock-held (place) &amp;body body)
 </code></pre>
-
 <p>Evaluates <code>body</code> with the recursive lock named by <code>place</code>, which is a
 reference to a recursive lock created by <a href="#make-recursive-lock">make-recursive-lock</a>. See
 <a href="#with-lock-held">with-lock-held</a> etc etc</p>
 <h3 id="with-timeout">with-timeout</h3>
-<pre><code class="lisp">Macro: (with-timeout (timeout) &amp;body body)
+<pre><code class="language-lisp">Macro: (with-timeout (timeout) &amp;body body)
 </code></pre>
               
             </div>

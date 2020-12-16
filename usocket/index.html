@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>usocket - Universal Socket Library - common-lisp-libraries</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../extra.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "usocket - Universal Socket Library";
+    var mkdocs_page_input_path = "usocket.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/lisp.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> common-lisp-libraries</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../asdf/">asdf - Build System</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../postmodern/">postmodern - PostgreSQL programming interace</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">usocket - Universal Socket Library</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">GETTING STARTED</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#example-1-tcp-and-netcat">Example 1 - TCP and Netcat</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example-2-netcat-and-udp">Example 2 - Netcat and UDP</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#more-examples">More examples</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#conventions">Conventions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sockets-and-servers">Sockets and Servers</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#sockets">Sockets</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#servers">Servers</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#api-documentation">API DOCUMENTATION</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#auto-port">*auto-port*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#backend">*backend*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#default-event-base">*default-event-base*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remote-host">*remote-host*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remote-port">*remote-port*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#version">*version*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wildcard-host">*wildcard-host*</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#max-datagram-packet-size">+max-datagram-packet-size+</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#add-waiter">add-waiter</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#address-in-use-error">address-in-use-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#address-not-available-error">address-not-available-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bad-file-descriptor-error">bad-file-descriptor-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#connection-aborted-error">connection-aborted-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#connection-refused-error">connection-refused-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#connection-reset-error">connection-reset-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#datagram-usocket">datagram-usocket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#datagram-usocket-p">datagram-usocket-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deadline-timeout-error">deadline-timeout-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#default-tcp-handler">default-tcp-handler</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#default-udp-handler">default-udp-handler</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#dotted-quad-to-vector-quad">dotted-quad-to-vector-quad</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#echo-tcp-handler">echo-tcp-handler</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-host-by-name">get-host-by-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-hosts-by-name">get-hosts-by-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-local-address">get-local-address</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-local-name">get-local-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-local-port">get-local-port</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-peer-address">get-peer-address</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-peer-name">get-peer-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-peer-port">get-peer-port</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#get-random-host-by-name">get-random-host-by-name</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hbo-to-dotted-quad">hbo-to-dotted-quad</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#hbo-to-vector-quad">hbo-to-vector-quad</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#host-byte-order">host-byte-order</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#host-down-error">host-down-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#host-or-ip">host-or-ip</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#host-to-hostname">host-to-hostname</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#host-unreachable-error">host-unreachable-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#insufficient-implementation">insufficient-implementation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#integer-to-octet-buffer">integer-to-octet-buffer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#interrupted-condition">interrupted-condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#invalid-argument-error">invalid-argument-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#invalid-socket-error">invalid-socket-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#invalid-socket-stream-error">invalid-socket-stream-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ip-from-octet-buffer">ip-from-octet-buffer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ip-to-octet-buffer">ip-to-octet-buffer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ip">ip/=</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ip_1">ip=</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ipv6-host-to-vector">ipv6-host-to-vector</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#make-wait-list">make-wait-list</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#network-down-error">network-down-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#network-reset-error">network-reset-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#network-unreachable-error">network-unreachable-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#no-buffers-error">no-buffers-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ns-condition">ns-condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ns-error">ns-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ns-host-not-found-error">ns-host-not-found-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ns-no-recovery-error">ns-no-recovery-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ns-try-again-condition">ns-try-again-condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ns-unknown-condition">ns-unknown-condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ns-unknown-error">ns-unknown-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#octet-buffer-to-integer">octet-buffer-to-integer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-not-permitted-error">operation-not-permitted-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#operation-not-supported-error">operation-not-supported-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#port-from-octet-buffer">port-from-octet-buffer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#port-to-octet-buffer">port-to-octet-buffer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#protocol-not-supported-error">protocol-not-supported-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remove-all-waiters">remove-all-waiters</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#remove-waiter">remove-waiter</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#shutdown-error">shutdown-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket">socket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-accept">socket-accept</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-close">socket-close</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-condition">socket-condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-connect">socket-connect</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-error">socket-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-listen">socket-listen</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-option">socket-option</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-receive">socket-receive</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-send">socket-send</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-server">socket-server</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-shutdown">socket-shutdown</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-state">socket-state</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-stream">socket-stream</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-type-not-supported-error">socket-type-not-supported-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#socket-warning">socket-warning</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stream-server-usocket">stream-server-usocket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stream-server-usocket-p">stream-server-usocket-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stream-usocket">stream-usocket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#stream-usocket-p">stream-usocket-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#timeout-error">timeout-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unimplemented">unimplemented</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unknown-condition">unknown-condition</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unknown-error">unknown-error</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#unsupported">unsupported</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usocket">usocket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#usocket-p">usocket-p</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vector-quad-to-dotted-quad">vector-quad-to-dotted-quad</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#vector-to-ipv6-host">vector-to-ipv6-host</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#wait-for-input">wait-for-input</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-client-socket">with-client-socket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-connected-socket">with-connected-socket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-mapped-conditions">with-mapped-conditions</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-server-socket">with-server-socket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#with-socket-listener">with-socket-listener</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">common-lisp-libraries</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Defacto libraries &raquo;</li>
+        
+      
+    
+    <li>usocket - Universal Socket Library</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="usocket-universal-socket-library">usocket - Universal Socket Library</h1>
+<p>Version: 0.8.3
+<br/>
+Licence: MIT
+<br/>
+Repository: <a href="https://github.com/usocket/usocket">usocket/usocket</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#websockets">awesome-cl#websockets</a></p>
+<p><em>This page was possible due to the excellent <a href="https://common-lisp.net/project/usocket/api-docs.shtml">official documentation</a>.</em></p>
+<p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
+<h2 id="getting-started">GETTING STARTED</h2>
+<p>For the examples below, we assume the user has access to <code>netcat</code>. A pure lisp example can be found <a href="http://lispcookbook.github.io/cl-cookbook/sockets.html">here</a>.</p>
+<p>0] Firstly, we</p>
+<pre><code class="language-lisp">CL-USER&gt; (add-package-local-nickname :u :usocket)
+#&lt;PACKAGE &quot;COMMON-LISP-USER&quot;&gt;
+</code></pre>
+<h3 id="example-1-tcp-and-netcat">Example 1 - TCP and Netcat</h3>
+<p>1] On a terminal, we start a TCP server using netcat</p>
+<pre><code class="language-sh">$ nc -lv localhost 8001
+Listening on [localhost] (family 0, port 8001)
+</code></pre>
+<p>On the lisp side, we connect to the server</p>
+<pre><code class="language-lisp">CL-USER&gt; (defparameter socket (u:socket-connect &quot;localhost&quot; 8001))
+SOCKET
+</code></pre>
+<pre><code class="language-sh">$ nc -lv localhost 8001
+Listening on [localhost] (family 0, port 8001)
+Connection from localhost 56888 received!
+</code></pre>
+<p>2] Once the connection is established, we send some data from lisp to the netcat server:</p>
+<pre><code class="language-lisp">CL-USER&gt; (defparameter str (u:socket-stream socket))
+STR
+CL-USER&gt; (defun write-and-flush (string)
+           (write-string string str)
+           (force-output str))
+WRITE-AND-FLUSH
+CL-USER&gt; (write-and-flush &quot;hello&quot;)
+NIL
+</code></pre>
+<p>That should cause <code>hello</code> appear on netcat.</p>
+<p>3] We also do the reverse: type <code>world</code> on the terminal and press <code>Ctrl+D</code> to flush it.</p>
+<p>On the lisp side,</p>
+<pre><code class="language-lisp">CL-USER&gt; (loop :while (listen str) :do (write-char (read-char str)))
+world
+NIL
+</code></pre>
+<h3 id="example-2-netcat-and-udp">Example 2 - Netcat and UDP</h3>
+<p>The process is similar in this case; however, instead of reading and writing to the
+stream, one uses <a href="#socket-send">socket-send</a> and <a href="#socket-receive">socket-receive</a>. The first step is the same, except we start netcat as <code>nc -luv</code>.</p>
+<p>2] Once the connection is established, we send some data from lisp to the netcat server:</p>
+<pre><code class="language-lisp">CL-USER&gt; (u:socket-send socket &quot;hello&quot; nil)
+NIL
+</code></pre>
+<p>That should cause <code>hello</code> appear on netcat.</p>
+<p>3] We also do the reverse: type <code>world</code> on the terminal and press <code>Ctrl+D</code> to flush it.</p>
+<p>On the lisp side,</p>
+<pre><code class="language-lisp">CL-USER&gt; (u:socket-receive socket (make-string 10) nil)
+&quot;world\0\0\0&quot;
+5
+#(127 0 0 1)
+8001
+</code></pre>
+<p>The final state of the terminal should be</p>
+<pre><code class="language-sh">$ nc -luv localhost 8001
+Listening on [localhost] (family 0, port 8001)
+Connection from localhost 60367 received!
+helloworld
+</code></pre>
+<h3 id="more-examples">More examples</h3>
+<p>See <a href="http://lispcookbook.github.io/cl-cookbook/sockets.html">the Cookbook</a>.</p>
+<h3 id="conventions">Conventions</h3>
+<p>Specification of a <code>host</code> or <code>local-host</code> parameter
+A <code>host</code> or <code>local-host</code> parameter may be any one of
+-   32-bit positive integer,
+-   A four element integer list representing IPv4 address, i.e.
+    <code>#(127 0 0 1)</code>
+-   a string containing an IP addres in dotted notation, or
+-   a host name to be resolved through DNS lookup.</p>
+<h3 id="sockets-and-servers">Sockets and Servers</h3>
+<p>The system consists of two subsystems <code>usocket</code> and <code>usocket-server</code>. Loading <code>usocket</code>
+avoids loading the server related functions and helps keeps the core small.
+To load the whole thing, one needs to <code>:depends-on</code> both <code>"usocket"</code> and <code>"usocket-server"</code>
+in the ASDF file. Both these work with the <code>:usocket</code> package.</p>
+<h3 id="sockets">Sockets</h3>
+<p><strong>Types of Sockets</strong></p>
+<ul>
+<li><a href="#usocket">usocket</a></li>
+<li><a href="#datagram-usocket">datagram-usocket</a></li>
+<li><a href="#stream-usocket">stream-usocket</a></li>
+<li><a href="#stream-server-usocket">stream-server-usocket</a></li>
+</ul>
+<p><strong>Socket Functions</strong></p>
+<ul>
+<li><a href="#socket-connect">socket-connect</a></li>
+<li><a href="#socket-listen">socket-listen</a></li>
+<li><a href="#socket-accept">socket-accept</a></li>
+<li><a href="#socket-close">socket-close</a></li>
+<li><a href="#socket-send">socket-send</a></li>
+<li><a href="#socket-receive">socket-receive</a></li>
+<li><a href="#socket-shutdown">socket-shutdown</a></li>
+</ul>
+<p><strong>Accessors</strong></p>
+<ul>
+<li><a href="#get-local-name">get-local-name</a></li>
+<li><a href="#get-local-address">get-local-address</a></li>
+<li><a href="#get-local-port">get-local-port</a></li>
+<li><a href="#get-peer-name">get-peer-name</a></li>
+<li><a href="#get-peer-address">get-peer-address</a></li>
+<li><a href="#get-peer-port">get-peer-port</a></li>
+</ul>
+<p><strong>Select</strong></p>
+<ul>
+<li><a href="#wait-for-input">wait-for-input</a></li>
+</ul>
+<h3 id="servers">Servers</h3>
+<p>The following are available in the <code>usocket</code> package after loading both <code>usocket</code> and <code>usocket-server</code> systems.</p>
+<ul>
+<li><a href="#socket-server">socket-server</a>
+<br/>
+<br/></li>
+<li><a href="#udp-event-loop">udp-event-loop</a></li>
+<li><a href="#tcp-event-loop">tcp-event-loop</a>
+<br/>
+<br/></li>
+<li><a href="#echo-tcp-handler">echo-tcp-handler</a>
+<br/>
+<br/></li>
+<li><a href="#default-udp-handler">default-udp-handler</a></li>
+<li><a href="#default-tcp-handler">default-tcp-handler</a></li>
+</ul>
+<h2 id="api-documentation">API DOCUMENTATION</h2>
+<p><em><code>usocket</code> maintainers are committed to the interface described below for
+the entire 0.x phase of the library. When 1.0 comes some of the
+functionality may be split up in different functions and guarantees may
+change because of it.</em></p>
+<h3 id="auto-port">*auto-port*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: 0
+</code></pre>
+<p>The port number to use with <a href="#socket-listen">socket-listen</a> to make the socket listen
+    on a random available port. The port number assigned can be
+    retrieved from the returned socket by calling
+    <a href="#get-local-port">get-local-port</a>.</p>
+<h3 id="backend">*backend*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: :NATIVE
+</code></pre>
+<h3 id="default-event-base">*default-event-base*</h3>
+<p>No documentation found for <code>*default-event-base*</code></p>
+<h3 id="remote-host">*remote-host*</h3>
+<p>Special variable used in <a href="#socket-server">socket-server</a>'s
+    handler function for getting current client address. (Start from
+    USOCKET 0.5)</p>
+<h3 id="remote-port">*remote-port*</h3>
+<p>Special variable used in <a href="#socket-server">socket-server</a>'s
+    handler function for getting current client port. (Start from
+    USOCKET 0.5)</p>
+<h3 id="version">*version*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: &quot;0.8.3&quot;
+</code></pre>
+<p>usocket version string</p>
+<h3 id="wildcard-host">*wildcard-host*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: #(0 0 0 0)
+</code></pre>
+<p>Hostname to pass when all interfaces in the current system are to
+  be bound.  If this variable is passed to <a href="#socket-listen">socket-listen</a>, IPv6 capable
+  systems will also listen for IPv6 connections.</p>
+<h3 id="max-datagram-packet-size">+max-datagram-packet-size+</h3>
+<pre><code class="language-lisp">Constant: 65507
+</code></pre>
+<p>The theoretical maximum amount of data in a UDP datagram.</p>
+<p>The IPv4 UDP packets have a 16-bit length constraint, and IP+UDP header has 28-byte.</p>
+<pre><code>IP_MAXPACKET = 65535,       /* netinet/ip.h */
+sizeof(struct ip) = 20,     /* netinet/ip.h */
+sizeof(struct udphdr) = 8,  /* netinet/udp.h */
+
+65535 - 20 - 8 = 65507
+</code></pre>
+<p>(But for UDP broadcast, the maximum message size is limited by the MTU size of the underlying link)</p>
+<h3 id="add-waiter">add-waiter</h3>
+<pre><code class="language-lisp">Function: (add-waiter wait-list input)
+</code></pre>
+<h3 id="address-in-use-error">address-in-use-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="address-not-available-error">address-not-available-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="bad-file-descriptor-error">bad-file-descriptor-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="connection-aborted-error">connection-aborted-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="connection-refused-error">connection-refused-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="connection-reset-error">connection-reset-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="datagram-usocket">datagram-usocket</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>UDP (inet-datagram) socket</p>
+<ul>
+<li>Direct superclasses: <a href="#usocket">usocket</a></li>
+</ul>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>connected-p</strong></p>
+<pre><code class="language-lisp">Initargs: :CONNECTED-P
+Reader: CONNECTED-P
+Writer: (SETF CONNECTED-P)
+</code></pre>
+<p>Used to identify if the datagram is connected. It will be setup
+by <a href="#socket-connect">socket-connect</a>, and used by <a href="#socket-send">socket-send</a>
+and <a href="#socket-receive">socket-receive</a>.</p>
+<h3 id="datagram-usocket-p">datagram-usocket-p</h3>
+<pre><code class="language-lisp">Function: (datagram-usocket-p socket)
+</code></pre>
+<h3 id="deadline-timeout-error">deadline-timeout-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="default-tcp-handler">default-tcp-handler</h3>
+<pre><code class="language-lisp">Function: (default-tcp-handler stream)
+</code></pre>
+<h3 id="default-udp-handler">default-udp-handler</h3>
+<pre><code class="language-lisp">Function: (default-udp-handler buffer)
+</code></pre>
+<h3 id="dotted-quad-to-vector-quad">dotted-quad-to-vector-quad</h3>
+<pre><code class="language-lisp">Function: (dotted-quad-to-vector-quad string)
+</code></pre>
+<h3 id="echo-tcp-handler">echo-tcp-handler</h3>
+<pre><code class="language-lisp">Function: (echo-tcp-handler stream)
+</code></pre>
+<h3 id="get-host-by-name">get-host-by-name</h3>
+<pre><code class="language-lisp">Function: (get-host-by-name name)
+</code></pre>
+<p>0.7.1+: if there're IPv4 addresses, return the first IPv4 address.</p>
+<h3 id="get-hosts-by-name">get-hosts-by-name</h3>
+<pre><code class="language-lisp">Function: (get-hosts-by-name name)
+</code></pre>
+<h3 id="get-local-address">get-local-address</h3>
+<pre><code class="language-lisp">Generic Function: (get-local-address socket)
+</code></pre>
+<p>Returns the IP address of the socket.</p>
+<h3 id="get-local-name">get-local-name</h3>
+<pre><code class="language-lisp">Generic Function: (get-local-name socket)
+</code></pre>
+<p>Returns the IP address and port of the socket as values.</p>
+<p>This function applies to both <a href="#stream-usocket">stream-usocket</a> and server-stream-usocket
+type objects.</p>
+<h3 id="get-local-port">get-local-port</h3>
+<pre><code class="language-lisp">Generic Function: (get-local-port socket)
+</code></pre>
+<p>Returns the IP port of the socket.</p>
+<p>This function applies to both <a href="#stream-usocket">stream-usocket</a> and server-stream-usocket
+type objects.</p>
+<h3 id="get-peer-address">get-peer-address</h3>
+<pre><code class="language-lisp">Generic Function: (get-peer-address socket)
+</code></pre>
+<p>Returns the IP address of the peer the <code>socket</code> is connected to.</p>
+<h3 id="get-peer-name">get-peer-name</h3>
+<pre><code class="language-lisp">Generic Function: (get-peer-name socket)
+</code></pre>
+<p>Returns the IP address and port of the peer
+the <code>socket</code> is connected to as values.</p>
+<h3 id="get-peer-port">get-peer-port</h3>
+<pre><code class="language-lisp">Generic Function: (get-peer-port socket)
+</code></pre>
+<p>Returns the IP port of the peer the <code>socket</code> to.</p>
+<h3 id="get-random-host-by-name">get-random-host-by-name</h3>
+<pre><code class="language-lisp">Function: (get-random-host-by-name name)
+</code></pre>
+<p>0.7.1+: if there're IPv4 addresses, only return a random IPv4 address.</p>
+<h3 id="hbo-to-dotted-quad">hbo-to-dotted-quad</h3>
+<pre><code class="language-lisp">Function: (hbo-to-dotted-quad integer)
+</code></pre>
+<p>Host-byte-order integer to dotted-quad string conversion utility.</p>
+<h3 id="hbo-to-vector-quad">hbo-to-vector-quad</h3>
+<pre><code class="language-lisp">Function: (hbo-to-vector-quad integer)
+</code></pre>
+<p>Host-byte-order integer to dotted-quad string conversion utility.</p>
+<h3 id="host-byte-order">host-byte-order</h3>
+<pre><code class="language-lisp">Generic Function: (host-byte-order address)
+</code></pre>
+<h3 id="host-down-error">host-down-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="host-or-ip">host-or-ip</h3>
+<pre><code class="language-lisp">Generic Function: (host-or-ip condition)
+</code></pre>
+<h3 id="host-to-hostname">host-to-hostname</h3>
+<pre><code class="language-lisp">Function: (host-to-hostname host)
+</code></pre>
+<p>Translate a string, vector quad or 16 byte IPv6 address to a
+stringified hostname.</p>
+<h3 id="host-unreachable-error">host-unreachable-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="insufficient-implementation">insufficient-implementation</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>The ancestor of all errors usocket may generate
+because of insufficient support from the underlying implementation
+with respect to the arguments given to <code>function</code>.</p>
+<p>One call may signal several errors, if the caller allows processing
+to continue.</p>
+<h3 id="integer-to-octet-buffer">integer-to-octet-buffer</h3>
+<pre><code class="language-lisp">Function: (integer-to-octet-buffer integer buffer octets &amp;key (start 0))
+</code></pre>
+<h3 id="interrupted-condition">interrupted-condition</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="invalid-argument-error">invalid-argument-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="invalid-socket-error">invalid-socket-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="invalid-socket-stream-error">invalid-socket-stream-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="ip-from-octet-buffer">ip-from-octet-buffer</h3>
+<pre><code class="language-lisp">Macro: (ip-from-octet-buffer buffer &amp;key (start 0))
+</code></pre>
+<h3 id="ip-to-octet-buffer">ip-to-octet-buffer</h3>
+<pre><code class="language-lisp">Macro: (ip-to-octet-buffer ip buffer &amp;key (start 0))
+</code></pre>
+<h3 id="ip">ip/=</h3>
+<pre><code class="language-lisp">Function: (ip/= ip1 ip2)
+</code></pre>
+<h3 id="ip_1">ip=</h3>
+<pre><code class="language-lisp">Function: (ip= ip1 ip2)
+</code></pre>
+<h3 id="ipv6-host-to-vector">ipv6-host-to-vector</h3>
+<pre><code class="language-lisp">Function: (ipv6-host-to-vector string)
+</code></pre>
+<h3 id="make-wait-list">make-wait-list</h3>
+<pre><code class="language-lisp">Function: (make-wait-list waiters)
+</code></pre>
+<h3 id="network-down-error">network-down-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="network-reset-error">network-reset-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="network-unreachable-error">network-unreachable-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="no-buffers-error">no-buffers-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="ns-condition">ns-condition</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Parent condition for all name resolution conditions.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>host-or-ip</strong></p>
+<pre><code class="language-lisp">Initargs: :HOST-OR-IP
+Readers: HOST-OR-IP
+Writers: (SETF HOST-OR-IP)
+</code></pre>
+<h3 id="ns-error">ns-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Parent error for all name resolution errors.</p>
+<h3 id="ns-host-not-found-error">ns-host-not-found-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="ns-no-recovery-error">ns-no-recovery-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="ns-try-again-condition">ns-try-again-condition</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="ns-unknown-condition">ns-unknown-condition</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Condition raised when there's no other - more applicable -
+condition available.</p>
+<h3 id="ns-unknown-error">ns-unknown-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Error raised when there's no other - more applicable -
+error available.</p>
+<h3 id="octet-buffer-to-integer">octet-buffer-to-integer</h3>
+<pre><code class="language-lisp">Function: (octet-buffer-to-integer buffer octets &amp;key (start 0))
+</code></pre>
+<h3 id="operation-not-permitted-error">operation-not-permitted-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="operation-not-supported-error">operation-not-supported-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="port-from-octet-buffer">port-from-octet-buffer</h3>
+<pre><code class="language-lisp">Macro: (port-from-octet-buffer buffer &amp;key (start 0))
+</code></pre>
+<h3 id="port-to-octet-buffer">port-to-octet-buffer</h3>
+<pre><code class="language-lisp">Macro: (port-to-octet-buffer port buffer &amp;key (start 0))
+</code></pre>
+<h3 id="protocol-not-supported-error">protocol-not-supported-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="remove-all-waiters">remove-all-waiters</h3>
+<pre><code class="language-lisp">Function: (remove-all-waiters wait-list)
+</code></pre>
+<h3 id="remove-waiter">remove-waiter</h3>
+<pre><code class="language-lisp">Function: (remove-waiter wait-list input)
+</code></pre>
+<h3 id="shutdown-error">shutdown-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="socket">socket</h3>
+<pre><code class="language-lisp">Generic Function: (socket object)
+</code></pre>
+<h3 id="socket-accept">socket-accept</h3>
+<pre><code class="language-lisp">Generic Function: (socket-accept socket &amp;key element-type)
+</code></pre>
+<p>Accepts a connection from <code>socket</code>, returning a <a href="#stream-socket">stream-socket</a>.</p>
+<p>The stream associated with the socket returned has <code>element-type</code> when
+explicitly specified, or the <code>element-type</code> of the <code>socket</code> (as used when it was created by the call to <a href="#socket-listen">socket-listen</a>) otherwise.</p>
+<h3 id="socket-close">socket-close</h3>
+<pre><code class="language-lisp">Generic Function: (socket-close usocket)
+</code></pre>
+<p>Close a previously opened <a href="#usocket">usocket</a> after flushing it.</p>
+<h3 id="socket-condition">socket-condition</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Parent condition for all socket related conditions.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>socket</strong></p>
+<pre><code class="language-lisp">Initargs: :SOCKET
+Readers: :USOCKET-SOCKET
+Writers: (SETF :USOCKET-SOCKET)
+</code></pre>
+<h3 id="socket-connect">socket-connect</h3>
+<pre><code class="language-lisp">Function: (socket-connect host port &amp;key (protocol :stream)
+           (element-type (quote character)) timeout deadline
+           (nodelay t nodelay-specified) local-host local-port &amp;aux
+           (sockopt-tcp-nodelay-p (fboundp (quote sockopt-tcp-nodelay))))
+</code></pre>
+<p>Returns a <a href="#stream-usocket">stream-usocket</a> (TCP) object if <code>protocol</code> is <code>:stream</code> and
+<a href="#datagram-socket">datagram-socket</a> (UDP) if it is <code>:datagram</code>.</p>
+<p>Connects the socket to <code>host</code> on <code>port</code>.  <code>host</code> is assumed to be a string or
+an IP address represented in vector notation, such as <code>#(192 168 1 1)</code>.
+<code>port</code> is assumed to be an integer.</p>
+<p><code>element-type</code> specifies the element type to use when constructing the
+stream associated with the stream-socket.  The default is <code>'character</code>,
+but <code>(unsigned-byte 8)</code> is also a valid value.</p>
+<p><code>timeout</code> is a integer, it represents the socket option
+    <code>SO_RCVTIMEO</code> (read timeout), in seconds.</p>
+<p><code>deadline</code> is only supported in Clozure CL and Digitool MCL</p>
+<ul>
+<li><code>local-host</code> and <code>local-port</code>, when specified, will cause the socket
+    calling bind() on local address. This is useful for selecting
+    interfaces to send, or listening on UDP port. Note: use only one of
+    them are allowed when reasonable (listen on wildcard address, or
+    bind to random free port).</li>
+</ul>
+<p><code>nodelay</code> allows to disable/enable <a href="http://en.wikipedia.org/wiki/Nagle%27s_algorithm">Nagle's algorithm</a>.
+If this parameter is omitted, the behaviour is inherited from the
+CL implementation (in most cases, Nagle's algorithm is
+enabled by default, but for example in ACL it is disabled).
+If the parameter is specified, one of these three values is possible:</p>
+<ul>
+<li><code>T</code> - Disable Nagle's algorithm; signals an <a href="#unsupported">unsupported</a>
+      condition if the implementation does not support explicit
+      manipulation with that option.</li>
+<li><code>NIL</code> - Leave Nagle's algorithm enabled on the socket;
+      signals an <a href="#unsupported">unsupported</a> condition if the implementation does
+      not support explicit manipulation with that option.</li>
+<li><code>:IF-SUPPORTED</code> - Disables Nagle's algorithm if the implementation
+      allows this, otherwises just ignore this option.</li>
+</ul>
+<h3 id="socket-error">socket-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Parent error for all socket related errors</p>
+<h3 id="socket-listen">socket-listen</h3>
+<pre><code class="language-lisp">Function: (socket-listen host port &amp;key reuseaddress
+           (reuse-address NIL reuse-address-supplied-p) (backlog 5)
+           (element-type (quote character)))
+</code></pre>
+<p>Bind to interface <code>host</code> on <code>port</code>. <code>host</code> should be the
+representation of an ready-interface address.  The implementation is
+not required to do an address lookup, making no guarantees that
+hostnames will be correctly resolved.  If <a href="#wildcard-host">*wildcard-host*</a> or <code>NIL</code> is
+passed for host, the socket will be bound to all available
+interfaces for the system.  port can be selected by the IP stack by
+passing <a href="#auto-port">*auto-port*</a>. A <code>port</code> value of 0 indicates a request for
+a random free port.</p>
+<p>Returns an object of type <a href="#stream-server-usocket">stream-server-usocket</a>.</p>
+<p><code>reuse-address</code> and <code>backlog</code> are advisory parameters for setting socket
+options at creation time. <code>element-type</code> is the element type of the
+streams to be created by <a href="#socket-accept">socket-accept</a>.  <code>reuseaddress</code> is supported for
+backward compatibility (but deprecated); when both <code>reuseaddress</code> and
+<code>reuse-address</code> have been specified, the latter takes precedence.</p>
+<h3 id="socket-option">socket-option</h3>
+<pre><code class="language-lisp">Generic Function: (socket-option socket option &amp;key)
+</code></pre>
+<p>Get a socket's internal options</p>
+<h3 id="socket-receive">socket-receive</h3>
+<pre><code class="language-lisp">Generic Function: (socket-receive usocket buffer length &amp;key element-type)
+</code></pre>
+<p>Receive packets from a previously opened <a href="#usocket">usocket</a>.</p>
+<p>Returns 4 values: <code>(values buffer size host port)</code></p>
+<p>Receive data from a datagram socket, and return 4 values:
+    <code>return-buffer</code>, <code>return-length</code>, <code>remote-host</code>, and <code>remove-port</code>.</p>
+<p>If the datagram socket was created by <a href="#socket-connect">socket-connect</a>
+    with a <code>timeout</code> keyword argument, this function will block at most
+    that timeout value (in seconds). (Start from USOCKET 0.5)</p>
+<p><em>socket</em> should be a <a href="#datagram-usocket"><code>datagram-usocket</code></a></p>
+<p><code>buffer</code> is a Lisp vector of type <code>(simple-array (unsigned-byte 8) *)</code>. Using <code>nil</code> here
+    is also allowed, new buffer will be created to hold data.</p>
+<p><code>length</code> is used to specify the length of a exist buffer for
+    receiving at most these data. Using <code>nil</code> here is allowed, and the
+    actual length of <code>buffer</code> will be used; when <code>buffer</code> is also <code>nil</code>,
+    a default maximum length (65507) will be used.</p>
+<h3 id="socket-send">socket-send</h3>
+<pre><code class="language-lisp">Generic Function: (socket-send usocket buffer length &amp;key host port offset)
+</code></pre>
+<p>Send packets through a previously opened <a href="#usocket">usocket</a>.</p>
+<p><code>buffer</code> is a Lisp vector, type of
+    <code>(simple-array (unsigned-byte 8) *)</code>.</p>
+<p><code>length</code> is used to tell <a href="#socket-send">socket-send</a> the actual useful length of data buffer for sending to socket.</p>
+<p><code>host</code> and <code>port</code> are used for unconnected datagram sockets, for
+    sending to specific destination.</p>
+<p>The return value indicates the number of bytes sent. (Start from USOCKET 0.5)</p>
+<h3 id="socket-server">socket-server</h3>
+<pre><code class="language-lisp">Function: (socket-server host port function &amp;optional arguments &amp;key
+           in-new-thread (protocol :stream) (timeout 1)
+           (max-buffer-size +max-datagram-packet-size+) element-type
+           (reuse-address t) multi-threading name)
+</code></pre>
+<p>Create a simple TCP or UDP socket server. (Start from USOCKET 0.5)</p>
+<ul>
+<li><code>host</code> names a local interface,</li>
+<li>
+<p><code>port</code> names a local port,</p>
+</li>
+<li>
+<p><code>function</code> names a function object, which is used to handle TCP or
+    UDP connections. This is explained below.</p>
+</li>
+<li>
+<p><code>arguments</code> is a list used for passing extra arguments to
+    user-defined <code>function</code>.</p>
+</li>
+<li>
+<p><code>in-new-thread</code> is a boolean, default is <code>nil</code>. When it's <code>T</code>, the
+    server will be created in a new thread and socket-server returns
+    immediately in current thread.</p>
+</li>
+<li>
+<p><code>protocol</code> could be either <code>:stream</code> (default) or <code>:datagram</code>, which
+    decide the socket server is TCP server or UDP server.</p>
+</li>
+<li>
+<p><code>timeout</code> is UDP only, it provides the internal
+    <a href="#socket-receive">socket-receive</a>
+    call (in UDP event loop of the socket server) a read timeout,
+    default value is 1 (second).</p>
+</li>
+<li>
+<p><code>max-buffer-size</code> is UDP only, it's the max UDP data buffer size
+    when handling UDP packets, default value is 65507.</p>
+</li>
+<li><code>element-type</code> is TCP only, it's element-type of the stream
+    provided for user-defined function,</li>
+<li><code>reuse-address</code> is TCP only, it's a boolean option for internal
+    call of socket-listen in the socket server,</li>
+<li><code>multi-threading</code> is TCP only, it's a boolean, default value is
+    <code>nil</code>. When it's <code>T</code>, each client connection will cause a new
+    thread being created to handle that client, so that the TCP server
+    could handle multiple clients at the same time. (Note: since UDP
+    server is connectionless, it can always handle multiple clients, as
+    long as the handler function run fast enough)</li>
+</ul>
+<p><strong>TCP HANDLER FUNCTION</strong></p>
+<p>Following forms a valid template function for TCP:</p>
+<pre><code>    (defun default-tcp-handler (stream) ; null
+      (declare (type stream stream))
+      (terpri stream))
+</code></pre>
+<p><strong>Note:</strong></p>
+<ol>
+<li>
+<p>You don't need to close the stream as
+    <code>socket-server</code> will do that for you.</p>
+</li>
+<li>
+<p>More function arguments can be defined, and
+    these extra arguments must be feeded as the optional <code>arguments</code> of
+    <code>socket-server</code></p>
+</li>
+</ol>
+<p><strong>UDP HANDLER FUNCTION</strong></p>
+<p>The handler function for UDP is buffer-based, that is, you receive a
+    buffer of data as input, and you return another buffer for output. A
+    template function is a simple UDP echo server:</p>
+<pre><code>    (defun default-udp-handler (buffer) ; echo
+      (declare (type (simple-array (unsigned-byte 8) *) buffer))
+      buffer)
+</code></pre>
+<p><strong>Note:</strong></p>
+<ol>
+<li>
+<p>data length is the length of the whole buffer.</p>
+</li>
+<li>
+<p>Sometimes you may want to know the client's IP address and sending port,
+    these informations are specially bounded on variables
+    <a href="#remote-host">*remote-host*</a>
+    and
+    <a href="#remote-port">*remote-port*</a>
+    when handler function is running.</p>
+</li>
+</ol>
+<h3 id="socket-shutdown">socket-shutdown</h3>
+<pre><code class="language-lisp">Generic Function: (socket-shutdown usocket direction)
+</code></pre>
+<p>The <code>socket-shutdown</code> call causes all or part of a full-duplex
+    connection on the socket associated with sockfd to be shut down.</p>
+<ul>
+<li>If <code>direction</code> is <code>:input</code>, further receptions will be disallowed.</li>
+<li>If <code>direction</code> is <code>:output</code>, further transmissions will be disallowed.</li>
+<li>If <code>direction</code> is <code>:io</code>, further receptions and transmissions will be
+    disallowed. (Starting from USOCKET 0.6.4)</li>
+</ul>
+<p><code>socket</code> should be a <a href="#datagram-socket">datagram-usocket</a>.</p>
+<h3 id="socket-state">socket-state</h3>
+<pre><code class="language-lisp">Generic Function: (socket-state socket)
+</code></pre>
+<pre><code class="language-text">NIL          - not ready
+:READ        - ready to read
+:READ-WRITE  - ready to read and write
+:WRITE       - ready to write
+</code></pre>
+<h3 id="socket-stream">socket-stream</h3>
+<pre><code class="language-lisp">Generic Function: (socket-stream object)
+</code></pre>
+<h3 id="socket-type-not-supported-error">socket-type-not-supported-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="socket-warning">socket-warning</h3>
+<p>No documentation found for <code>socket-warning</code></p>
+<h3 id="stream-server-usocket">stream-server-usocket</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>Socket which listens for stream connections to
+be initiated from remote sockets.</p>
+<ul>
+<li>Direct superclasses: <a href="#usocket">usocket</a></li>
+</ul>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>element-type</strong></p>
+<pre><code class="language-lisp">Initargs: :ELEMENT-TYPE
+Initform: 'CHARACTER
+Reader: ELEMENT-TYPE
+</code></pre>
+<p>Indicates the default element-type to be used when constructing
+streams off this socket when no element type is specified in the
+call to <a href="#socket-accept">socket-accept</a>.</p>
+<h3 id="stream-server-usocket-p">stream-server-usocket-p</h3>
+<pre><code class="language-lisp">Function: (stream-server-usocket-p socket)
+</code></pre>
+<h3 id="stream-usocket">stream-usocket</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>Stream socket class. Contrary to other sockets, these sockets may be closed either
+with the <code>socket-close</code> method or by closing the associated stream
+(which can be retrieved with the <code>socket-stream</code> accessor).</p>
+<ul>
+<li>Direct superclasses: <a href="#usocket">usocket</a></li>
+</ul>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>stream</strong></p>
+<pre><code class="language-lisp">Initargs: :STREAM
+Readers: SOCKET-STREAM
+Writers: (SETF SOCKET-STREAM)
+</code></pre>
+<p>Used to store the stream associated with the tcp socket
+connection. When you want to write to the socket stream, use this function.</p>
+<h3 id="stream-usocket-p">stream-usocket-p</h3>
+<pre><code class="language-lisp">Function: (stream-usocket-p socket)
+</code></pre>
+<h3 id="timeout-error">timeout-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="unimplemented">unimplemented</h3>
+<pre><code class="language-lisp">Macro: (unimplemented feature context)
+</code></pre>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Signalled if a certain feature might be implemented,
+based on the features of the underlying implementation, but hasn't
+been implemented yet.</p>
+<h3 id="unknown-condition">unknown-condition</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Condition raised when there's no other - more applicable -
+condition available.</p>
+<h3 id="unknown-error">unknown-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Error raised when there's no other - more applicable -
+error available.</p>
+<h3 id="unsupported">unsupported</h3>
+<pre><code class="language-lisp">Macro: (unsupported feature context &amp;key minimum)
+</code></pre>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Signalled when the underlying implementation
+doesn't allow supporting the requested feature.</p>
+<p>When you see this error, go bug your vendor/implementation developer!</p>
+<h3 id="usocket">usocket</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>The main socket class.</p>
+<p>Sockets should be closed using the <a href="#socket-close">socket-close</a> method.</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>socket</strong></p>
+<pre><code class="language-lisp">Initargs: :SOCKET
+Readers: SOCKET
+Writers: (SETF SOCKET)
+</code></pre>
+<p>Used to store sockets as used by the current implementation -
+may be any of socket handles, socket objects and stream objects</p>
+<p><strong>state</strong></p>
+<pre><code class="language-lisp">Initargs: :STATE
+Readers: STATE
+Writers: (SETF STATE)
+</code></pre>
+<p>Used to store socket state: <code>NIL</code> (not ready), or <code>:READ</code> (ready to read).</p>
+<h3 id="usocket-p">usocket-p</h3>
+<pre><code class="language-lisp">Function: (usocket-p socket)
+</code></pre>
+<h3 id="vector-quad-to-dotted-quad">vector-quad-to-dotted-quad</h3>
+<pre><code class="language-lisp">Function: (vector-quad-to-dotted-quad vector)
+</code></pre>
+<h3 id="vector-to-ipv6-host">vector-to-ipv6-host</h3>
+<pre><code class="language-lisp">Function: (vector-to-ipv6-host vector)
+</code></pre>
+<h3 id="wait-for-input">wait-for-input</h3>
+<pre><code class="language-lisp">Function: (wait-for-input socket-or-sockets &amp;key timeout ready-only &amp;aux
+           (single-socket-p (usocket-p socket-or-sockets)))
+</code></pre>
+<p>Waits for one or more sockets to become ready for reading from
+the socket. This is like the UNIX's "select" function.</p>
+<p>When <code>timeout</code> (a non-negative real number) is
+specified, wait <code>timeout</code> seconds, or wait indefinitely when
+it isn't specified.  A timeout value of 0 (zero) means polling.</p>
+<p>Returns two values:</p>
+<ul>
+<li>the first value is the list of sockets which
+are readable (or in case of server sockets acceptable).  <code>NIL</code> may
+be returned for this value either when waiting timed out or when
+it was interrupted (EINTR).</li>
+<li>The second value is a real number
+indicating the time remaining within the timeout period or <code>NIL</code> if
+none.</li>
+</ul>
+<p>Without the <code>ready-only</code> arg, <code>wait-for-input</code> will return all sockets in
+the original list you passed it. This prevents a new list from being
+consed up. Some users of USOCKET were reluctant to use it if it
+wouldn't behave that way, expecting it to cost significant performance
+to do the associated garbage collection.</p>
+<p>Without the <code>ready-only</code> arg, you need to check the socket <code>state</code> slot for
+the values documented in usocket.lisp in the usocket class.</p>
+<h3 id="with-client-socket">with-client-socket</h3>
+<pre><code class="language-lisp">Macro: (with-client-socket (socket-var stream-var &amp;rest socket-connect-args)
+        &amp;body body)
+</code></pre>
+<p>Bind the socket resulting from a call to <a href="#socket-connect">socket-connect</a> with
+the arguments socket-connect-args to socket-var and if stream-var is
+non-nil, bind the associated socket stream to it.</p>
+<h3 id="with-connected-socket">with-connected-socket</h3>
+<pre><code class="language-lisp">Macro: (with-connected-socket (var socket) &amp;body body)
+</code></pre>
+<p>Bind <a href="#socket">socket</a> to var, ensuring socket destruction on exit.</p>
+<p>body is only evaluated when var is bound to a non-null value.</p>
+<p>The body is an implied progn form.</p>
+<h3 id="with-mapped-conditions">with-mapped-conditions</h3>
+<pre><code class="language-lisp">Macro: (with-mapped-conditions (&amp;optional socket host-or-ip) &amp;body body)
+</code></pre>
+<h3 id="with-server-socket">with-server-socket</h3>
+<pre><code class="language-lisp">Macro: (with-server-socket (var server-socket) &amp;body body)
+</code></pre>
+<p>Bind server-socket to var, ensuring socket destruction on exit.</p>
+<p>body is only evaluated when var is bound to a non-null value.</p>
+<p>The body is an implied progn form.</p>
+<h3 id="with-socket-listener">with-socket-listener</h3>
+<pre><code class="language-lisp">Macro: (with-socket-listener (socket-var &amp;rest socket-listen-args) &amp;body body)
+</code></pre>
+<p>Bind the socket resulting from a call to <a href="#socket-listen">socket-listen</a> with arguments
+socket-listen-args to socket-var.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../quicklisp/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../utilities/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(false);
+        };
+    </script>
+
+</body>
+</html>

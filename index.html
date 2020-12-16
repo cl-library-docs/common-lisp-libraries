@@ -99,11 +99,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="unix-opts/">unix-opts - cmd line argument parser</a>
@@ -143,36 +147,34 @@
               
                 <h1 id="common-lisp-librariesreadthedocsio">common-lisp-libraries.readthedocs.io</h1>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
+<p><em>See the <a href="https://common-lisp-libraries.readthedocs.io">html version of this page</a>, rather than the markdown version for the working links below.</em></p>
 <hr />
 <h2 id="introduction">Introduction</h2>
 <p>Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have <em>some</em> objective component to it.</p>
 <h2 id="libraries">Libraries</h2>
 <h3 id="installation"><span id="defacto-installation">Installation</span></h3>
 <p>Each of the below libraries (except asdf and quicklisp) can be installed using quicklisp:</p>
-<pre><code class="lisp">(ql:quickload &quot;alexandria&quot;) ; for example
+<pre><code class="language-lisp">(ql:quickload &quot;alexandria&quot;) ; for example
 </code></pre>
-
 <p>See <a href="./quicklisp/#getting-started">quicklisp - Getting Started</a> for instructions on
 installing quicklisp.</p>
 <p>Optionally, you may want to use <code>trivial-package-local-nicknames</code> for, well, <a href="https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here">adding package local nicknames</a>.</p>
-<pre><code class="lisp">(ql:quickload :trivial-package-local-nicknames)
+<pre><code class="language-lisp">(ql:quickload :trivial-package-local-nicknames)
 (trivial-package-local-nicknames:add-package-local-nickname :a :alexandria)
 ; OR
-(defpackage my-package 
+(defpackage my-package
   (:use #:cl)
   (:local-nicknames (#:a #:alexandria)))
 ;;; I'm yet to read up on the naming conventions and the reasons behind those conventions
 ;;; in the context of systems and packages; some conventions do exist.
 </code></pre>
-
 <h3 id="libraries-documented-so-far">Libraries documented so far</h3>
-<p>See <a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a> for more libraries.</p>
-<p>(See the <a href="https://common-lisp-libraries.readthedocs.io">html version of this page</a>, rather than the markdown version for the working links below.)</p>
+<p>The below list of libraries is not even the <em>complete list of defacto libraries</em>. Many more awesome Common Lisp libraries are available at <a href="https://github.com/CodyReichert/awesome-cl">awesome-cl</a>.</p>
 <h4 id="defacto-libraries">Defacto libraries</h4>
 <ul>
 <li><a href="./asdf/">asdf</a> - build system for softwares (packages*)</li>
 <li><a href="./alexandria/">alexandria</a> - a utility library</li>
-<li><a href="./bordeaux-threads/">bordeaux-threads</a> - library for threading </li>
+<li><a href="./bordeaux-threads/">bordeaux-threads</a> - library for threading</li>
 <li><a href="./cl-ppcre/">cl-ppcre</a> - regular expressions</li>
 <li><a href="./cl-who/">cl-who</a> - DSL for Markup</li>
 <li><a href="./hunchentoot/">hunchentoot</a> - web server</li>
@@ -180,10 +182,12 @@ installing quicklisp.</p>
 <li><a href="./iterate/">iterate</a> - a lispy extensible alternative to <code>loop</code></li>
 <li><a href="./postmodern/">postmodern</a> - PostgreSQL programming interace</li>
 <li><a href="./quicklisp/">quicklisp</a> - library manager</li>
+<li><a href="./usocket">usocket</a> - universal socket library</li>
 <li><a href="./utilities/">utilities</a> - a collection of utility libraries</li>
 </ul>
 <h4 id="not-yet-defacto">Not yet defacto</h4>
 <ul>
+<li><a href="./local-time/">local-time</a> - date and time manipulation</li>
 <li><a href="./numcl/">numcl</a> - lispy clone of numpy</li>
 <li><a href="./unix-opts/">unix-opts</a> - minimalistic command line options parser</li>
 </ul>
@@ -209,7 +213,7 @@ for symbols. By contrast, a system is a tool to organize a bunch of files, in ac
 </li>
 </ul>
 <h2 id="ultraspec">UltraSpec</h2>
-<p>I liked (the theme of) <a href="https://phoe.tymoon.eu/clus/doku.php">UltraSpec</a>. I also liked <a href="https://www.mkdocs.org/">mkdocs</a> - I am using mkdocs with the pre-provided <a href="https://readthedocs.org/">readthedocs</a> theme. What UltraSpec seems to be good for is larger websites than what is currently here, in that it isn't as straightforward as mkdocs for library-documenters to use it. </p>
+<p>I liked (the theme of) <a href="https://phoe.tymoon.eu/clus/doku.php">UltraSpec</a>. I also liked <a href="https://www.mkdocs.org/">mkdocs</a> - I am using mkdocs with the pre-provided <a href="https://readthedocs.org/">readthedocs</a> theme. What UltraSpec seems to be good for is larger websites than what is currently here, in that it isn't as straightforward as mkdocs for library-documenters to use it.</p>
 <p>Additionally, <code>markdown</code> files and <code>dokuwiki</code> files (the format UltraSpec requires) are interconvertible (but the compatibility is untested) using <a href="https://pandoc.org/">pandoc</a>. (pandoc is indeed useful for a ton of other file formats!)</p>
 <h2 id="mkdocs">mkdocs</h2>
 <p>As a marketing for mkdocs: <a href="https://www.mkdocs.org/#getting-started">mkdocs</a> is as simple as</p>
@@ -266,6 +270,6 @@ for symbols. By contrast, a system is a tool to organize a bunch of files, in ac
 </html>
 
 <!--
-MkDocs version : 1.1
-Build Date UTC : 2020-07-08 07:55:22
+MkDocs version : 1.1.2
+Build Date UTC : 2020-12-16 21:37:19.247793+00:00
 -->

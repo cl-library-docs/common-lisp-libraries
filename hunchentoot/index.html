@@ -471,11 +471,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
@@ -520,7 +524,11 @@
                 <h1 id="hunchentoot-web-server">hunchentoot - Web Server</h1>
 <p>Version: 1.2.38
 <br/>
-Repository: <a href="https://github.com/edicl/hunchentoot/">edicl/hunchentoot - Github</a></p>
+Licence: BSD-2-Clause
+<br/>
+Repository: <a href="https://github.com/edicl/hunchentoot/">edicl/hunchentoot - Github</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#network-and-internet">awesome-cl#network-and-internet</a></p>
 <p><em>This page was possible due to the excellent <a href="https://edicl.github.io/hunchentoot/">official documentation</a> as well as the page on <a href="http://lispcookbook.github.io/cl-cookbook/web.html">Web Development on The Common Lisp Cookbook</a>.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
 <hr />
@@ -557,11 +565,10 @@ website</a>.</p>
 <p>See <a href="../index.html#defacto-installation">the section on Installation under Defacto Libraries on Home Page</a>.</p>
 <h3 id="serving-local-files">Serving local files</h3>
 <p>To start the server, simply</p>
-<pre><code class="lisp">(defvar *acceptor*)
+<pre><code class="language-lisp">(defvar *acceptor*)
 (setq *acceptor* (make-instance 'hunchentoot:easy-acceptor :port 4242))
 (hunchentoot:start *acceptor*)
 </code></pre>
-
 <p>You should see something - but not very interesting - at
 "<a href="http://127.0.0.1:4242/"><code>http://127.0.0.1:4242/</code></a>" in your browser.</p>
 <p>By default, Hunchentoot serves files from the <code>www/</code> directory from
@@ -591,14 +598,13 @@ for a list of various configuration options for hunchentoot, such as whether to
 <p>To bind an existing function to a route, we <a href="#create-prefix-dispatcher">create-prefix-dispatcher</a>
 that we push onto the <a href="#dispatch-table">*dispatch-table*</a> 
 (just a global list of dispatch functions):</p>
-<pre><code class="lisp">(defun hello ()
+<pre><code class="language-lisp">(defun hello ()
   (format nil &quot;Hello, it works!&quot;))
 
 (push
   (hunchentoot:create-prefix-dispatcher &quot;/hello.html&quot; 'hello) 
   hunchentoot:*dispatch-table*)
 </code></pre>
-
 <p>To create a route with a regexp, we use <a href="#create-regex-dispatcher">create-regex-dispatcher</a>, where the url-as-regexp can be a string, an s-expression or a cl-ppcre scanner. In all, there exist</p>
 <ul>
 <li><a href="#create-folder-dispatcher-and-handler">create-folder-dispatcher-and-handler</a></li>
@@ -608,11 +614,10 @@ that we push onto the <a href="#dispatch-table">*dispatch-table*</a>
 </ul>
 <h4 id="define-easy-handler">define-easy-handler</h4>
 <p><code>define-easy-handler</code> allows to create a function and to bind it to an uri at once. For instance:</p>
-<pre><code class="lisp">(hunchentoot:define-easy-handler (say-yo :uri &quot;/yo&quot;) (name)
+<pre><code class="language-lisp">(hunchentoot:define-easy-handler (say-yo :uri &quot;/yo&quot;) (name)
   (setf (hunchentoot:content-type*) &quot;text/plain&quot;)
   (format nil &quot;Hey~@[ ~A~]!&quot; name))
 </code></pre>
-
 <p>Visit <a href="http://localhost:4242/yo">http://localhost:4242/yo</a> or add parameters to the url:
 <a href="http://localhost:4242/yo?name=Alice">http://localhost:4242/yo?name=Alice</a>.</p>
 <p>Note that we didn't explicitly ask Hunchentoot to add this
@@ -622,9 +627,8 @@ say another one opened at port 4444:
 <code>define-easy-handler</code> accepts an <code>acceptor-names</code> parameter that defines which acceptors it works for.</p>
 <h4 id="accessing-get-and-post-parameters">Accessing GET and POST parameters</h4>
 <p>Query parameters are accessible with</p>
-<pre><code class="lisp">(hunchentoot:parameter &quot;my-param&quot;)
+<pre><code class="language-lisp">(hunchentoot:parameter &quot;my-param&quot;)
 </code></pre>
-
 <p>while in the <a href="#variables-in-request-context">context of a request</a>.</p>
 <p>It acts on the default <code>*request*</code> object which is passed to all handlers.</p>
 <p>There also are <a href="#get-parameter">get-paramater</a> and <a href="#post-parameter">post-parameter</a>. </p>
@@ -656,9 +660,8 @@ how Hunchentoot and some other libraries can be used to build web sites.</li>
 </ul>
 <h2 id="api-reference">API REFERENCE</h2>
 <h3 id="1-acceptor">1. <span id="acceptor">ACCEPTOR</span></h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>To create a Hunchentoot webserver, you make an
 instance of this class and use the generic function START to start it
 (and STOP to stop it).  Use the :PORT initarg if you don't want to
@@ -674,35 +677,31 @@ same time.</p>
 </ul>
 <h4 id="relevant-methods">RELEVANT METHODS</h4>
 <h5 id="accept-connections">accept-connections</h5>
-<pre><code class="lisp">Function: (accept-connections acceptor)
+<pre><code class="language-lisp">Function: (accept-connections acceptor)
 </code></pre>
-
 <p>In a loop, accepts a connection and hands it over
 to the acceptor's taskmaster for processing using
 HANDLE-INCOMING-CONNECTION.  On LispWorks, this function returns
 immediately, on other Lisps it retusn only once the acceptor has been
 stopped.</p>
 <h5 id="acceptor-log-access">acceptor-log-access</h5>
-<pre><code class="lisp">Function: (acceptor-log-access acceptor &amp;key return-code)
+<pre><code class="language-lisp">Function: (acceptor-log-access acceptor &amp;key return-code)
 </code></pre>
-
 <p>Function to call to log access to the acceptor.  The RETURN-CODE,
 CONTENT and CONTENT-LENGTH keyword arguments contain additional
 information about the request to log.  In addition, it can use the
 standard request accessor functions that are available to handler
 functions to find out more information about the request.</p>
 <h5 id="acceptor-log-message">acceptor-log-message</h5>
-<pre><code class="lisp">Function: (acceptor-log-message acceptor log-level format-string &amp;rest format-arguments)
+<pre><code class="language-lisp">Function: (acceptor-log-message acceptor log-level format-string &amp;rest format-arguments)
 </code></pre>
-
 <p>Function to call to log messages by the ACCEPTOR.  It must accept
 a severity level for the message, which will be one of :ERROR, :INFO,
 or :WARNING, a format string and an arbitary number of formatting
 arguments.</p>
 <h5 id="acceptor-status-message">acceptor-status-message</h5>
-<pre><code class="lisp">Function: (acceptor-status-message acceptor http-status-code &amp;key &amp;allow-other-keys)
+<pre><code class="language-lisp">Function: (acceptor-status-message acceptor http-status-code &amp;key &amp;allow-other-keys)
 </code></pre>
-
 <p>This function is called after the request's handler has been
 invoked to convert the HTTP-STATUS-CODE to a HTML message to be
 displayed to the user.  If this function returns a string, that
@@ -722,9 +721,8 @@ the script-name, lisp-implementation-type,
 lisp-implementation-version and hunchentoot-version variables are
 available.</p>
 <h5 id="detach-socket">detach-socket</h5>
-<pre><code class="lisp">Function: (detach-socket acceptor)
+<pre><code class="language-lisp">Function: (detach-socket acceptor)
 </code></pre>
-
 <p>Indicate to Hunchentoot that it should stop serving
 requests on the current request's socket.
 Hunchentoot will finish processing the current
@@ -733,18 +731,16 @@ without closing the connection to the client.
 DETACH-SOCKET can only be called from within a
 request handler function.</p>
 <h5 id="initialize-connection-stream">initialize-connection-stream</h5>
-<pre><code class="lisp">Function: (initialize-connection-stream acceptor stream)
+<pre><code class="language-lisp">Function: (initialize-connection-stream acceptor stream)
 </code></pre>
-
 <p>Can be used to modify the stream which is used to
 communicate between client and server before the request is read.  The
 default method of ACCEPTOR does nothing, but see for example the
 method defined for SSL-ACCEPTOR.  All methods of this generic function
 must return the stream to use.</p>
 <h5 id="process-connection">process-connection</h5>
-<pre><code class="lisp">Function: (process-connection acceptor socket)
+<pre><code class="language-lisp">Function: (process-connection acceptor socket)
 </code></pre>
-
 <p>This function is called by the taskmaster when a
 new client connection has been established.  Its arguments are the
 ACCEPTOR object and a LispWorks socket handle or a usocket socket
@@ -765,42 +761,37 @@ processing the request and the <code>PROCESS-CONNECTION</code> function
 will return without closing the connection. At that point, the
 acceptor may interact with the socket in whatever fashion required.</p>
 <h5 id="reset-connection-stream">reset-connection-stream</h5>
-<pre><code class="lisp">Function: (reset-connection-stream acceptor stream)
+<pre><code class="language-lisp">Function: (reset-connection-stream acceptor stream)
 </code></pre>
-
 <p>Resets the stream which is used to communicate
 between client and server after one request has been served so that it
 can be used to process the next request.  This generic function is
 called after a request has been processed and must return the
 stream.</p>
 <h5 id="start">start</h5>
-<pre><code class="lisp">Function: (start acceptor)
+<pre><code class="language-lisp">Function: (start acceptor)
 </code></pre>
-
 <p>Starts the ACCEPTOR so that it begins accepting
 connections.  Returns the acceptor.</p>
 <h5 id="start-listening">start-listening</h5>
-<pre><code class="lisp">Function: (start-listening acceptor)
+<pre><code class="language-lisp">Function: (start-listening acceptor)
 </code></pre>
-
 <p>Sets up a listen socket for the given ACCEPTOR and
 enables it to listen to incoming connections.  This function is called
 from the thread that starts the acceptor initially and may return
 errors resulting from the listening operation (like 'address in use'
 or similar).</p>
 <h5 id="stop">stop</h5>
-<pre><code class="lisp">Function: (stop acceptor &amp;key soft)
+<pre><code class="language-lisp">Function: (stop acceptor &amp;key soft)
 </code></pre>
-
 <p>Stops the ACCEPTOR so that it no longer accepts
 requests.  If SOFT is true, and there are any requests in progress,
 wait until all requests are fully processed, but meanwhile do not
 accept new requests.  Note that SOFT must not be set when calling
 STOP from within a request handler, as that will deadlock.</p>
 <h5 id="started-p">started-p</h5>
-<pre><code class="lisp">Function: (started-p acceptor)
+<pre><code class="language-lisp">Function: (started-p acceptor)
 </code></pre>
-
 <p>Tells if ACCEPTOR has been started.
 The default implementation simply queries ACCEPTOR for its listening
 status, so if T is returned to the calling thread, then some thread
@@ -810,27 +801,24 @@ to START hasn't finished or START was never called at all for
 ACCEPTOR.</p>
 <h4 id="slots"><span id="acceptor-slots">SLOTS</span></h4>
 <h5 id="acceptor-shutdown-p">acceptor-shutdown-p</h5>
-<pre><code class="lisp">Initform: T
+<pre><code class="language-lisp">Initform: T
 </code></pre>
-
 <p>A flag that makes the acceptor
  shutdown itself when set to something other than NIL.</p>
 <h5 id="access-log-destination">access-log-destination</h5>
-<pre><code class="lisp">Initargs: :access-log-destination
+<pre><code class="language-lisp">Initargs: :access-log-destination
 Readers: hunchentoot:acceptor-access-log-destination
 Writers: (setf hunchentoot:acceptor-access-log-destination)
 </code></pre>
-
 <p>Destination of the access log
  which contains one log entry per request handled in a format similar
  to Apache's access.log.  Can be set to a pathname or string
  designating the log file, to a open output stream or to NIL to
  suppress logging.</p>
 <h5 id="address">address</h5>
-<pre><code class="lisp">Initargs: :address
+<pre><code class="language-lisp">Initargs: :address
 Readers: hunchentoot:acceptor-address
 </code></pre>
-
 <p>The address the acceptor is listening on.
  If address is a string denoting an IP address, then the server only
  receives connections for that address.  This must be one of the
@@ -839,20 +827,18 @@ Readers: hunchentoot:acceptor-address
  "72.3.247.29".  If address is NIL, then the server will receive
  connections to all IP addresses on the machine. This is the default.</p>
 <h5 id="document-root">document-root</h5>
-<pre><code class="lisp">Initargs: :document-root
+<pre><code class="language-lisp">Initargs: :document-root
 Readers: hunchentoot:acceptor-document-root
 Writers: (setf hunchentoot:acceptor-document-root)
 </code></pre>
-
 <p>Directory pathname that points to
  files that are served by the acceptor if no more specific
  acceptor-dispatch-request method handles the request.</p>
 <h5 id="error-template-directory">error-template-directory</h5>
-<pre><code class="lisp">Initargs: :error-template-directory
+<pre><code class="language-lisp">Initargs: :error-template-directory
 Readers: hunchentoot:acceptor-error-template-directory
 Writers: (setf hunchentoot:acceptor-error-template-directory)
 </code></pre>
-
 <p>Directory pathname that
   contains error message template files for server-generated error
   messages.  Files must be named <return-code>.html with <return-code>
@@ -860,10 +846,9 @@ Writers: (setf hunchentoot:acceptor-error-template-directory)
   i.e. 404.html would be used as the content for a HTTP 404 Not found
   response.</p>
 <h5 id="listen-backlog">listen-backlog</h5>
-<pre><code class="lisp">Initargs: :listen-backlog
+<pre><code class="language-lisp">Initargs: :listen-backlog
 Readers: hunchentoot:acceptor-listen-backlog
 </code></pre>
-
 <p>Number of pending connections
 allowed in the listen socket before the kernel rejects
 further incoming connections.</p>
@@ -871,99 +856,89 @@ further incoming connections.</p>
 <p>The socket listening for incoming
  connections.</p>
 <h5 id="message-log-destination">message-log-destination</h5>
-<pre><code class="lisp">Initargs: :message-log-destination
+<pre><code class="language-lisp">Initargs: :message-log-destination
 Readers: hunchentoot:acceptor-message-log-destination
 Writers: (setf hunchentoot:acceptor-message-log-destination)
 </code></pre>
-
 <p>Destination of the server
  error log which is used to log informational, warning and error
  messages in a free-text format intended for human inspection. Can be
  set to a pathname or string designating the log file, to a open output
  stream or to NIL to suppress logging.</p>
 <h5 id="input-chunking-p">input-chunking-p</h5>
-<pre><code class="lisp">Initargs: :input-chunking-p
+<pre><code class="language-lisp">Initargs: :input-chunking-p
 Readers: hunchentoot:acceptor-input-chunking-p
 Writers: (setf hunchentoot:acceptor-input-chunking-p)
 </code></pre>
-
 <p>A generalized boolean denoting
  whether the acceptor may use chunked encoding for input, i.e. when
  accepting request bodies from the client.  The default is T and
  there's usually no reason to change this to NIL.</p>
 <h5 id="name">name</h5>
-<pre><code class="lisp">Initargs: :name
+<pre><code class="language-lisp">Initargs: :name
 Readers: hunchentoot:acceptor-name
 Writers: (setf hunchentoot:acceptor-name)
 </code></pre>
-
 <p>The optional name of the acceptor, a symbol.
  This name can be utilized when defining "easy handlers" - see
  DEFINE-EASY-HANDLER.  The default name is an uninterned symbol as
  returned by GENSYM.</p>
 <h5 id="output-chunking-p">output-chunking-p</h5>
-<pre><code class="lisp">Initargs: :output-chunking-p
+<pre><code class="language-lisp">Initargs: :output-chunking-p
 Readers: hunchentoot:acceptor-output-chunking-p
 Writers: (setf hunchentoot:acceptor-output-chunking-p)
 </code></pre>
-
 <p>A generalized boolean denoting
  whether the acceptor may use chunked encoding for output, i.e. when
  sending data to the client.  The default is T and there's usually no
  reason to change this to NIL.</p>
 <h5 id="persistent-connections-p">persistent-connections-p</h5>
-<pre><code class="lisp">Initargs: :persistent-connections-p
+<pre><code class="language-lisp">Initargs: :persistent-connections-p
 Readers: hunchentoot:acceptor-persistent-connections-p
 Writers: (setf hunchentoot:acceptor-persistent-connections-p)
 </code></pre>
-
 <p>A generalized boolean
  denoting whether the acceptor supports persistent connections, which
  is the default for threaded acceptors.  If this property is NIL,
  Hunchentoot closes each incoming connection after having processed one
  request.  This is the default for non-threaded acceptors.</p>
 <h5 id="port">port</h5>
-<pre><code class="lisp">Initargs: :port
+<pre><code class="language-lisp">Initargs: :port
 Readers: hunchentoot:acceptor-port
 </code></pre>
-
 <p>The port the acceptor is listening on.  The
  default is 80.  Note that depending on your operating system you might
  need special privileges to listen on port 80.  When 0, the port will be
  chosen by the system the first time the acceptor is started.</p>
 <h5 id="read-timeout">read-timeout</h5>
-<pre><code class="lisp">Initargs: :read-timeout
+<pre><code class="language-lisp">Initargs: :read-timeout
 Readers: hunchentoot:acceptor-read-timeout
 </code></pre>
-
 <p>The read timeout of the acceptor,
  specified in (fractional) seconds.  The precise semantics of this
  parameter is determined by the underlying Lisp's implementation of
  socket timeouts.  NIL means no timeout.</p>
 <h5 id="reply-class">reply-class</h5>
-<pre><code class="lisp">Initargs: :reply-class
+<pre><code class="language-lisp">Initargs: :reply-class
 Readers: hunchentoot:acceptor-reply-class
 Writers: (setf hunchentoot:acceptor-reply-class)
 </code></pre>
-
 <p>Determines which class of reply
  objects is created when a request is served in and should be (a
  symbol naming) a class which inherits from REPLY.  The default is the
  symbol REPLY.</p>
 <h5 id="request-class">request-class</h5>
-<pre><code class="lisp">Initargs: :request-class
+<pre><code class="language-lisp">Initargs: :request-class
 Readers: hunchentoot:acceptor-request-class
 Writers: (setf hunchentoot:acceptor-request-class)
 </code></pre>
-
 <p>Determines which class of request
  objects is created when a request comes in and should be (a symbol
  naming) a class which inherits from REQUEST.  The default is the
  symbol REQUEST.</p>
 <h5 id="requests-in-progress">requests-in-progress</h5>
-<pre><code class="lisp">Initform: 0
+<pre><code class="language-lisp">Initform: 0
 </code></pre>
-
 <p>The number of
  requests currently in progress.</p>
 <h5 id="shutdown-lock">shutdown-lock</h5>
@@ -974,47 +949,41 @@ Writers: (setf hunchentoot:acceptor-request-class)
  used with soft shutdown, signaled when all requests
  have been processed.</p>
 <h5 id="taskmaster"><span id="acceptor-taskmaster">taskmaster</span></h5>
-<pre><code class="lisp">Initargs: :taskmaster
+<pre><code class="language-lisp">Initargs: :taskmaster
 </code></pre>
-
 <p>The taskmaster (i.e. an instance of a
  subclass of TASKMASTER) that is responsible for scheduling the work
  for this acceptor.  The default depends on the MP capabilities of the
  underlying Lisp.</p>
 <h5 id="write-timeout">write-timeout</h5>
-<pre><code class="lisp">Initargs: :write-timeout
+<pre><code class="language-lisp">Initargs: :write-timeout
 Readers: hunchentoot:acceptor-write-timeout
 </code></pre>
-
 <p>The write timeout of the acceptor,
  specified in (fractional) seconds.  The precise semantics of this
  parameter is determined by the underlying Lisp's implementation of
  socket timeouts.  NIL means no timeout.</p>
 <h3 id="2-easy-acceptor">2. <span id="easy-acceptor">EASY-ACCEPTOR</span></h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>This is the acceptor of the "easy" Hunchentoot framework.</p>
 <ul>
 <li>Direct superclasses: <a href="#acceptor">ACCEPTOR</a></li>
 <li>Direct subclasses: <a href="#easy-ssl-acceptor">EASY-SSL-ACCEPTOR</a></li>
 </ul>
 <h3 id="3-define-easy-handler">3. <span id="define-easy-handler">DEFINE-EASY-HANDLER</span></h3>
-<pre><code class="lisp">Macro: (define-easy-handler description lambda-list &amp;body body)
+<pre><code class="language-lisp">Macro: (define-easy-handler description lambda-list &amp;body body)
 </code></pre>
-
 <p>Defines a handler with the body BODY and optionally registers
 it with a URI so that it will be found by <a href="#DISPATCH-EASY-HANDLERS">DISPATCH-EASY-HANDLERS</a>.
 DESCRIPTION is either a symbol NAME or a list matching the
 destructuring lambda list</p>
-<pre><code class="lisp">  (name &amp;key uri acceptor-names default-parameter-type default-request-type)
+<pre><code class="language-lisp">  (name &amp;key uri acceptor-names default-parameter-type default-request-type)
 </code></pre>
-
 <p>LAMBDA-LIST is a list the elements of which are either a symbol
 VAR or a list matching the destructuring lambda list</p>
-<pre><code class="lisp">  (var &amp;key real-name parameter-type init-form request-type)
+<pre><code class="language-lisp">  (var &amp;key real-name parameter-type init-form request-type)
 </code></pre>
-
 <p>The resulting handler will be a Lisp function with the name NAME
 and keyword parameters named by the VAR symbols.  Each VAR will
 be bound to the value of the GET or POST parameter called
@@ -1063,9 +1032,8 @@ will be collected, converted to the inner type, and assembled
 into a list which will be the value of VAR.</p>
 <p>In the case of 'ARRAY, all GET/POST parameters which have a name
 like the result of</p>
-<pre><code class="lisp">  (format nil &quot;~A[~A]&quot; real-name n)
+<pre><code class="language-lisp">  (format nil &quot;~A[~A]&quot; real-name n)
 </code></pre>
-
 <p>where N is a non-negative integer, will be assembled into an
 array where the Nth element will be set accordingly, after
 conversion to the inner type.  The array, which will become the
@@ -1075,16 +1043,14 @@ be NIL.  Note that VAR will always be bound to an array, which
 may be empty, so it will never be NIL, even if no appropriate
 GET/POST parameters are found.</p>
 <p>The full form of a 'HASH-TABLE parameter type is</p>
-<pre><code class="lisp">  (hash-table inner-type key-type test-function),
+<pre><code class="language-lisp">  (hash-table inner-type key-type test-function),
 </code></pre>
-
 <p>but KEY-TYPE and TEST-FUNCTION can be left out in which case they
 default to 'STRING and 'EQUAL, respectively.  For this parameter
 type, all GET/POST parameters which have a name like the result
 of</p>
-<pre><code class="lisp">  (format nil &quot;~A{~A}&quot; real-name key)
+<pre><code class="language-lisp">  (format nil &quot;~A{~A}&quot; real-name key)
 </code></pre>
-
 <p>(where KEY is a string that doesn't contain curly brackets) will
 become the values (after conversion to INNER-TYPE) of a hash
 table with test function TEST-FUNCTION where KEY (after
@@ -1109,9 +1075,8 @@ Hunchentoot request.  Otherwise, VAR will always be bound to the
 result of evaluating INIT-FORM unless a corresponding keyword
 argument is provided.</p>
 <h3 id="4-ssl-acceptor">4. <span id="ssl-acceptor">SSL-ACCEPTOR</span></h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>Create and START an instance of this class
 (instead of ACCEPTOR) if you want an https server.  There are two
 required initargs, :SSL-CERTIFICATE-FILE and :SSL-PRIVATEKEY-FILE, for
@@ -1128,40 +1093,35 @@ for the key file (or NIL, the default, for no password).</p>
 <h4 id="direct-slots">DIRECT SLOTS</h4>
 <p>Also see slots for the superclass.</p>
 <h5 id="ssl-certificate-file">ssl-certificate-file</h5>
-<pre><code class="lisp">Initargs: :ssl-certificate-file
+<pre><code class="language-lisp">Initargs: :ssl-certificate-file
 Readers: hunchentoot:acceptor-ssl-certificate-file
 </code></pre>
-
 <p>A pathname designator for a
  certificate file in PEM format.</p>
 <h5 id="ssl-privatekey-file">ssl-privatekey-file</h5>
-<pre><code class="lisp">Initargs: :ssl-privatekey-file
+<pre><code class="language-lisp">Initargs: :ssl-privatekey-file
 Readers: hunchentoot:acceptor-ssl-privatekey-file
 </code></pre>
-
 <p>A pathname designator for a
  private key file in PEM format, or (only on LispWorks) NIL if the
  certificate file contains the private key.</p>
 <h5 id="ssl-privatekey-password">ssl-privatekey-password</h5>
-<pre><code class="lisp">Initargs: :ssl-privatekey-password
+<pre><code class="language-lisp">Initargs: :ssl-privatekey-password
 Readers: hunchentoot:acceptor-ssl-privatekey-password
 </code></pre>
-
 <p>The password for the
  private key file or NIL for no password.</p>
 <h3 id="5-easy-ssl-acceptor">5. <span id="easy-ssl-acceptor">EASY-SSL-ACCEPTOR</span></h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>This is an acceptor that mixes the "easy" Hunchentoot with SSL connections.</p>
 <ul>
 <li>Direct superclasses: <a href="#easy-acceptor">EASY-ACCEPTOR</a>, <a href="#ssl-acceptor">SSL-ACCEPTOR</a></li>
 <li>No subclasses.</li>
 </ul>
 <h3 id="6-reply">6. <span id="class-reply">REPLY</span></h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>Objects of this class hold all the information
 about an outgoing reply.  They are created automatically by
 Hunchentoot and can be accessed and modified by the corresponding
@@ -1175,43 +1135,36 @@ REPLY-CLASS slot of the ACCEPTOR class.</p>
 </ul>
 <h4 id="relevant-methods_1">RELEVANT METHODS</h4>
 <h5 id="headers-out">headers-out*</h5>
-<pre><code class="lisp">Function: (headers-out* &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (headers-out* &amp;optional (reply *reply*))
 </code></pre>
-
 <p>Returns an alist of the outgoing headers associated with the
 REPLY object REPLY.</p>
 <h5 id="content-length">content-length*</h5>
-<pre><code class="lisp">Function: (content-length* &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (content-length* &amp;optional (reply *reply*))
 </code></pre>
-
 <p>The outgoing 'Content-Length' http header of REPLY.</p>
 <h5 id="content-type">content-type*</h5>
-<pre><code class="lisp">Function: (content-type* &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (content-type* &amp;optional (reply *reply*))
 </code></pre>
-
 <p>The outgoing 'Content-Type' http header of REPLY.</p>
 <h5 id="cookie-out">cookie-out</h5>
-<pre><code class="lisp">Function: (cookie-out name &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (cookie-out name &amp;optional (reply *reply*))
 </code></pre>
-
 <p>Returns the current value of the outgoing cookie named
 NAME. Search is case-sensitive.</p>
 <h5 id="cookies-out">cookies-out*</h5>
-<pre><code class="lisp">Function: (cookies-out* &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (cookies-out* &amp;optional (reply *reply*))
 </code></pre>
-
 <p>Returns an alist of the outgoing cookies associated with the
 REPLY object REPLY.</p>
 <h5 id="return-code">return-code*</h5>
-<pre><code class="lisp">Function: (return-code* &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (return-code* &amp;optional (reply *reply*))
 </code></pre>
-
 <p>The http return code of REPLY.  The return codes Hunchentoot can
 handle are defined in specials.lisp.</p>
 <h5 id="send-headers">send-headers</h5>
-<pre><code class="lisp">Function: (send-headers)
+<pre><code class="language-lisp">Function: (send-headers)
 </code></pre>
-
 <p>Sends the initial status line and all headers as determined by the
 REPLY object *REPLY*.  Returns a binary stream to which the body of
 the reply can be written.  Once this function has been called, further
@@ -1223,61 +1176,53 @@ this function.</p>
 <p>This function does not return control to the caller during HEAD
 request processing.</p>
 <h5 id="reply-external-format">reply-external-format*</h5>
-<pre><code class="lisp">Function: (reply-external-format* &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (reply-external-format* &amp;optional (reply *reply*))
 </code></pre>
-
 <p>The external format of REPLY which is used for character output.</p>
 <h4 id="slots_1">SLOTS</h4>
 <h5 id="content-type_1">content-type</h5>
-<pre><code class="lisp">Readers: hunchentoot:content-type
+<pre><code class="language-lisp">Readers: hunchentoot:content-type
 </code></pre>
-
 <p>The outgoing 'Content-Type' http
  header which defaults to the value of *DEFAULT-CONTENT-TYPE*.</p>
 <h5 id="content-length_1">content-length</h5>
-<pre><code class="lisp">Readers: hunchentoot:content-length
+<pre><code class="language-lisp">Readers: hunchentoot:content-length
 </code></pre>
-
 <p>The outgoing 'Content-Length'
  http header which defaults NIL.  If this is NIL, Hunchentoot will
  compute the content length.</p>
 <h5 id="headers-out_1">headers-out</h5>
-<pre><code class="lisp">Readers: hunchentoot:headers-out
+<pre><code class="language-lisp">Readers: hunchentoot:headers-out
 </code></pre>
-
 <p>An alist of the outgoing http headers
  not including the 'Set-Cookie', 'Content-Length', and 'Content-Type'
  headers.  Use the functions HEADER-OUT and (SETF HEADER-OUT) to
  modify this slot.</p>
 <h5 id="return-code_1">return-code</h5>
-<pre><code class="lisp">Initform: hunchentoot:+http-ok+
+<pre><code class="language-lisp">Initform: hunchentoot:+http-ok+
 Readers: hunchentoot:return-code
 Writers: (setf hunchentoot:return-code)
 </code></pre>
-
 <p>The http return code of this
  reply.  The return codes Hunchentoot can handle are defined in
  specials.lisp.</p>
 <h5 id="external-format">external-format</h5>
-<pre><code class="lisp">Initform: hunchentoot:*hunchentoot-default-external-format*
+<pre><code class="language-lisp">Initform: hunchentoot:*hunchentoot-default-external-format*
 Readers: hunchentoot:reply-external-format
 Writers: (setf hunchentoot:reply-external-format)
 </code></pre>
-
 <p>The external format of the reply -
  used for character output.</p>
 <h5 id="cookies-out_1">cookies-out</h5>
-<pre><code class="lisp">Readers: hunchentoot:cookies-out
+<pre><code class="language-lisp">Readers: hunchentoot:cookies-out
 Writers: (setf hunchentoot:cookies-out)
 </code></pre>
-
 <p>The outgoing cookies.  This slot's
  value should only be modified by the functions defined in
  cookies.lisp.</p>
 <h3 id="7-request">7. <span id="class-request">REQUEST</span></h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>Objects of this class hold all the information
 about an incoming request.  They are created automatically by
 acceptors and can be accessed by the corresponding handler.</p>
@@ -1290,135 +1235,112 @@ the REQUEST-CLASS slot of the ACCEPTOR class.</p>
 </ul>
 <h4 id="relevant-methods_2">RELEVANT METHODS</h4>
 <h5 id="real-remote-addr">real-remote-addr</h5>
-<pre><code class="lisp">Function: (real-remote-addr &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (real-remote-addr &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the 'X-Forwarded-For' incoming http header as the
 second value in the form of a list of IP addresses and the first
 element of this list as the first value if this header exists.
 Otherwise returns the value of REMOTE-ADDR as the only value.</p>
 <h5 id="parameter">parameter</h5>
-<pre><code class="lisp">Function: (parameter name &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (parameter name &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the GET or the POST parameter with name NAME (a string) -
 or NIL if there is none.  If both a GET and a POST parameter with the
 same name exist the GET parameter is returned.  Search is
 case-sensitive.</p>
 <h5 id="get-parameter">get-parameter</h5>
-<pre><code class="lisp">Function: (get-parameter name &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (get-parameter name &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the GET parameter with name NAME (a string) - or NIL if
 there is none.  Search is case-sensitive.</p>
 <h5 id="get-parameters">get-parameters*</h5>
-<pre><code class="lisp">Function: (get-parameters* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (get-parameters* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns an alist of the GET parameters associated with the REQUEST
 object REQUEST.</p>
 <h5 id="post-parameter">post-parameter</h5>
-<pre><code class="lisp">Function: (post-parameter name &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (post-parameter name &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the POST parameter with name NAME (a string) - or NIL if
 there is none.  Search is case-sensitive.</p>
 <h5 id="post-parameters">post-parameters*</h5>
-<pre><code class="lisp">Function: (post-parameters* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (post-parameters* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns an alist of the POST parameters associated with the REQUEST
 object REQUEST.</p>
 <h5 id="cookie-in">cookie-in</h5>
-<pre><code class="lisp">Function: (cookie-in name &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (cookie-in name &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the cookie with the name NAME (a string) as sent by the
 browser - or NIL if there is none.</p>
 <h5 id="cookies-in">cookies-in*</h5>
-<pre><code class="lisp">Function: (cookies-in* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (cookies-in* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns an alist of all cookies associated with the REQUEST object
 REQUEST.</p>
 <h5 id="host">host</h5>
-<pre><code class="lisp">Function: (host &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (host &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the 'Host' incoming http header value.</p>
 <h5 id="query-string">query-string*</h5>
-<pre><code class="lisp">Function: (query-string* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (query-string* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the query string of the REQUEST object REQUEST. That's
 the part behind the question mark (i.e. the GET parameters).</p>
 <h5 id="referer">referer</h5>
-<pre><code class="lisp">Function: (referer &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (referer &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the 'Referer' (sic!) http header.</p>
 <h5 id="request-method">request-method*</h5>
-<pre><code class="lisp">Function: (request-method* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (request-method* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the request method as a Lisp keyword.</p>
 <h5 id="request-uri">request-uri*</h5>
-<pre><code class="lisp">Function: (request-uri* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (request-uri* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the request URI.</p>
 <h5 id="server-protocol">server-protocol*</h5>
-<pre><code class="lisp">Function: (server-protocol* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (server-protocol* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the request protocol as a Lisp keyword.</p>
 <h5 id="user-agent">user-agent</h5>
-<pre><code class="lisp">Function: (user-agent &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (user-agent &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the 'User-Agent' http header.</p>
 <h5 id="header-in">header-in*</h5>
-<pre><code class="lisp">Function: (header-in* name &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (header-in* name &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the incoming header with name NAME.  NAME can be a keyword
 (recommended) or a string.</p>
 <h5 id="headers-in">headers-in*</h5>
-<pre><code class="lisp">Function: (headers-in* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (headers-in* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns an alist of the incoming headers associated with the
 REQUEST object REQUEST.</p>
 <h5 id="remote-addr">remote-addr*</h5>
-<pre><code class="lisp">Function: (remote-addr* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (remote-addr* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the address the current request originated from.</p>
 <h5 id="remote-port">remote-port*</h5>
-<pre><code class="lisp">Function: (remote-port* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (remote-port* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the port the current request originated from.</p>
 <h5 id="local-addr">local-addr*</h5>
-<pre><code class="lisp">Function: (local-addr* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (local-addr* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the address the current request connected to.</p>
 <h5 id="local-port">local-port*</h5>
-<pre><code class="lisp">Function: (local-port* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (local-port* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the port the current request connected to.</p>
 <h5 id="script-name">script-name*</h5>
-<pre><code class="lisp">Function: (script-name* &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (script-name* &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the file name of the REQUEST object REQUEST. That's the
 requested URI without the query string (i.e the GET parameters).</p>
 <h5 id="aux-request-value">aux-request-value</h5>
-<pre><code class="lisp">Function: (aux-request-value symbol &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (aux-request-value symbol &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns the value associated with SYMBOL from the request object
 REQUEST (the default is the current request) if it exists.  The
 second return value is true if such a value was found.
@@ -1426,21 +1348,18 @@ Sets the value associated with SYMBOL from the request object
 REQUEST (default is *REQUEST*).  If there is already a value
 associated with SYMBOL it will be replaced.</p>
 <h5 id="delete-aux-request-value">delete-aux-request-value</h5>
-<pre><code class="lisp">Function: (delete-aux-request-value symbol &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (delete-aux-request-value symbol &amp;optional (request *request*))
 </code></pre>
-
 <p>Removes the value associated with SYMBOL from the request object
 REQUEST.</p>
 <h5 id="authorization">authorization</h5>
-<pre><code class="lisp">Function: (authorization &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (authorization &amp;optional (request *request*))
 </code></pre>
-
 <p>Returns as two values the user and password (if any) as encoded in
 the 'AUTHORIZATION' header.  Returns NIL if there is no such header.</p>
 <h5 id="raw-post-data">raw-post-data</h5>
-<pre><code class="lisp">Function: (raw-post-data &amp;key (request *request*) external-format force-text force-binary want-stream)
+<pre><code class="language-lisp">Function: (raw-post-data &amp;key (request *request*) external-format force-text force-binary want-stream)
 </code></pre>
-
 <p>Returns the content sent by the client if there was any (unless
 the content type was "multipart/form-data").  By default, the result
 is a string if the type of the <code>Content-Type' media type is "text",
@@ -1467,18 +1386,16 @@ mix calls which have different values for WANT-STREAM.</p>
 <p>Note that this function is slightly misnamed because a client can send
 content even if the request method is not POST.</p>
 <h5 id="recompute-request-parameters">recompute-request-parameters</h5>
-<pre><code class="lisp">Function: (recompute-request-parameters 
+<pre><code class="language-lisp">Function: (recompute-request-parameters 
              &amp;key (request *request*) 
                (external-format *hunchentoot-default-external-format*))
 </code></pre>
-
 <p>Recomputes the GET and POST parameters for the REQUEST object
 REQUEST.  This only makes sense if you're switching external formats
 during the request.</p>
 <h5 id="process-request">process-request</h5>
-<pre><code class="lisp">Function: (process-request request)
+<pre><code class="language-lisp">Function: (process-request request)
 </code></pre>
-
 <p>This function is called by PROCESS-CONNECTION after
 the incoming headers have been read.  It calls HANDLE-REQUEST to
 select and call a handler and sends the output of this handler to the
@@ -1489,9 +1406,8 @@ PROCESS-REQUEST is called anew for each request.</p>
 HANDLE-REQUEST.</p>
 <p>The return value of this function is ignored.</p>
 <h5 id="handle-request">handle-request</h5>
-<pre><code class="lisp">Function: (handle-request acceptor request)
+<pre><code class="language-lisp">Function: (handle-request acceptor request)
 </code></pre>
-
 <p>This function is called once the request has been
 read and a REQUEST object has been created.  Its job is to set up
 standard error handling and request logging.</p>
@@ -1499,9 +1415,8 @@ standard error handling and request logging.</p>
 of ACCEPTOR which bind or rebind special variables which can then be
 accessed by your handlers.</p>
 <h5 id="handle-request_1">handle-request</h5>
-<pre><code class="lisp">Function: (handle-request acceptor request)
+<pre><code class="language-lisp">Function: (handle-request acceptor request)
 </code></pre>
-
 <p>This function is called once the request has been
 read and a REQUEST object has been created.  Its job is to set up
 standard error handling and request logging.</p>
@@ -1509,9 +1424,8 @@ standard error handling and request logging.</p>
 of ACCEPTOR which bind or rebind special variables which can then be
 accessed by your handlers.</p>
 <h5 id="acceptor-dispatch-request">acceptor-dispatch-request</h5>
-<pre><code class="lisp">Function: (acceptor-dispatch-request acceptor request)
+<pre><code class="language-lisp">Function: (acceptor-dispatch-request acceptor request)
 </code></pre>
-
 <p>This function is called to actually dispatch the
 request once the standard logging and error handling has been set up.
 ACCEPTOR subclasses implement methods for this function in order to
@@ -1521,103 +1435,87 @@ the next ACCEPTOR in the inheritance chain gets a chance to handle the
 request.</p>
 <h4 id="slots_2">SLOTS</h4>
 <h5 id="acceptor">acceptor</h5>
-<pre><code class="lisp">Initargs: :acceptor
+<pre><code class="language-lisp">Initargs: :acceptor
 Readers: hunchentoot:request-acceptor
 </code></pre>
-
 <p>The acceptor which created this request
  object.</p>
 <h5 id="headers-in_1">headers-in</h5>
-<pre><code class="lisp">Initargs: :headers-in
+<pre><code class="language-lisp">Initargs: :headers-in
 Readers: hunchentoot:headers-in
 </code></pre>
-
 <p>An alist of the incoming headers.</p>
 <h5 id="method">method</h5>
-<pre><code class="lisp">Initargs: :method
+<pre><code class="language-lisp">Initargs: :method
 Readers: hunchentoot:request-method
 </code></pre>
-
 <p>The request method as a keyword.</p>
 <h5 id="uri">uri</h5>
-<pre><code class="lisp">Initargs: :uri
+<pre><code class="language-lisp">Initargs: :uri
 Readers: hunchentoot:request-uri
 </code></pre>
-
 <p>The request URI as a string.</p>
 <h5 id="server-protocol_1">server-protocol</h5>
-<pre><code class="lisp">Initargs: :server-protocol
+<pre><code class="language-lisp">Initargs: :server-protocol
 Readers: hunchentoot:server-protocol
 </code></pre>
-
 <p>The HTTP protocol as a keyword.</p>
 <h5 id="local-addr_1">local-addr</h5>
-<pre><code class="lisp">Initargs: :local-addr
+<pre><code class="language-lisp">Initargs: :local-addr
 Readers: hunchentoot:local-addr
 </code></pre>
-
 <p>The IP address of the local system
  that the client connected to.</p>
 <h5 id="local-port_1">local-port</h5>
-<pre><code class="lisp">Initargs: :local-port
+<pre><code class="language-lisp">Initargs: :local-port
 Readers: hunchentoot:local-port
 </code></pre>
-
 <p>The TCP port number of the local
  system that the client connected to.</p>
 <h5 id="remote-addr_1">remote-addr</h5>
-<pre><code class="lisp">Initargs: :remote-addr
+<pre><code class="language-lisp">Initargs: :remote-addr
 Readers: hunchentoot:remote-addr
 </code></pre>
-
 <p>The IP address of the client that
  initiated this request.</p>
 <h5 id="remote-port_1">remote-port</h5>
-<pre><code class="lisp">Initargs: :remote-port
+<pre><code class="language-lisp">Initargs: :remote-port
 Readers: hunchentoot:remote-port
 </code></pre>
-
 <p>The TCP port number of the client
  socket from which this request originated.</p>
 <h5 id="content-stream">content-stream</h5>
-<pre><code class="lisp">Initargs: :content-stream
+<pre><code class="language-lisp">Initargs: :content-stream
 </code></pre>
-
 <p>A stream from which the request
  body can be read if there is one.</p>
 <h5 id="cookies-in_1">cookies-in</h5>
-<pre><code class="lisp">Readers: hunchentoot:cookies-in
+<pre><code class="language-lisp">Readers: hunchentoot:cookies-in
 </code></pre>
-
 <p>An alist of the cookies sent by the client.</p>
 <h5 id="get-parameters_1">get-parameters</h5>
-<pre><code class="lisp">Readers: hunchentoot:get-parameters
+<pre><code class="language-lisp">Readers: hunchentoot:get-parameters
 </code></pre>
-
 <p>An alist of the GET parameters sent
  by the client.</p>
 <h5 id="post-parameters_1">post-parameters</h5>
-<pre><code class="lisp">Readers: hunchentoot:post-parameters
+<pre><code class="language-lisp">Readers: hunchentoot:post-parameters
 </code></pre>
-
 <p>An alist of the POST parameters
  sent by the client.</p>
 <h5 id="script-name_1">script-name</h5>
-<pre><code class="lisp">Readers: hunchentoot:script-name
+<pre><code class="language-lisp">Readers: hunchentoot:script-name
 </code></pre>
-
 <p>The URI requested by the client without
  the query string.</p>
 <h5 id="query-string_1">query-string</h5>
-<pre><code class="lisp">Readers: hunchentoot:query-string
+<pre><code class="language-lisp">Readers: hunchentoot:query-string
 </code></pre>
-
 <p>The query string of this request.</p>
 <h5 id="session">session</h5>
-<pre><code class="lisp">Readers: hunchentoot:session
+<pre><code class="language-lisp">Readers: hunchentoot:session
 Writers: (setf hunchentoot:session)
 </code></pre>
-
 <p>The session object associated with this
  request.</p>
 <h5 id="aux-data">aux-data</h5>
@@ -1627,9 +1525,8 @@ Writers: (setf hunchentoot:session)
 <p>The raw string sent as the body of a
  POST request, populated only if not a multipart/form-data request.</p>
 <h3 id="8-session">8. <span id="class-session">SESSION</span></h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>SESSION objects are automatically maintained by
 Hunchentoot.  They should not be created explicitly with MAKE-INSTANCE
 but implicitly with START-SESSION and they should be treated as opaque
@@ -1671,16 +1568,14 @@ attacks</a>, and should
 be used when a user logs in according to the application.</p>
 <h4 id="relevant-methods_3">RELEVANT METHODS</h4>
 <h5 id="start-session">start-session</h5>
-<pre><code class="lisp">Function: (start-session)
+<pre><code class="language-lisp">Function: (start-session)
 </code></pre>
-
 <p>Returns the current SESSION object. If there is no current session,
 creates one and updates the corresponding data structures. In this
 case the function will also send a session cookie to the browser.</p>
 <h5 id="session-value">session-value</h5>
-<pre><code class="lisp">Function: (session-value symbol &amp;optional (session *session*))
+<pre><code class="language-lisp">Function: (session-value symbol &amp;optional (session *session*))
 </code></pre>
-
 <p>Returns the value associated with SYMBOL from the session object
 SESSION (the default is the current session) if it exists.
 Sets the value associated with SYMBOL from the session object
@@ -1688,117 +1583,102 @@ SESSION. If there is already a value associated with SYMBOL it will be
 replaced. Will automatically start a session if none was supplied and
 there's no session for the current request.</p>
 <h5 id="delete-session-value">delete-session-value</h5>
-<pre><code class="lisp">Function: (delete-session-value symbol &amp;optional (session *session*))
+<pre><code class="language-lisp">Function: (delete-session-value symbol &amp;optional (session *session*))
 </code></pre>
-
 <p>Removes the value associated with SYMBOL from SESSION if there is
 one.</p>
 <h5 id="remove-session">remove-session</h5>
-<pre><code class="lisp">Function: (remove-session session)
+<pre><code class="language-lisp">Function: (remove-session session)
 </code></pre>
-
 <p>Completely removes the SESSION object SESSION from Hunchentoot's
 internal session database.</p>
 <h4 id="slots_3">SLOTS</h4>
 <h5 id="session-id">session-id</h5>
-<pre><code class="lisp">Type: integer
+<pre><code class="language-lisp">Type: integer
 Initform: (hunchentoot:next-session-id (hunchentoot:request-acceptor hunchentoot:*request*))
 Readers: hunchentoot:session-id
 </code></pre>
-
 <p>The unique ID (an INTEGER) of the session.</p>
 <h5 id="session-string">session-string</h5>
 <p>The session string encodes enough
  data to safely retrieve this session.  It is sent to the browser as a
  cookie value or as a GET parameter.</p>
 <h5 id="user-agent_1">user-agent</h5>
-<pre><code class="lisp">Initform: (hunchentoot:user-agent hunchentoot:*request*)
+<pre><code class="language-lisp">Initform: (hunchentoot:user-agent hunchentoot:*request*)
 Readers: hunchentoot:session-user-agent
 </code></pre>
-
 <p>The incoming 'User-Agent' header that
  was sent when this session was created.</p>
 <h5 id="remote-addr_2">remote-addr</h5>
-<pre><code class="lisp">Initform: (hunchentoot:real-remote-addr hunchentoot:*request*)
+<pre><code class="language-lisp">Initform: (hunchentoot:real-remote-addr hunchentoot:*request*)
 Readers: hunchentoot:session-remote-addr
 </code></pre>
-
 <p>The remote IP address of the client
  when this session was started as returned by REAL-REMOTE-ADDR.</p>
 <h5 id="session-start">session-start</h5>
-<pre><code class="lisp">Initform: (GET-UNIVERSAL-TIME)
+<pre><code class="language-lisp">Initform: (GET-UNIVERSAL-TIME)
 Readers: hunchentoot:session-start
 </code></pre>
-
 <p>The time this session was started.</p>
 <h5 id="last-click">last-click</h5>
 <p>The last time this session was used.</p>
 <h5 id="session-data">session-data</h5>
-<pre><code class="lisp">Initargs: :session-data
+<pre><code class="language-lisp">Initargs: :session-data
 </code></pre>
-
 <p>Data associated with this session -
  see SESSION-VALUE.</p>
 <h5 id="max-time">max-time</h5>
-<pre><code class="lisp">Type: fixnum
+<pre><code class="language-lisp">Type: fixnum
 Initargs: :max-time
 Initform: hunchentoot:*session-max-time*
 Readers: hunchentoot:session-max-time
 Writers: (setf hunchentoot:session-max-time)
 </code></pre>
-
 <p>The time (in seconds) after which this
  session expires if it's not used.</p>
 <h5 id="session-id_1">session-id</h5>
-<pre><code class="lisp">Type: integer
+<pre><code class="language-lisp">Type: integer
 Initform: (hunchentoot:next-session-id (hunchentoot:request-acceptor hunchentoot:*request*))
 Readers: hunchentoot:session-id
 </code></pre>
-
 <p>The unique ID (an INTEGER) of the session.</p>
 <h5 id="session-string_1">session-string</h5>
 <p>The session string encodes enough
  data to safely retrieve this session.  It is sent to the browser as a
  cookie value or as a GET parameter.</p>
 <h5 id="user-agent_2">user-agent</h5>
-<pre><code class="lisp">Initform: (HUNCHENTOOT:USER-AGENT HUNCHENTOOT:*REQUEST*)
+<pre><code class="language-lisp">Initform: (HUNCHENTOOT:USER-AGENT HUNCHENTOOT:*REQUEST*)
 Readers: hunchentoot:session-user-agent
 </code></pre>
-
 <p>The incoming 'User-Agent' header that
  was sent when this session was created.</p>
 <h5 id="remote-addr_3">remote-addr</h5>
-<pre><code class="lisp">Initform: (hunchentoot:real-remote-addr hunchentoot:*request*)
+<pre><code class="language-lisp">Initform: (hunchentoot:real-remote-addr hunchentoot:*request*)
 Readers: hunchentoot:session-remote-addr
 </code></pre>
-
 <p>The remote IP address of the client
  when this session was started as returned by REAL-REMOTE-ADDR.</p>
 <h5 id="session-start_1">session-start</h5>
-<pre><code class="lisp">Initform: (get-universal-time)
+<pre><code class="language-lisp">Initform: (get-universal-time)
 Readers: hunchentoot:session-start
 </code></pre>
-
 <p>The time this session was started.</p>
 <h3 id="9-miscellaneous-functions">9. MISCELLANEOUS FUNCTIONS</h3>
 <h4 id="bad-request">bad-request</h4>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <ul>
 <li>Direct superclasses: <a href="#hunchentoot-error">HUNCHENTOOT-ERROR</a></li>
 <li>No subclasses.</li>
 </ul>
 <h4 id="client-as-string">client-as-string</h4>
-<pre><code class="lisp">Function: (client-as-string socket)
+<pre><code class="language-lisp">Function: (client-as-string socket)
 </code></pre>
-
 <p>A helper function which returns the client's address and port as a
 string and tries to act robustly in the presence of network problems.</p>
 <h4 id="create-folder-dispatcher-and-handler">create-folder-dispatcher-and-handler</h4>
-<pre><code class="lisp">Function: (create-folder-dispatcher-and-handler uri-prefix base-path &amp;optional content-type)
+<pre><code class="language-lisp">Function: (create-folder-dispatcher-and-handler uri-prefix base-path &amp;optional content-type)
 </code></pre>
-
 <p>Creates and returns a dispatch function which will dispatch to a
 handler function which emits the file relative to BASE-PATH that is
 denoted by the URI of the request relative to URI-PREFIX.  URI-PREFIX
@@ -1806,47 +1686,40 @@ must be a string ending with a slash, BASE-PATH must be a pathname
 designator for an existing directory.  If CONTENT-TYPE is not NIL,
 it'll be the content type used for all files in the folder.</p>
 <h4 id="create-prefix-dispatcher">create-prefix-dispatcher</h4>
-<pre><code class="lisp">Function: (create-prefix-dispatcher prefix handler)
+<pre><code class="language-lisp">Function: (create-prefix-dispatcher prefix handler)
 </code></pre>
-
 <p>Creates a request dispatch function which will dispatch to the
 function denoted by HANDLER if the file name of the current request
 starts with the string PREFIX.</p>
 <h4 id="create-regex-dispatcher">create-regex-dispatcher</h4>
-<pre><code class="lisp">Function: (create-regex-dispatcher regex handler)
+<pre><code class="language-lisp">Function: (create-regex-dispatcher regex handler)
 </code></pre>
-
 <p>Creates a request dispatch function which will dispatch to the
 function denoted by HANDLER if the file name of the current request
 matches the CL-PPCRE regular expression REGEX.</p>
 <h4 id="create-request-handler-thread">create-request-handler-thread</h4>
-<pre><code class="lisp">Function: (create-request-handler-thread taskmaster socket)
+<pre><code class="language-lisp">Function: (create-request-handler-thread taskmaster socket)
 </code></pre>
-
 <p>Create a new thread in which to process the request.
  This thread will call PROCESS-CONNECTION to process the request.</p>
 <h4 id="create-static-file-dispatcher-and-handler">create-static-file-dispatcher-and-handler</h4>
-<pre><code class="lisp">Function: (create-static-file-dispatcher-and-handler uri path &amp;optional content-type)
+<pre><code class="language-lisp">Function: (create-static-file-dispatcher-and-handler uri path &amp;optional content-type)
 </code></pre>
-
 <p>Creates and returns a request dispatch function which will dispatch
 to a handler function which emits the file denoted by the pathname
 designator PATH with content type CONTENT-TYPE if the SCRIPT-NAME of
 the request matches the string URI.  If CONTENT-TYPE is NIL, tries to
 determine the content type via the file's suffix.</p>
 <h4 id="decrement-taskmaster-thread-count">decrement-taskmaster-thread-count</h4>
-<pre><code class="lisp">Function: (decrement-taskmaster-thread-count taskmaster)
+<pre><code class="language-lisp">Function: (decrement-taskmaster-thread-count taskmaster)
 </code></pre>
-
 <p>Atomically decrement the number of taskmaster requests</p>
 <h4 id="default-document-directory">default-document-directory</h4>
-<pre><code class="lisp">Function: (default-document-directory &amp;optional sub-directory)
+<pre><code class="language-lisp">Function: (default-document-directory &amp;optional sub-directory)
 </code></pre>
-
 <h4 id="detach-socket_1">detach-socket</h4>
-<pre><code class="lisp">Function: (detach-socket acceptor)
+<pre><code class="language-lisp">Function: (detach-socket acceptor)
 </code></pre>
-
 <p>Indicate to Hunchentoot that it should stop serving
  requests on the current request's socket.
  Hunchentoot will finish processing the current
@@ -1855,107 +1728,92 @@ determine the content type via the file's suffix.</p>
  DETACH-SOCKET can only be called from within a
  request handler function.</p>
 <h4 id="dispatch-easy-handlers">dispatch-easy-handlers</h4>
-<pre><code class="lisp">Function: (dispatch-easy-handlers request)
+<pre><code class="language-lisp">Function: (dispatch-easy-handlers request)
 </code></pre>
-
 <p>This is a dispatcher which returns the appropriate handler
 defined with DEFINE-EASY-HANDLER, if there is one.</p>
 <h4 id="escape-for-html">escape-for-html</h4>
-<pre><code class="lisp">Function: (escape-for-html string)
+<pre><code class="language-lisp">Function: (escape-for-html string)
 </code></pre>
-
 <p>Escapes the characters #\&lt;, #>, #\', #\", and #\&amp; for HTML
 output.</p>
 <h4 id="handle-if-modified-since">handle-if-modified-since</h4>
-<pre><code class="lisp">Function: (handle-if-modified-since time &amp;optional (request *request*))
+<pre><code class="language-lisp">Function: (handle-if-modified-since time &amp;optional (request *request*))
 </code></pre>
-
 <p>Handles the 'If-Modified-Since' header of REQUEST.  The date string
 is compared to the one generated from the supplied universal time
 TIME.</p>
 <h4 id="handle-static-file">handle-static-file</h4>
-<pre><code class="lisp">Function: (handle-static-file pathname &amp;optional content-type)
+<pre><code class="language-lisp">Function: (handle-static-file pathname &amp;optional content-type)
 </code></pre>
-
 <p>A function which acts like a Hunchentoot handler for the file
 denoted by PATHNAME.  Sends a content type header corresponding to
 CONTENT-TYPE or (if that is NIL) tries to determine the content type
 via the file's suffix.</p>
 <h4 id="http-token-p">http-token-p</h4>
-<pre><code class="lisp">Function: (http-token-p token)
+<pre><code class="language-lisp">Function: (http-token-p token)
 </code></pre>
-
 <p>This function tests whether OBJECT is a non-empty string which is a
 TOKEN according to RFC 2068 (i.e. whether it may be used for, say,
 cookie names).</p>
 <h4 id="hunchentoot-error">hunchentoot-error</h4>
-<pre><code class="lisp">Function: (hunchentoot-error format-control &amp;rest format-arguments)
+<pre><code class="language-lisp">Function: (hunchentoot-error format-control &amp;rest format-arguments)
 </code></pre>
-
 <p>Signals an error of type HUNCHENTOOT-SIMPLE-ERROR with the provided
 format control and arguments.
 Superclass for all errors related to Hunchentoot.</p>
 <h4 id="increment-taskmaster-thread-count">increment-taskmaster-thread-count</h4>
-<pre><code class="lisp">Function: (increment-taskmaster-thread-count taskmaster)
+<pre><code class="language-lisp">Function: (increment-taskmaster-thread-count taskmaster)
 </code></pre>
-
 <p>Atomically increment the number of taskmaster requests.</p>
 <h4 id="initialize-connection-stream_1">initialize-connection-stream</h4>
-<pre><code class="lisp">Function: (initialize-connection-stream acceptor stream)
+<pre><code class="language-lisp">Function: (initialize-connection-stream acceptor stream)
 </code></pre>
-
 <p>Can be used to modify the stream which is used to
 communicate between client and server before the request is read.  The
 default method of ACCEPTOR does nothing, but see for example the
 method defined for SSL-ACCEPTOR.  All methods of this generic function
 must return the stream to use.</p>
 <h4 id="log-message">log-message*</h4>
-<pre><code class="lisp">Function: (log-message* log-level format-string &amp;rest format-arguments)
+<pre><code class="language-lisp">Function: (log-message* log-level format-string &amp;rest format-arguments)
 </code></pre>
-
 <p>Convenience function which calls the message logger of the current
 acceptor (if there is one) with the same arguments it accepts.</p>
 <p>This is the function which Hunchentoot itself uses to log errors it
 catches during request processing.</p>
 <h4 id="maybe-invoke-debugger">maybe-invoke-debugger</h4>
-<pre><code class="lisp">Function: (maybe-invoke-debugger condition)
+<pre><code class="language-lisp">Function: (maybe-invoke-debugger condition)
 </code></pre>
-
 <p>This generic function is called whenever a
 condition CONDITION is signaled in Hunchentoot.  You might want to
 specialize it on specific condition classes for debugging purposes.</p>
 <h4 id="mime-type">mime-type</h4>
-<pre><code class="lisp">Function: (mime-type pathspec)
+<pre><code class="language-lisp">Function: (mime-type pathspec)
 </code></pre>
-
 <p>Given a pathname designator PATHSPEC returns the MIME type
 (as a string) corresponding to the suffix of the file denoted by
 PATHSPEC (or NIL).</p>
 <h4 id="next-session-id">next-session-id</h4>
-<pre><code class="lisp">Function: (next-session-id acceptor)
+<pre><code class="language-lisp">Function: (next-session-id acceptor)
 </code></pre>
-
 <p>Returns the next sequential session ID, an integer,
 which should be unique per session.  The default method uses a simple
 global counter and isn't guarded by a lock.  For a high-performance
 production environment you might consider using a more robust
 implementation.</p>
 <h4 id="no-cache">no-cache</h4>
-<pre><code class="lisp">Function: (no-cache)
+<pre><code class="language-lisp">Function: (no-cache)
 </code></pre>
-
 <p>Adds appropriate headers to completely prevent caching on most browsers.</p>
 <h4 id="parameter-error">parameter-error</h4>
-<pre><code class="lisp">Function: (parameter-error format-control &amp;rest format-arguments)
+<pre><code class="language-lisp">Function: (parameter-error format-control &amp;rest format-arguments)
 </code></pre>
-
 <p>Signals an error of type PARAMETER-ERROR with the provided
 format control and arguments.
 Signalled if a function was called with incosistent or illegal parameters.</p>
 <h4 id="process-connection_1">process-connection</h4>
-<pre><code class="lisp">Function: (process-connection acceptor socket)
+<pre><code class="language-lisp">Function: (process-connection acceptor socket)
 </code></pre>
-
 <p>This function is called by the taskmaster when a
 new client connection has been established.  Its arguments are the
 ACCEPTOR object and a LispWorks socket handle or a usocket socket
@@ -1966,13 +1824,12 @@ timeout occurs.</p>
 <p>It is probably not a good idea to re-implement this method until you
 really, really know what you're doing.</p>
 <h4 id="reason-phrase">reason-phrase</h4>
-<pre><code class="lisp">Function: (reason-phrase return-code)
+<pre><code class="language-lisp">Function: (reason-phrase return-code)
 </code></pre>
-
 <p>Returns a reason phrase for the HTTP return code RETURN-CODE (which
 should be an integer) or NIL for return codes Hunchentoot doesn't know.</p>
 <h4 id="redirect">redirect</h4>
-<pre><code class="lisp">Function: (redirect target &amp;key 
+<pre><code class="language-lisp">Function: (redirect target &amp;key 
                              (host (host *request*) host-provided-p)
                              port 
                              (protocol (if (ssl-p) :https :http))
@@ -1981,7 +1838,6 @@ should be an integer) or NIL for return codes Hunchentoot doesn't know.</p>
                                                       (cookie-in (session-cookie-name *acceptor*)))))
                              (code +http-moved-temporarily+))
 </code></pre>
-
 <p>Redirects the browser to TARGET which should be a string.  If
 TARGET is a full URL starting with a scheme, HOST, PORT and PROTOCOL
 are ignored.  Otherwise, TARGET should denote the path part of a URL,
@@ -1990,9 +1846,8 @@ redirect to will be constructed from HOST, PORT, PROTOCOL, and TARGET.
 Adds a session ID if ADD-SESSION-ID is true.  If CODE is a 3xx
 redirection code, it will be sent as status code.</p>
 <h4 id="regenerate-session-cookie-value">regenerate-session-cookie-value</h4>
-<pre><code class="lisp">Function: (regenerate-session-cookie-value session)
+<pre><code class="language-lisp">Function: (regenerate-session-cookie-value session)
 </code></pre>
-
 <p>Regenerates the cookie value. This should be used
 when a user logs in according to the application to prevent against
 session fixation attacks. The cookie value being dependent on ID,
@@ -2002,70 +1857,59 @@ generating a new cookie, it makes sense to have the session being
 restarted, in time. That said, because of this fact, calling this
 function twice in the same second will regenerate twice the same value.</p>
 <h4 id="reply-external-format_1">reply-external-format*</h4>
-<pre><code class="lisp">Function: (reply-external-format* &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (reply-external-format* &amp;optional (reply *reply*))
 </code></pre>
-
 <p>The external format of REPLY which is used for character output.</p>
 <h4 id="request-pathname">request-pathname</h4>
-<pre><code class="lisp">Function: (request-pathname &amp;optional (request *request*) drop-prefix)
+<pre><code class="language-lisp">Function: (request-pathname &amp;optional (request *request*) drop-prefix)
 </code></pre>
-
 <p>Construct a relative pathname from the request's SCRIPT-NAME.
 If DROP-PREFIX is given, pathname construction starts at the first path
 segment after the prefix.</p>
 <h4 id="require-authorization">require-authorization</h4>
-<pre><code class="lisp">Function: (require-authorization &amp;optional (realm hunchentoot))
+<pre><code class="language-lisp">Function: (require-authorization &amp;optional (realm hunchentoot))
 </code></pre>
-
 <p>Sends back appropriate headers to require basic HTTP authentication
 (see RFC 2617) for the realm REALM.</p>
 <h4 id="reset-connection-stream_1">reset-connection-stream</h4>
-<pre><code class="lisp">Function: (reset-connection-stream acceptor stream)
+<pre><code class="language-lisp">Function: (reset-connection-stream acceptor stream)
 </code></pre>
-
 <p>Resets the stream which is used to communicate
 between client and server after one request has been served so that it
 can be used to process the next request.  This generic function is
 called after a request has been processed and must return the
 stream.</p>
 <h4 id="reset-session-secret">reset-session-secret</h4>
-<pre><code class="lisp">Function: (reset-session-secret)
+<pre><code class="language-lisp">Function: (reset-session-secret)
 </code></pre>
-
 <p>Sets *SESSION-SECRET* to a new random value. All old sessions will
 cease to be valid.</p>
 <h4 id="reset-sessions">reset-sessions</h4>
-<pre><code class="lisp">Function: (reset-sessions &amp;optional (acceptor *acceptor*))
+<pre><code class="language-lisp">Function: (reset-sessions &amp;optional (acceptor *acceptor*))
 </code></pre>
-
 <p>Removes ALL stored sessions of ACCEPTOR.</p>
 <h4 id="rfc-1123-date">rfc-1123-date</h4>
-<pre><code class="lisp">Function: (rfc-1123-date &amp;optional (time (get-universal-time)))
+<pre><code class="language-lisp">Function: (rfc-1123-date &amp;optional (time (get-universal-time)))
 </code></pre>
-
 <p>Generates a time string according to RFC 1123. Default is current time.
 This can be used to send a 'Last-Modified' header - see
 HANDLE-IF-MODIFIED-SINCE.</p>
 <h4 id="script-name_2">script-name</h4>
-<pre><code class="lisp">Function: (script-name object)
+<pre><code class="language-lisp">Function: (script-name object)
 </code></pre>
-
 <h4 id="server-protocol_2">server-protocol</h4>
-<pre><code class="lisp">Function: (server-protocol object)
+<pre><code class="language-lisp">Function: (server-protocol object)
 </code></pre>
-
 <h4 id="session-cookie-name">session-cookie-name</h4>
-<pre><code class="lisp">Function: (session-cookie-name acceptor)
+<pre><code class="language-lisp">Function: (session-cookie-name acceptor)
 </code></pre>
-
 <p>Returns the name (a string) of the cookie (or the
 GET parameter) which is used to store a session on the client side.
 The default is to use the string "hunchentoot-session", but you can
 specialize this function if you want another name.</p>
 <h4 id="session-cookie-value">session-cookie-value</h4>
-<pre><code class="lisp">Function: (session-cookie-value session)
+<pre><code class="language-lisp">Function: (session-cookie-value session)
 </code></pre>
-
 <p>Returns a string which can be used to safely
 restore the session SESSION if as session has already been
 established.  This is used as the value stored in the session cookie
@@ -2073,25 +1917,22 @@ or in the corresponding GET parameter and verified by SESSION-VERIFY.</p>
 <p>A default method is provided and there's no reason to change it unless
 you want to use your own session objects.</p>
 <h4 id="session-created">session-created</h4>
-<pre><code class="lisp">Function: (session-created acceptor new-session)
+<pre><code class="language-lisp">Function: (session-created acceptor new-session)
 </code></pre>
-
 <p>This function is called whenever a new session has
 been created.  There's a default method which might trigger a session
 GC based on the value of *SESSION-GC-FREQUENCY*.</p>
 <p>The return value is ignored.</p>
 <h4 id="session-db">session-db</h4>
-<pre><code class="lisp">Function: (session-db acceptor)
+<pre><code class="language-lisp">Function: (session-db acceptor)
 </code></pre>
-
 <p>Returns the current session database which is an
 alist where each car is a session's ID and the cdr is the
 corresponding SESSION object itself.  The default is to use a global
 list for all acceptors.</p>
 <h4 id="session-db-lock">session-db-lock</h4>
-<pre><code class="lisp">Function: (session-db-lock acceptor &amp;key whole-db-p)
+<pre><code class="language-lisp">Function: (session-db-lock acceptor &amp;key whole-db-p)
 </code></pre>
-
 <p>A function which returns a lock that will be used
 to prevent concurrent access to sessions.  The first argument will be
 the acceptor that handles the current request, the second argument is
@@ -2103,21 +1944,18 @@ single-threaded environments).  The default is to always return a
 global lock (ignoring the ACCEPTOR argument) for Lisps that support
 threads and NIL otherwise.</p>
 <h4 id="session-gc">session-gc</h4>
-<pre><code class="lisp">Function: (session-gc)
+<pre><code class="language-lisp">Function: (session-gc)
 </code></pre>
-
 <p>Removes sessions from the current session database which are too
 old - see SESSION-TOO-OLD-P.</p>
 <h4 id="session-too-old-p">session-too-old-p</h4>
-<pre><code class="lisp">Function: (session-too-old-p session)
+<pre><code class="language-lisp">Function: (session-too-old-p session)
 </code></pre>
-
 <p>Returns true if the SESSION object SESSION has not been active in
 the last (SESSION-MAX-TIME SESSION) seconds.</p>
 <h4 id="session-verify">session-verify</h4>
-<pre><code class="lisp">Function: (session-verify request)
+<pre><code class="language-lisp">Function: (session-verify request)
 </code></pre>
-
 <p>Tries to get a session identifier from the cookies
 (or alternatively from the GET parameters) sent by the client (see
 SESSION-COOKIE-NAME and SESSION-COOKIE-VALUE).  This identifier is
@@ -2127,111 +1965,95 @@ success the corresponding session object (if not too old) is returned
 <p>A default method is provided and you only need to write your own one
 if you want to maintain your own sessions.</p>
 <h4 id="set-cookie">set-cookie</h4>
-<pre><code class="lisp">Function: (set-cookie name &amp;key (value &quot;&quot;) expires max-age 
+<pre><code class="language-lisp">Function: (set-cookie name &amp;key (value &quot;&quot;) expires max-age 
                              path domain secure http-only (reply *reply*))
 </code></pre>
-
 <p>Creates a cookie object from the parameters provided and adds
 it to the outgoing cookies of the REPLY object REPLY. If a cookie
 with the name NAME (case-sensitive) already exists, it is
 replaced.</p>
 <h4 id="set-cookie_1">set-cookie*</h4>
-<pre><code class="lisp">Function: (set-cookie* cookie &amp;optional (reply *reply*))
+<pre><code class="language-lisp">Function: (set-cookie* cookie &amp;optional (reply *reply*))
 </code></pre>
-
 <p>Adds the COOKIE object COOKIE to the outgoing cookies of the
 REPLY object REPLY. If a cookie with the same name
 (case-sensitive) already exists, it is replaced.</p>
 <h4 id="ssl-p">ssl-p</h4>
-<pre><code class="lisp">Function: (ssl-p &amp;optional (acceptor *acceptor*))
+<pre><code class="language-lisp">Function: (ssl-p &amp;optional (acceptor *acceptor*))
 </code></pre>
-
 <p>Whether the current connection to the client is secure. See
 ACCEPTOR-SSL-P.</p>
 <h4 id="taskmaster-max-accept-count">taskmaster-max-accept-count</h4>
-<pre><code class="lisp">Function: (taskmaster-max-accept-count taskmaster)
+<pre><code class="language-lisp">Function: (taskmaster-max-accept-count taskmaster)
 </code></pre>
-
 <p>The maximum number of connections this taskmaster will accept before refusing
     new connections.  If supplied, this must be greater than MAX-THREAD-COUNT.
     The number of queued requests is the difference between MAX-ACCEPT-COUNT
     and MAX-THREAD-COUNT.</p>
 <h4 id="taskmaster-max-thread-count">taskmaster-max-thread-count</h4>
-<pre><code class="lisp">Function: (taskmaster-max-thread-count taskmaster)
+<pre><code class="language-lisp">Function: (taskmaster-max-thread-count taskmaster)
 </code></pre>
-
 <p>The maximum number of request threads this taskmaster will simultaneously
     run before refusing or queueing new connections requests.  If the value
     is null, then there is no limit.</p>
 <h4 id="taskmaster-thread-count">taskmaster-thread-count</h4>
-<pre><code class="lisp">Function: (taskmaster-thread-count taskmaster)
+<pre><code class="language-lisp">Function: (taskmaster-thread-count taskmaster)
 </code></pre>
-
 <p>Returns the current number of taskmaster requests.</p>
 <h4 id="too-many-taskmaster-requests">too-many-taskmaster-requests</h4>
-<pre><code class="lisp">Function: (too-many-taskmaster-requests taskmaster socket)
+<pre><code class="language-lisp">Function: (too-many-taskmaster-requests taskmaster socket)
 </code></pre>
-
 <p>Signal a "too many requests" error, just prior to closing the connection.</p>
 <h4 id="url-decode">url-decode</h4>
-<pre><code class="lisp">Function: (url-decode string &amp;optional (external-format
+<pre><code class="language-lisp">Function: (url-decode string &amp;optional (external-format
                                         *hunchentoot-default-external-format*))
 </code></pre>
-
 <p>Decodes a URL-encoded string which is assumed to be encoded using the
 external format EXTERNAL-FORMAT, i.e. this is the inverse of
 URL-ENCODE. It is assumed that you'll rarely need this function, if
 ever. But just in case - here it is. The default for EXTERNAL-FORMAT is
 the value of *HUNCHENTOOT-DEFAULT-EXTERNAL-FORMAT*.</p>
 <h4 id="url-encode">url-encode</h4>
-<pre><code class="lisp">Function: (url-encode string &amp;optional (external-format
+<pre><code class="language-lisp">Function: (url-encode string &amp;optional (external-format
                                         *hunchentoot-default-external-format*))
 </code></pre>
-
 <p>URL-encodes a string using the external format EXTERNAL-FORMAT. The
 default for EXTERNAL-FORMAT is the value of
 *HUNCHENTOOT-DEFAULT-EXTERNAL-FORMAT*.</p>
 <h4 id="within-request-p">within-request-p</h4>
-<pre><code class="lisp">Function: (within-request-p)
+<pre><code class="language-lisp">Function: (within-request-p)
 </code></pre>
-
 <p>True if we're in the context of a request, otherwise nil.</p>
 <h3 id="10-configuration-variables">10. <span id="configuration-variables">CONFIGURATION VARIABLES</span></h3>
 <h4 id="catch-errors-p">*catch-errors-p*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether Hunchentoot should catch and log errors (or rather invoke
 the debugger).</p>
 <h4 id="content-types-for-url-rewrite">*content-types-for-url-rewrite*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>The content types for which url-rewriting is OK. See
 <a href="#rewrite-for-session-urls">*REWRITE-FOR-SESSION-URLS*</a>.</p>
 <h4 id="default-connection-timeout">*default-connection-timeout*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>The default connection timeout used when an acceptor is reading
 from and writing to a socket stream.</p>
 <h4 id="default-content-type">*default-content-type*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>The default content-type header which is returned to the client.
 If this is text content type, the character set used for encoding the
 response will automatically be added to the content type in a
 ``charset'' attribute.</p>
 <h4 id="dispatch-table">*dispatch-table*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>A global list of dispatch functions.</p>
 <h4 id="file-upload-hook">*file-upload-hook*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>If this is not NIL, it should be a unary function which will
 be called with a pathname for each file which is uploaded to
 Hunchentoot.  The pathname denotes the temporary file to which
@@ -2239,381 +2061,311 @@ the uploaded file is written.  The hook is called directly before
 the file is created.</p>
 <h4 id="handle-http-errors-p">*handle-http-errors-p*</h4>
 <h4 id="header-stream">*header-stream*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>If this variable is not NIL, it should be bound to a stream to
 which incoming and outgoing headers will be written for debugging
 purposes.</p>
 <h4 id="http-error-handler">*http-error-handler*</h4>
 <h4 id="hunchentoot-default-external-format">*hunchentoot-default-external-format*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>The external format used to compute the REQUEST object.</p>
 <h4 id="hunchentoot-version">*hunchentoot-version*</h4>
 <h4 id="lisp-errors-log-level">*lisp-errors-log-level*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Log level for Lisp errors.  Should be one of :ERROR (the default),
 :WARNING, or :INFO.</p>
 <h4 id="lisp-warnings-log-level">*lisp-warnings-log-level*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Log level for Lisp warnings.  Should be one of :ERROR, :WARNING
 (the default), or :INFO.</p>
 <h4 id="log-lisp-backtraces-p">*log-lisp-backtraces-p*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether Lisp backtraces should be logged.  Only has an effect if
 [*LOG-LISP-ERRORS-P*](#log-lisp-errors-p] is true as well.</p>
 <h4 id="log-lisp-errors-p">*log-lisp-errors-p*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether Lisp errors in request handlers should be logged.</p>
 <h4 id="log-lisp-warnings-p">*log-lisp-warnings-p*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether Lisp warnings in request handlers should be logged.</p>
 <h4 id="methods-for-post-parameters">*methods-for-post-parameters*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>A list of the request method types (as keywords) for which
 Hunchentoot will try to compute <a href="#post-parameters">POST-PARAMETERS</a>.</p>
 <h4 id="rewrite-for-session-urls">*rewrite-for-session-urls*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether HTML pages should possibly be rewritten for cookie-less
 session-management.</p>
 <h4 id="session-gc-frequency">*session-gc-frequency*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>A session GC (see function SESSION-GC) will happen every
 *SESSION-GC-FREQUENCY* requests (counting only requests which create
 a new session) if this variable is not NIL.  See <a href="#session-created">SESSION-CREATED</a>.</p>
 <h4 id="session-max-time">*session-max-time*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>The default time (in seconds) after which a session times out.</p>
 <h4 id="session-secret">*session-secret*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>A random ASCII string that's used to encode the public session
 data.  This variable is initially unbound and will be set (using
 <a href="#reset-session-secret">RESET-SESSION-SECRET</a>) the first time a session is created, if
 necessary.  You can prevent this from happening if you set the value
 yourself before starting acceptors.</p>
 <h4 id="show-lisp-backtraces-p">*show-lisp-backtraces-p*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether Lisp errors shown in HTML output should contain backtrace information.</p>
 <h4 id="show-lisp-errors-p">*show-lisp-errors-p*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether Lisp errors in request handlers should be shown in HTML output.</p>
 <h4 id="tmp-directory">*tmp-directory*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Directory for temporary files created by MAKE-TMP-FILE-NAME.</p>
 <h4 id="use-remote-addr-for-sessions">*use-remote-addr-for-sessions*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether the client's remote IP (as returned by <a href="#real-remote-addr">REAL-REMOTE-ADDR</a>)
 should be encoded into the session string.  If this value is true, a
 session will cease to be accessible if the client's remote IP changes.</p>
 <p>This might for example be an issue if the client uses a proxy server
 which doesn't send correct 'X_FORWARDED_FOR' headers.</p>
 <h4 id="use-user-agent-for-sessions">*use-user-agent-for-sessions*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>Whether the 'User-Agent' header should be encoded into the session
 string.  If this value is true, a session will cease to be accessible
 if the client sends a different 'User-Agent' header.</p>
 <h3 id="11-variables-in-the-context-of-a-request">11. <span id="variables-in-request-context">VARIABLES IN THE CONTEXT OF A REQUEST</span></h3>
 <h4 id="acceptor_1">*acceptor*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 
 </code></pre>
-
 <p>The current <a href="#acceptor">ACCEPTOR</a> object.</p>
 <h4 id="reply">*reply*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 
 </code></pre>
-
 <p>The current <a href="#class-reply">REPLY</a> object.</p>
 <h4 id="request">*request*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 
 </code></pre>
-
 <p>The current <a href="#class-request">REQUEST</a> object.</p>
 <h4 id="session_1">*session*</h4>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>The current <a href="#class-session">SESSION</a> (can be NIL).</p>
 <h3 id="12-constants">12. CONSTANTS</h3>
 <h4 id="http-accepted">+http-accepted+</h4>
-<pre><code class="lisp">Constant: 202
+<pre><code class="language-lisp">Constant: 202
 </code></pre>
-
 <p>HTTP return code (202) for 'Accepted'.</p>
 <h4 id="http-authorization-required">+http-authorization-required+</h4>
-<pre><code class="lisp">Constant: 401
+<pre><code class="language-lisp">Constant: 401
 </code></pre>
-
 <p>HTTP return code (401) for 'Authorization Required'.</p>
 <h4 id="http-bad-gateway">+http-bad-gateway+</h4>
-<pre><code class="lisp">Constant: 502
+<pre><code class="language-lisp">Constant: 502
 </code></pre>
-
 <p>HTTP return code (502) for 'Bad Gateway'.</p>
 <h4 id="http-bad-request">+http-bad-request+</h4>
-<pre><code class="lisp">Constant: 400
+<pre><code class="language-lisp">Constant: 400
 </code></pre>
-
 <p>HTTP return code (400) for 'Bad Request'.</p>
 <h4 id="http-conflict">+http-conflict+</h4>
-<pre><code class="lisp">Constant: 409
+<pre><code class="language-lisp">Constant: 409
 </code></pre>
-
 <p>HTTP return code (409) for 'Conflict'.</p>
 <h4 id="http-continue">+http-continue+</h4>
-<pre><code class="lisp">Constant: 100
+<pre><code class="language-lisp">Constant: 100
 </code></pre>
-
 <p>HTTP return code (100) for 'Continue'.</p>
 <h4 id="http-created">+http-created+</h4>
-<pre><code class="lisp">Constant: 201
+<pre><code class="language-lisp">Constant: 201
 </code></pre>
-
 <p>HTTP return code (201) for 'Created'.</p>
 <h4 id="http-expectation-failed">+http-expectation-failed+</h4>
-<pre><code class="lisp">Constant: 417
+<pre><code class="language-lisp">Constant: 417
 </code></pre>
-
 <p>HTTP return code (417) for 'Expectation Failed'.</p>
 <h4 id="http-failed-dependency">+http-failed-dependency+</h4>
-<pre><code class="lisp">Constant: 424
+<pre><code class="language-lisp">Constant: 424
 </code></pre>
-
 <p>HTTP return code (424) for 'Failed Dependency'.</p>
 <h4 id="http-forbidden">+http-forbidden+</h4>
-<pre><code class="lisp">Constant: 403
+<pre><code class="language-lisp">Constant: 403
 </code></pre>
-
 <p>HTTP return code (403) for 'Forbidden'.</p>
 <h4 id="http-gateway-time-out">+http-gateway-time-out+</h4>
-<pre><code class="lisp">Constant: 504
+<pre><code class="language-lisp">Constant: 504
 </code></pre>
-
 <p>HTTP return code (504) for 'Gateway Time-out'.</p>
 <h4 id="http-gone">+http-gone+</h4>
-<pre><code class="lisp">Constant: 410
+<pre><code class="language-lisp">Constant: 410
 </code></pre>
-
 <p>HTTP return code (410) for 'Gone'.</p>
 <h4 id="http-internal-server-error">+http-internal-server-error+</h4>
-<pre><code class="lisp">Constant: 500
+<pre><code class="language-lisp">Constant: 500
 </code></pre>
-
 <p>HTTP return code (500) for 'Internal Server Error'.</p>
 <h4 id="http-length-required">+http-length-required+</h4>
-<pre><code class="lisp">Constant: 411
+<pre><code class="language-lisp">Constant: 411
 </code></pre>
-
 <p>HTTP return code (411) for 'Length Required'.</p>
 <h4 id="http-method-not-allowed">+http-method-not-allowed+</h4>
-<pre><code class="lisp">Constant: 405
+<pre><code class="language-lisp">Constant: 405
 </code></pre>
-
 <p>HTTP return code (405) for 'Method Not Allowed'.</p>
 <h4 id="http-moved-permanently">+http-moved-permanently+</h4>
-<pre><code class="lisp">Constant: 301
+<pre><code class="language-lisp">Constant: 301
 </code></pre>
-
 <p>HTTP return code (301) for 'Moved Permanently'.</p>
 <h4 id="http-moved-temporarily">+http-moved-temporarily+</h4>
-<pre><code class="lisp">Constant: 302
+<pre><code class="language-lisp">Constant: 302
 </code></pre>
-
 <p>HTTP return code (302) for 'Moved Temporarily'.</p>
 <h4 id="http-multi-status">+http-multi-status+</h4>
-<pre><code class="lisp">Constant: 207
+<pre><code class="language-lisp">Constant: 207
 </code></pre>
-
 <p>HTTP return code (207) for 'Multi-Status'.</p>
 <h4 id="http-multiple-choices">+http-multiple-choices+</h4>
-<pre><code class="lisp">Constant: 300
+<pre><code class="language-lisp">Constant: 300
 </code></pre>
-
 <p>HTTP return code (300) for 'Multiple Choices'.</p>
 <h4 id="http-network-authentication-required">+http-network-authentication-required+</h4>
-<pre><code class="lisp">Constant: 511
+<pre><code class="language-lisp">Constant: 511
 </code></pre>
-
 <p>HTTP return code (511) for 'Network Authentication Required'.</p>
 <h4 id="http-no-content">+http-no-content+</h4>
-<pre><code class="lisp">Constant: 204
+<pre><code class="language-lisp">Constant: 204
 </code></pre>
-
 <p>HTTP return code (204) for 'No Content'.</p>
 <h4 id="http-non-authoritative-information">+http-non-authoritative-information+</h4>
-<pre><code class="lisp">Constant: 203
+<pre><code class="language-lisp">Constant: 203
 </code></pre>
-
 <p>HTTP return code (203) for 'Non-Authoritative Information'.</p>
 <h4 id="http-not-acceptable">+http-not-acceptable+</h4>
-<pre><code class="lisp">Constant: 406
+<pre><code class="language-lisp">Constant: 406
 </code></pre>
-
 <p>HTTP return code (406) for 'Not Acceptable'.</p>
 <h4 id="http-not-found">+http-not-found+</h4>
-<pre><code class="lisp">Constant: 404
+<pre><code class="language-lisp">Constant: 404
 </code></pre>
-
 <p>HTTP return code (404) for 'Not Found'.</p>
 <h4 id="http-not-implemented">+http-not-implemented+</h4>
-<pre><code class="lisp">Constant: 501
+<pre><code class="language-lisp">Constant: 501
 </code></pre>
-
 <p>HTTP return code (501) for 'Not Implemented'.</p>
 <h4 id="http-not-modified">+http-not-modified+</h4>
-<pre><code class="lisp">Constant: 304
+<pre><code class="language-lisp">Constant: 304
 </code></pre>
-
 <p>HTTP return code (304) for 'Not Modified'.</p>
 <h4 id="http-ok">+http-ok+</h4>
-<pre><code class="lisp">Constant: 200
+<pre><code class="language-lisp">Constant: 200
 </code></pre>
-
 <p>HTTP return code (200) for 'OK'.</p>
 <h4 id="http-partial-content">+http-partial-content+</h4>
-<pre><code class="lisp">Constant: 206
+<pre><code class="language-lisp">Constant: 206
 </code></pre>
-
 <p>HTTP return code (206) for 'Partial Content'.</p>
 <h4 id="http-payment-required">+http-payment-required+</h4>
-<pre><code class="lisp">Constant: 402
+<pre><code class="language-lisp">Constant: 402
 </code></pre>
-
 <p>HTTP return code (402) for 'Payment Required'.</p>
 <h4 id="http-precondition-failed">+http-precondition-failed+</h4>
-<pre><code class="lisp">Constant: 412
+<pre><code class="language-lisp">Constant: 412
 </code></pre>
-
 <p>HTTP return code (412) for 'Precondition Failed'.</p>
 <h4 id="http-precondition-required">+http-precondition-required+</h4>
-<pre><code class="lisp">Constant: 428
+<pre><code class="language-lisp">Constant: 428
 </code></pre>
-
 <p>HTTP return code (428) for 'Precondition Required'.</p>
 <h4 id="http-proxy-authentication-required">+http-proxy-authentication-required+</h4>
-<pre><code class="lisp">Constant: 407
+<pre><code class="language-lisp">Constant: 407
 </code></pre>
-
 <p>HTTP return code (407) for 'Proxy Authentication Required'.</p>
 <h4 id="http-request-entity-too-large">+http-request-entity-too-large+</h4>
-<pre><code class="lisp">Constant: 413
+<pre><code class="language-lisp">Constant: 413
 </code></pre>
-
 <p>HTTP return code (413) for 'Request Entity Too Large'.</p>
 <h4 id="http-request-header-fields-too-large">+http-request-header-fields-too-large+</h4>
-<pre><code class="lisp">Constant: 431
+<pre><code class="language-lisp">Constant: 431
 </code></pre>
-
 <p>HTTP return code (431) for 'Request Header Fields Too Large'.</p>
 <h4 id="http-request-time-out">+http-request-time-out+</h4>
-<pre><code class="lisp">Constant: 408
+<pre><code class="language-lisp">Constant: 408
 </code></pre>
-
 <p>HTTP return code (408) for 'Request Time-out'.</p>
 <h4 id="http-request-uri-too-large">+http-request-uri-too-large+</h4>
-<pre><code class="lisp">Constant: 414
+<pre><code class="language-lisp">Constant: 414
 </code></pre>
-
 <p>HTTP return code (414) for 'Request-URI Too Large'.</p>
 <h4 id="http-requested-range-not-satisfiable">+http-requested-range-not-satisfiable+</h4>
-<pre><code class="lisp">Constant: 416
+<pre><code class="language-lisp">Constant: 416
 </code></pre>
-
 <p>HTTP return code (416) for 'Requested range not satisfiable'.</p>
 <h4 id="http-reset-content">+http-reset-content+</h4>
-<pre><code class="lisp">Constant: 205
+<pre><code class="language-lisp">Constant: 205
 </code></pre>
-
 <p>HTTP return code (205) for 'Reset Content'.</p>
 <h4 id="http-see-other">+http-see-other+</h4>
-<pre><code class="lisp">Constant: 303
+<pre><code class="language-lisp">Constant: 303
 </code></pre>
-
 <p>HTTP return code (303) for 'See Other'.</p>
 <h4 id="http-service-unavailable">+http-service-unavailable+</h4>
-<pre><code class="lisp">Constant: 503
+<pre><code class="language-lisp">Constant: 503
 </code></pre>
-
 <p>HTTP return code (503) for 'Service Unavailable'.</p>
 <h4 id="http-switching-protocols">+http-switching-protocols+</h4>
-<pre><code class="lisp">Constant: 101
+<pre><code class="language-lisp">Constant: 101
 </code></pre>
-
 <p>HTTP return code (101) for 'Switching Protocols'.</p>
 <h4 id="http-temporary-redirect">+http-temporary-redirect+</h4>
-<pre><code class="lisp">Constant: 307
+<pre><code class="language-lisp">Constant: 307
 </code></pre>
-
 <p>HTTP return code (307) for 'Temporary Redirect'.</p>
 <h4 id="http-too-many-requests">+http-too-many-requests+</h4>
-<pre><code class="lisp">Constant: 429
+<pre><code class="language-lisp">Constant: 429
 </code></pre>
-
 <p>HTTP return code (429) for 'Too Many Requests'.</p>
 <h4 id="http-unsupported-media-type">+http-unsupported-media-type+</h4>
-<pre><code class="lisp">Constant: 415
+<pre><code class="language-lisp">Constant: 415
 </code></pre>
-
 <p>HTTP return code (415) for 'Unsupported Media Type'.</p>
 <h4 id="http-use-proxy">+http-use-proxy+</h4>
-<pre><code class="lisp">Constant: 305
+<pre><code class="language-lisp">Constant: 305
 </code></pre>
-
 <p>HTTP return code (305) for 'Use Proxy'.</p>
 <h4 id="http-version-not-supported">+http-version-not-supported+</h4>
-<pre><code class="lisp">Constant: 505
+<pre><code class="language-lisp">Constant: 505
 </code></pre>
-
 <p>HTTP return code (505) for 'Version not supported'.</p>
 <h3 id="13-hunchentoot-condition">13. HUNCHENTOOT-CONDITION</h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>Superclass for all conditions related to Hunchentoot.</p>
 <h3 id="14-hunchentoot-warning">14. HUNCHENTOOT-WARNING</h3>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>Superclass for all warnings related to Hunchentoot.</p>
 <h3 id="15-taskmaster">15. TASKMASTER</h3>
 <h4 id="taskmaster_1"><span id="class-taskmaster">taskmaster</span></h4>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>An instance of this class is responsible for
 distributing the work of handling requests for its acceptor.  This is
 an "abstract" class in the sense that usually only instances of
@@ -2624,26 +2376,23 @@ subclasses of TASKMASTER will be used.</p>
 </ul>
 <h5 id="relevant-methods_4">RELEVANT METHODS</h5>
 <h6 id="shutdown">shutdown</h6>
-<pre><code class="lisp">Function: (shutdown taskmaster)
+<pre><code class="language-lisp">Function: (shutdown taskmaster)
 </code></pre>
-
 <p>Shuts down the taskmaster, i.e. frees all resources
 that were set up by it.  For example, a multi-threaded taskmaster
 might terminate all threads that are currently associated with it.
 This function is called by the acceptor's STOP method.</p>
 <h6 id="execute-acceptor">execute-acceptor</h6>
-<pre><code class="lisp">Function: (execute-acceptor taskmaster)
+<pre><code class="language-lisp">Function: (execute-acceptor taskmaster)
 </code></pre>
-
 <p>This is a callback called by the acceptor once it
 has performed all initial processing to start listening for incoming
 connections (see START-LISTENING).  It usually calls the
 ACCEPT-CONNECTIONS method of the acceptor, but depending on the
 taskmaster instance the method might be called from a new thread.</p>
 <h6 id="handle-incoming-connection">handle-incoming-connection</h6>
-<pre><code class="lisp">Function: (handle-incoming-connection taskmaster socket)
+<pre><code class="language-lisp">Function: (handle-incoming-connection taskmaster socket)
 </code></pre>
-
 <p>This function is called by the acceptor to start
 processing of requests on a new incoming connection.  SOCKET is the
 usocket instance that represents the new connection (or a socket
@@ -2652,9 +2401,8 @@ the incoming connection by calling the PROCESS-CONNECTION method of
 the acceptor instance.  The SOCKET argument is passed to
 PROCESS-CONNECTION as an argument.</p>
 <h6 id="start-thread">start-thread</h6>
-<pre><code class="lisp">Function: (start-thread taskmaster thunk &amp;key name)
+<pre><code class="language-lisp">Function: (start-thread taskmaster thunk &amp;key name)
 </code></pre>
-
 <p>Start a name thread in which to call the THUNK, in the context of the given TASKMASTER.
 Keyword arguments provide TASKMASTER-dependent options.
 Return a thread object.</p>
@@ -2663,16 +2411,14 @@ allowing hunchentoot extensions to define specialized methods that may e.g.
 wrap the thunk within a proper set of bindings and condition handlers.</p>
 <h5 id="direct-slots_1">DIRECT SLOTS</h5>
 <h6 id="acceptor_2">acceptor</h6>
-<pre><code class="lisp">Readers: taskmaster-acceptor
+<pre><code class="language-lisp">Readers: taskmaster-acceptor
 Writers: (setf taskmaster-acceptor)
 </code></pre>
-
 <p>A backpointer to the acceptor instance
 this taskmaster works for.</p>
 <h4 id="multi-threaded-taskmaster">multi-threaded-taskmaster</h4>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>An abstract class for taskmasters that use multiple threads.
 For a concrete class to instantiate, use one-thread-per-connection-taskmaster.</p>
 <ul>
@@ -2684,9 +2430,8 @@ For a concrete class to instantiate, use one-thread-per-connection-taskmaster.</
 <p>A process that accepts incoming connections and hands them off to new processes
   for request handling.</p>
 <h4 id="one-thread-per-connection-taskmaster">one-thread-per-connection-taskmaster</h4>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>A taskmaster that starts one thread for listening
 to incoming requests and one new thread for each incoming connection.</p>
 <p>If MAX-THREAD-COUNT is null, a new thread will always be created for
@@ -2718,42 +2463,38 @@ implementations.</p>
 </ul>
 <h5 id="direct-slots_3">DIRECT SLOTS</h5>
 <h6 id="max-thread-count">max-thread-count</h6>
-<pre><code class="lisp">Type: (OR INTEGER NULL)
+<pre><code class="language-lisp">Type: (OR INTEGER NULL)
 Initargs: :max-thread-count
 Readers: taskmaster-max-thread-count
 Writers: (setf taskmaster-max-thread-count)
 </code></pre>
-
 <p>The maximum number of request threads this taskmaster will simultaneously
   run before refusing or queueing new connections requests.  If the value
   is null, then there is no limit.</p>
 <h6 id="thread-count">thread-count</h6>
-<pre><code class="lisp">Type: INTEGER
+<pre><code class="language-lisp">Type: INTEGER
 Initform: 0
 Readers: taskmaster-thread-count
 Writers: (setf taskmaster-thread-count)
 </code></pre>
-
 <p>The number of taskmaster processing threads currently running.</p>
 <h6 id="thread-count-lock">thread-count-lock</h6>
 <p>In the absence of 'atomic-incf', we need this to atomically
   increment and decrement the request count.</p>
 <h6 id="max-accept-count">max-accept-count</h6>
-<pre><code class="lisp">Type: (OR INTEGER NULL)
+<pre><code class="language-lisp">Type: (OR INTEGER NULL)
 Initargs: :max-accept-count
 Readers: taskmaster-max-accept-count
 Writers: (setf taskmaster-max-accept-count)
 </code></pre>
-
 <p>The maximum number of connections this taskmaster will accept before refusing
   new connections.  If supplied, this must be greater than MAX-THREAD-COUNT.
   The number of queued requests is the difference between MAX-ACCEPT-COUNT
   and MAX-THREAD-COUNT.</p>
 <h6 id="accept-count">accept-count</h6>
-<pre><code class="lisp">Type: INTEGER
+<pre><code class="language-lisp">Type: INTEGER
 Initform: 0
 </code></pre>
-
 <p>The number of connection currently accepted by the taskmaster. These
  connections are not ensured to be processed, thay may be waiting for an
  empty processing slot or rejected because the load is too heavy.</p>
@@ -2765,15 +2506,13 @@ Initform: 0
 <h6 id="wait-lock">wait-lock</h6>
 <p>The lock for the connection wait queue.</p>
 <h6 id="worker-thread-name-format">worker-thread-name-format</h6>
-<pre><code class="lisp">Type: (OR STRING NULL)
+<pre><code class="language-lisp">Type: (OR STRING NULL)
 Initargs: :worker-thread-name-format
 Initform: &quot;hunchentoot-worker-~A&quot;
 </code></pre>
-
 <h4 id="single-threaded-taskmaster">single-threaded-taskmaster</h4>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>A taskmaster that runs synchronously in the thread
 where the START function was invoked (or in the case of LispWorks in
 the thread started by COMM:START-UP-SERVER).  This is the simplest
@@ -2874,10 +2613,9 @@ provide Hunchentoot with basic virtual host support. It assumes
 Hunchentoot is sitting behind an Internet-facing reverse-proxy web
 server that maps the host (or domain) part of incoming HTTP requests to
 unique localhost ports.</p>
-<pre><code class="lisp">    (ql:quickload '(&quot;hunchentoot&quot; &quot;drakma&quot;))
+<pre><code class="language-lisp">    (ql:quickload '(&quot;hunchentoot&quot; &quot;drakma&quot;))
 </code></pre>
-
-<pre><code class="lisp">    ;;; Subclass ACCEPTOR
+<pre><code class="language-lisp">    ;;; Subclass ACCEPTOR
     (defclass vhost (hunchentoot:acceptor)
       ;; slots
       ((dispatch-table
@@ -2949,7 +2687,6 @@ unique localhost ports.</p>
     ;;; T
     ;;; &quot;OK&quot;
 </code></pre>
-
 <p>How to make each VHOST write to separate access log streams (or files)
 is left as an exercise to the reader.</p>
 <h3 id="taskmasters">TASKMASTERS</h3>

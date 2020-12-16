@@ -161,11 +161,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
@@ -210,9 +214,13 @@
                 <h1 id="cl-ppcre-regular-expressions">cl-ppcre - Regular Expressions</h1>
 <p>Version: 2.1.1
 <br/>
+Licence: BSD
+<br/>
 Nickname: ppcre
 <br/>
-Repository: <a href="https://github.com/edicl/cl-ppcre">edicl/cl-ppcre - Github</a></p>
+Repository: <a href="https://github.com/edicl/cl-ppcre">edicl/cl-ppcre - Github</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#regex">awesome-cl/#regex</a></p>
 <p><em>This documentation is possible the <a href="https://edicl.github.io/cl-ppcre">excellent official documentation</a> as of 4th May 2020.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
 <hr />
@@ -255,11 +263,10 @@ characters), <code>\w</code>, <code>\W</code>, <code>\s</code>, <code>\S</code>,
 <li><a href="#regex-replace">regex-replace</a></li>
 </ul>
 <p>Register groups simply refer to the captured groups. For instance:</p>
-<pre><code class="lisp">CL-USER&gt; (register-groups-bind (a b) (&quot;([^ ]+) ([^ ]+)&quot; &quot;hello world&quot;)
+<pre><code class="language-lisp">CL-USER&gt; (register-groups-bind (a b) (&quot;([^ ]+) ([^ ]+)&quot; &quot;hello world&quot;)
            (list a b))
 (&quot;hello&quot; &quot;world&quot;)
 </code></pre>
-
 <p>See the <a href="#do-matches">other macros</a> for iterative versions of these.</p>
 <p>Those wanting to get into perl regular expressions, might find <a href="https://perldoc.perl.org/perlre.html">their official
 documentation</a> useful.</p>
@@ -285,12 +292,11 @@ interpolation facilities to the lisp reader. (Yes, it's defacto!)</p>
 | (anything else)                      | Syntax Error                          |
 +--------------------------------------+---------------------------------------+
 </code></pre>
-
 <p>Simple combinations include <code>:sequence</code>, <code>:group</code>, <code>:flags</code>, <code>:register</code>,
 <code>:greedy-repetition</code>, <code>:non-greedy-repetition</code>. You could play around with
 <a href="#parse-string">parse-string</a> to learn more about the equivalence.</p>
 <p>For instance:</p>
-<pre><code class="lisp">* (parse-string &quot;(ab)*&quot;)
+<pre><code class="language-lisp">* (parse-string &quot;(ab)*&quot;)
 (:GREEDY-REPETITION 0 `NIL` (:REGISTER &quot;ab&quot;))
 
 * (parse-string &quot;(a(b))&quot;)
@@ -312,27 +318,24 @@ interpolation facilities to the lisp reader. (Yes, it's defacto!)</p>
 * (parse-string &quot;aa|aaa&quot;)
 (:ALTERNATION &quot;aa&quot; &quot;aaa&quot;)
 </code></pre>
-
 <p>See the <a href="https://edicl.github.io/cl-ppcre/#create-scanner2">manual</a> for the
 more detailed equivalence.</p>
 <p>Thus, you could equivalently use parse-trees for the functions and macros that
 expect regex.</p>
-<pre><code class="lisp">* (all-matches-as-strings '(:greedy-repetition 1 nil #\a) &quot;aaaa&quot;)
+<pre><code class="language-lisp">* (all-matches-as-strings '(:greedy-repetition 1 nil #\a) &quot;aaaa&quot;)
 (&quot;aaaa&quot;)
 </code></pre>
-
 <h3 id="performance-aspects">Performance Aspects</h3>
 <p><code>cl-ppcre</code> was intended to be fast. Indeed, <a href="http://web.archive.org/web/20080624164217/http://weitz.de/cl-ppcre/#bench">when it first appeared,
 it was perhaps the fastest</a>.</p>
 <p>However, in 2020, it can be five times as slow as Perl:</p>
-<pre><code class="sh">time perl -e '&quot;@{['x' x 50000000]}&quot; =~ /([xy])*/'
+<pre><code class="language-sh">time perl -e '&quot;@{['x' x 50000000]}&quot; =~ /([xy])*/'
 
 real    0m0.245s
 user    0m0.161s
 sys     0m0.084s
 </code></pre>
-
-<pre><code class="lisp">CL-USER&gt; (time (progn
+<pre><code class="language-lisp">CL-USER&gt; (time (progn
                  (scan &quot;([xy])*&quot;
                        (make-string 50000000 :element-type 'base-char
                                     :initial-element #\x))
@@ -344,52 +347,46 @@ Evaluation took:
   2,463,959,814 processor cycles
   50,000,032 bytes consed
 </code></pre>
-
 <p>But still (more than) 5 times faster than python:</p>
-<pre><code class="sh">time python3 -c 'import re; x = re.search(&quot;([xy])*&quot;, &quot;x&quot;*50000000)'
+<pre><code class="language-sh">time python3 -c 'import re; x = re.search(&quot;([xy])*&quot;, &quot;x&quot;*50000000)'
 
 real    0m7.458s
 user    0m4.563s
 sys     0m2.892s
 </code></pre>
-
 <p>Or slower as well:</p>
-<pre><code class="sh">$ ~ time python3 -c 'import re; x = re.search(&quot;x*&quot;, &quot;x&quot;*50000000)'
+<pre><code class="language-sh">$ ~ time python3 -c 'import re; x = re.search(&quot;x*&quot;, &quot;x&quot;*50000000)'
 
 real    0m0.146s
 user    0m0.109s
 sys     0m0.036s
 </code></pre>
-
 <p>Honestly, though, it should be possible to use implementation specific means to speed things up
 - or copying the developments in the perl and/or python world.</p>
 <p>Perhaps, see the <a href="https://edicl.github.io/cl-ppcre/#blabla">manual</a> for hints on speeding things
 up.</p>
 <h2 id="functions-and-macros">FUNCTIONS AND MACROS</h2>
 <h3 id="all-matches">all-matches</h3>
-<pre><code class="lisp">Function: (all-matches regex target-string
+<pre><code class="language-lisp">Function: (all-matches regex target-string
             &amp;key (start 0) (end (length target-string)))
 </code></pre>
-
 <p>Returns a list containing the start and end positions of all
 matches of <code>regex</code> against <code>target-string</code>, i.e. if there are N matches
 the list contains (* 2 N) elements.  If <code>regex</code> matches an empty string
 the scan is continued one position behind this match.</p>
 <h3 id="all-matches-as-strings">all-matches-as-strings</h3>
-<pre><code class="lisp">Function: (all-matches-as-strings regex target-string
+<pre><code class="language-lisp">Function: (all-matches-as-strings regex target-string
             &amp;key (start 0) (end (length target-string)) sharedp)
 </code></pre>
-
 <p>Returns a list containing all substrings of <code>target-string</code> which
 match <code>regex</code>. If <code>regex</code> matches an empty string the scan is continued
 one position behind this match. If <code>sharedp</code> is true, the substrings may
 share structure with <code>target-string</code>.</p>
 <h3 id="create-optimized-test-function">create-optimized-test-function</h3>
-<pre><code class="lisp">Function: (create-optimized-test-function test-function
+<pre><code class="language-lisp">Function: (create-optimized-test-function test-function
             &amp;key (start 0) (end *regex-char-code-limit*)
               (kind *optimize-char-classes*))
 </code></pre>
-
 <p>Given a unary test function which is applicable to characters
 returns a function which yields the same boolean results for all
 characters with character codes from <code>start</code> to (excluding) <code>end</code>.  If
@@ -420,11 +417,10 @@ data structure.  There is no corresponding <code>:charmap*</code> kind as the bi
 vectors are already created to cover the smallest possible interval
 which contains either the set or its complement.</p>
 <h3 id="create-scanner">create-scanner</h3>
-<pre><code class="lisp">Function: (create-scanner regex
+<pre><code class="language-lisp">Function: (create-scanner regex
             &amp;key case-insensitive-mode multi-line-mode 
               single-line-mode extended-mode destructive)
 </code></pre>
-
 <p>Accepts a regular expression - either as a
 parse-tree or as a string - and returns a scan closure which will scan
 strings for this regular expression and a list mapping registers to
@@ -434,17 +430,15 @@ arguments are equivalent to the imsx modifiers in Perl.  If
 modify its first argument (but only if it's a parse tree).</p>
 <p>(More in the manual!)</p>
 <h3 id="define-parse-tree-synonym">define-parse-tree-synonym</h3>
-<pre><code class="lisp">Macro: (define-parse-tree-synonym name parse-tree)
+<pre><code class="language-lisp">Macro: (define-parse-tree-synonym name parse-tree)
 </code></pre>
-
 <p>Defines the symbol <code>name</code> to be a synonym for the parse tree
 <code>parse-tree</code>.  Both arguments are quoted.</p>
 <h3 id="do-matches">do-matches</h3>
-<pre><code class="lisp">Macro: (do-matches (match-start match-end regex target-string
+<pre><code class="language-lisp">Macro: (do-matches (match-start match-end regex target-string
                      &amp;optional result-form &amp;key start end)
          &amp;body body)
 </code></pre>
-
 <p>Iterates over <code>target-string</code> and tries to match <code>regex</code> as often as
 possible evaluating <code>body</code> with <code>match-start</code> and <code>match-end</code> bound to the
 start/end positions of each match in turn.  After the last match,
@@ -454,12 +448,11 @@ loop immediately.  If <code>regex</code> matches an empty string the scan is
 continued one position behind this match. <code>body</code> may start with
 declarations.</p>
 <h3 id="do-matches-as-strings">do-matches-as-strings</h3>
-<pre><code class="lisp">Macro: (do-matches-as-strings
+<pre><code class="language-lisp">Macro: (do-matches-as-strings
            (match-var regex target-string 
              &amp;optional result-form &amp;key start end sharedp)
          &amp;body body)
 </code></pre>
-
 <p>Iterates over <code>target-string</code> and tries to match <code>regex</code> as often as
 possible evaluating <code>body</code> with <code>match-var</code> bound to the substring of
 <code>target-string</code> corresponding to each match in turn.  After the last
@@ -470,13 +463,12 @@ scan is continued one position behind this match.  If <code>sharedp</code> is tr
 the substrings may share structure with <code>target-string</code>.  <code>body</code> may start
 with declarations.</p>
 <h3 id="do-register-groups">do-register-groups</h3>
-<pre><code class="lisp">Macro: (do-register-groups
+<pre><code class="language-lisp">Macro: (do-register-groups
             var-list
             (regex target-string 
                &amp;optional result-form &amp;key start end sharedp)
           &amp;body body)
 </code></pre>
-
 <p>Iterates over <code>target-string</code> and tries to match <code>regex</code> as often as
 possible evaluating <code>body</code> with the variables in <code>var-list</code> bound to the
 corresponding register groups for each match in turn, i.e. each
@@ -491,11 +483,10 @@ one position behind this match.  If <code>sharedp</code> is true, the substrings
 may share structure with <code>target-string</code>.  <code>body</code> may start with
 declarations.</p>
 <h3 id="do-scans">do-scans</h3>
-<pre><code class="lisp">Macro: (do-scans (match-start match-end reg-starts reg-ends regex target-string
+<pre><code class="language-lisp">Macro: (do-scans (match-start match-end reg-starts reg-ends regex target-string
                     &amp;optional result-form &amp;key start end) 
           &amp;body body)
 </code></pre>
-
 <p>Iterates over <code>target-string</code> and tries to match <code>regex</code> as often as
 possible evaluating BODY with <code>match-start</code>, <code>match-end</code>, <code>reg-starts</code>, and
 <code>reg-ends</code> bound to the four return values of each match in turn.  After
@@ -505,14 +496,12 @@ terminate the loop immediately.  If <code>regex</code> matches an empty string t
 scan is continued one position behind this match. <code>body</code> may start with
 declarations.</p>
 <h3 id="parse-string">parse-string</h3>
-<pre><code class="lisp">Function: (parse-string string)
+<pre><code class="language-lisp">Function: (parse-string string)
 </code></pre>
-
 <p>Translate the regex string <code>string</code> into a parse tree.</p>
 <h3 id="parse-tree-synonym">parse-tree-synonym</h3>
-<pre><code class="lisp">Function: (parse-tree-synonym symbol)
+<pre><code class="language-lisp">Function: (parse-tree-synonym symbol)
 </code></pre>
-
 <p>Returns the parse tree the <code>symbol</code> symbol is a synonym for.  Returns
 <code>nil</code> is <code>symbol</code> wasn't yet defined to be a synonym.</p>
 <h3 id="ppcre-error">ppcre-error</h3>
@@ -524,46 +513,40 @@ without any additional slots or options.</p>
 <h3 id="ppcre-syntax-error">ppcre-syntax-error</h3>
 <p>An error of type <code>ppcre-syntax-error</code> is signaled if CL-PPCRE's parser encounters an error when trying to parse a regex string or to convert a parse tree into its internal representation. This is a direct subtype of <code>ppcre-error</code> with two additional slots. These denote the regex string which HTML-PPCRE was parsing and the position within the string where the error occurred. If the error happens while CL-PPCRE is converting a parse tree, both of these slots contain NIL. (See the next two entries on how to access these slots.)</p>
 <h3 id="ppcre-syntax-error-pos">ppcre-syntax-error-pos</h3>
-<pre><code class="lisp">Function: (ppcre-syntax-error-pos condition)
+<pre><code class="language-lisp">Function: (ppcre-syntax-error-pos condition)
 </code></pre>
-
 <p>Returns the position within the string where the error occurred
 (or <code>nil</code> if the error happened while trying to convert a parse tree</p>
 <h3 id="ppcre-syntax-error-string">ppcre-syntax-error-string</h3>
-<pre><code class="lisp">Function: (ppcre-syntax-error-string condition)
+<pre><code class="language-lisp">Function: (ppcre-syntax-error-string condition)
 </code></pre>
-
 <p>Returns the string the parser was parsing when the error was
 encountered (or <code>nil</code> if the error happened while trying to convert a
 parse tree).</p>
 <h3 id="quote-meta-chars">quote-meta-chars</h3>
-<pre><code class="lisp">Function: (quote-meta-chars string &amp;key (start 0) (end (length string)))
+<pre><code class="language-lisp">Function: (quote-meta-chars string &amp;key (start 0) (end (length string)))
 </code></pre>
-
 <p>Quote, i.e. prefix all non-word characters in <code>string</code> with <code>#\\</code>.</p>
 <h3 id="regex-apropos">regex-apropos</h3>
-<pre><code class="lisp">Function: (regex-apropos regex &amp;optional packages &amp;key (case-insensitive t))
+<pre><code class="language-lisp">Function: (regex-apropos regex &amp;optional packages &amp;key (case-insensitive t))
 </code></pre>
-
 <p>Similar to the standard function <code>apropos</code> but returns a list of all
 symbols which match the regular expression REGEX.  If <code>case-insensitive</code>
 is true and <code>regex</code> isn't already a scanner, a case-insensitive scanner
 is used.</p>
 <h3 id="regex-apropos-list">regex-apropos-list</h3>
-<pre><code class="lisp">Function: (regex-apropos-list regex &amp;optional packages &amp;key (case-insensitive t))
+<pre><code class="language-lisp">Function: (regex-apropos-list regex &amp;optional packages &amp;key (case-insensitive t))
 </code></pre>
-
 <p>Similar to the standard function <code>apropos-list</code> but returns a list of
 all symbols which match the regular expression <code>regex</code>.  If
 <code>case-insensitive</code> is true and <code>regex</code> isn't already a scanner, a
 case-insensitive scanner is used.</p>
 <h3 id="regex-replace">regex-replace</h3>
-<pre><code class="lisp">Function: (regex-replace regex target-string replacement
+<pre><code class="language-lisp">Function: (regex-replace regex target-string replacement
              &amp;key (start 0) (end (length target-string))
                preserve-case simple-calls
                (element-type 'character))
 </code></pre>
-
 <p>Try to match <code>target-string</code> between <code>start</code> and <code>end</code> against <code>regex</code> and
 replace the first match with <code>replacement</code>.  Two values are returned;
 the modified string, and <code>t</code> if <code>regex</code> matched or <code>nil</code> otherwise.</p>
@@ -589,12 +572,11 @@ match. The result will always be a fresh string, even if <code>regex</code> does
 match.</p>
 <p><code>element-type</code> is the element type of the resulting string.</p>
 <h3 id="regex-replace-all">regex-replace-all</h3>
-<pre><code class="lisp">Function: (regex-replace-all regex target-string replacement
+<pre><code class="language-lisp">Function: (regex-replace-all regex target-string replacement
              &amp;key (start 0) (end (length target-string))
              preserve-case simple-calls 
              (element-type 'character))
 </code></pre>
-
 <p>Try to match <code>target-string</code> between <code>start</code> and <code>end</code> against <code>regex</code> and
 replace all matches with <code>replacement</code>.  Two values are returned; the
 modified string, and T if <code>regex</code> matched or <code>nil</code> otherwise.</p>
@@ -620,11 +602,10 @@ match. The result will always be a fresh string, even if <code>regex</code> does
 match.</p>
 <p><code>element-type</code> is the element type of the resulting string.</p>
 <h3 id="register-groups-bind">register-groups-bind</h3>
-<pre><code class="lisp">Macro: (register-groups-bind var-list
+<pre><code class="language-lisp">Macro: (register-groups-bind var-list
             (regex target-string &amp;key start end sharedp) 
           &amp;body body)
 </code></pre>
-
 <p>Executes <code>body</code> with the variables in <code>var-list</code> bound to the
 corresponding register groups after <code>target-string</code> has been matched
 against <code>regex</code>, i.e. each variable is either bound to a string or to
@@ -634,9 +615,8 @@ register group.  The number of variables in <code>var-list</code> must not be
 greater than the number of register groups.  If <code>sharedp</code> is true, the
 substrings may share structure with <code>target-string</code>.</p>
 <h3 id="scan">scan</h3>
-<pre><code class="lisp">Function: (scan regex target-string &amp;key start end real-start-pos)
+<pre><code class="language-lisp">Function: (scan regex target-string &amp;key start end real-start-pos)
 </code></pre>
-
 <p>Searches <code>target-string</code> from <code>start</code> to <code>end</code> and tries
 to match <code>regex</code>.  On success returns four values - the start of the
 match, the end of the match, and two arrays denoting the beginnings
@@ -647,21 +627,19 @@ be coerced to a simple string if it isn't one already.  The
 <code>real-start-pos</code> parameter should be ignored - it exists only for
 internal purposes.</p>
 <h3 id="scan-to-strings">scan-to-strings</h3>
-<pre><code class="lisp">Function: (scan-to-strings regex target-string
+<pre><code class="language-lisp">Function: (scan-to-strings regex target-string
              &amp;key (start 0) (end (length target-string)) sharedp)
 </code></pre>
-
 <p>Like <code>scan</code> but returns substrings of <code>target-string</code> instead of
 positions, i.e. this function returns two values on success: the whole
 match as a string plus an array of substrings (or <code>nil</code>s) corresponding
 to the matched registers.  If <code>sharedp</code> is true, the substrings may
 share structure with <code>target-string</code>.</p>
 <h3 id="split">split</h3>
-<pre><code class="lisp">Function: (split regex target-string
+<pre><code class="language-lisp">Function: (split regex target-string
              &amp;key (start 0) (end (length target-string))
                limit with-registers-p omit-unmatched-p sharedp)
 </code></pre>
-
 <p>Matches <code>regex</code> against <code>target-string</code> as often as possible and
 returns a list of the substrings between the matches.  If
 <code>with-registers-p</code> is true, substrings corresponding to matched

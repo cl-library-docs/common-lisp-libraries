@@ -335,11 +335,15 @@
     </li>
     </ul>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
@@ -384,26 +388,26 @@
                 <h1 id="quicklisp-library-manager">quicklisp - Library Manager</h1>
 <p>Version: 2020-01-04
 <br/>
+Licence: BSD-style
+<br/>
 Repository: <a href="https://github.com/quicklisp/quicklisp-client">quicklisp/quicklisp-client - Github</a></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
 <h2 id="getting-started">GETTING STARTED</h2>
 <h3 id="installation">Installation</h3>
 <p><strong>Download</strong></p>
 <p>Do the equivalent steps on Windows and Mac OS:</p>
-<pre><code class="sh">curl -O https://beta.quicklisp.org/quicklisp.lisp     # download quicklisp.lisp
+<pre><code class="language-sh">curl -O https://beta.quicklisp.org/quicklisp.lisp     # download quicklisp.lisp
 curl -O https://beta.quicklisp.org/quicklisp.lisp.asc # download the PGP signature file
 gpg --verify quicklisp.lisp.asc quicklisp.lisp        # verify it against the signing key
 </code></pre>
-
 <p>As of 07 June 2020, Quicklisp release signing key has a fingerprint of <code>D7A3 489D DEFE 32B7 D0E7 CC61 3079 65AB 028B 5FF7</code>, an id of <code>028B5FF7</code>, and an email of <code>release@quicklisp.org</code>. See <a href="https://www.quicklisp.org/beta/#installation">here</a> for the more recent details.</p>
 <p><strong>Installation</strong></p>
 <p>Load quicklisp.lisp: <code>sbcl --load quicklisp.lisp # or an equivalent command for your implementation</code> (optionally, you may want to <code>rlwrap sbcl --load quicklisp.lisp</code> for a better
 repl experience):</p>
-<pre><code class="lisp">(quicklisp-quickstart:install)
+<pre><code class="language-lisp">(quicklisp-quickstart:install)
 (ql:add-to-init-file) ; to automatically load quicklisp at implementation startup
 ;;; Note that ql acts as a nickname for the quicklisp-client package.
 </code></pre>
-
 <p><code>quicklisp-quickstart:install</code> also takes a couple keyword arguments (see <code>(describe 'quicklisp-quickstart:install)</code> - but unless you know what
 you are doing, it is recommended to leave them as they are.</p>
 <h3 id="loading-after-installation">Loading after installation</h3>
@@ -447,41 +451,34 @@ bleeding edge packages - for these cases, there exists <a href="https://ultralis
 <p>The Quicklisp client package, intended for end-user Quicklisp
 commands and configuration parameters.</p>
 <h3 id="local-project-directories">*local-project-directories*</h3>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>The default local projects directory.</p>
 <h3 id="quickload-prompt">*quickload-prompt*</h3>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>When NIL, quickload systems without prompting for enter to
 continue, otherwise proceed directly without user intervention.</p>
 <h3 id="quickload-verbose">*quickload-verbose*</h3>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p>When NIL, show terse output when quickloading a system. Otherwise,
 show normal compile and load output.</p>
 <h3 id="add-to-init-file">add-to-init-file</h3>
-<pre><code class="lisp">Function: (add-to-init-file &amp;optional implementation-or-file)
+<pre><code class="language-lisp">Function: (add-to-init-file &amp;optional implementation-or-file)
 </code></pre>
-
 <p>Add forms to the Lisp implementation's init file that will load
 quicklisp at CL startup.</p>
 <h3 id="available-client-versions">available-client-versions</h3>
-<pre><code class="lisp">Function: (available-client-versions)
+<pre><code class="language-lisp">Function: (available-client-versions)
 </code></pre>
-
 <h3 id="available-dist-versions">available-dist-versions</h3>
-<pre><code class="lisp">Function: (available-dist-versions name)
+<pre><code class="language-lisp">Function: (available-dist-versions name)
 </code></pre>
-
 <h3 id="bundle-systems">bundle-systems</h3>
-<pre><code class="lisp">Function: (bundle-systems system-names &amp;key include-local-projects to
+<pre><code class="language-lisp">Function: (bundle-systems system-names &amp;key include-local-projects to
                           (overwrite t))
 </code></pre>
-
 <p>In the directory <code>to</code>, construct a self-contained bundle of libraries
 based on <code>system-names</code>. For each system named, and its recursive
 required systems, unpack its release archive in TO/software/, and
@@ -494,151 +491,121 @@ ASDF to load systems from the bundle before any other system.</p>
 QL:<em>LOCAL-PROJECT-DIRECTORIES</em> is copied into the bundle and loaded
 before any of the other bundled systems.</p>
 <h3 id="client-url">client-url</h3>
-<pre><code class="lisp">Function: (client-url)
+<pre><code class="language-lisp">Function: (client-url)
 </code></pre>
-
 <p>Return an URL suitable for passing as the :URL argument to
 <a href="#install-client">install-client</a> for the current local client installation.</p>
 <h3 id="client-version">client-version</h3>
-<pre><code class="lisp">Function: (client-version)
+<pre><code class="language-lisp">Function: (client-version)
 </code></pre>
-
 <p>Return the version for the current local client installation. May
 or may not be suitable for passing as the :VERSION argument to
 <a href="#install-client">install-client</a>, depending on if it's a standard Quicklisp-provided
 client.</p>
 <h3 id="config-value">config-value</h3>
-<pre><code class="lisp">Function: (config-value path)
+<pre><code class="language-lisp">Function: (config-value path)
 </code></pre>
-
 <h3 id="dist-url">dist-url</h3>
-<pre><code class="lisp">Function: (dist-url name)
+<pre><code class="language-lisp">Function: (dist-url name)
 </code></pre>
-
 <h3 id="dist-version">dist-version</h3>
-<pre><code class="lisp">Function: (dist-version name)
+<pre><code class="language-lisp">Function: (dist-version name)
 </code></pre>
-
 <h3 id="help">help</h3>
-<pre><code class="lisp">Function: (help)
+<pre><code class="language-lisp">Function: (help)
 </code></pre>
-
 <h3 id="install-client">install-client</h3>
-<pre><code class="lisp">Function: (install-client &amp;key url version)
+<pre><code class="language-lisp">Function: (install-client &amp;key url version)
 </code></pre>
-
 <h3 id="list-local-projects">list-local-projects</h3>
-<pre><code class="lisp">Function: (list-local-projects)
+<pre><code class="language-lisp">Function: (list-local-projects)
 </code></pre>
-
 <p>Return a list of pathnames to local project system files.</p>
 <h3 id="list-local-systems">list-local-systems</h3>
-<pre><code class="lisp">Function: (list-local-systems)
+<pre><code class="language-lisp">Function: (list-local-systems)
 </code></pre>
-
 <p>Return a list of local project system names.</p>
 <h3 id="local-projects-searcher">local-projects-searcher</h3>
-<pre><code class="lisp">Function: (local-projects-searcher system-name)
+<pre><code class="language-lisp">Function: (local-projects-searcher system-name)
 </code></pre>
-
 <p>This function is added to ASDF:<em>SYSTEM-DEFINITION-SEARCH-FUNCTIONS</em>
 to use the local project directory and cache to find systems.</p>
 <h3 id="provided-systems">provided-systems</h3>
-<pre><code class="lisp">Generic Function: (provided-systems object)
+<pre><code class="language-lisp">Generic Function: (provided-systems object)
 </code></pre>
-
 <p>Return a list of systems provided by <code>object</code>.</p>
 <h3 id="qmerge">qmerge</h3>
-<pre><code class="lisp">Function: (qmerge pathname)
+<pre><code class="language-lisp">Function: (qmerge pathname)
 </code></pre>
-
 <p>Return <code>pathname</code> merged with the base Quicklisp directory.</p>
 <h3 id="quickload">quickload</h3>
-<pre><code class="lisp">Generic Function: (quickload systems &amp;key verbose silent prompt explain
+<pre><code class="language-lisp">Generic Function: (quickload systems &amp;key verbose silent prompt explain
                    &amp;allow-other-keys)
 </code></pre>
-
 <p>Load <code>systems</code> the quicklisp way. <code>systems</code> is a designator for a list
    of things to be loaded.</p>
 <h3 id="register-local-projects">register-local-projects</h3>
-<pre><code class="lisp">Function: (register-local-projects)
+<pre><code class="language-lisp">Function: (register-local-projects)
 </code></pre>
-
 <p>Force a scan of the local projects directory to create the system
 file index.</p>
 <h3 id="setup">setup</h3>
-<pre><code class="lisp">Function: (setup)
+<pre><code class="language-lisp">Function: (setup)
 </code></pre>
-
 <h3 id="system-apropos">system-apropos</h3>
-<pre><code class="lisp">Generic Function: (system-apropos term)
+<pre><code class="language-lisp">Generic Function: (system-apropos term)
 </code></pre>
-
 <h3 id="system-apropos-list">system-apropos-list</h3>
-<pre><code class="lisp">Generic Function: (system-apropos-list term)
+<pre><code class="language-lisp">Generic Function: (system-apropos-list term)
 </code></pre>
-
 <h3 id="system-list">system-list</h3>
-<pre><code class="lisp">Function: (system-list)
+<pre><code class="language-lisp">Function: (system-list)
 </code></pre>
-
 <h3 id="system-not-found">system-not-found</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <p>This condition is signaled by QUICKLOAD when a
   system given to load is not available via ASDF or a Quicklisp
   dist.</p>
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>ql-dist:name</strong></p>
-<pre><code class="lisp">Initargs: :NAME
+<pre><code class="language-lisp">Initargs: :NAME
 Readers: SYSTEM-NOT-FOUND-NAME
 </code></pre>
-
 <h3 id="system-not-found-name">system-not-found-name</h3>
-<pre><code class="lisp">Generic Function: (system-not-found-name condition)
+<pre><code class="language-lisp">Generic Function: (system-not-found-name condition)
 </code></pre>
-
 <h3 id="uninstall">uninstall</h3>
-<pre><code class="lisp">Function: (uninstall system-name)
+<pre><code class="language-lisp">Function: (uninstall system-name)
 </code></pre>
-
 <h3 id="uninstall-dist">uninstall-dist</h3>
-<pre><code class="lisp">Function: (uninstall-dist name)
+<pre><code class="language-lisp">Function: (uninstall-dist name)
 </code></pre>
-
 <h3 id="update-all-dists">update-all-dists</h3>
-<pre><code class="lisp">Function: (update-all-dists &amp;key (prompt t))
+<pre><code class="language-lisp">Function: (update-all-dists &amp;key (prompt t))
 </code></pre>
-
 <h3 id="update-client">update-client</h3>
-<pre><code class="lisp">Function: (update-client &amp;key (prompt t))
+<pre><code class="language-lisp">Function: (update-client &amp;key (prompt t))
 </code></pre>
-
 <h3 id="update-dist">update-dist</h3>
-<pre><code class="lisp">Function: (update-dist dist &amp;key (prompt t))
+<pre><code class="language-lisp">Function: (update-dist dist &amp;key (prompt t))
 </code></pre>
-
 <h3 id="use-only-quicklisp-systems">use-only-quicklisp-systems</h3>
-<pre><code class="lisp">Function: (use-only-quicklisp-systems)
+<pre><code class="language-lisp">Function: (use-only-quicklisp-systems)
 </code></pre>
-
 <h3 id="where-is-system">where-is-system</h3>
-<pre><code class="lisp">Function: (where-is-system name)
+<pre><code class="language-lisp">Function: (where-is-system name)
 </code></pre>
-
 <p>Return the pathname to the source directory of ASDF system with the
 given <code>name</code>, or NIL if no system by that name can be found known.</p>
 <h3 id="who-depends-on">who-depends-on</h3>
-<pre><code class="lisp">Function: (who-depends-on system-name)
+<pre><code class="language-lisp">Function: (who-depends-on system-name)
 </code></pre>
-
 <p>Return a list of names of systems that depend on <code>system-name</code>.</p>
 <h3 id="write-asdf-manifest-file">write-asdf-manifest-file</h3>
-<pre><code class="lisp">Function: (write-asdf-manifest-file output-file &amp;key
+<pre><code class="language-lisp">Function: (write-asdf-manifest-file output-file &amp;key
            (if-exists :rename-and-delete) exclude-local-projects)
 </code></pre>
-
 <p>Write a list of system file pathnames to <code>output-file</code>, one per line,
 in order of descending QL-DIST:PREFERENCE.</p>
 <h2 id="ql-dist-api-reference">ql-dist: API Reference</h2>
@@ -646,574 +613,464 @@ in order of descending QL-DIST:PREFERENCE.</p>
    dist system. Documented, exported symbols are intended for public
    use.</p>
 <h3 id="dist-enumeration-functions">*dist-enumeration-functions*</h3>
-<pre><code class="lisp">Variable
+<pre><code class="language-lisp">Variable
 </code></pre>
-
 <p><a href="#all-dists">all-dists</a> calls each function in this list with no arguments, and
   appends the results into a list of dist objects, removing
   duplicates. Functions might be called just once for a batch of
   related operations; see <a href="#with-consistent-dists">with-consistent-dists</a>.</p>
 <h3 id="all-dists">all-dists</h3>
-<pre><code class="lisp">Function: (all-dists)
+<pre><code class="language-lisp">Function: (all-dists)
 </code></pre>
-
 <p>Return a list of all known dists.</p>
 <h3 id="archive-content-sha1">archive-content-sha1</h3>
-<pre><code class="lisp">Generic Function: (archive-content-sha1 object)
+<pre><code class="language-lisp">Generic Function: (archive-content-sha1 object)
 </code></pre>
-
 <h3 id="archive-md5">archive-md5</h3>
-<pre><code class="lisp">Generic Function: (archive-md5 object)
+<pre><code class="language-lisp">Generic Function: (archive-md5 object)
 </code></pre>
-
 <h3 id="archive-size">archive-size</h3>
-<pre><code class="lisp">Generic Function: (archive-size object)
+<pre><code class="language-lisp">Generic Function: (archive-size object)
 </code></pre>
-
 <h3 id="archive-url">archive-url</h3>
-<pre><code class="lisp">Generic Function: (archive-url release)
+<pre><code class="language-lisp">Generic Function: (archive-url release)
 </code></pre>
-
 <p>Return the full URL for fetching the archive file of <code>release</code>.</p>
 <h3 id="available-update">available-update</h3>
-<pre><code class="lisp">Generic Function: (available-update dist)
+<pre><code class="language-lisp">Generic Function: (available-update dist)
 </code></pre>
-
 <p>If an update is available for <code>dist</code>, return the
   update as an uninstalled dist object. Otherwise, return NIL.</p>
 <h3 id="available-versions">available-versions</h3>
-<pre><code class="lisp">Generic Function: (available-versions object)
+<pre><code class="language-lisp">Generic Function: (available-versions object)
 </code></pre>
-
 <p>Return a list of version information for <code>object</code>.</p>
 <h3 id="available-versions-url">available-versions-url</h3>
-<pre><code class="lisp">Generic Function: (available-versions-url object)
+<pre><code class="language-lisp">Generic Function: (available-versions-url object)
 </code></pre>
-
 <p>Return the URL for the available versions data file of <code>object</code>.</p>
 <h3 id="badly-sized-local-archive">badly-sized-local-archive</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <h3 id="base-directory">base-directory</h3>
-<pre><code class="lisp">Generic Function: (base-directory object)
+<pre><code class="language-lisp">Generic Function: (base-directory object)
 </code></pre>
-
 <p>Return the base directory pathname of <code>object</code>.</p>
 <h3 id="canonical-distinfo-url">canonical-distinfo-url</h3>
-<pre><code class="lisp">Generic Function: (canonical-distinfo-url object)
+<pre><code class="language-lisp">Generic Function: (canonical-distinfo-url object)
 </code></pre>
-
 <h3 id="check-local-archive-file">check-local-archive-file</h3>
-<pre><code class="lisp">Generic Function: (check-local-archive-file release)
+<pre><code class="language-lisp">Generic Function: (check-local-archive-file release)
 </code></pre>
-
 <p>Check the local archive file of <code>release</code> for validity, including
    size and signature checks. Signals errors in the case of invalid files.</p>
 <h3 id="clean">clean</h3>
-<pre><code class="lisp">Generic Function: (clean object)
+<pre><code class="language-lisp">Generic Function: (clean object)
 </code></pre>
-
 <p>Remove any unneeded files or directories related to
   <code>object</code>.</p>
 <h3 id="dependency-tree">dependency-tree</h3>
-<pre><code class="lisp">Generic Function: (dependency-tree system)
+<pre><code class="language-lisp">Generic Function: (dependency-tree system)
 </code></pre>
-
 <h3 id="disable">disable</h3>
-<pre><code class="lisp">Generic Function: (disable object)
+<pre><code class="language-lisp">Generic Function: (disable object)
 </code></pre>
-
 <p>Disable <code>object</code>.</p>
 <h3 id="dist">dist</h3>
-<pre><code class="lisp">Generic Function: (dist object)
+<pre><code class="language-lisp">Generic Function: (dist object)
 </code></pre>
-
 <p>Return the dist of <code>object</code>.</p>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>base-directory</strong></p>
-<pre><code class="lisp">Initargs: :BASE-DIRECTORY
+<pre><code class="language-lisp">Initargs: :BASE-DIRECTORY
 Readers: BASE-DIRECTORY
 Writers: (SETF BASE-DIRECTORY)
 </code></pre>
-
 <p><strong>name</strong></p>
-<pre><code class="lisp">Initargs: :NAME
+<pre><code class="language-lisp">Initargs: :NAME
 Readers: NAME
 Writers: (SETF NAME)
 </code></pre>
-
 <p><strong>version</strong></p>
-<pre><code class="lisp">Initargs: :VERSION
+<pre><code class="language-lisp">Initargs: :VERSION
 Readers: VERSION
 Writers: (SETF VERSION)
 </code></pre>
-
 <p><strong>system-index-url</strong></p>
-<pre><code class="lisp">Initargs: :SYSTEM-INDEX-URL
+<pre><code class="language-lisp">Initargs: :SYSTEM-INDEX-URL
 Readers: SYSTEM-INDEX-URL
 Writers: (SETF SYSTEM-INDEX-URL)
 </code></pre>
-
 <p><strong>release-index-url</strong></p>
-<pre><code class="lisp">Initargs: :RELEASE-INDEX-URL
+<pre><code class="language-lisp">Initargs: :RELEASE-INDEX-URL
 Readers: RELEASE-INDEX-URL
 Writers: (SETF RELEASE-INDEX-URL)
 </code></pre>
-
 <p><strong>available-versions-url</strong></p>
-<pre><code class="lisp">Initargs: :AVAILABLE-VERSIONS-URL
+<pre><code class="language-lisp">Initargs: :AVAILABLE-VERSIONS-URL
 Readers: AVAILABLE-VERSIONS-URL
 Writers: (SETF AVAILABLE-VERSIONS-URL)
 </code></pre>
-
 <p><strong>canonical-distinfo-url</strong></p>
-<pre><code class="lisp">Initargs: :CANONICAL-DISTINFO-URL
+<pre><code class="language-lisp">Initargs: :CANONICAL-DISTINFO-URL
 Readers: CANONICAL-DISTINFO-URL
 Writers: (SETF CANONICAL-DISTINFO-URL)
 </code></pre>
-
 <p><strong>provided-systems</strong></p>
-<pre><code class="lisp">Initargs: :PROVIDED-SYSTEMS
+<pre><code class="language-lisp">Initargs: :PROVIDED-SYSTEMS
 Readers: PROVIDED-SYSTEMS
 Writers: (SETF PROVIDED-SYSTEMS)
 </code></pre>
-
 <p><strong>provided-releases</strong></p>
-<pre><code class="lisp">Initargs: :PROVIDED-RELEASES
+<pre><code class="language-lisp">Initargs: :PROVIDED-RELEASES
 Readers: PROVIDED-RELEASES
 Writers: (SETF PROVIDED-RELEASES)
 </code></pre>
-
 <h3 id="enable">enable</h3>
-<pre><code class="lisp">Generic Function: (enable object)
+<pre><code class="language-lisp">Generic Function: (enable object)
 </code></pre>
-
 <p>Enable <code>object</code>.</p>
 <h3 id="enabled-dists">enabled-dists</h3>
-<pre><code class="lisp">Function: (enabled-dists)
+<pre><code class="language-lisp">Function: (enabled-dists)
 </code></pre>
-
 <p>Return a list of all known dists for which <a href="#enabledp">enabledp</a> returns true.</p>
 <h3 id="enabledp">enabledp</h3>
-<pre><code class="lisp">Generic Function: (enabledp object)
+<pre><code class="language-lisp">Generic Function: (enabledp object)
 </code></pre>
-
 <p>Return true if <code>object</code> is enabled.</p>
 <h3 id="ensure-installed">ensure-installed</h3>
-<pre><code class="lisp">Generic Function: (ensure-installed object)
+<pre><code class="language-lisp">Generic Function: (ensure-installed object)
 </code></pre>
-
 <p>Ensure that <code>object</code> is installed.</p>
 <h3 id="ensure-local-archive-file">ensure-local-archive-file</h3>
-<pre><code class="lisp">Generic Function: (ensure-local-archive-file release)
+<pre><code class="language-lisp">Generic Function: (ensure-local-archive-file release)
 </code></pre>
-
 <p>If the archive file for <code>release</code> is not available locally, fetch it
    and return the pathname to it.</p>
 <h3 id="find-asdf-system-file">find-asdf-system-file</h3>
-<pre><code class="lisp">Function: (find-asdf-system-file name)
+<pre><code class="language-lisp">Function: (find-asdf-system-file name)
 </code></pre>
-
 <p>Return the ASDF system file in which the system named <code>name</code> is defined.</p>
 <h3 id="find-dist">find-dist</h3>
-<pre><code class="lisp">Function: (find-dist name)
+<pre><code class="language-lisp">Function: (find-dist name)
 </code></pre>
-
 <h3 id="find-dist-or-lose">find-dist-or-lose</h3>
-<pre><code class="lisp">Function: (find-dist-or-lose name)
+<pre><code class="language-lisp">Function: (find-dist-or-lose name)
 </code></pre>
-
 <h3 id="find-release">find-release</h3>
-<pre><code class="lisp">Generic Function: (find-release name)
+<pre><code class="language-lisp">Generic Function: (find-release name)
 </code></pre>
-
 <p>Return a release with the given <code>name</code>, or NIL if no system is
    found. If multiple releases have the same name, the one with the
    highest preference is returned.</p>
 <h3 id="find-release-in-dist">find-release-in-dist</h3>
-<pre><code class="lisp">Generic Function: (find-release-in-dist release-name dist)
+<pre><code class="language-lisp">Generic Function: (find-release-in-dist release-name dist)
 </code></pre>
-
 <p>Return a release with the given <a href="#name">name</a> in <code>dist</code>, or NIL if no release
    is found.</p>
 <h3 id="find-system">find-system</h3>
-<pre><code class="lisp">Generic Function: (find-system name)
+<pre><code class="language-lisp">Generic Function: (find-system name)
 </code></pre>
-
 <p>Return a system with the given <code>name</code>, or NIL if no system is
    found. If multiple systems have the same name, the one with the
    highest preference is returned.</p>
 <h3 id="find-system-in-dist">find-system-in-dist</h3>
-<pre><code class="lisp">Generic Function: (find-system-in-dist system-name dist)
+<pre><code class="language-lisp">Generic Function: (find-system-in-dist system-name dist)
 </code></pre>
-
 <p>Return a system with the given <a href="#name">name</a> in <code>dist</code>, or NIL if no system
    is found.</p>
 <h3 id="forget-preference">forget-preference</h3>
-<pre><code class="lisp">Generic Function: (forget-preference object)
+<pre><code class="language-lisp">Generic Function: (forget-preference object)
 </code></pre>
-
 <p>Remove specific preference information for <code>object</code>.</p>
 <h3 id="inhibit-subscription">inhibit-subscription</h3>
-<pre><code class="lisp">Generic Function: (inhibit-subscription object)
+<pre><code class="language-lisp">Generic Function: (inhibit-subscription object)
 </code></pre>
-
 <p>Inhibit subscription for <code>object</code>.</p>
 <h3 id="initialize-release-index">initialize-release-index</h3>
-<pre><code class="lisp">Generic Function: (initialize-release-index dist)
+<pre><code class="language-lisp">Generic Function: (initialize-release-index dist)
 </code></pre>
-
 <p>Initialize the release index of <code>dist</code>.</p>
 <h3 id="initialize-system-index">initialize-system-index</h3>
-<pre><code class="lisp">Generic Function: (initialize-system-index dist)
+<pre><code class="language-lisp">Generic Function: (initialize-system-index dist)
 </code></pre>
-
 <p>Initialize the system index of <code>dist</code>.</p>
 <h3 id="install">install</h3>
-<pre><code class="lisp">Generic Function: (install object)
+<pre><code class="language-lisp">Generic Function: (install object)
 </code></pre>
-
 <p>Install <code>object</code>.</p>
 <h3 id="install-dist">install-dist</h3>
-<pre><code class="lisp">Function: (install-dist url &amp;key (prompt t) replace)
+<pre><code class="language-lisp">Function: (install-dist url &amp;key (prompt t) replace)
 </code></pre>
-
 <h3 id="install-metadata-file">install-metadata-file</h3>
-<pre><code class="lisp">Generic Function: (install-metadata-file object)
+<pre><code class="language-lisp">Generic Function: (install-metadata-file object)
 </code></pre>
-
 <p>The pathname to a file describing the installation status of
    <code>object</code>.</p>
 <h3 id="installed-releases">installed-releases</h3>
-<pre><code class="lisp">Generic Function: (installed-releases dist)
+<pre><code class="language-lisp">Generic Function: (installed-releases dist)
 </code></pre>
-
 <p>Return a list of all releases installed for <code>dist</code>.</p>
 <h3 id="installed-systems">installed-systems</h3>
-<pre><code class="lisp">Generic Function: (installed-systems dist)
+<pre><code class="language-lisp">Generic Function: (installed-systems dist)
 </code></pre>
-
 <p>Return a list of all systems installed for <code>dist</code>.</p>
 <h3 id="installedp">installedp</h3>
-<pre><code class="lisp">Generic Function: (installedp object)
+<pre><code class="language-lisp">Generic Function: (installedp object)
 </code></pre>
-
 <p>Return true if <code>object</code> is installed.</p>
 <h3 id="invalid-local-archive">invalid-local-archive</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>release</strong></p>
-<pre><code class="lisp">Initargs: :RELEASE
+<pre><code class="language-lisp">Initargs: :RELEASE
 Readers: INVALID-LOCAL-ARCHIVE-RELEASE
 </code></pre>
-
 <h3 id="invalid-local-archive-file">invalid-local-archive-file</h3>
-<pre><code class="lisp">Generic Function: (invalid-local-archive-file condition)
+<pre><code class="language-lisp">Generic Function: (invalid-local-archive-file condition)
 </code></pre>
-
 <h3 id="invalid-local-archive-release">invalid-local-archive-release</h3>
-<pre><code class="lisp">Generic Function: (invalid-local-archive-release condition)
+<pre><code class="language-lisp">Generic Function: (invalid-local-archive-release condition)
 </code></pre>
-
 <h3 id="local-archive-file">local-archive-file</h3>
-<pre><code class="lisp">Generic Function: (local-archive-file release)
+<pre><code class="language-lisp">Generic Function: (local-archive-file release)
 </code></pre>
-
 <p>Return the pathname to where the archive file of <code>release</code> should be
    stored.</p>
 <h3 id="metadata-name">metadata-name</h3>
-<pre><code class="lisp">Generic Function: (metadata-name object)
+<pre><code class="language-lisp">Generic Function: (metadata-name object)
 </code></pre>
-
 <p>The metadata-name of an object is used to form the pathname for a
    few different object metadata files.</p>
 <h3 id="missing-local-archive">missing-local-archive</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <h3 id="name">name</h3>
-<pre><code class="lisp">Generic Function: (name object)
+<pre><code class="language-lisp">Generic Function: (name object)
 </code></pre>
-
 <p>Return the name of <code>object</code>.</p>
 <h3 id="new-version-available-p">new-version-available-p</h3>
-<pre><code class="lisp">Generic Function: (new-version-available-p dist)
+<pre><code class="language-lisp">Generic Function: (new-version-available-p dist)
 </code></pre>
-
 <p>Return true if a new version of <code>dist</code> is available.</p>
 <h3 id="preference">preference</h3>
-<pre><code class="lisp">Generic Function: (preference object)
+<pre><code class="language-lisp">Generic Function: (preference object)
 </code></pre>
-
 <p>Returns a value used when comparing multiple systems or releases
    with the same name. Objects with higher preference are returned by
    <a href="#find-system">find-system</a> and <a href="#find-release">find-release</a>.</p>
 <h3 id="preference-file">preference-file</h3>
-<pre><code class="lisp">Generic Function: (preference-file object)
+<pre><code class="language-lisp">Generic Function: (preference-file object)
 </code></pre>
-
 <p>Return the file from which preference information is loaded for
    <code>object</code>.</p>
 <h3 id="preference-parent">preference-parent</h3>
-<pre><code class="lisp">Generic Function: (preference-parent object)
+<pre><code class="language-lisp">Generic Function: (preference-parent object)
 </code></pre>
-
 <p>Return a value suitable for checking if <code>object</code> has no specific
    preference set.</p>
 <h3 id="prefix">prefix</h3>
-<pre><code class="lisp">Generic Function: (prefix object)
+<pre><code class="language-lisp">Generic Function: (prefix object)
 </code></pre>
-
 <h3 id="project-name">project-name</h3>
-<pre><code class="lisp">Generic Function: (project-name object)
+<pre><code class="language-lisp">Generic Function: (project-name object)
 </code></pre>
-
 <h3 id="provided-releases">provided-releases</h3>
-<pre><code class="lisp">Generic Function: (provided-releases object)
+<pre><code class="language-lisp">Generic Function: (provided-releases object)
 </code></pre>
-
 <p>Return a list of releases provided by <code>object</code>.</p>
 <h3 id="provided-systems_1">provided-systems</h3>
-<pre><code class="lisp">Generic Function: (provided-systems object)
+<pre><code class="language-lisp">Generic Function: (provided-systems object)
 </code></pre>
-
 <p>Return a list of systems provided by <code>object</code>.</p>
 <h3 id="relative-to">relative-to</h3>
-<pre><code class="lisp">Generic Function: (relative-to object pathname)
+<pre><code class="language-lisp">Generic Function: (relative-to object pathname)
 </code></pre>
-
 <p>Merge <code>pathname</code> with the base-directory of <code>object</code>.</p>
 <h3 id="release">release</h3>
-<pre><code class="lisp">Generic Function: (release object)
+<pre><code class="language-lisp">Generic Function: (release object)
 </code></pre>
-
 <p>Return the release of <code>object</code>.</p>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>Instances of this class represent a snapshot of a project at some
    point in time, which might be from version control, or from an
    official release, or from some other source.</p>
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>project-name</strong></p>
-<pre><code class="lisp">Initargs: :PROJECT-NAME
+<pre><code class="language-lisp">Initargs: :PROJECT-NAME
 </code></pre>
-
 <p><strong>dist</strong></p>
-<pre><code class="lisp">Initargs: :DIST
+<pre><code class="language-lisp">Initargs: :DIST
 </code></pre>
-
 <p><strong>provided-systems</strong></p>
-<pre><code class="lisp">Initargs: :PROVIDED-SYSTEMS
+<pre><code class="language-lisp">Initargs: :PROVIDED-SYSTEMS
 Readers: PROVIDED-SYSTEMS
 Writers: (SETF PROVIDED-SYSTEMS)
 </code></pre>
-
 <p><strong>archive-url</strong></p>
-<pre><code class="lisp">Initargs: :ARCHIVE-URL
+<pre><code class="language-lisp">Initargs: :ARCHIVE-URL
 Readers: ARCHIVE-URL
 Writers: (SETF ARCHIVE-URL)
 </code></pre>
-
 <p><strong>archive-size</strong></p>
-<pre><code class="lisp">Initargs: :ARCHIVE-SIZE
+<pre><code class="language-lisp">Initargs: :ARCHIVE-SIZE
 Readers: ARCHIVE-SIZE
 Writers: (SETF ARCHIVE-SIZE)
 </code></pre>
-
 <p><strong>archive-md5</strong></p>
-<pre><code class="lisp">Initargs: :ARCHIVE-MD5
+<pre><code class="language-lisp">Initargs: :ARCHIVE-MD5
 Readers: ARCHIVE-MD5
 Writers: (SETF ARCHIVE-MD5)
 </code></pre>
-
 <p><strong>archive-content-sha1</strong></p>
-<pre><code class="lisp">Initargs: :ARCHIVE-CONTENT-SHA1
+<pre><code class="language-lisp">Initargs: :ARCHIVE-CONTENT-SHA1
 Readers: ARCHIVE-CONTENT-SHA1
 Writers: (SETF ARCHIVE-CONTENT-SHA1)
 </code></pre>
-
 <p><strong>prefix</strong></p>
-<pre><code class="lisp">Initargs: :PREFIX
+<pre><code class="language-lisp">Initargs: :PREFIX
 </code></pre>
-
 <p><strong>system-files</strong></p>
-<pre><code class="lisp">Initargs: :SYSTEM-FILES
+<pre><code class="language-lisp">Initargs: :SYSTEM-FILES
 Readers: SYSTEM-FILES
 Writers: (SETF SYSTEM-FILES)
 </code></pre>
-
 <p><strong>metadata-name</strong></p>
-<pre><code class="lisp">Initargs: :METADATA-NAME
+<pre><code class="language-lisp">Initargs: :METADATA-NAME
 Readers: METADATA-NAME
 Writers: (SETF METADATA-NAME)
 </code></pre>
-
 <h3 id="release-index-url">release-index-url</h3>
-<pre><code class="lisp">Generic Function: (release-index-url object)
+<pre><code class="language-lisp">Generic Function: (release-index-url object)
 </code></pre>
-
 <p>Return the URL for the release index of <code>object</code>.</p>
 <h3 id="required-systems">required-systems</h3>
-<pre><code class="lisp">Generic Function: (required-systems object)
+<pre><code class="language-lisp">Generic Function: (required-systems object)
 </code></pre>
-
 <h3 id="short-description">short-description</h3>
-<pre><code class="lisp">Generic Function: (short-description object)
+<pre><code class="language-lisp">Generic Function: (short-description object)
 </code></pre>
-
 <p>Return a short string describing <code>object</code>.</p>
 <h3 id="show-update-report">show-update-report</h3>
-<pre><code class="lisp">Generic Function: (show-update-report old-dist new-dist)
+<pre><code class="language-lisp">Generic Function: (show-update-report old-dist new-dist)
 </code></pre>
-
 <p>Display a description of the update from <code>old-dist</code>
   to <code>new-dist</code>.</p>
 <h3 id="standard-dist-enumeration-function">standard-dist-enumeration-function</h3>
-<pre><code class="lisp">Function: (standard-dist-enumeration-function)
+<pre><code class="language-lisp">Function: (standard-dist-enumeration-function)
 </code></pre>
-
 <p>The default function used for producing a list of dist objects.</p>
 <h3 id="subscribe">subscribe</h3>
-<pre><code class="lisp">Generic Function: (subscribe object)
+<pre><code class="language-lisp">Generic Function: (subscribe object)
 </code></pre>
-
 <p>Subscribe to updates of <code>object</code>, if possible. If no
   updates are available, a condition of type <a href="#subscription-unavailable">subscription-unavailable</a>
   is raised.</p>
 <h3 id="subscribedp">subscribedp</h3>
-<pre><code class="lisp">Generic Function: (subscribedp object)
+<pre><code class="language-lisp">Generic Function: (subscribedp object)
 </code></pre>
-
 <p>Return true if <code>object</code> is subscribed to updates.</p>
 <h3 id="subscription-inhibited-p">subscription-inhibited-p</h3>
-<pre><code class="lisp">Generic Function: (subscription-inhibited-p object)
+<pre><code class="language-lisp">Generic Function: (subscription-inhibited-p object)
 </code></pre>
-
 <p>Return T if subscription to <code>object</code> is inhibited.</p>
 <h3 id="subscription-inhibition-file">subscription-inhibition-file</h3>
-<pre><code class="lisp">Generic Function: (subscription-inhibition-file object)
+<pre><code class="language-lisp">Generic Function: (subscription-inhibition-file object)
 </code></pre>
-
 <p>The file whose presence indicates the inhibited
   subscription status of <code>object</code>.</p>
 <h3 id="subscription-unavailable">subscription-unavailable</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <h3 id="subscription-url">subscription-url</h3>
-<pre><code class="lisp">Generic Function: (subscription-url object)
+<pre><code class="language-lisp">Generic Function: (subscription-url object)
 </code></pre>
-
 <h3 id="system">system</h3>
-<pre><code class="lisp">Generic Function: (system object)
+<pre><code class="language-lisp">Generic Function: (system object)
 </code></pre>
-
 <p>Return the system of <code>object</code>.</p>
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>name</strong></p>
-<pre><code class="lisp">Initargs: :NAME
+<pre><code class="language-lisp">Initargs: :NAME
 </code></pre>
-
 <p><strong>system-file-name</strong></p>
-<pre><code class="lisp">Initargs: :SYSTEM-FILE-NAME
+<pre><code class="language-lisp">Initargs: :SYSTEM-FILE-NAME
 Readers: SYSTEM-FILE-NAME
 Writers: (SETF SYSTEM-FILE-NAME)
 </code></pre>
-
 <p><strong>release</strong></p>
-<pre><code class="lisp">Initargs: :RELEASE
+<pre><code class="language-lisp">Initargs: :RELEASE
 </code></pre>
-
 <p><strong>dist</strong></p>
-<pre><code class="lisp">Initargs: :DIST
+<pre><code class="language-lisp">Initargs: :DIST
 Readers: DIST
 Writers: (SETF DIST)
 </code></pre>
-
 <p><strong>required-systems</strong></p>
-<pre><code class="lisp">Initargs: :REQUIRED-SYSTEMS
+<pre><code class="language-lisp">Initargs: :REQUIRED-SYSTEMS
 Readers: REQUIRED-SYSTEMS
 Writers: (SETF REQUIRED-SYSTEMS)
 </code></pre>
-
 <p><strong>metadata-name</strong></p>
-<pre><code class="lisp">Initargs: :METADATA-NAME
+<pre><code class="language-lisp">Initargs: :METADATA-NAME
 Readers: METADATA-NAME
 Writers: (SETF METADATA-NAME)
 </code></pre>
-
 <h3 id="system-apropos_1">system-apropos</h3>
-<pre><code class="lisp">Generic Function: (system-apropos term)
+<pre><code class="language-lisp">Generic Function: (system-apropos term)
 </code></pre>
-
 <h3 id="system-apropos-list_1">system-apropos-list</h3>
-<pre><code class="lisp">Generic Function: (system-apropos-list term)
+<pre><code class="language-lisp">Generic Function: (system-apropos-list term)
 </code></pre>
-
 <h3 id="system-definition-searcher">system-definition-searcher</h3>
-<pre><code class="lisp">Function: (system-definition-searcher name)
+<pre><code class="language-lisp">Function: (system-definition-searcher name)
 </code></pre>
-
 <p>Like <a href="#find-asdf-system-file">find-asdf-system-file</a>, but this function can be used in
 ASDF:<em>SYSTEM-DEFINITION-SEARCH-FUNCTIONS</em>; it will only return system
 file names if they match <code>name</code>.</p>
 <h3 id="system-file-name">system-file-name</h3>
-<pre><code class="lisp">Generic Function: (system-file-name object)
+<pre><code class="language-lisp">Generic Function: (system-file-name object)
 </code></pre>
-
 <h3 id="system-files">system-files</h3>
-<pre><code class="lisp">Generic Function: (system-files object)
+<pre><code class="language-lisp">Generic Function: (system-files object)
 </code></pre>
-
 <h3 id="system-index-url">system-index-url</h3>
-<pre><code class="lisp">Generic Function: (system-index-url object)
+<pre><code class="language-lisp">Generic Function: (system-index-url object)
 </code></pre>
-
 <p>Return the URL for the system index of <code>object</code>.</p>
 <h3 id="uninhibit-subscription">uninhibit-subscription</h3>
-<pre><code class="lisp">Generic Function: (uninhibit-subscription object)
+<pre><code class="language-lisp">Generic Function: (uninhibit-subscription object)
 </code></pre>
-
 <p>Remove inhibition of subscription for <code>object</code>.</p>
 <h3 id="uninstall_1">uninstall</h3>
-<pre><code class="lisp">Generic Function: (uninstall object)
+<pre><code class="language-lisp">Generic Function: (uninstall object)
 </code></pre>
-
 <p>Uninstall <code>object</code>.</p>
 <h3 id="unknown-dist">unknown-dist</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>name</strong></p>
-<pre><code class="lisp">Initargs: :NAME
+<pre><code class="language-lisp">Initargs: :NAME
 Readers: :UNKNOWN-DIST-NAME
 </code></pre>
-
 <h3 id="unsubscribe">unsubscribe</h3>
-<pre><code class="lisp">Generic Function: (unsubscribe object)
+<pre><code class="language-lisp">Generic Function: (unsubscribe object)
 </code></pre>
-
 <p>Unsubscribe from updates to <code>object</code>.</p>
 <h3 id="update-in-place">update-in-place</h3>
-<pre><code class="lisp">Generic Function: (update-in-place old-dist new-dist)
+<pre><code class="language-lisp">Generic Function: (update-in-place old-dist new-dist)
 </code></pre>
-
 <p>Update <code>old-dist</code> to <code>new-dist</code> in place.</p>
 <h3 id="update-release-differences">update-release-differences</h3>
-<pre><code class="lisp">Generic Function: (update-release-differences old-dist new-dist)
+<pre><code class="language-lisp">Generic Function: (update-release-differences old-dist new-dist)
 </code></pre>
-
 <p>Compare <code>old-dist</code> to <code>new-dist</code> and return three lists
   as multiple values: new releases (present in <code>new-dist</code> but not
   <code>old-dist</code>), changed releases (present in both dists but different in
@@ -1222,13 +1079,11 @@ Readers: :UNKNOWN-DIST-NAME
   lists, with each two-element list having first the old release
   object and then the new release object.</p>
 <h3 id="version">version</h3>
-<pre><code class="lisp">Generic Function: (version object)
+<pre><code class="language-lisp">Generic Function: (version object)
 </code></pre>
-
 <h3 id="with-consistent-dists">with-consistent-dists</h3>
-<pre><code class="lisp">Macro: (with-consistent-dists &amp;body body)
+<pre><code class="language-lisp">Macro: (with-consistent-dists &amp;body body)
 </code></pre>
-
 <p>See CALL-WITH-CONSISTENT-DISTS.</p>
               
             </div>
@@ -1260,7 +1115,7 @@ Readers: :UNKNOWN-DIST-NAME
         <span><a href="../postmodern/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../utilities/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../usocket/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

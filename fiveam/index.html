@@ -203,11 +203,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
@@ -254,7 +258,11 @@
 <br/>
 Nickname: 5am
 <br/>
-Repository: <a href="https://github.com/sionescu/fiveam">sionescu/fiveam - Github</a></p>
+Licence: BSD
+<br/>
+Repository: <a href="https://github.com/sionescu/fiveam">sionescu/fiveam - Github</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#unit-testing">awesome-cl#unit-testing</a></p>
 <p><em>This documentation was possible due to <a href="http://turtleware.eu/posts/Tutorial-Working-with-FiveAM.html">Tomek Kurez's tutorial on fiveam</a> and the <a href="https://common-lisp.net/project/fiveam/docs/">excellent official documentation</a>.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/cl-library-docs/common-lisp-libraries/issues">create an issue here</a>.</em></p>
 <hr />
@@ -262,15 +270,14 @@ Repository: <a href="https://github.com/sionescu/fiveam">sionescu/fiveam - Githu
 <h3 id="checks-and-tests">Checks and Tests</h3>
 <p>A check, defined using the macro <a href="#is">is</a>, is a line of code that makes sure something is indeed true. A basic check definition is of the form <code>(is test &amp;rest reason-args)</code>.</p>
 <p>However, checks can only be defined in the context of tests:</p>
-<pre><code class="lisp">(test test-demo
+<pre><code class="language-lisp">(test test-demo
   &quot;This demonstrates the basic use of test and check.&quot;
   (is (listp (list 1 2)))
   (is (= 5 (+ 2 3)) &quot;This should pass.&quot;)  ; &amp;rest reason-args
   (is (= 4 4.1) &quot;~D and ~D are not = to each other.&quot; 4 4.1))
 </code></pre>
-
 <p>To run the test, simply, call <a href="#run_1">run!</a>:</p>
-<pre><code class="lisp">(run! 'test-demo)
+<pre><code class="language-lisp">(run! 'test-demo)
 ;; Running test TEST-DEMO ..f
 ;;  Did 3 checks.
 ;;     Pass: 2 (66%)
@@ -287,9 +294,8 @@ Repository: <a href="https://github.com/sionescu/fiveam">sionescu/fiveam - Githu
 ;;  was NIL..
 ;;  --------------------------------
 </code></pre>
-
 <p>Tests can automatically be run on (re)compilation by setting <a href="#run-test-when-defined">*run-test-when-defined*</a> to <code>t</code>. So, simply compiling</p>
-<pre><code class="lisp">(test another-test (is (eq t t)))
+<pre><code class="language-lisp">(test another-test (is (eq t t)))
 ;; 
 ;; Running test ANOTHER-TEST .
 ;;  Did 1 check.
@@ -297,14 +303,13 @@ Repository: <a href="https://github.com/sionescu/fiveam">sionescu/fiveam - Githu
 ;;     Skip: 0 ( 0%)
 ;;     Fail: 0 ( 0%)
 </code></pre>
-
 <p>runs the test. (Also see other <a href="#configuration-variables">Configuration Variables</a>.)</p>
 <p><code>(run!)</code> can be called without arguments to run all the tests.</p>
 <h3 id="suites">Suites</h3>
 <p>Tests can be grouped into suites. In fact, suites can also parent other suites.</p>
 <p>Suites can be defined using <a href="#def-suite">def-suite</a>, and similar to* <code>in-package</code>, the current
 suite can be specified using <a href="#in-suite">in-suite</a>.</p>
-<pre><code class="lisp">(def-suite suite-one)
+<pre><code class="language-lisp">(def-suite suite-one)
 (def-suite suite-two)
 
 (in-suite suite-one)
@@ -317,9 +322,8 @@ suite can be specified using <a href="#in-suite">in-suite</a>.</p>
 
 (test third-test (is (eq 'done 'done)))
 </code></pre>
-
 <p>All tests can be run with <a href="#run-all-tests">run-all-tests</a>. Also see the arguments to <a href="#run_1">run!</a>.</p>
-<pre><code class="lisp">(run-all-tests)
+<pre><code class="language-lisp">(run-all-tests)
 ;; Running test suite NIL
 ;;  Running test FIRST-TEST .
 ;;  Running test THIRD-TEST .
@@ -330,7 +334,6 @@ suite can be specified using <a href="#in-suite">in-suite</a>.</p>
 ;;     Skip: 0 ( 0%)
 ;;     Fail: 0 ( 0%)
 </code></pre>
-
 <h3 id="more-things">More Things</h3>
 <ul>
 <li>Tests can be removed using <a href="#rem-test">rem-test</a>.</li>
@@ -378,51 +381,43 @@ returning true. This second run limit prevents that.</p>
 <p>T if we should print the expression failing, NIL otherwise.</p>
 <h2 id="functions-and-macros">FUNCTIONS AND MACROS</h2>
 <h3 id="_1">!</h3>
-<pre><code class="lisp">Function: (!)
+<pre><code class="language-lisp">Function: (!)
 </code></pre>
-
 <p>Rerun the most recently run test and explain the results.</p>
 <h3 id="_2">!!</h3>
-<pre><code class="lisp">Function: (!!)
+<pre><code class="language-lisp">Function: (!!)
 </code></pre>
-
 <p>Rerun the second most recently run test and explain the results.</p>
 <h3 id="_3">!!!</h3>
-<pre><code class="lisp">Function: (!!!)
+<pre><code class="language-lisp">Function: (!!!)
 </code></pre>
-
 <p>Rerun the third most recently run test and explain the results.</p>
 <h3 id="debug">debug!</h3>
-<pre><code class="lisp">Function: (debug! &amp;optional (test-spec *suite*))
+<pre><code class="language-lisp">Function: (debug! &amp;optional (test-spec *suite*))
 </code></pre>
-
 <p>Calls (run! test-spec) but enters the debugger if any kind of error happens.</p>
 <h3 id="def-fixture">def-fixture</h3>
-<pre><code class="lisp">Macro: (def-fixture name (&amp;rest args) &amp;body body)
+<pre><code class="language-lisp">Macro: (def-fixture name (&amp;rest args) &amp;body body)
 </code></pre>
-
 <p>Defines a fixture named NAME. A fixture is very much like a
 macro but is used only for simple templating. A fixture created
 with DEF-FIXTURE is a macro which can use the special macrolet
 &amp;BODY to specify where the body should go.</p>
 <p>See Also: <a href="#with-fixture">WITH-FIXTURE</a>.</p>
 <h3 id="def-suite">def-suite</h3>
-<pre><code class="lisp">Macro: (def-suite name &amp;key description in)
+<pre><code class="language-lisp">Macro: (def-suite name &amp;key description in)
 </code></pre>
-
 <p>Define a new test-suite named NAME.</p>
 <p>IN (a symbol), if provided, causes this suite te be nested in the
 suite named by IN. NB: This macro is built on top of make-suite,
 as such it, like make-suite, will overrwrite any existing suite
 named NAME.</p>
 <h3 id="def-suite_1">def-suite*</h3>
-<pre><code class="lisp">Macro: (def-suite* name &amp;rest def-suite-args)
+<pre><code class="language-lisp">Macro: (def-suite* name &amp;rest def-suite-args)
 </code></pre>
-
 <h3 id="def-test">def-test</h3>
-<pre><code class="lisp">Macro: (def-test name (&amp;key depends-on (suite) fixture (compile-at) profile) &amp;body body)
+<pre><code class="language-lisp">Macro: (def-test name (&amp;key depends-on (suite) fixture (compile-at) profile) &amp;body body)
 </code></pre>
-
 <p>Create a test named NAME.</p>
 <p>NAME is the symbol which names the test.</p>
 <p>DEPENDS-ON is a list of the form:</p>
@@ -439,28 +434,24 @@ depending on another.</p>
 <p>FIXTURE specifies a fixture to wrap the body in.</p>
 <p>If PROFILE is T profiling information will be collected as well.</p>
 <h3 id="explain">explain!</h3>
-<pre><code class="lisp">Function: (explain! result-list)
+<pre><code class="language-lisp">Function: (explain! result-list)
 </code></pre>
-
 <p>Explain the results of RESULT-LIST using a
 detailed-text-explainer with output going to <em>test-dribble</em>.
 Return a boolean indicating whether no tests failed.</p>
 <h3 id="fail">fail</h3>
-<pre><code class="lisp">Macro: (fail &amp;rest message-args)
+<pre><code class="language-lisp">Macro: (fail &amp;rest message-args)
 </code></pre>
-
 <p>Simply generate a FAIL.</p>
 <h3 id="finishes">finishes</h3>
-<pre><code class="lisp">Macro: (finishes &amp;body body)
+<pre><code class="language-lisp">Macro: (finishes &amp;body body)
 </code></pre>
-
 <p>Generates a pass if BODY executes to normal completion. In
 other words if body does signal, return-from or throw this test
 fails.</p>
 <h3 id="for-all">for-all</h3>
-<pre><code class="lisp">Macro: (for-all bindings &amp;body body)
+<pre><code class="language-lisp">Macro: (for-all bindings &amp;body body)
 </code></pre>
-
 <p>Bind <code>BINDINGS</code> to random variables and test <code>BODY</code> <em>num-trials</em> times.</p>
 <p><code>BINDINGS</code> is a list of binding forms, each element is a list
 of <code>(BINDING VALUE &amp;optional GUARD)</code>. Value, which is evaluated
@@ -473,7 +464,7 @@ generated and they can refer to the current value of any
 binding. NB: Generator forms, unlike guard forms, can not contain
 references to the bound variables.</p>
 <p>Examples:</p>
-<pre><code class="lisp">  (for-all ((a (gen-integer)))
+<pre><code class="language-lisp">  (for-all ((a (gen-integer)))
     (is (integerp a)))
 
   (for-all ((a (gen-integer) (plusp a)))
@@ -488,97 +479,83 @@ references to the bound variables.</p>
     (is (integerp a))
     (is (integerp b)))
 </code></pre>
-
 <h3 id="gen-buffer">gen-buffer</h3>
-<pre><code class="lisp">Function: (gen-buffer &amp;key
+<pre><code class="language-lisp">Function: (gen-buffer &amp;key
                       (length (gen-integer min 0 max 50))
                       (element-type '(unsigned-byte 8))
                       (elements (gen-integer :min 0 :max (1- (expt 2 8)))))
 </code></pre>
-
 <h3 id="gen-character">gen-character</h3>
-<pre><code class="lisp">Function: (gen-character &amp;key
+<pre><code class="language-lisp">Function: (gen-character &amp;key
                          (code-limit char-code-limit)
                          (code (gen-integer :min 0 :max (1- code-limit)))
                          (alphanumericp nil))
 </code></pre>
-
 <p>Returns a generator of characters.</p>
 <p>CODE must be a generator of random integers. ALPHANUMERICP, if
 non-NIL, limits the returned chars to those which pass
 alphanumericp.</p>
 <h3 id="gen-float">gen-float</h3>
-<pre><code class="lisp">Function: (gen-float &amp;key bound (type 'short-float))
+<pre><code class="language-lisp">Function: (gen-float &amp;key bound (type 'short-float))
 </code></pre>
-
 <p>Returns a generator which produces floats of type TYPE. BOUND,
 if specified, constrains the results to be in the range (-BOUND,
 BOUND).</p>
 <h3 id="gen-integer">gen-integer</h3>
-<pre><code class="lisp">Function: (gen-integer &amp;key
+<pre><code class="language-lisp">Function: (gen-integer &amp;key
                        (max (1+ most-positive-fixnum))
                        (min (1- most-negative-fixnum)))
 </code></pre>
-
 <p>Returns a generator which produces random integers greater
 than or equal to MIN and less than or equal to MAX.</p>
 <h3 id="gen-list">gen-list</h3>
-<pre><code class="lisp">Function: (gen-list &amp;key
+<pre><code class="language-lisp">Function: (gen-list &amp;key
                     (length (gen-integer :min 0 :max 10))
                     (elements (gen-integer :min -10 :max 10)))
 </code></pre>
-
 <p>Returns a generator which produces random lists. LENGTH must be
 an integer generator and ELEMENTS must be a generator which
 produces objects.</p>
 <h3 id="gen-one-element">gen-one-element</h3>
-<pre><code class="lisp">Function: (gen-one-element &amp;rest elements)
+<pre><code class="language-lisp">Function: (gen-one-element &amp;rest elements)
 </code></pre>
-
 <h3 id="gen-string">gen-string</h3>
-<pre><code class="lisp">
+<pre><code class="language-lisp">
 Function: (gen-string &amp;key
                       (length (gen-integer :min 0 :max 80))
                       (elements (gen-character))
                       (element-type 'character))
 </code></pre>
-
 <p>Returns a generator which produces random strings. LENGTH must
 be a generator which produces integers, ELEMENTS must be a
 generator which produces characters of type ELEMENT-TYPE.</p>
 <h3 id="gen-tree">gen-tree</h3>
-<pre><code class="lisp">Function: (gen-tree &amp;key (size 20) (elements (gen-integer :min -10 :max 10)))
+<pre><code class="language-lisp">Function: (gen-tree &amp;key (size 20) (elements (gen-integer :min -10 :max 10)))
 </code></pre>
-
 <p>Returns a generator which produces random trees. SIZE controls
 the approximate size of the tree, but don't try anything above
  30, you have been warned. ELEMENTS must be a generator which
 will produce the elements.</p>
 <h3 id="get-fixture">get-fixture</h3>
-<pre><code class="lisp">Function: (get-fixture key &amp;optional default)
+<pre><code class="language-lisp">Function: (get-fixture key &amp;optional default)
 </code></pre>
-
 <h3 id="get-test">get-test</h3>
-<pre><code class="lisp">Function: (get-test key &amp;optional default)
+<pre><code class="language-lisp">Function: (get-test key &amp;optional default)
 </code></pre>
-
 <h3 id="in-suite">in-suite</h3>
-<pre><code class="lisp">Macro: (in-suite suite-name)
+<pre><code class="language-lisp">Macro: (in-suite suite-name)
 </code></pre>
-
 <p>Set the <em>suite</em> special variable so that all tests defined
 after the execution of this form are, unless specified otherwise,
 in the test-suite named SUITE-NAME.</p>
 <p>See also: DEF-SUITE <em>SUITE</em></p>
 <h3 id="in-suite_1">in-suite*</h3>
-<pre><code class="lisp">Macro: (in-suite* suite-name &amp;key in)
+<pre><code class="language-lisp">Macro: (in-suite* suite-name &amp;key in)
 </code></pre>
-
 <p>Just like in-suite, but silently creates missing suites.</p>
 <h3 id="is">is</h3>
-<pre><code class="lisp">Macro: (is test &amp;rest reason-args)
+<pre><code class="language-lisp">Macro: (is test &amp;rest reason-args)
 </code></pre>
-
 <p>The DWIM checking operator.</p>
 <p>If TEST returns a true value a test-passed result is generated,
 otherwise a test-failure result is generated. The reason, unless
@@ -591,98 +568,83 @@ REASON-ARGS is provided, is generated based on the form of TEST:</p>
 <p>Wrapping the TEST form in a NOT simply produces a negated reason
  string.</p>
 <h3 id="is-every">is-every</h3>
-<pre><code class="lisp">Macro: (is-every predicate &amp;body clauses)
+<pre><code class="language-lisp">Macro: (is-every predicate &amp;body clauses)
 </code></pre>
-
 <p>The input is either a list of lists, or a list of pairs. Generates (is (,predicate ,expr ,value))
    for each pair of elements or (is (,predicate ,expr ,value) ,@reason) for each list.</p>
 <h3 id="is-false">is-false</h3>
-<pre><code class="lisp">Macro: (is-false condition &amp;rest reason-args)
+<pre><code class="language-lisp">Macro: (is-false condition &amp;rest reason-args)
 </code></pre>
-
 <p>Generates a pass if CONDITION returns false, generates a
   failure otherwise. Like IS-TRUE, and unlike IS, IS-FALSE does
   not inspect CONDITION to determine what reason to give it case
   of test failure</p>
 <h3 id="is-true">is-true</h3>
-<pre><code class="lisp">Macro: (is-true condition &amp;rest reason-args)
+<pre><code class="language-lisp">Macro: (is-true condition &amp;rest reason-args)
 </code></pre>
-
 <p>Like IS this check generates a pass if CONDITION returns true
   and a failure if CONDITION returns false. Unlike IS this check
   does not inspect CONDITION to determine how to report the
   failure.</p>
 <h3 id="make-fixture">make-fixture</h3>
 <h3 id="make-suite">make-suite</h3>
-<pre><code class="lisp">Function: (make-suite name &amp;key description ((in parent-suite)))
+<pre><code class="language-lisp">Function: (make-suite name &amp;key description ((in parent-suite)))
 </code></pre>
-
 <p>Create a new test suite object.</p>
 <p>Overrides any existing suite named NAME.</p>
 <h3 id="make-test">make-test</h3>
 <h3 id="pass">pass</h3>
-<pre><code class="lisp">Macro: (pass &amp;rest message-args)
+<pre><code class="language-lisp">Macro: (pass &amp;rest message-args)
 </code></pre>
-
 <p>Simply generate a PASS.</p>
 <h3 id="rem-fixture">rem-fixture</h3>
-<pre><code class="lisp">Function: (rem-fixture key)
+<pre><code class="language-lisp">Function: (rem-fixture key)
 </code></pre>
-
 <h3 id="rem-test">rem-test</h3>
-<pre><code class="lisp">Function: (rem-test key)
+<pre><code class="language-lisp">Function: (rem-test key)
 </code></pre>
-
 <h3 id="results-status">results-status</h3>
-<pre><code class="lisp">Function: (results-status result-list)
+<pre><code class="language-lisp">Function: (results-status result-list)
 </code></pre>
-
 <p>Given a list of test results (generated while running a test)
   return true if no results are of type TEST-FAILURE.  Returns second
   and third values, which are the set of failed tests and skipped
   tests respectively.</p>
 <h3 id="run">run</h3>
-<pre><code class="lisp">Function: (run test-spec &amp;key (print-names *print-names*))
+<pre><code class="language-lisp">Function: (run test-spec &amp;key (print-names *print-names*))
 </code></pre>
-
 <p>Run the test specified by TEST-SPEC.</p>
 <p>TEST-SPEC can be either a symbol naming a test or test suite, or
 a testable-object object. This function changes the operations
 performed by the !, !! and !!! functions.</p>
 <h3 id="run_1">run!</h3>
-<pre><code class="lisp">Function: (run! &amp;optional (test-spec *suite*)
+<pre><code class="language-lisp">Function: (run! &amp;optional (test-spec *suite*)
                 &amp;key (print-names *print-names*))
 </code></pre>
-
 <p>Equivalent to (explain! (run TEST-SPEC)).</p>
 <h3 id="run-all-tests">run-all-tests</h3>
-<pre><code class="lisp">Function: (run-all-tests &amp;key (summary :end))
+<pre><code class="language-lisp">Function: (run-all-tests &amp;key (summary :end))
 </code></pre>
-
 <p>Runs all defined test suites, T if all tests passed and NIL otherwise.
 SUMMARY can be :END to print a summary at the end, :SUITE to print it
 after each suite or NIL to skip explanations.</p>
 <h3 id="signals">signals</h3>
-<pre><code class="lisp">Macro: (signals condition-spec &amp;body body)
+<pre><code class="language-lisp">Macro: (signals condition-spec &amp;body body)
 </code></pre>
-
 <p>Generates a pass if BODY signals a condition of type
 CONDITION. BODY is evaluated in a block named NIL, CONDITION is
 not evaluated.</p>
 <h3 id="skip">skip</h3>
-<pre><code class="lisp">Macro: (skip &amp;rest reason)
+<pre><code class="language-lisp">Macro: (skip &amp;rest reason)
 </code></pre>
-
 <p>Generates a TEST-SKIPPED result.</p>
 <h3 id="test">test</h3>
-<pre><code class="lisp">Macro: (test name &amp;body body)
+<pre><code class="language-lisp">Macro: (test name &amp;body body)
 </code></pre>
-
 <p>Create a test named NAME. If NAME is a list it must be of the
 form:</p>
-<pre><code class="lisp">  (name &amp;key depends-on suite fixture compile-at profile)
+<pre><code class="language-lisp">  (name &amp;key depends-on suite fixture compile-at profile)
 </code></pre>
-
 <p>NAME is the symbol which names the test.</p>
 <p>DEPENDS-ON is a list of the form:</p>
 <ul>
@@ -706,13 +668,11 @@ depending on another.</p>
 <p>FIXTURE specifies a fixture to wrap the body in.</p>
 <p>If PROFILE is T profiling information will be collected as well.</p>
 <h3 id="test-names">test-names</h3>
-<pre><code class="lisp">Function: (test-names)
+<pre><code class="language-lisp">Function: (test-names)
 </code></pre>
-
 <h3 id="with-fixture">with-fixture</h3>
-<pre><code class="lisp">Macro: (with-fixture fixture-name (&amp;rest args) &amp;body body)
+<pre><code class="language-lisp">Macro: (with-fixture fixture-name (&amp;rest args) &amp;body body)
 </code></pre>
-
 <p>Insert BODY into the fixture named FIXTURE-NAME.</p>
 <p>See Also: <a href="#def-fixture">DEF-FIXTURE</a>.</p>
               

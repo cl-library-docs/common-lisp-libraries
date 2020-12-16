@@ -75,11 +75,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">unix-opts - cmd line argument parser</a>
@@ -162,14 +166,20 @@
                 <h1 id="unix-opts-cmd-line-argument-parser">unix-opts - cmd line argument parser</h1>
 <p>Version: 0.1.7
 <br/>
-Nickname: opts</p>
+Licence: MIT
+<br/>
+Nickname: opts
+<br>
+Repository: <a href="https://github.com/libre-man/unix-opts">libre-man/unix-opts</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#command-line-options-parsers">awesome-cl#command-line-options-parsers</a></p>
 <p><em>This documentation was possible due to the excellent <a href="https://github.com/libre-man/unix-opts">official documentation and
 example</a>.</em></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
 <hr />
 <h2 id="getting-started">GETTING STARTED</h2>
 <p>Consider the following command line options defined using <a href="#define-opts">define-opts</a>:</p>
-<pre><code class="lisp">(opts:define-opts
+<pre><code class="language-lisp">(opts:define-opts
   (:name :help
    :description &quot;print this help text&quot;
    :short #\h
@@ -192,10 +202,9 @@ example</a>.</em></p>
    :arg-parser #'identity ; &lt;- takes an argument, but we keep it as the string
    :meta-var &quot;FILE&quot;))
 </code></pre>
-
 <p><a href="#describe">describe</a> gets us the required "help text" (see the documentation for other
 options):</p>
-<pre><code class="lisp">CL-USER&gt; (opts:describe :prefix &quot;Demonstrating REPL&quot;)
+<pre><code class="language-lisp">CL-USER&gt; (opts:describe :prefix &quot;Demonstrating REPL&quot;)
 Demonstrating REPL
 
 Available options:
@@ -205,12 +214,11 @@ Available options:
   -o, --output FILE        redirect output to file FILE
 NIL
 </code></pre>
-
 <p>Command line arguments can be processed with a call to <a href="#get-opts">get-opts</a>.
 For demonstration purposes, we use the REPL. See <a href="https://github.com/libre-man/unix-opts/tree/master/example">this example
 directory</a>
 to see how this might be done in a script.</p>
-<pre><code class="lisp">CL-USER&gt; (opts:get-opts '())
+<pre><code class="language-lisp">CL-USER&gt; (opts:get-opts '())
 ; Evaluation aborted on #&lt;UNIX-OPTS:MISSING-REQUIRED-OPTION {10084173F3}&gt;.
 CL-USER&gt; (opts:get-opts '(&quot;--level&quot; &quot;2&quot;))
 (:LEVEL 2)
@@ -219,7 +227,6 @@ CL-USER&gt; (opts:get-opts '(&quot;--level&quot; &quot;2&quot; &quot;--help&quot
 (:LEVEL 2 :HELP T)
 NIL
 </code></pre>
-
 <p><code>get-opts</code> can throw several conditions:</p>
 <ul>
 <li><a href="#unknown-option">unknown-option</a></li>
@@ -238,7 +245,7 @@ The Cookbook chapter on <a href="https://lispcookbook.github.io/cl-cookbook/erro
 Handling</a> should be helpful
 if you want to learn about them.)</p>
 <p>Thus, a typical way to use <code>get-opts</code> would be simply wrap the error in <a href="">handler-case</a>:</p>
-<pre><code class="lisp">CL-USER&gt; (handler-case (opts:get-opts '())
+<pre><code class="language-lisp">CL-USER&gt; (handler-case (opts:get-opts '())
            (error (condition)
              (format t &quot;~A&quot; condition)
              (opts:describe)))
@@ -251,11 +258,10 @@ Available options:
 
 NIL
 </code></pre>
-
 <p>You could use <a href="http://www.lispworks.com/documentation/lw50/CLHS/Body/f_getf.htm#getf">getf</a>
 or <a href="http://www.lispworks.com/documentation/HyperSpec/Body/m_destru.htm#destructuring-bind">destructuring-bind</a>
 to obtain the arguments you need:</p>
-<pre><code class="lisp">CL-USER&gt; (defun process-options (&amp;rest options)
+<pre><code class="language-lisp">CL-USER&gt; (defun process-options (&amp;rest options)
            (handler-case (opts:get-opts options)
              (error (condition) ; or you could case down on the various conditions above!
                (format t &quot;~A&quot; condition)
@@ -280,9 +286,8 @@ CL-USER&gt; (destructuring-bind (&amp;key level help) (process-options &quot;--l
 I see you've supplied level option, you want 2 level!
 NIL
 </code></pre>
-
 <p>You could also <a href="../iterate/#dsetq">iterate:dsetq</a> to bring the options to global space.</p>
-<pre><code class="lisp">CL-USER&gt; (destructuring-bind (&amp;key verbose level help)
+<pre><code class="language-lisp">CL-USER&gt; (destructuring-bind (&amp;key verbose level help)
              (process-options &quot;--level&quot; &quot;2&quot; &quot;--verbose&quot;)
            (if help
                (opts:describe) ; assume we have defined *level* and *verbose* previously
@@ -293,30 +298,25 @@ T
 CL-USER&gt; *level*
 2
 </code></pre>
-
 <h2 id="api-reference">API REFERENCE</h2>
 <h3 id="arg-parser-failed">arg-parser-failed</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <p>This condition is thrown when some option OPTION wants
 an argument, it's given but cannot be parsed by argument parser.</p>
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>raw-arg</strong></p>
-<pre><code class="lisp">Initargs: :RAW-ARG
+<pre><code class="language-lisp">Initargs: :RAW-ARG
 Readers: RAW-ARG
 </code></pre>
-
 <h3 id="argv">argv</h3>
-<pre><code class="lisp">Function: (argv)
+<pre><code class="language-lisp">Function: (argv)
 </code></pre>
-
 <p>Return a list of program's arguments, including command used to execute
 the program as first elements of the list. Portable across implementations.</p>
 <h3 id="define-opts">define-opts</h3>
-<pre><code class="lisp">Macro: (define-opts &amp;body descriptions)
+<pre><code class="language-lisp">Macro: (define-opts &amp;body descriptions)
 </code></pre>
-
 <p>Define command line options. Arguments of this macro must be plists
 containing various parameters. Here we enumerate all allowed parameters:</p>
 <ul>
@@ -346,9 +346,8 @@ printed in option description.</p>
 </li>
 </ul>
 <h3 id="describe">describe</h3>
-<pre><code class="lisp">Function: (describe &amp;key prefix suffix usage-of args (stream *standard-output*))
+<pre><code class="language-lisp">Function: (describe &amp;key prefix suffix usage-of args (stream *standard-output*))
 </code></pre>
-
 <p>Return string describing options of the program that were defined with
 <code>define-opts</code> macro previously. You can supply <code>prefix</code> and <code>suffix</code> arguments
 that will be printed before and after options respectively. If <code>usage-of</code> is
@@ -358,14 +357,12 @@ takes arguments (apart from options), you can specify how to print them in
 "Usage: " section with <code>args</code> option (should be a string designator). Output
 goes to <code>stream</code>.</p>
 <h3 id="exit">exit</h3>
-<pre><code class="lisp">Function: (exit &amp;optional (status 0))
+<pre><code class="language-lisp">Function: (exit &amp;optional (status 0))
 </code></pre>
-
 <p>Exit the program returning <code>status</code>.</p>
 <h3 id="get-opts">get-opts</h3>
-<pre><code class="lisp">Function: (get-opts &amp;optional options)
+<pre><code class="language-lisp">Function: (get-opts &amp;optional options)
 </code></pre>
-
 <p>Parse command line options. If <code>options</code> is given, it should be a list to
 parse. If it's not given, the function will use <code>argv</code> function to get list
 of command line arguments.</p>
@@ -422,50 +419,41 @@ to <code>nil</code></li>
 </li>
 </ul>
 <h3 id="missing-arg">missing-arg</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <p>This condition is thrown when some option OPTION wants
 an argument, but there is no such argument given.</p>
 <h3 id="missing-options">missing-options</h3>
-<pre><code class="lisp">Generic Function: (missing-options condition)
+<pre><code class="language-lisp">Generic Function: (missing-options condition)
 </code></pre>
-
 <h3 id="missing-required-option">missing-required-option</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <p>This condition is thrown when required options are missing.</p>
 <p><u><strong>Direct Slots</strong></u></p>
 <p><strong>missing-options</strong></p>
-<pre><code class="lisp">Initargs: :MISSING-OPTIONS
+<pre><code class="language-lisp">Initargs: :MISSING-OPTIONS
 Readers: MISSING-OPTIONS
 </code></pre>
-
 <h3 id="option">option</h3>
-<pre><code class="lisp">Generic Function: (option condition)
+<pre><code class="language-lisp">Generic Function: (option condition)
 </code></pre>
-
-<pre><code class="lisp">Class
+<pre><code class="language-lisp">Class
 </code></pre>
-
 <p>representation of an option</p>
 <h3 id="raw-arg">raw-arg</h3>
-<pre><code class="lisp">Generic Function: (raw-arg condition)
+<pre><code class="language-lisp">Generic Function: (raw-arg condition)
 </code></pre>
-
 <h3 id="reparse-arg">reparse-arg</h3>
 <h3 id="skip-option">skip-option</h3>
 <h3 id="unknown-option">unknown-option</h3>
-<pre><code class="lisp">Condition
+<pre><code class="language-lisp">Condition
 </code></pre>
-
 <p>This condition is thrown when parser encounters
 unknown (not previously defined with <code>define-opts</code>) option.</p>
 <h3 id="use-value">use-value</h3>
-<pre><code class="lisp">Function: (use-value value &amp;optional condition)
+<pre><code class="language-lisp">Function: (use-value value &amp;optional condition)
 </code></pre>
-
 <p>Transfer control and <code>value</code> to a restart named USE-VALUE, or
 return NIL if none exists.</p>
               

@@ -75,11 +75,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">numcl - Lispy clone of numpy</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#introduction">INTRODUCTION</a>
@@ -520,7 +524,11 @@
                 <h1 id="numcl-lispy-clone-of-numpy">numcl - Lispy clone of numpy</h1>
 <p>Version: 0.1
 <br/>
-Repository: <a href="https://github.com/numcl/numcl/">numcl/numcl - Github</a></p>
+Licence: LGPL
+<br/>
+Repository: <a href="https://github.com/numcl/numcl/">numcl/numcl - Github</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#numerical-and-scientific">awesome-cl#numerical-and-scientific</a></p>
 <p><em>This documentation was possible due to the excellent 
 <a href="https://numcl.github.io/numcl/">official documentation</a>.</em></p>
 <p><em>In case of any errors here, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue</a>.</em></p>
@@ -584,9 +592,8 @@ and other libraries that are automatically loaded by quicklisp.</p>
 <li><a href="https://github.com/numcl/specialized-function">https://github.com/numcl/specialized-function</a> .</li>
 </ul>
 <p>With Roswell, installation can be done by</p>
-<pre><code class="example">ros install numcl/constantfold numcl/specialized-function numcl/gtype numcl/numcl
+<pre><code class="language-example">ros install numcl/constantfold numcl/specialized-function numcl/gtype numcl/numcl
 </code></pre>
-
 <p>This library is at least tested on implementation listed below:</p>
 <ul>
 <li>SBCL 1.4.12 on X86-64 Linux 4.4.0-141-generic (author's environment)</li>
@@ -610,7 +617,7 @@ conditions:</p>
     means a non-displaced, non-adjustable array without fill pointer.</li>
 </ul>
 <p>There are a few ways to create the required arrays:</p>
-<pre><code class="lisp">(reshape (arange 4.0) '(2 2))
+<pre><code class="language-lisp">(reshape (arange 4.0) '(2 2))
 (asarray #2A((0.0 1.0) (2.0 3.0)))
 (asarray '((0.0 1.0) (2.0 3.0)))
 (asarray '(#(0.0 1.0) #(2.0 3.0)))
@@ -619,7 +626,6 @@ conditions:</p>
     (dotimes (j 2)
       (setf (aref a i j) ...))))
 </code></pre>
-
 <p>The names and the parameters of numcl functions mostly (rather strictly)
 follows the numpy counterpart. There are even numpy names, such as
 <code>dtype</code>, which are just aliases for <code>array-element-type</code>.</p>
@@ -670,79 +676,62 @@ the functionality implemented so far in NUMCL.</p>
 <p>As stated on the section on <a href="#packages">Packages</a>, NUMCL exports all the symbols in package CL, along with the ones with <code>numcl.exported</code>. Therefore, here, we only list the symbols exported by 
 <code>numcl.exported</code>.</p>
 <h3 id="_1">*</h3>
-<pre><code class="lisp">Function: (* &amp;rest args)
+<pre><code class="language-lisp">Function: (* &amp;rest args)
 </code></pre>
-
 <h3 id="_2">**</h3>
 <h3 id="_3">***</h3>
 <h3 id="_4">+</h3>
-<pre><code class="lisp">Function: (+ &amp;rest args)
+<pre><code class="language-lisp">Function: (+ &amp;rest args)
 </code></pre>
-
 <h3 id="_5">++</h3>
 <h3 id="_6">+++</h3>
 <h3 id="-">-</h3>
-<pre><code class="lisp">Function: (- first &amp;rest args)
+<pre><code class="language-lisp">Function: (- first &amp;rest args)
 </code></pre>
-
 <h3 id="_7">/</h3>
-<pre><code class="lisp">Function: (/ first &amp;rest args)
+<pre><code class="language-lisp">Function: (/ first &amp;rest args)
 </code></pre>
-
 <h3 id="_8">//</h3>
 <h3 id="_9">///</h3>
 <h3 id="_10">/=</h3>
-<pre><code class="lisp">Function: (/= x y)
+<pre><code class="language-lisp">Function: (/= x y)
 </code></pre>
-
 <h3 id="1">1+</h3>
-<pre><code class="lisp">Function: (1+ array)
+<pre><code class="language-lisp">Function: (1+ array)
 </code></pre>
-
 <h3 id="1-">1-</h3>
-<pre><code class="lisp">Function: (1- array)
+<pre><code class="language-lisp">Function: (1- array)
 </code></pre>
-
 <h3 id="_11">&lt;</h3>
-<pre><code class="lisp">Function: (&lt; x y)
+<pre><code class="language-lisp">Function: (&lt; x y)
 </code></pre>
-
 <h3 id="_12">&lt;=</h3>
-<pre><code class="lisp">Function: (&lt;= x y)
+<pre><code class="language-lisp">Function: (&lt;= x y)
 </code></pre>
-
 <h3 id="_13">=</h3>
-<pre><code class="lisp">Function: (= x y)
+<pre><code class="language-lisp">Function: (= x y)
 </code></pre>
-
 <h3 id="_14">&gt;</h3>
-<pre><code class="lisp">Function: (&gt; x y)
+<pre><code class="language-lisp">Function: (&gt; x y)
 </code></pre>
-
 <h3 id="_15">&gt;=</h3>
-<pre><code class="lisp">Function: (&gt;= x y)
+<pre><code class="language-lisp">Function: (&gt;= x y)
 </code></pre>
-
 <h3 id="abs">abs</h3>
-<pre><code class="lisp">Function: (abs x)
+<pre><code class="language-lisp">Function: (abs x)
 </code></pre>
-
 <h3 id="acos">acos</h3>
-<pre><code class="lisp">Function: (acos x)
+<pre><code class="language-lisp">Function: (acos x)
 </code></pre>
-
 <h3 id="amax">amax</h3>
-<pre><code class="lisp">Function: (amax array &amp;rest args &amp;key axes type)
+<pre><code class="language-lisp">Function: (amax array &amp;rest args &amp;key axes type)
 </code></pre>
-
 <h3 id="amin">amin</h3>
-<pre><code class="lisp">Function: (amin array &amp;rest args &amp;key axes type)
+<pre><code class="language-lisp">Function: (amin array &amp;rest args &amp;key axes type)
 </code></pre>
-
 <h3 id="arange">arange</h3>
-<pre><code class="lisp">Function: (arange &amp;rest args)
+<pre><code class="language-lisp">Function: (arange &amp;rest args)
 </code></pre>
-
 <p>Arange's argument signature is irregular, following the API of numpy.
 The interpretation of its arguments depends on the number of arguments.</p>
 <p>(arange stop            &amp;key type)
@@ -750,9 +739,8 @@ The interpretation of its arguments depends on the number of arguments.</p>
  (arange start stop step &amp;key type)</p>
 <p>Don't worry, we provide a compiler-macro to avoid the runtime dispatch.</p>
 <h3 id="aref">aref</h3>
-<pre><code class="lisp">Function: (aref array &amp;rest subscripts)
+<pre><code class="language-lisp">Function: (aref array &amp;rest subscripts)
 </code></pre>
-
 <p>An extended <code>aref</code> that accepts ranges as lists, similar to numpy's array access.
 For a 3D array x,</p>
 <ul>
@@ -766,47 +754,40 @@ x[2,:1,3]    = (aref x 2 '(t 1) 3)
 x[2,:,3]     = (aref x 2 '(t t) 3)
 x[2,:,3]     = (aref x 2    t   3)
 </code></pre>
-
 <ul>
 <li>insufficient axis</li>
 </ul>
-<pre><code class="commonlisp">(aref x '(1 5)) == (aref x '(1 5) t t)
+<pre><code class="language-commonlisp">(aref x '(1 5)) == (aref x '(1 5) t t)
 (aref x 2 '(1 5)) == (aref x 2 '(1 5) t)
 </code></pre>
-
 <ul>
 <li>newaxis</li>
 </ul>
-<pre><code class="commonlisp">(aref x '(1 2 5) nil 2 3)
+<pre><code class="language-commonlisp">(aref x '(1 2 5) nil 2 3)
 </code></pre>
-
 <ul>
 <li>ellipsis</li>
 </ul>
-<pre><code class="commonlisp">(aref x '- 2) = (aref x t t 2) = x[...,2]
+<pre><code class="language-commonlisp">(aref x '- 2) = (aref x t t 2) = x[...,2]
 (aref x 2 '-) = (aref x 2 t t) = x[2,...]
 (aref x 2 '- 3) = (aref x 2 t 3) = x[2,...,3]
 (aref x 2 3 '-) = (aref x 2 3 t) = x[2,3,...]
 </code></pre>
-
 <h3 id="argmax">argmax</h3>
 <h3 id="argmin">argmin</h3>
 <h3 id="argwhere">argwhere</h3>
-<pre><code class="lisp">Function: (argwhere array fn)
+<pre><code class="language-lisp">Function: (argwhere array fn)
 </code></pre>
-
 <p>Returns a list of the multidimentional indices of the elements which satisfies the predicate FN.
 Note that the list elements are the multidimentional indices, even for a single-dimensional array.</p>
 <h3 id="array-index-from-row-major-index">array-index-from-row-major-index</h3>
-<pre><code class="lisp">Function: (array-index-from-row-major-index array row-major-index)
+<pre><code class="language-lisp">Function: (array-index-from-row-major-index array row-major-index)
 </code></pre>
-
 <p>Takes a multidimentional array and a row-major-index.
  Returns a list containing the normal index.</p>
 <h3 id="asarray">asarray</h3>
-<pre><code class="lisp">Function: (asarray contents &amp;key type)
+<pre><code class="language-lisp">Function: (asarray contents &amp;key type)
 </code></pre>
-
 <p>Copy CONTENTS to a new array. NOTE: ASARRAY is <em>SLOW</em> as it recurses into the substructures.
 When CONTENTS is a multidimentional array, its elements are copied to a new array that guarantees the NUMCL assumption.
 When CONTENTS is a nested sequence, it is traversed up to the depth that guarantees the sane shape for an array.
@@ -814,7 +795,7 @@ When elements are copied, it is coerced to TYPE.
 When TYPE is not given, it is replaced with the float-contagion type deduced from the elements of CONTENTS.
 It may return a 0-dimensional array with CONTENTS being the only element.</p>
 <p>For example:</p>
-<pre><code class="lisp">;; a vector of two lists.
+<pre><code class="language-lisp">;; a vector of two lists.
 (asarray '((1) (1 2)))               -&gt; #((1) (1 2))
 ;; a 2D array of 4 lists.
 (asarray '(((1) (1 2)) ((3) (3 4)))) -&gt; #2A(((1) (1 2)) ((3) (3 4)))
@@ -823,19 +804,17 @@ It may return a 0-dimensional array with CONTENTS being the only element.</p>
 (asarray #(#(1 2) #(3 4)))  -&gt; #2A((1 2) (3 4))
 (asarray #((1 2) (3 4)))    -&gt; #2A((1 2) (3 4))
 </code></pre>
-
 <p>However, this behavior may not be ideal because the resulting shape could be affected by the lengths of the strings.</p>
-<pre><code class="lisp">(asarray #(#(1 2) #(3 4)))   -&gt; #2A((1 2) (3 4))
+<pre><code class="language-lisp">(asarray #(#(1 2) #(3 4)))   -&gt; #2A((1 2) (3 4))
 (asarray #(#(1 2) #(3 4 5))) -&gt; #(#(1 2) #(3 4 5))
 
 (asarray #(&quot;aa&quot; &quot;aa&quot;))   -&gt; #2A((#a #a) (#a #a))
 (asarray #(&quot;aa&quot; &quot;aaa&quot;))  -&gt; #(&quot;aa&quot; &quot;aaa&quot;)
 </code></pre>
-
 <p>As a remedy to this problem, we allow TYPE to be a specifier for vector subtypes. Providing such a type specifier
 will keep the leaf objects (e.g. strings) from split into individual elements.
 We don't allow it to be a multidimentional array [at the moment.]</p>
-<pre><code class="lisp">(asarray #(#(1 2) #(3 4))   :type '(array fixnum (*))) -&gt; #(#(1 2) #(3 4))
+<pre><code class="language-lisp">(asarray #(#(1 2) #(3 4))   :type '(array fixnum (*))) -&gt; #(#(1 2) #(3 4))
 (asarray #(#(1 2) #(3 4 5)) :type '(array fixnum (*))) -&gt; #(#(1 2) #(3 4 5))
 
 (asarray #(&quot;aa&quot; &quot;aa&quot;)  :type 'string)    -&gt; #(&quot;aa&quot; &quot;aa&quot;)
@@ -843,99 +822,77 @@ We don't allow it to be a multidimentional array [at the moment.]</p>
 
 (asarray '((1 2) (3 4))   :type '(array fixnum (* *)))  -&gt; error
 </code></pre>
-
 <h3 id="asin">asin</h3>
-<pre><code class="lisp">Function: (asin x)
+<pre><code class="language-lisp">Function: (asin x)
 </code></pre>
-
 <h3 id="astype">astype</h3>
-<pre><code class="lisp">Function: (astype array type)
+<pre><code class="language-lisp">Function: (astype array type)
 </code></pre>
-
 <h3 id="atan">atan</h3>
-<pre><code class="lisp">Function: (atan x)
+<pre><code class="language-lisp">Function: (atan x)
 </code></pre>
-
 <h3 id="avg">avg</h3>
-<pre><code class="lisp">Function: (avg array &amp;key axes)
+<pre><code class="language-lisp">Function: (avg array &amp;key axes)
 </code></pre>
-
 <h3 id="bernoulli">bernoulli</h3>
-<pre><code class="lisp">Function: (bernoulli p &amp;optional shape)
+<pre><code class="language-lisp">Function: (bernoulli p &amp;optional shape)
 </code></pre>
-
 <p>Returns a bit array whose elements are 1 with probability P</p>
 <h3 id="bernoulli-like">bernoulli-like</h3>
-<pre><code class="lisp">Function: (bernoulli-like a)
+<pre><code class="language-lisp">Function: (bernoulli-like a)
 </code></pre>
-
 <h3 id="beta">beta</h3>
-<pre><code class="lisp">Function: (beta a b &amp;optional shape (type
+<pre><code class="language-lisp">Function: (beta a b &amp;optional shape (type
                                      (union-to-float-type (type-of a)
                                                           (type-of b))))
 </code></pre>
-
 <h3 id="binomial">binomial</h3>
-<pre><code class="lisp">Function: (binomial n p &amp;optional shape)
+<pre><code class="language-lisp">Function: (binomial n p &amp;optional shape)
 </code></pre>
-
 <h3 id="broadcast">broadcast</h3>
-<pre><code class="lisp">Function: (broadcast function x y &amp;key type (atomic function))
+<pre><code class="language-lisp">Function: (broadcast function x y &amp;key type (atomic function))
 </code></pre>
-
 <p>For binary functions</p>
 <h3 id="ceiling">ceiling</h3>
-<pre><code class="lisp">Function: (ceiling number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (ceiling number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="chisquare">chisquare</h3>
 <h3 id="cis">cis</h3>
-<pre><code class="lisp">Function: (cis x)
+<pre><code class="language-lisp">Function: (cis x)
 </code></pre>
-
 <h3 id="clip">clip</h3>
-<pre><code class="lisp">Function: (clip array min max)
+<pre><code class="language-lisp">Function: (clip array min max)
 </code></pre>
-
 <h3 id="concatenate">concatenate</h3>
-<pre><code class="lisp">Function: (concatenate arrays &amp;key (axis 0) out)
+<pre><code class="language-lisp">Function: (concatenate arrays &amp;key (axis 0) out)
 </code></pre>
-
 <h3 id="conjugate">conjugate</h3>
-<pre><code class="lisp">Function: (conjugate x)
+<pre><code class="language-lisp">Function: (conjugate x)
 </code></pre>
-
 <h3 id="copy">copy</h3>
-<pre><code class="lisp">Function: (copy array)
+<pre><code class="language-lisp">Function: (copy array)
 </code></pre>
-
 <h3 id="cos">cos</h3>
-<pre><code class="lisp">Function: (cos x)
+<pre><code class="language-lisp">Function: (cos x)
 </code></pre>
-
 <h3 id="cosh">cosh</h3>
-<pre><code class="lisp">Function: (cosh x)
+<pre><code class="language-lisp">Function: (cosh x)
 </code></pre>
-
 <h3 id="denominator">denominator</h3>
-<pre><code class="lisp">Function: (denominator x)
+<pre><code class="language-lisp">Function: (denominator x)
 </code></pre>
-
 <h3 id="diag">diag</h3>
-<pre><code class="lisp">Function: (diag a &amp;optional result)
+<pre><code class="language-lisp">Function: (diag a &amp;optional result)
 </code></pre>
-
 <p>Return the diagonal element of a matrix as a vector</p>
 <h3 id="dirichlet">dirichlet</h3>
 <h3 id="dot">dot</h3>
 <h3 id="dtype">dtype</h3>
-<pre><code class="lisp">Function: (dtype array)
+<pre><code class="language-lisp">Function: (dtype array)
 </code></pre>
-
 <h3 id="einsum">einsum</h3>
-<pre><code class="lisp">Function: (einsum subscripts &amp;rest args)
+<pre><code class="language-lisp">Function: (einsum subscripts &amp;rest args)
 </code></pre>
-
 <p>Performs Einstein's summation.
 The SUBSCRIPT specification is significantly extended from that of Numpy
 and can be seens as a full-brown DSL for array operations.</p>
@@ -1004,12 +961,11 @@ operations on the elements of the input arrays.</p>
   when a0, a1 are the input arrays and a2 is the output array.</li>
 </ul>
 <p>For example, (einsum '(ij jk) a b) is equivalent to:</p>
-<pre><code class="commonlisp"> (dotimes (i &lt;max&gt; &lt;output&gt;)
+<pre><code class="language-commonlisp"> (dotimes (i &lt;max&gt; &lt;output&gt;)
    (dotimes (j &lt;max&gt;)
      (dotimes (k &lt;max&gt;)
        (setf (aref &lt;output&gt; i j k) (* (aref a i j) (aref b j k))))))
 </code></pre>
-
 <h4 id="performance">Performance</h4>
 <p>If SUBSCRIPTS is a constant, the compiler macro
 builds an iterator function and make them inlined. Otherwise,
@@ -1022,9 +978,8 @@ by <code>(setf (aref output i j) (* (aref a i k) (aref b k j)))</code>,
 it is well known that ikj-loop is the fastest among other loops, e.g. ijk-loop.
 EINSUM reorders the indices so that it maximizes the cache locality.</p>
 <h3 id="empty">empty</h3>
-<pre><code class="lisp">Function: (empty shape &amp;key (type 'bit))
+<pre><code class="language-lisp">Function: (empty shape &amp;key (type 'bit))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1036,9 +991,8 @@ EINSUM reorders the indices so that it maximizes the cache locality.</p>
   array of the same shape.</li>
 </ul>
 <h3 id="empty-like">empty-like</h3>
-<pre><code class="lisp">Function: (empty-like array &amp;key (type (array-element-type array)))
+<pre><code class="language-lisp">Function: (empty-like array &amp;key (type (array-element-type array)))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1050,60 +1004,48 @@ EINSUM reorders the indices so that it maximizes the cache locality.</p>
   array of the same shape.</li>
 </ul>
 <h3 id="exp">exp</h3>
-<pre><code class="lisp">Function: (exp x)
+<pre><code class="language-lisp">Function: (exp x)
 </code></pre>
-
 <h3 id="expand-dims">expand-dims</h3>
-<pre><code class="lisp">Function: (expand-dims a axes)
+<pre><code class="language-lisp">Function: (expand-dims a axes)
 </code></pre>
-
 <p>axes: an int or a list of ints</p>
 <h3 id="exponential">exponential</h3>
-<pre><code class="lisp">Function: (exponential scale &amp;optional shape (type
+<pre><code class="language-lisp">Function: (exponential scale &amp;optional shape (type
                                               (union-to-float-type
                                                (type-of scale))))
 </code></pre>
-
 <h3 id="eye">eye</h3>
-<pre><code class="lisp">Function: (eye n &amp;key (m n) (k 0) (type 'bit))
+<pre><code class="language-lisp">Function: (eye n &amp;key (m n) (k 0) (type 'bit))
 </code></pre>
-
 <p>Returns a matrix whose k-th diagnonal filled with 1.
  N,M specifies the shape of the return array. K will adjust the sub-diagonal -- positive K moves it upward.</p>
 <h3 id="f">f</h3>
-<pre><code class="lisp">Function: (f dfnum dfden &amp;optional shape (type
+<pre><code class="language-lisp">Function: (f dfnum dfden &amp;optional shape (type
                                           (union-to-float-type (type-of dfnum)
                                                                (type-of dfden))))
 </code></pre>
-
 <h3 id="fceiling">fceiling</h3>
-<pre><code class="lisp">Function: (fceiling number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (fceiling number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="ffloor">ffloor</h3>
-<pre><code class="lisp">Function: (ffloor number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (ffloor number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="flatten">flatten</h3>
-<pre><code class="lisp">Function: (flatten a)
+<pre><code class="language-lisp">Function: (flatten a)
 </code></pre>
-
 <h3 id="floor">floor</h3>
-<pre><code class="lisp">Function: (floor number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (floor number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="fround">fround</h3>
-<pre><code class="lisp">Function: (fround number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (fround number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="ftruncate">ftruncate</h3>
-<pre><code class="lisp">Function: (ftruncate number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (ftruncate number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="full">full</h3>
-<pre><code class="lisp">Function: (full shape value &amp;key (type (type-of value)))
+<pre><code class="language-lisp">Function: (full shape value &amp;key (type (type-of value)))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1115,9 +1057,8 @@ EINSUM reorders the indices so that it maximizes the cache locality.</p>
   array of the same shape.</li>
 </ul>
 <h3 id="full-like">full-like</h3>
-<pre><code class="lisp">Function: (full-like array value &amp;key (type (array-element-type array)))
+<pre><code class="language-lisp">Function: (full-like array value &amp;key (type (array-element-type array)))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1129,45 +1070,39 @@ EINSUM reorders the indices so that it maximizes the cache locality.</p>
   array of the same shape.</li>
 </ul>
 <h3 id="gamma">gamma</h3>
-<pre><code class="lisp">Function: (gamma k &amp;optional (theta 1.0) shape (type
+<pre><code class="language-lisp">Function: (gamma k &amp;optional (theta 1.0) shape (type
                                                 (union-to-float-type
                                                  (type-of k) (type-of theta))))
 </code></pre>
-
 <h3 id="geometric">geometric</h3>
 <h3 id="gumbel">gumbel</h3>
 <h3 id="histogram">histogram</h3>
-<pre><code class="lisp">Function: (histogram array &amp;key (low (amin array)) (high (amax array)) (split 1))
+<pre><code class="language-lisp">Function: (histogram array &amp;key (low (amin array)) (high (amax array)) (split 1))
 </code></pre>
-
 <p>Returns a fixnum vector representing a histogram of values.
 The interval between LOW and HIGH are split by STEP value.
 All values less than LOW are put in the 0-th bucket;
 All values greater than equal to HIGH are put in the last bucket.</p>
 <h3 id="hypergeometric">hypergeometric</h3>
 <h3 id="imagpart">imagpart</h3>
-<pre><code class="lisp">Function: (imagpart x)
+<pre><code class="language-lisp">Function: (imagpart x)
 </code></pre>
-
 <h3 id="inner">inner</h3>
-<pre><code class="lisp">Function: (inner a b &amp;optional result)
+<pre><code class="language-lisp">Function: (inner a b &amp;optional result)
 </code></pre>
-
 <p>Inner product of two vectors.</p>
 <h3 id="integer-length">integer-length</h3>
-<pre><code class="lisp">Function: (integer-length x)
+<pre><code class="language-lisp">Function: (integer-length x)
 </code></pre>
-
 <h3 id="invalid-array-index-error">invalid-array-index-error</h3>
-<pre><code class="lisp">NIL
+<pre><code class="language-lisp">NIL
 </code></pre>
-
 <p>NUMCL.EXPORTED:SHAPE
 Initargs: :shape
 Readers: numcl.exported:invalid-array-index-error-shape
 Writers: (setf numcl.exported:invalid-array-index-error-shape)</p>
 <h4 id="axis">axis</h4>
-<pre><code class="lisp">Initargs: :axis
+<pre><code class="language-lisp">Initargs: :axis
 Readers: numcl.exported:invalid-array-index-error-axis
 Writers: (setf numcl.exported:invalid-array-index-error-axis)
 
@@ -1181,149 +1116,117 @@ Writers: (setf numcl.exported:invalid-array-index-error-subscripts)### kron
 ```lisp
 Function: (kron a b &amp;optional result)
 </code></pre>
-
 <p>Compute the kronecker product of two vectors.</p>
 <h3 id="laplace">laplace</h3>
 <h3 id="length">length</h3>
-<pre><code class="lisp">Function: (length array)
+<pre><code class="language-lisp">Function: (length array)
 </code></pre>
-
 <h3 id="linspace">linspace</h3>
-<pre><code class="lisp">Function: (linspace start stop length &amp;key type endpoint)
+<pre><code class="language-lisp">Function: (linspace start stop length &amp;key type endpoint)
 </code></pre>
-
 <h3 id="log">log</h3>
-<pre><code class="lisp">Function: (log x)
+<pre><code class="language-lisp">Function: (log x)
 </code></pre>
-
 <h3 id="logand">logand</h3>
-<pre><code class="lisp">Function: (logand &amp;rest args)
+<pre><code class="language-lisp">Function: (logand &amp;rest args)
 </code></pre>
-
 <h3 id="logandc1">logandc1</h3>
-<pre><code class="lisp">Function: (logandc1 &amp;rest args)
+<pre><code class="language-lisp">Function: (logandc1 &amp;rest args)
 </code></pre>
-
 <h3 id="logandc2">logandc2</h3>
-<pre><code class="lisp">Function: (logandc2 &amp;rest args)
+<pre><code class="language-lisp">Function: (logandc2 &amp;rest args)
 </code></pre>
-
 <h3 id="logcount">logcount</h3>
-<pre><code class="lisp">Function: (logcount x)
+<pre><code class="language-lisp">Function: (logcount x)
 </code></pre>
-
 <h3 id="logeqv">logeqv</h3>
-<pre><code class="lisp">Function: (logeqv &amp;rest args)
+<pre><code class="language-lisp">Function: (logeqv &amp;rest args)
 </code></pre>
-
 <h3 id="logior">logior</h3>
-<pre><code class="lisp">Function: (logior &amp;rest args)
+<pre><code class="language-lisp">Function: (logior &amp;rest args)
 </code></pre>
-
 <h3 id="logistic">logistic</h3>
 <h3 id="lognand">lognand</h3>
-<pre><code class="lisp">Function: (lognand &amp;rest args)
+<pre><code class="language-lisp">Function: (lognand &amp;rest args)
 </code></pre>
-
 <h3 id="lognor">lognor</h3>
-<pre><code class="lisp">Function: (lognor &amp;rest args)
+<pre><code class="language-lisp">Function: (lognor &amp;rest args)
 </code></pre>
-
 <h3 id="lognormal">lognormal</h3>
 <h3 id="lognot">lognot</h3>
-<pre><code class="lisp">Function: (lognot x)
+<pre><code class="language-lisp">Function: (lognot x)
 </code></pre>
-
 <h3 id="logorc1">logorc1</h3>
-<pre><code class="lisp">Function: (logorc1 &amp;rest args)
+<pre><code class="language-lisp">Function: (logorc1 &amp;rest args)
 </code></pre>
-
 <h3 id="logorc2">logorc2</h3>
-<pre><code class="lisp">Function: (logorc2 &amp;rest args)
+<pre><code class="language-lisp">Function: (logorc2 &amp;rest args)
 </code></pre>
-
 <h3 id="logseries">logseries</h3>
 <h3 id="logxor">logxor</h3>
-<pre><code class="lisp">Function: (logxor &amp;rest args)
+<pre><code class="language-lisp">Function: (logxor &amp;rest args)
 </code></pre>
-
 <h3 id="map">map</h3>
-<pre><code class="lisp">Function: (map result-type function &amp;rest sequences)
+<pre><code class="language-lisp">Function: (map result-type function &amp;rest sequences)
 </code></pre>
-
 <h3 id="map-array">map-array</h3>
-<pre><code class="lisp">Function: (map-array function &amp;rest sequences)
+<pre><code class="language-lisp">Function: (map-array function &amp;rest sequences)
 </code></pre>
-
 <h3 id="map-array-into">map-array-into</h3>
-<pre><code class="lisp">Function: (map-array-into result-sequence function &amp;rest sequences)
+<pre><code class="language-lisp">Function: (map-array-into result-sequence function &amp;rest sequences)
 </code></pre>
-
 <h3 id="map-into">map-into</h3>
-<pre><code class="lisp">Function: (map-into result-sequence function &amp;rest sequences)
+<pre><code class="language-lisp">Function: (map-into result-sequence function &amp;rest sequences)
 </code></pre>
-
 <h3 id="matmul">matmul</h3>
-<pre><code class="lisp">Function: (matmul a b &amp;optional result)
+<pre><code class="language-lisp">Function: (matmul a b &amp;optional result)
 </code></pre>
-
 <p>Matrix product of two arrays.</p>
 <h3 id="max">max</h3>
-<pre><code class="lisp">Function: (max &amp;rest args)
+<pre><code class="language-lisp">Function: (max &amp;rest args)
 </code></pre>
-
 <h3 id="mean">mean</h3>
-<pre><code class="lisp">Function: (mean array &amp;key axes)
+<pre><code class="language-lisp">Function: (mean array &amp;key axes)
 </code></pre>
-
 <h3 id="min">min</h3>
-<pre><code class="lisp">Function: (min &amp;rest args)
+<pre><code class="language-lisp">Function: (min &amp;rest args)
 </code></pre>
-
 <h3 id="mod">mod</h3>
-<pre><code class="lisp">Function: (mod number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (mod number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="multinomial">multinomial</h3>
-<pre><code class="lisp">Function: (multinomial n pvals &amp;optional shape)
+<pre><code class="language-lisp">Function: (multinomial n pvals &amp;optional shape)
 </code></pre>
-
 <p>pvals is a sequence of probabilities summing up to 1.</p>
 <h3 id="multivariate-normal">multivariate-normal</h3>
 <h3 id="negative-binomial">negative-binomial</h3>
-<pre><code class="lisp">Function: (negative-binomial n p &amp;optional shape)
+<pre><code class="language-lisp">Function: (negative-binomial n p &amp;optional shape)
 </code></pre>
-
 <h3 id="noncentral-chisquare">noncentral-chisquare</h3>
 <h3 id="noncentral-f">noncentral-f</h3>
 <h3 id="nonzero">nonzero</h3>
-<pre><code class="lisp">Function: (nonzero array)
+<pre><code class="language-lisp">Function: (nonzero array)
 </code></pre>
-
 <p>collect multidimentional indices where the element is nonzero</p>
 <h3 id="normal">normal</h3>
-<pre><code class="lisp">Function: (normal &amp;optional (mean 0.0) (var 1.0) shape (type
+<pre><code class="language-lisp">Function: (normal &amp;optional (mean 0.0) (var 1.0) shape (type
                                                         (union-to-float-type
                                                          (type-of mean)
                                                          (type-of var))))
 </code></pre>
-
 <h3 id="numcl-array">numcl-array</h3>
 <h3 id="numcl-array-p">numcl-array-p</h3>
-<pre><code class="lisp">Function: (numcl-array-p array)
+<pre><code class="language-lisp">Function: (numcl-array-p array)
 </code></pre>
-
 <p>Returns true when ARRAY satisfies the NUMCL assumption, that is,
 an array displaced to a non-displaced 1D array.</p>
 <h3 id="numerator">numerator</h3>
-<pre><code class="lisp">Function: (numerator x)
+<pre><code class="language-lisp">Function: (numerator x)
 </code></pre>
-
 <h3 id="onehot">onehot</h3>
 <h3 id="ones">ones</h3>
-<pre><code class="lisp">Function: (ones shape &amp;key (type 'bit))
+<pre><code class="language-lisp">Function: (ones shape &amp;key (type 'bit))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1335,9 +1238,8 @@ an array displaced to a non-displaced 1D array.</p>
   array of the same shape.</li>
 </ul>
 <h3 id="ones-like">ones-like</h3>
-<pre><code class="lisp">Function: (ones-like array &amp;key (type (array-element-type array)))
+<pre><code class="language-lisp">Function: (ones-like array &amp;key (type (array-element-type array)))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1349,51 +1251,42 @@ an array displaced to a non-displaced 1D array.</p>
   array of the same shape.</li>
 </ul>
 <h3 id="outer">outer</h3>
-<pre><code class="lisp">Function: (outer a b &amp;optional result)
+<pre><code class="language-lisp">Function: (outer a b &amp;optional result)
 </code></pre>
-
 <p>Compute the outer product of two vectors.</p>
 <h3 id="pareto">pareto</h3>
 <h3 id="phase">phase</h3>
-<pre><code class="lisp">Function: (phase x)
+<pre><code class="language-lisp">Function: (phase x)
 </code></pre>
-
 <h3 id="poisson">poisson</h3>
-<pre><code class="lisp">Function: (poisson &amp;optional (lambda 1.0) shape (type
+<pre><code class="language-lisp">Function: (poisson &amp;optional (lambda 1.0) shape (type
                                                  (union-to-float-type
                                                   (type-of lambda))))
 </code></pre>
-
 <h3 id="power">power</h3>
 <h3 id="prod">prod</h3>
-<pre><code class="lisp">Function: (prod array &amp;rest args &amp;key axes type)
+<pre><code class="language-lisp">Function: (prod array &amp;rest args &amp;key axes type)
 </code></pre>
-
 <h3 id="rank">rank</h3>
-<pre><code class="lisp">Function: (rank array)
+<pre><code class="language-lisp">Function: (rank array)
 </code></pre>
-
 <h3 id="rayleigh">rayleigh</h3>
 <h3 id="realpart">realpart</h3>
-<pre><code class="lisp">Function: (realpart x)
+<pre><code class="language-lisp">Function: (realpart x)
 </code></pre>
-
 <h3 id="reduce-array">reduce-array</h3>
-<pre><code class="lisp">Function: (reduce-array fn array &amp;key axes (type
+<pre><code class="language-lisp">Function: (reduce-array fn array &amp;key axes (type
                                             (%reduce-array-result-type array
                                                                        fn)) (initial-element
                                                                              (zero-value
                                                                               type)))
 </code></pre>
-
 <h3 id="rem">rem</h3>
-<pre><code class="lisp">Function: (rem number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (rem number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="reshape">reshape</h3>
-<pre><code class="lisp">Function: (reshape a shape)
+<pre><code class="language-lisp">Function: (reshape a shape)
 </code></pre>
-
 <p>Reshape the array while sharing the backing 1D array.
 -1 implies that the axis size is deduced from the other axes. At most one axis is allowed to be -1.
 T  implies that the axis size is preserved. It can be used as many times, but only at the right/leftmost axes.</p>
@@ -1408,17 +1301,14 @@ T  implies that the axis size is preserved. It can be used as many times, but on
 <pre><code>(2 t 2 2 t)
 </code></pre>
 <h3 id="round">round</h3>
-<pre><code class="lisp">Function: (round number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (round number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="shape">shape</h3>
-<pre><code class="lisp">Function: (shape array)
+<pre><code class="language-lisp">Function: (shape array)
 </code></pre>
-
 <h3 id="shuffle">shuffle</h3>
-<pre><code class="lisp">Function: (shuffle array-or-sequence &amp;key (start 0) end)
+<pre><code class="language-lisp">Function: (shuffle array-or-sequence &amp;key (start 0) end)
 </code></pre>
-
 <p>This code extends alexandria:shuffle.
 It additionally accepts arrays and shuffles the elements according to the first axis,
 viewing the remaining axes as one "element".</p>
@@ -1428,139 +1318,111 @@ Original sequence may be destructively modified, and (if it contains
 CONS or lists themselv) share storage with the original one.
 Signals an error if SEQUENCE is not a proper sequence.</p>
 <h3 id="signum">signum</h3>
-<pre><code class="lisp">Function: (signum x)
+<pre><code class="language-lisp">Function: (signum x)
 </code></pre>
-
 <h3 id="sin">sin</h3>
-<pre><code class="lisp">Function: (sin x)
+<pre><code class="language-lisp">Function: (sin x)
 </code></pre>
-
 <h3 id="sinh">sinh</h3>
-<pre><code class="lisp">Function: (sinh x)
+<pre><code class="language-lisp">Function: (sinh x)
 </code></pre>
-
 <h3 id="size">size</h3>
-<pre><code class="lisp">Function: (size array)
+<pre><code class="language-lisp">Function: (size array)
 </code></pre>
-
 <h3 id="sqrt">sqrt</h3>
-<pre><code class="lisp">Function: (sqrt x)
+<pre><code class="language-lisp">Function: (sqrt x)
 </code></pre>
-
 <h3 id="square">square</h3>
-<pre><code class="lisp">Function: (square x)
+<pre><code class="language-lisp">Function: (square x)
 </code></pre>
-
 <h3 id="squeeze">squeeze</h3>
-<pre><code class="lisp">Function: (squeeze a)
+<pre><code class="language-lisp">Function: (squeeze a)
 </code></pre>
-
 <h3 id="stack">stack</h3>
-<pre><code class="lisp">Function: (stack arrays &amp;key (axis 0) out)
+<pre><code class="language-lisp">Function: (stack arrays &amp;key (axis 0) out)
 </code></pre>
-
 <h3 id="standard-cauchy">standard-cauchy</h3>
 <h3 id="standard-deviation">standard-deviation</h3>
-<pre><code class="lisp">Function: (standard-deviation array &amp;key axes)
+<pre><code class="language-lisp">Function: (standard-deviation array &amp;key axes)
 </code></pre>
-
 <h3 id="standard-exponential">standard-exponential</h3>
 <h3 id="standard-gamma">standard-gamma</h3>
 <h3 id="standard-normal">standard-normal</h3>
 <h3 id="standard-t">standard-t</h3>
 <h3 id="stdev">stdev</h3>
-<pre><code class="lisp">Function: (stdev array &amp;key axes)
+<pre><code class="language-lisp">Function: (stdev array &amp;key axes)
 </code></pre>
-
 <h3 id="sum">sum</h3>
-<pre><code class="lisp">Function: (sum array &amp;rest args &amp;key axes type)
+<pre><code class="language-lisp">Function: (sum array &amp;rest args &amp;key axes type)
 </code></pre>
-
 <h3 id="take">take</h3>
-<pre><code class="lisp">Function: (take array indices)
+<pre><code class="language-lisp">Function: (take array indices)
 </code></pre>
-
 <p>Collect the elements using a list of multidimentional indices (in a format returned by WHERE).</p>
 <h3 id="tan">tan</h3>
-<pre><code class="lisp">Function: (tan x)
+<pre><code class="language-lisp">Function: (tan x)
 </code></pre>
-
 <h3 id="tanh">tanh</h3>
-<pre><code class="lisp">Function: (tanh x)
+<pre><code class="language-lisp">Function: (tanh x)
 </code></pre>
-
 <h3 id="to-simple-array">to-simple-array</h3>
-<pre><code class="lisp">Function: (to-simple-array array)
+<pre><code class="language-lisp">Function: (to-simple-array array)
 </code></pre>
-
 <p>Returns a simple array of the equivalent contents.</p>
 <h3 id="transpose">transpose</h3>
-<pre><code class="lisp">Function: (transpose matrix &amp;optional result)
+<pre><code class="language-lisp">Function: (transpose matrix &amp;optional result)
 </code></pre>
-
 <p>Reverses the axes of an array.</p>
 <h3 id="tri">tri</h3>
-<pre><code class="lisp">Function: (tri n &amp;key (m n) (k 0) (type 'bit))
+<pre><code class="language-lisp">Function: (tri n &amp;key (m n) (k 0) (type 'bit))
 </code></pre>
-
 <p>Returns a triangle matrix whose lower diagnonal (including the diagonal) filled with 1.
  N,M specifies the shape of the return array. K will adjust the sub-diagonal -- positive K fills more 1s.</p>
 <h3 id="triangular">triangular</h3>
 <h3 id="tril">tril</h3>
-<pre><code class="lisp">Function: (tril matrix &amp;optional (k 0))
+<pre><code class="language-lisp">Function: (tril matrix &amp;optional (k 0))
 </code></pre>
-
 <p>Returns the copy of matrix with elements above the k-th diagonal zeroed. Positive K fills less 0s.</p>
 <h3 id="triu">triu</h3>
-<pre><code class="lisp">Function: (triu matrix &amp;optional (k 0))
+<pre><code class="language-lisp">Function: (triu matrix &amp;optional (k 0))
 </code></pre>
-
 <p>Returns the copy of matrix with elements below the k-th diagonal zeroed. Positive K fills more 0s.</p>
 <h3 id="truncate">truncate</h3>
-<pre><code class="lisp">Function: (truncate number &amp;optional (divisor 1))
+<pre><code class="language-lisp">Function: (truncate number &amp;optional (divisor 1))
 </code></pre>
-
 <h3 id="uniform">uniform</h3>
-<pre><code class="lisp">Function: (uniform &amp;optional (low 0.0) (high 1.0) shape type)
+<pre><code class="language-lisp">Function: (uniform &amp;optional (low 0.0) (high 1.0) shape type)
 </code></pre>
-
 <h3 id="unstack">unstack</h3>
-<pre><code class="lisp">Function: (unstack array &amp;key (axis 0))
+<pre><code class="language-lisp">Function: (unstack array &amp;key (axis 0))
 </code></pre>
-
 <h3 id="vander">vander</h3>
-<pre><code class="lisp">Function: (vander v &amp;key (n (length v)) increasing)
+<pre><code class="language-lisp">Function: (vander v &amp;key (n (length v)) increasing)
 </code></pre>
-
 <p>Returns a matrix where M[i,j] == V[i]^(N-j) when increasing is false (default), and 
  M[i,j] == V[i]^j when increasing is true.</p>
 <h3 id="var">var</h3>
-<pre><code class="lisp">Function: (var array &amp;key axes)
+<pre><code class="language-lisp">Function: (var array &amp;key axes)
 </code></pre>
-
 <h3 id="variance">variance</h3>
-<pre><code class="lisp">Function: (variance array &amp;key axes)
+<pre><code class="language-lisp">Function: (variance array &amp;key axes)
 </code></pre>
-
 <h3 id="vdot">vdot</h3>
-<pre><code class="lisp">Function: (vdot a b &amp;optional result)
+<pre><code class="language-lisp">Function: (vdot a b &amp;optional result)
 </code></pre>
-
 <p>Dot product of two vectors. For complex values, the first value is conjugated.</p>
 <h3 id="vonmises">vonmises</h3>
 <h3 id="wald">wald</h3>
 <h3 id="weibull">weibull</h3>
 <h3 id="where">where</h3>
-<pre><code class="lisp">Function: (where array fn)
+<pre><code class="language-lisp">Function: (where array fn)
 </code></pre>
-
 <p>Returns a list of list of indices of the elements which satisfies the predicate FN.
 The first list contains the indices for the 1st dimension,
 the second list contains the indices for the 2nd dimension, and so on.</p>
 <h3 id="zeros">zeros</h3>
-<pre><code class="lisp">Function: (zeros shape &amp;key (type 'bit))
+<pre><code class="language-lisp">Function: (zeros shape &amp;key (type 'bit))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1572,9 +1434,8 @@ the second list contains the indices for the 2nd dimension, and so on.</p>
   array of the same shape.</li>
 </ul>
 <h3 id="zeros-like">zeros-like</h3>
-<pre><code class="lisp">Function: (zeros-like array &amp;key (type (array-element-type array)))
+<pre><code class="language-lisp">Function: (zeros-like array &amp;key (type (array-element-type array)))
 </code></pre>
-
 <p>Equivalent of the same function in numpy. Note the default <code>type</code> difference.</p>
 <ul>
 <li><code>empty</code> : does not explicitly fill the array. In an unsafe compiler setting,
@@ -1589,13 +1450,12 @@ the second list contains the indices for the 2nd dimension, and so on.</p>
 <h2 id="more-discussion">MORE DISCUSSION</h2>
 <h3 id="common-lisp-types">Common Lisp Types</h3>
 <p>Common Lisp has the following types for numbers.</p>
-<pre><code class="lisp">number = (or complex real)
+<pre><code class="language-lisp">number = (or complex real)
 real   = (or float rational)
 rational = (or ratio integer)
 integer  = (or fixnum bignum)
 float    = (or short-float ... long-float) (== irrational).
 </code></pre>
-
 <p>Common Lisp defines several rules for the type of the values returned by
 the numerical operations. The detail of the rules are explained in <a href="http://clhs.lisp.se/Body/12_a.htm">CLHS
 12.1 Number Concepts</a>.</p>
@@ -1671,7 +1531,7 @@ Copyright (c) 2019 IBM Corporation</p>
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../utilities/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../local-time/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../unix-opts/" style="color: #fcfcfc">Next &raquo;</a></span>

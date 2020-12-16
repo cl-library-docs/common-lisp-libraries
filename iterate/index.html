@@ -201,11 +201,15 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
                     </li>
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
@@ -250,7 +254,11 @@
                 <h1 id="iterate-psuedocodic-iteration">iterate - Psuedocodic Iteration</h1>
 <p>Version: 1.5
 <br/>
-Repository: <a href="https://gitlab.common-lisp.net/iterate/iterate">iterate/iterate - Gitlab</a></p>
+Licence: MIT
+<br/>
+Repository: <a href="https://gitlab.common-lisp.net/iterate/iterate">iterate/iterate - Gitlab</a>
+<br>
+See also: <a href="https://github.com/CodyReichert/awesome-cl#iteration">awesome-cl#iteration</a></p>
 <p><em>In case of any inaccuracies, ambiguities or suggestions, please <a href="https://github.com/digikar99/common-lisp.readthedocs/issues">create an issue here</a>.</em></p>
 <hr />
 <p><code>iterate</code> is a powerful iteration facility for Common Lisp, and a alternative to <code>loop</code>. As opposed to <code>loop</code>, <code>iterate</code> is more lispy, extensible, besides being more powerful.</p>
@@ -290,7 +298,7 @@ Repository: <a href="https://gitlab.common-lisp.net/iterate/iterate">iterate/ite
 <h3 id="accumulate">accumulate</h3>
 <p><code>accumulate</code><em><code>expr</code></em><code>by</code><em><code>func</code></em><code>&amp;optional initial-value</code><em><code>init-val</code></em><code>into</code><em><code>var</code></em></p>
 <p>This is a general-purpose accumulation clause. func should be a function of two arguments, the value of expr and the value accumulated so far in the iteration, and it should return the updated value. If no initial value is supplied, nil is used.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3))
                (accumulate i by 
                            (lambda (i values-so-far)
                              (cons i values-so-far))))
@@ -308,7 +316,6 @@ CL-USER&gt; (iter (for i in '(1 2 3))
                           initial-value '(init) into var))
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Accumulations.html">Accumulations</a>, <a href="#accumulation-vs-reduction">Accumulation vs Reduction</a> and <a href="#reducing">reducing</a>. </p>
 <h3 id="accumulating">accumulating</h3>
 <p>An alias for <a href="#accumulate">accumulate</a>.</p>
@@ -318,7 +325,7 @@ NIL
 <h3 id="after-each">after-each</h3>
 <p><code>after-each &amp;rest</code><em><code>forms</code></em></p>
 <p>Executes forms at the end of the loop body, after each iteration. Forms may contain iterate clauses.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i below 4) 
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i below 4) 
                (after-each (print var))
                (if (oddp i)
                    (collect i into var)
@@ -330,14 +337,12 @@ NIL
 ; (0 1 4 3) 
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Code-Placement.html#index-after_002deach-103">Code Placement</a> and <a href="https://common-lisp.net/project/iterate/doc/Problems-with-Code-Movement.html#Problems-with-Code-Movement">Problems with Code Movement</a>.</p>
 <h3 id="always">always</h3>
 <p><code>always</code><em><code>expr</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i below 4) (always (evenp i)))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i below 4) (always (evenp i)))
 NIL
 </code></pre>
-
 <ul>
 <li>If expr ever evaluates to nil, then nil is immediately returned; the epilogue code is not executed. </li>
 <li>If expr never evaluates to nil, the epilogue code is executed and the last value of expr (or t if expr was never evaluated) is returned (whereas loop would constantly return t).</li>
@@ -346,32 +351,30 @@ NIL
 <h3 id="appending">appending</h3>
 <p><code>appending</code><em><code>exptr</code></em><code>&amp;optional into</code><em><code>var</code></em><code>at</code><em><code>place</code></em>
 Like <a href="#collect">collect</a>, but behaves like the Common Lisp <code>append</code>, and works only on lists.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '((1) (2 3) (4 5 6)))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '((1) (2 3) (4 5 6)))
                (appending i))
 (1 2 3 4 5 6)
 CL-USER&gt; (iter (for i in '((1) (2 3) (4 5 6)))
                (appending i into var))
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Accumulations.html">Accumulations</a>.</p>
 <h3 id="as">as</h3>
 <p>An alias for <a href="#for">for</a>.</p>
 <h3 id="collect">collect</h3>
 <p><code>collect</code><em><code>exptr</code></em><code>&amp;optional into</code><em><code>var</code></em><code>test</code><em><code>test</code></em><code>at</code><em><code>place</code></em><code>result-type</code><em><code>type</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i from 1 to 5)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i from 1 to 5)
                (collect i))
 (1 2 3 4 5)
 CL-USER&gt; (iter (for i from 1 to 5)
                (collect i at start)) ;; likely to be faster
 (5 4 3 2 1)
 </code></pre>
-
 <ul>
 <li><code>place</code> can be either <code>beginning</code>/<code>start</code> or <code>end</code>: default value is <code>end</code>.</li>
 <li><code>type</code> should be a subtype of <code>sequence</code> - default is <code>list</code>; however, the type of sequence being constructed inside the loop is undefined when a non-list type is specified.</li>
 </ul>
-<pre><code class="lisp">CL-USER&gt; (iter (for i from 1 to 3)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i from 1 to 3)
                (collect i into vec result-type 'vector)
                (print vec)
                (finally (return vec)))
@@ -381,7 +384,6 @@ CL-USER&gt; (iter (for i from 1 to 5)
 ; (1 2 3) 
 #(1 2 3)
 </code></pre>
-
 <ul>
 <li><code>type</code> or <code>place</code> may be optionally quoted.</li>
 </ul>
@@ -391,11 +393,10 @@ CL-USER&gt; (iter (for i from 1 to 5)
 <h3 id="count">count</h3>
 <p>Alias for <a href="#counting">counting</a>.</p>
 <p>This, probably, overrides the CL <code>count</code> when used in top-level inside an iterate loop.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3))
                (finally (return (count 1 '(1 2 1)))))
 2
 </code></pre>
-
 <h3 id="counting">counting</h3>
 <p><code>counting</code><em><code>expr</code></em><code>&amp;optional into</code><em><code>var</code></em></p>
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Reductions.html">Reductions</a> and <a href="#accumulate">accumulate</a>.</p>
@@ -406,7 +407,7 @@ CL-USER&gt; (iter (for i from 1 to 5)
 <li>Declaration of types of user introduced symbols can be done by either the usual Common Lisp <code>declare</code>, but this declaration should be inside the iter form.</li>
 <li>Declaration of internal variables or use of <code>the</code> requires one to use <code>declare-variables</code>, or set <code>iterate:::*always-declare-variables* to</code>t`.</li>
 </ul>
-<pre><code class="lisp">CL-USER&gt; (macroexpand-1 '(iter (for (the fixnum el) in '(1 2 3))
+<pre><code class="language-lisp">CL-USER&gt; (macroexpand-1 '(iter (for (the fixnum el) in '(1 2 3))
                                (declare (DECLARE-VARIABLES))
                                (count (oddp el))))
 ;; note that this produces a type declaration for el.
@@ -418,7 +419,6 @@ CL-USER&gt; (macroexpand-1 '(iter (for (the fixnum el) in '(1 2 3))
                                (count (oddp el))))
 ;; this does not produce any declarations.
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Types-and-Declarations.html">Types and Declarations</a>.</p>
 <h3 id="defclause-sequence">defclause-sequence</h3>
 <p>[Undocumented here.]</p>
@@ -434,7 +434,7 @@ CL-USER&gt; (macroexpand-1 '(iter (for (the fixnum el) in '(1 2 3))
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Extensibility-Aids.html">Extensibility Aids</a>.</p>
 <h3 id="display-iterate-clauses">display-iterate-clauses</h3>
 <p><code>display-iterate-clauses &amp;optional</code><em><code>clause-spec</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (display-iterate-clauses 'repeat)
+<pre><code class="language-lisp">CL-USER&gt; (display-iterate-clauses 'repeat)
 ; REPEAT                    Repeat the loop some number of times
 T
 CL-USER&gt; (display-iterate-clauses '(for in-vector))
@@ -442,12 +442,11 @@ CL-USER&gt; (display-iterate-clauses '(for in-vector))
 ;     WITH-INDEX            Elements of a vector
 T
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/On_002dline-Help.html">On-line help</a>.</p>
 <h3 id="dsetq">dsetq</h3>
 <p><code>dsetq</code><em><code>template expr</code></em></p>
 <p>Can be used outside iter.</p>
-<pre><code class="lisp">CL-USER&gt; (foo)
+<pre><code class="language-lisp">CL-USER&gt; (foo)
 FIRST
 SECOND
 CL-USER&gt; (progn
@@ -455,31 +454,28 @@ CL-USER&gt; (progn
            (list a b)) ;; undeclared variables warning
 (FIRST SECOND)
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Destructuring.html">Destructuring</a>.</p>
 <h3 id="else">else</h3>
 <p><code>else &amp;rest</code><em><code>forms</code></em></p>
 <p>Forms are executed if loop is never entered, but is terminated normally.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3)) (while nil)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3)) (while nil)
            (else (write 'else)))
 ; ELSE
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Code-Placement.html#index-after_002deach-103">Code Placement</a> and <a href="https://common-lisp.net/project/iterate/doc/Problems-with-Code-Movement.html#Problems-with-Code-Movement">Problems with Code Movement</a>.</p>
 <h3 id="finally">finally</h3>
 <p><code>finally &amp;rest</code><em><code>forms</code></em></p>
 <p>Forms are executed after a normal termination of the loop.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3)) (finally (write 'end)))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3)) (finally (write 'end)))
 ; END
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Code-Placement.html#index-after_002deach-103">Code Placement</a> and <a href="https://common-lisp.net/project/iterate/doc/Problems-with-Code-Movement.html#Problems-with-Code-Movement">Problems with Code Movement</a>.</p>
 <h3 id="finally-protected">finally-protected</h3>
 <p><code>finally-protected &amp;rest</code><em><code>forms</code></em></p>
 <p>Forms are executed "always" - regardless of whether the termination was notmal</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in-vector '(1 2 3)) 
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in-vector '(1 2 3)) 
            (finally-protected (write 'error)))
 ;; warnings
 ERROR ; Evaluation aborted on #&lt;SIMPLE-TYPE-ERROR expected-type: VECTOR datum: (1 2 3)&gt;.
@@ -488,7 +484,6 @@ CL-USER&gt; (iter (for i in '(1 2 3))
 ; NO-ERROR
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Code-Placement.html#index-after_002deach-103">Code Placement</a> and <a href="https://common-lisp.net/project/iterate/doc/Problems-with-Code-Movement.html#Problems-with-Code-Movement">Problems with Code Movement</a>.</p>
 <h3 id="finding">finding</h3>
 <p><code>finding</code><em><code>expr</code></em><code>such-that</code><em><code>test</code></em><code>&amp;optionally into</code><em><code>var</code></em><code>on-failure</code><em><code>failure-value</code></em></p>
@@ -497,7 +492,7 @@ NIL
 <li><em><code>expr</code></em> that satifies the <em><code>test</code></em>, or <em><code>failure-value</code></em>, or <code>nil</code> is returned (unless modified by epilogue).</li>
 <li><em><code>failure-value</code></em> is always evaluated.</li>
 </ul>
-<pre><code class="lisp">CL-USER&gt; (iter (for x in '(1 2 3))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for x in '(1 2 3))
                (finding x such-that #'evenp on-failure 'not-found))
 2
 CL-USER&gt; (iter (for x in '(1 2 3))
@@ -508,7 +503,6 @@ CL-USER&gt; (iter (for x in '(1 2 3))
                (finally (error &quot;not found&quot;)))
 2
 </code></pre>
-
 <p><code>finding</code><em><code>expr</code></em><code>maximizing</code><em><code>m-expr</code></em><code>&amp;optionally into</code><em><code>var</code></em></p>
 <p><code>finding</code><em><code>expr</code></em><code>minimizing</code><em><code>m-expr</code></em><code>&amp;optionally into</code><em><code>var</code></em></p>
 <ul>
@@ -516,7 +510,7 @@ CL-USER&gt; (iter (for x in '(1 2 3))
 <li>If <em><code>m-expr</code></em> is never evaluated (how?), the return value is <code>nil</code> or <code>0</code> depending on the type (or its absence) of <em><code>expr</code></em> (or <em><code>var</code></em> if supplied.)</li>
 <li>Here, <em><code>m-expr</code></em> can also be a list of two symbols.</li>
 </ul>
-<pre><code class="lisp">CL-USER&gt; CL-USER&gt; (iter (for list in '((1) (2 3) nil))
+<pre><code class="language-lisp">CL-USER&gt; CL-USER&gt; (iter (for list in '((1) (2 3) nil))
                (finding list maximizing (length list)))
 (2 3)
 CL-USER&gt; (iter (for i in '(1 2 3))
@@ -525,21 +519,19 @@ CL-USER&gt; (iter (for i in '(1 2 3))
 2
 -1
 </code></pre>
-
 <p>[Example required for the case when <em><code>m-expr</code></em> is not evaluated.]</p>
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Finders.html">Finders</a>.</p>
 <h3 id="finish">finish</h3>
 <p><code>finish</code></p>
 <p>Stop the loop (and run the epilogue code).</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3)) (if (evenp i) (finish)))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3)) (if (evenp i) (finish)))
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Control-Flow.html">Control Flow</a>.</p>
 <h3 id="first-iteration-p">first-iteration-p</h3>
 <p><code>first-iteration-p</code></p>
 <p><code>t</code> in the first cycle of the loop, otherwise <code>nil</code>.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for el in '(nil 1 2 nil 3))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for el in '(nil 1 2 nil 3))
                (when el
                  (unless (first-iteration-p)
                    (princ &quot;, &quot;))
@@ -547,12 +539,11 @@ NIL
 ; , 1, 2, 3
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Boolean-Tests.html">Boolean Tests</a>.</p>
 <h3 id="first-time-p">first-time-p</h3>
 <p><code>first-iteration-p</code></p>
 <p><code>t</code> only when the expression is evaluated for the first time.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for el in '(nil 1 2 nil 3))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for el in '(nil 1 2 nil 3))
                (when el
                  (unless (first-time-p)
                    (princ &quot;, &quot;))
@@ -560,7 +551,6 @@ NIL
 ; 1, 2, 3
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Boolean-Tests.html">Boolean Tests</a>.</p>
 <h3 id="for">for</h3>
 <p>[Undocumented here.]</p>
@@ -574,18 +564,17 @@ NIL
 </ul>
 <h3 id="generate">generate</h3>
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Generators.html">Generators</a> and <a href="#for">for</a>.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for el in '(a b nil c))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for el in '(a b nil c))
                (generate i upfrom 1)
                (if el (collect (cons el (next i)))))
 ((A . 1) (B . 2) (C . 3))
 </code></pre>
-
 <p><code>for</code> can be replaced by <code>generate</code> to achieve the desired result, except in the case of <a href="https://common-lisp.net/project/iterate/doc/Variable-Binding-and-Setting.html">Variable Binding and Setting</a>.</p>
 <h3 id="generating">generating</h3>
 <p>Alias for <a href="#generate">generate</a></p>
 <h3 id="if-first-time">if-first-time</h3>
 <p><code>if-first-time</code><em><code>then</code></em><code>&amp;optional</code><em><code>else</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3))
                (if-first-time
                 (princ 'first)
                 (print 'not-first)))
@@ -594,11 +583,10 @@ NIL
 ; NOT-FIRST 
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Control-Flow.html">Control Flow</a>.</p>
 <h3 id="in">in</h3>
 <p><code>in</code><em><code>name</code></em><code>&amp;rest</code><em><code>forms</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (defvar ar #2A((1 2 3) (4 5 6)))
+<pre><code class="language-lisp">CL-USER&gt; (defvar ar #2A((1 2 3) (4 5 6)))
 AR
 CL-USER&gt; (iter outer 
                (for i below (array-dimension ar 0))
@@ -607,12 +595,11 @@ CL-USER&gt; (iter outer
                          (collect (aref ar i j)))))
 (1 2 3 4 5 6)
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Named-Blocks.html">Named Blocks</a>.</p>
 <h3 id="initially">initially</h3>
 <p><code>in &amp;rest</code><em><code>forms</code></em>
 Place the forms in the prologue of the loop.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (initially (princ 'hi))
+<pre><code class="language-lisp">CL-USER&gt; (iter (initially (princ 'hi))
                (for i below 3)
                (print i))
 ; HI
@@ -625,46 +612,41 @@ CL-USER&gt; (iter (for i below 3)
 ; -1 ;; this is probably an undefined behaviour.
 NIL
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Code-Placement.html#index-after_002deach-103">Code Placement</a> and <a href="https://common-lisp.net/project/iterate/doc/Problems-with-Code-Movement.html#Problems-with-Code-Movement">Problems with Code Movement</a>.</p>
 <h3 id="leave">leave</h3>
 <p><code>leave &amp;optional</code><em><code>value</code></em></p>
 <p>Returns from the current iterate form with <em><code>value</code></em> or <code>nil</code>.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i below 3)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i below 3)
                (leave
                 (iter (for j below 2)
                       (if (oddp j) (leave j)))))
 1
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Control-Flow.html">Control Flow</a>.</p>
 <h3 id="maximize">maximize</h3>
 <p><code>maximize</code><em><code>expr</code></em><code>&amp;optional into</code><em><code>var</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for list in '((1) (1 2) nil))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for list in '((1) (1 2) nil))
                (maximize (length list)))
 2
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Reductions.html">Reductions</a> and <a href="#finding">finding</a>.</p>
 <h3 id="maximizing">maximizing</h3>
 <p>Alias for <a href="#maximize">maximize</a>.</p>
 <h3 id="minimize">minimize</h3>
 <p><code>minimize</code><em><code>expr</code></em><code>&amp;optional into</code><em><code>var</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for list in '((1) (1 2) nil))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for list in '((1) (1 2) nil))
                (minimize (length list)))
 0
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Reductions.html">Reductions</a> and <a href="#finding">finding</a>.</p>
 <h3 id="minimizing">minimizing</h3>
 <p>Alias for <a href="#minimize">minimize</a>.</p>
 <h3 id="multiply">multiply</h3>
 <p><code>multiply</code><em><code>expr</code></em><code>&amp;optional into</code><em><code>var</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i from 1 to 5)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i from 1 to 5)
                (multiply i))
 120
 </code></pre>
-
 <p>Initial value of <code>*</code>var`* is 1.</p>
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Reductions.html">Reductions</a>.</p>
 <h3 id="multiplying">multiplying</h3>
@@ -675,63 +657,58 @@ NIL
 <h3 id="never">never</h3>
 <p><code>never</code><em><code>expr</code></em></p>
 <p>Effectively <code>(always (not expr))</code>, but does not influence the last value returned by a possible other <code>always</code> clause.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (repeat 2)
+<pre><code class="language-lisp">CL-USER&gt; (iter (repeat 2)
                (always 2)
                (never nil))
 2
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Aggregated-Boolean-Tests.html">Aggregated Boolean Tests</a></p>
 <h3 id="next">next</h3>
 <p>See <a href="#generate">generate</a>.</p>
 <h3 id="next-iteration">next-iteration</h3>
 <p><code>next-iteration</code></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i below 3)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i below 3)
                (if (oddp i) 
                    (next-iteration)
                    (collect i)))
 (0 2)
 </code></pre>
-
 <h3 id="nunioning">nunioning</h3>
 <p><code>nunioning</code><em><code>exptr</code></em><code>&amp;optional into</code><em><code>var</code></em><code>test</code><em><code>test</code></em><code>at</code><em><code>place</code></em><code>result-type</code><em><code>type</code></em></p>
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Accumulations.html">Accumulations</a> and <a href="#collect">collect</a>.</p>
 <h3 id="reducing">reducing</h3>
 <p><code>reducing</code><em><code>expr</code></em><code>by</code><em><code>func</code></em><code>&amp;optional initial-value</code><em><code>init-val</code></em><code>into</code><em><code>var</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3))
                (reducing i by 
                          (lambda (value-so-far i)
                            (cons i value-so-far))
                          initial-value ()))
 (3 2 1)
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Reductions.html">Reductions</a>, <a href="#accumulation-vs-reduction">Accumulation vs Reduction</a> and <a href="#accumulate">accumulate</a>.</p>
 <h3 id="repeat">repeat</h3>
 <p><code>repeat</code><em><code>n</code></em></p>
 <p>Repeat the loop n times.</p>
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Drivers.html">Drivers</a>.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (repeat 3) (print 'doing))
+<pre><code class="language-lisp">CL-USER&gt; (iter (repeat 3) (print 'doing))
 
 ; DOING 
 ; DOING 
 ; DOING 
 NIL
 </code></pre>
-
 <h3 id="sum">sum</h3>
 <p><code>sum</code><em><code>expr</code></em><code>&amp;optional into</code><em><code>var</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i from 1 to 5)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i from 1 to 5)
                (sum i))
 15
 </code></pre>
-
 <h3 id="summing">summing</h3>
 <p>Alias for <a href="#sum">sum</a>.</p>
 <h3 id="terminate">terminate</h3>
 <p>`terminate </p>
 <p>Use to terminate <code>for-next</code> clause. Effectively an alias for <code>finish</code> - but use with <code>for-next</code> to maintain compatibility with future versions of <code>iterate</code>(!).</p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i upfrom 0)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i upfrom 0)
                (if (&gt; i 5) (terminate) (collect i)))
 (0 1 2 3 4 5)
 CL-USER&gt; (iter (initially (setq i 0))
@@ -742,7 +719,6 @@ CL-USER&gt; (iter (initially (setq i 0))
 NIL
 
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Generalized-Drivers.html">Generalized Drivers</a>.</p>
 <h3 id="thereis">thereis</h3>
 <p><code>thereis</code><em><code>expr</code></em></p>
@@ -757,29 +733,27 @@ NIL
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Accumulations.html">Accumulations</a> and <a href="#collect">collect</a>.</p>
 <h3 id="until">until</h3>
 <p><code>until</code><em><code>expr</code></em></p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i in '(1 2 3 4 5))
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i in '(1 2 3 4 5))
                (until (&gt; i 5))
                (collect i))
 (1 2 3 4 5)
 </code></pre>
-
 <p>Equivalent to <code>(if expr (finish))</code>.</p>
 <p>See <a href="#finish">finish</a> and <a href="https://common-lisp.net/project/iterate/doc/Control-Flow.html">Control Flow</a>.</p>
 <h3 id="while">while</h3>
 <p><code>repeat</code><em><code>n</code></em>
 <code>until</code><em><code>expr</code></em></p>
 <p>Equivalent to <code>(if (not expr) (finish))</code>. </p>
-<pre><code class="lisp">CL-USER&gt; (iter (for i below 10)
+<pre><code class="language-lisp">CL-USER&gt; (iter (for i below 10)
                (while (= 0 (rem i 5)))
                (collect i))
 (0)
 </code></pre>
-
 <p>See <a href="#finish">finish</a> and <a href="https://common-lisp.net/project/iterate/doc/Control-Flow.html">Control Flow</a>.</p>
 <h3 id="with">with</h3>
 <p><code>with</code><em><code>var</code></em><code>&amp;optional =</code><em><code>value</code></em></p>
 <p><em><code>var</code></em> is bound to <em><code>value</code></em> before the loop is entered. Binding happens sequentially, as while using a <code>let*</code>, and not in parallel as with <code>let</code>.</p>
-<pre><code class="lisp">CL-USER&gt; (iter (with i = 0)
+<pre><code class="language-lisp">CL-USER&gt; (iter (with i = 0)
                (while (&lt; i 3))
                (collect (incf i)))
 (1 2 3)
@@ -788,7 +762,6 @@ CL-USER&gt; (iter (with i = 1)
                (collect (incf i)))
 ; Evaluation aborted on #&lt;SIMPLE-ERROR &quot;Iterate~@[, in ~a~]:~%Duplicate variable: ~a&quot; {1004185183}&gt;.
 </code></pre>
-
 <p>See <a href="https://common-lisp.net/project/iterate/doc/Variable-Binding-and-Setting.html">Variable Binding and Setting</a> and <a href="https://common-lisp.net/project/iterate/doc/Parallel-Binding-and-Stepping.html#Parallel-Binding-and-Stepping">Parallel Binding and Stepping</a>.</p>
 <h2 id="other-resources-on-iterate">OTHER RESOURCES ON ITERATE</h2>
 <ul>

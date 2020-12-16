@@ -22,8 +22,10 @@ nav:
       - iterate.md
       - postmodern.md
       - quicklisp.md
+      - usocket.md
       - utilities.md
     - Not yet defacto:
+      - local-time.md
       - numcl.md
       - unix-opts.md
 plugins:

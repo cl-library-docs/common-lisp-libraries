@@ -52,10 +52,12 @@ The below list of libraries is not even the *complete list of defacto libraries*
 - [iterate](./iterate/) - a lispy extensible alternative to `loop`
 - [postmodern](./postmodern/) - PostgreSQL programming interace
 - [quicklisp](./quicklisp/) - library manager
+- [usocket](./usocket) - universal socket library
 - [utilities](./utilities/) - a collection of utility libraries
 
 #### Not yet defacto
 
+- [local-time](./local-time/) - date and time manipulation
 - [numcl](./numcl/) - lispy clone of numpy
 - [unix-opts](./unix-opts/) - minimalistic command line options parser
 

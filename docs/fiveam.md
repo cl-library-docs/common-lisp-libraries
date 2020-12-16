@@ -7,6 +7,8 @@ Nickname: 5am
 Licence: BSD
 <br/>
 Repository: [sionescu/fiveam - Github](https://github.com/sionescu/fiveam)
+<br>
+See also: [awesome-cl#unit-testing](https://github.com/CodyReichert/awesome-cl#unit-testing)
 
 *This documentation was possible due to [Tomek Kurez's tutorial on fiveam](http://turtleware.eu/posts/Tutorial-Working-with-FiveAM.html) and the [excellent official documentation](https://common-lisp.net/project/fiveam/docs/).*
 

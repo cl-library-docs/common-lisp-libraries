@@ -7,6 +7,8 @@ Nickname: who
 Licence: BSD
 <br/>
 Repository: [edicl/cl-who - Github](https://github.com/edicl/cl-who)
+<br>
+See also: [awesome-cl#html-generators-and-templates](https://github.com/CodyReichert/awesome-cl#html-generators-and-templates)
 
 *This documentation is possible due to the  [excellent official documentation](https://edicl.github.io/cl-who) as of 5th May 2020.*
 

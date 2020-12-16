@@ -1,6 +1,6 @@
 # postmodern - PostgreSQL programming interace
 
-Version: 1.32 (The June 2020 Quicklisp dist contains version 1.30. 1.32 should be available post this. Everything except the constructs relevant to [Database Management](#database-management) and [Roles](#roles)  should work.)
+Version: 1.32
 
 Nickname: pomo
 <br/>

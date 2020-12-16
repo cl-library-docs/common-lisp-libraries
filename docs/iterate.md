@@ -5,6 +5,8 @@ Version: 1.5
 Licence: MIT
 <br/>
 Repository: [iterate/iterate - Gitlab](https://gitlab.common-lisp.net/iterate/iterate)
+<br>
+See also: [awesome-cl#iteration](https://github.com/CodyReichert/awesome-cl#iteration)
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/digikar99/common-lisp.readthedocs/issues).*
 

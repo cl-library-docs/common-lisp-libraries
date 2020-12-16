@@ -5,6 +5,8 @@ Version: 1.0.0
 Licence: Public Domain / 0-clause MIT
 <br/>
 Repository: [alexandria/alexandria - Gitlab](https://gitlab.common-lisp.net/alexandria/alexandria)
+<br>
+See also: [awesome-cl#language-extensions](https://github.com/CodyReichert/awesome-cl#language-extensions)
 
 *This documentation is modified to markdown from [here](https://common-lisp.net/project/alexandria/draft/alexandria.html) on 01 March, 2020.*
 

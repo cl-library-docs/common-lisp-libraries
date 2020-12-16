@@ -7,6 +7,8 @@ Licence: BSD
 Nickname: ppcre
 <br/>
 Repository: [edicl/cl-ppcre - Github](https://github.com/edicl/cl-ppcre)
+<br>
+See also: [awesome-cl/#regex](https://github.com/CodyReichert/awesome-cl#regex)
 
 *This documentation is possible the [excellent official documentation](https://edicl.github.io/cl-ppcre) as of 4th May 2020.*
 

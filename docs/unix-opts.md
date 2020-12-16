@@ -5,6 +5,10 @@ Version: 0.1.7
 Licence: MIT
 <br/>
 Nickname: opts
+<br>
+Repository: [libre-man/unix-opts](https://github.com/libre-man/unix-opts)
+<br>
+See also: [awesome-cl#command-line-options-parsers](https://github.com/CodyReichert/awesome-cl#command-line-options-parsers)
 
 *This documentation was possible due to the excellent [official documentation and
 example](https://github.com/libre-man/unix-opts).*

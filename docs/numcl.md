@@ -5,6 +5,8 @@ Version: 0.1
 Licence: LGPL
 <br/>
 Repository: [numcl/numcl - Github](https://github.com/numcl/numcl/)
+<br>
+See also: [awesome-cl#numerical-and-scientific](https://github.com/CodyReichert/awesome-cl#numerical-and-scientific)
 
 *This documentation was possible due to the excellent 
 [official documentation](https://numcl.github.io/numcl/).*

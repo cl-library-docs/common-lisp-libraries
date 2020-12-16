@@ -5,6 +5,8 @@ Version: 1.2.38
 Licence: BSD-2-Clause
 <br/>
 Repository: [edicl/hunchentoot - Github](https://github.com/edicl/hunchentoot/)
+<br>
+See also: [awesome-cl#network-and-internet](https://github.com/CodyReichert/awesome-cl#network-and-internet)
 
 *This page was possible due to the excellent [official documentation](https://edicl.github.io/hunchentoot/) as well as the page on [Web Development on The Common Lisp Cookbook](http://lispcookbook.github.io/cl-cookbook/web.html).*
 

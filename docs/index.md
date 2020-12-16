@@ -2,11 +2,14 @@
 
 *In case of any inaccuracies, ambiguities or suggestions, please [create an issue here](https://github.com/cl-library-docs/common-lisp-libraries/issues).*
 
-***
+*See the [html version of this page](https://common-lisp-libraries.readthedocs.io), rather than the markdown version for the working links below.*
+
+---
 
 ## Introduction
 
 Common Lisp documentation - libraries or the HyperSpec - isn't known to be particularly "modern" or "attractive". While those terms are subjective, ease of introduction to a technology does seem to have *some* objective component to it.
+
 
 ## Libraries
 
@@ -26,7 +29,7 @@ Optionally, you may want to use `trivial-package-local-nicknames` for, well, [ad
 (ql:quickload :trivial-package-local-nicknames)
 (trivial-package-local-nicknames:add-package-local-nickname :a :alexandria)
 ; OR
-(defpackage my-package 
+(defpackage my-package
   (:use #:cl)
   (:local-nicknames (#:a #:alexandria)))
 ;;; I'm yet to read up on the naming conventions and the reasons behind those conventions
@@ -35,15 +38,13 @@ Optionally, you may want to use `trivial-package-local-nicknames` for, well, [ad
 
 ### Libraries documented so far
 
-See [awesome-cl](https://github.com/CodyReichert/awesome-cl) for more libraries.
-
-(See the [html version of this page](https://common-lisp-libraries.readthedocs.io), rather than the markdown version for the working links below.)
+The below list of libraries is not even the *complete list of defacto libraries*. Many more awesome Common Lisp libraries are available at [awesome-cl](https://github.com/CodyReichert/awesome-cl).
 
 #### Defacto libraries
 
 - [asdf](./asdf/) - build system for softwares (packages*)
 - [alexandria](./alexandria/) - a utility library
-- [bordeaux-threads](./bordeaux-threads/) - library for threading 
+- [bordeaux-threads](./bordeaux-threads/) - library for threading
 - [cl-ppcre](./cl-ppcre/) - regular expressions
 - [cl-who](./cl-who/) - DSL for Markup
 - [hunchentoot](./hunchentoot/) - web server
@@ -78,7 +79,7 @@ Documentation efforts have been made at:
 
 ## UltraSpec
 
-I liked (the theme of) [UltraSpec]. I also liked [mkdocs](https://www.mkdocs.org/) - I am using mkdocs with the pre-provided [readthedocs](https://readthedocs.org/) theme. What UltraSpec seems to be good for is larger websites than what is currently here, in that it isn't as straightforward as mkdocs for library-documenters to use it. 
+I liked (the theme of) [UltraSpec]. I also liked [mkdocs](https://www.mkdocs.org/) - I am using mkdocs with the pre-provided [readthedocs](https://readthedocs.org/) theme. What UltraSpec seems to be good for is larger websites than what is currently here, in that it isn't as straightforward as mkdocs for library-documenters to use it.
 
 Additionally, `markdown` files and `dokuwiki` files (the format UltraSpec requires) are interconvertible (but the compatibility is untested) using [pandoc](https://pandoc.org/). (pandoc is indeed useful for a ton of other file formats!)
 

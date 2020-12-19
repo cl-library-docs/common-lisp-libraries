@@ -12,8 +12,6 @@ See also: [awesome-cl#date-and-time](https://github.com/CodyReichert/awesome-cl#
 
 *Great thanks to the excellent [official documentation](https://common-lisp.net/project/local-time/manual.html).*
 
-TODO: Move to defacto if [this](https://github.com/CodyReichert/awesome-cl/issues/377) is resolved.
-
 `local-time` library is a Common Lisp library for the manipulation
 of dates, times and intervals. It was originally based almost entirely
 upon Erik Naggum's paper [The Long Painful History of Time](http://naggum.no/lugm-time.html). Many of the core concepts originated from this paper,

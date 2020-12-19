@@ -50,6 +50,7 @@ The below list of libraries is not even the *complete list of defacto libraries*
 - [hunchentoot](./hunchentoot/) - web server
 - [fiveam](./fiveam/) - regression testing framework
 - [iterate](./iterate/) - a lispy extensible alternative to `loop`
+- [local-time](./local-time/) - date and time manipulation
 - [postmodern](./postmodern/) - PostgreSQL programming interace
 - [quicklisp](./quicklisp/) - library manager
 - [usocket](./usocket) - universal socket library
@@ -57,7 +58,6 @@ The below list of libraries is not even the *complete list of defacto libraries*
 
 #### Not yet defacto
 
-- [local-time](./local-time/) - date and time manipulation
 - [numcl](./numcl/) - lispy clone of numpy
 - [unix-opts](./unix-opts/) - minimalistic command line options parser
 

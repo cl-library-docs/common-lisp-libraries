@@ -105,9 +105,9 @@ Connection from localhost 60367 received!
 helloworld
 ```
 
-### More examples
+### More examples and FAQs
 
-See [the Cookbook](http://lispcookbook.github.io/cl-cookbook/sockets.html).
+See [the Cookbook](http://lispcookbook.github.io/cl-cookbook/sockets.html) and the [FAQs in official documentation](https://common-lisp.net/project/usocket/api-docs.shtml#faqs).
 
 ### Conventions
 

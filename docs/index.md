@@ -69,7 +69,7 @@ for symbols. By contrast, a system is a tool to organize a bunch of files, in ac
 
 Documentation efforts have been made at:
 
-- [Quickdocs](http://quickdocs.org/): I didn't like the theme. I want the API at a glance! Honestly, this can improve! But don't look at me. I'm also not very at ease with full automation without human intervention.
+- [Quickdocs](http://quickdocs.org/): While it was up, I didn't particularly like the layout. I want the API at a glance! This can improve! But don't look at me. I'm also not very at ease with full automation without human intervention. As of December 2020, this is down though.
 
 - [Quickref](http://quickref.common-lisp.net/): Frankly, this is just too much. As a user, all I want to know is "What can this library do? And, how do I do it? (What functions, macros or anything is available?)" Therefore, for a user, the only good place I found was the Packages section here. It is, after all, a Reference Manual. Another excuse is, again, that I do want human intervention in documentation.
 
@@ -77,7 +77,9 @@ Documentation efforts have been made at:
 
 - [CLiki](http://cliki.net/): Again, layout and "at a glance"!
 
-- [UltraSpec]: I liked this. The only trouble? It isn't "quick".
+- [UltraSpec]: I liked this. The only trouble? It isn't "quick" to build upon.
+
+- [MiniSpec](https://lamberta.github.io/minispec/): This looks like a work-in-progress-but-active perhaps-smaller version of UltraSpec. And for the parts that are done, I find this vastly better than CLHS in terms of looks and accessibility.
 
 ## UltraSpec
 

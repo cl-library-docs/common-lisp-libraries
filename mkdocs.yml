@@ -20,12 +20,12 @@ nav:
       - fiveam.md
       - hunchentoot.md
       - iterate.md
+      - local-time.md
       - postmodern.md
       - quicklisp.md
       - usocket.md
       - utilities.md
     - Not yet defacto:
-      - local-time.md
       - numcl.md
       - unix-opts.md
 plugins:

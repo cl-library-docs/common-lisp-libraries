@@ -95,6 +95,8 @@
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="iterate/">iterate - Psuedocodic Iteration</a>
                     </li>
+                    <li class="toctree-l1"><a class="reference internal" href="local-time/">local-time - Date and Time Manipulation</a>
+                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="postmodern/">postmodern - PostgreSQL programming interace</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="quicklisp/">quicklisp - Library Manager</a>
@@ -106,8 +108,6 @@
                 </ul>
                 <p class="caption"><span class="caption-text">Not yet defacto</span></p>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="local-time/">local-time - Date and Time Manipulation</a>
-                    </li>
                     <li class="toctree-l1"><a class="reference internal" href="numcl/">numcl - Lispy clone of numpy</a>
                     </li>
                     <li class="toctree-l1"><a class="reference internal" href="unix-opts/">unix-opts - cmd line argument parser</a>
@@ -180,6 +180,7 @@ installing quicklisp.</p>
 <li><a href="./hunchentoot/">hunchentoot</a> - web server</li>
 <li><a href="./fiveam/">fiveam</a> - regression testing framework</li>
 <li><a href="./iterate/">iterate</a> - a lispy extensible alternative to <code>loop</code></li>
+<li><a href="./local-time/">local-time</a> - date and time manipulation</li>
 <li><a href="./postmodern/">postmodern</a> - PostgreSQL programming interace</li>
 <li><a href="./quicklisp/">quicklisp</a> - library manager</li>
 <li><a href="./usocket">usocket</a> - universal socket library</li>
@@ -187,7 +188,6 @@ installing quicklisp.</p>
 </ul>
 <h4 id="not-yet-defacto">Not yet defacto</h4>
 <ul>
-<li><a href="./local-time/">local-time</a> - date and time manipulation</li>
 <li><a href="./numcl/">numcl</a> - lispy clone of numpy</li>
 <li><a href="./unix-opts/">unix-opts</a> - minimalistic command line options parser</li>
 </ul>
@@ -197,7 +197,7 @@ for symbols. By contrast, a system is a tool to organize a bunch of files, in ac
 <p>Documentation efforts have been made at:</p>
 <ul>
 <li>
-<p><a href="http://quickdocs.org/">Quickdocs</a>: I didn't like the theme. I want the API at a glance! Honestly, this can improve! But don't look at me. I'm also not very at ease with full automation without human intervention.</p>
+<p><a href="http://quickdocs.org/">Quickdocs</a>: While it was up, I didn't particularly like the layout. I want the API at a glance! This can improve! But don't look at me. I'm also not very at ease with full automation without human intervention. As of December 2020, this is down though.</p>
 </li>
 <li>
 <p><a href="http://quickref.common-lisp.net/">Quickref</a>: Frankly, this is just too much. As a user, all I want to know is "What can this library do? And, how do I do it? (What functions, macros or anything is available?)" Therefore, for a user, the only good place I found was the Packages section here. It is, after all, a Reference Manual. Another excuse is, again, that I do want human intervention in documentation.</p>
@@ -209,7 +209,10 @@ for symbols. By contrast, a system is a tool to organize a bunch of files, in ac
 <p><a href="http://cliki.net/">CLiki</a>: Again, layout and "at a glance"!</p>
 </li>
 <li>
-<p><a href="https://phoe.tymoon.eu/clus/doku.php">UltraSpec</a>: I liked this. The only trouble? It isn't "quick".</p>
+<p><a href="https://phoe.tymoon.eu/clus/doku.php">UltraSpec</a>: I liked this. The only trouble? It isn't "quick" to build upon.</p>
+</li>
+<li>
+<p><a href="https://lamberta.github.io/minispec/">MiniSpec</a>: This looks like a work-in-progress-but-active perhaps-smaller version of UltraSpec. And for the parts that are done, I find this vastly better than CLHS in terms of looks and accessibility.</p>
 </li>
 </ul>
 <h2 id="ultraspec">UltraSpec</h2>
@@ -271,5 +274,5 @@ for symbols. By contrast, a system is a tool to organize a bunch of files, in ac
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-12-16 21:42:51.980614+00:00
+Build Date UTC : 2021-01-10 21:31:55.160801+00:00
 -->

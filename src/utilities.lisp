@@ -42,15 +42,22 @@
 (define-constant +lisp-symbol-regex+
     `(:sequence (:register
                  (:greedy-repetition 1 nil
-                                     (:alternation (:CHAR-CLASS (:RANGE #\A #\Z))
-                                                   #\-))))
+                                     (:alternation (:char-class (:range #\A #\Z))
+                                                   #\-
+                                                   #\:
+                                                   #\*
+                                                   (:char-class (:range #\0 #\9))))))
   :test 'equal)
 
 (define-constant +quoted-lisp-symbol-regex+
     `(:sequence #\`
-                (:register (:greedy-repetition 1 nil
-                                               (:alternation (:CHAR-CLASS (:RANGE #\a #\z))
-                                                             #\-)))
+                (:register
+                 (:greedy-repetition 1 nil
+                                     (:alternation (:char-class (:range #\A #\Z))
+                                                   #\-
+                                                   #\:
+                                                   #\*
+                                                   (:char-class (:range #\0 #\9)))))
                 #\`)
   :test 'equal)
 
@@ -63,18 +70,25 @@
 (defun hyperlink-samedoc-symbols (string current-symbol)
   "Converts SYMBOL or `symbol` to [symbol](#symbol) if SYMBOL is in *SAMEDOC-SYMBOLS*."
   (ppcre-flet ((%hyperlink-samedoc-symbols
-                (let* ((symbol-name (subseq target-string [reg-starts 0] [reg-ends 0]))
-                       (downcased (string-downcase symbol-name)))
-                  (if (and (member (string-upcase symbol-name) *samedoc-symbols*
-                                   :test 'string=)
+                (let* ((potential-symbol-name (subseq target-string [reg-starts 0] [reg-ends 0]))
+                       (potential-symbol (ignore-errors (read-from-string
+                                                         (string-upcase potential-symbol-name))))
+                       (downcased (string-downcase potential-symbol-name)))
+                  (if (and (symbolp potential-symbol)
+                           (member potential-symbol *samedoc-symbols*
+                                   :test #'string=)
                            ;; avoid hyperlinking to the same function
-                           (string/= (string-upcase symbol-name) current-symbol))
-                      (format nil "[~A](#~A)" downcased downcased)
-                      symbol-name))))
-    (ppcre:regex-replace-all +lisp-symbol-regex+ string
-                             #'%hyperlink-samedoc-symbols)
-    (ppcre:regex-replace-all +quoted-lisp-symbol-regex+ string
-                             #'%hyperlink-samedoc-symbols)))
+                           (string/= potential-symbol current-symbol))
+                      (format nil "[~A](#~A)"
+                              (str:replace-all "*" "\\*"
+                                               (str:replace-all "\\*" "*" downcased))
+                              (string-trim '(#\*)
+                                           (string-downcase (symbol-name potential-symbol))))
+                      potential-symbol-name))))
+    (-<> (ppcre:regex-replace-all +lisp-symbol-regex+ string
+                                  #'%hyperlink-samedoc-symbols)
+         (ppcre:regex-replace-all +quoted-lisp-symbol-regex+ <>
+                                  #'%hyperlink-samedoc-symbols))))
 
 (defun quote-self (string current-symbol)
   (ppcre-flet ((%quote-self

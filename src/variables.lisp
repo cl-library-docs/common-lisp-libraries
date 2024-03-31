@@ -11,6 +11,9 @@
                 (format nil "~%```lisp~%Variable~%Default Value: ~S~%```~%"
                         (symbol-value symbol))
                 (format nil "~%```lisp~%Variable~%Default Unbound~%```~%")))
+           (:symbol-macro
+            (format nil "~%```lisp~%Symbol Macro~%Expansion: ~S~%```~%"
+                    (macroexpand-1 symbol)))
            ((nil)))
          (when docstring
            (list #\newline

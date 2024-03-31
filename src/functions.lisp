@@ -51,17 +51,18 @@
                        (restart-case
                            (-<> (ppcre:regex-replace-all "([^\\s^\(^\)^\.^\,^\;]*)"
                                                          docstring #'quote-args)
-                             ;; Usually, docstring contain symbols in upcase formats. However,
-                             ;; quoted-and-downcased symbols "look nicer".
-                             ;; A docstring-ed symbol cannot contain a space and '(', ')' characters.
-                             ;; Also assume, full-stops and commas are due to english.
-                             (requote-with-backquote <>)
-                             ;; Some also contain symbols in `format'. We want them to be in `format`.
-                             ;; Ideally they should be hyperlinked elsewhere around the world!
-                             (hyperlink-samedoc-symbols <> symbol)
-                             ;; Too many links? Control using *blacklist-samedoc-symbols*
-                             ;; These functions should be separated
-                             (quote-self <> symbol))
+                                ;; Usually, docstring contain symbols in upcase formats. However,
+                                ;; quoted-and-downcased symbols "look nicer".
+                                ;; A docstring-ed symbol cannot contain a space and '(', ')' characters.
+                                ;; Also assume, full-stops and commas are due to english.
+                                (requote-with-backquote <>)
+                                ;; Some also contain symbols in `format'. We want them to be in `format`.
+                                ;; Ideally they should be hyperlinked elsewhere around the world!
+                                (hyperlink-samedoc-symbols <> symbol)
+                                ;; Too many links? Control using *blacklist-samedoc-symbols*
+                                ;; These functions should be separated
+                                (quote-self <> symbol))
                          (continue-ignoring-errors () (format t "Errors on ~D~%" symbol)))
                        #\newline)))))))
+
 

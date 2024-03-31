@@ -2,7 +2,8 @@
 
 (defpackage :cl-rtd
   (:use :cl :alexandria :iterate :arrows)
-  (:local-nicknames (:mop :closer-mop)))
+  (:local-nicknames (:mop :closer-mop))
+  (:export #:md-file))
 
 (in-package :cl-rtd)
 

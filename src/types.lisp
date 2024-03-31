@@ -136,6 +136,12 @@
                               "Class")
                              ((subtypep class (find-class 'condition))
                               "Condition")
+                             ((typep class
+                                     (find-class 'closer-mop:funcallable-standard-class))
+                              "Function")
+                             #+sbcl
+                             ((typep class (find-class 'sb-pcl:system-class))
+                              "System Class (SBCL)")
                              (t (error "Non-exhaustive cases: ~D" class))))
                (when docstring
                  (conc (requote-with-backquote docstring)
@@ -147,5 +153,3 @@
                    split-and-clean-slots
                    format-slot-documentation
                    (hyperlink-samedoc-symbols symbol)))))))
-
-

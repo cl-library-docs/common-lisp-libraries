@@ -11,11 +11,12 @@
                #-swank "swank"
                "trivial-package-local-nicknames")
   :pathname #P"src/"
+  :serial t
   :components ((:file "package")
                (:file "utilities")
                (:file "variables")
-               (:file "functions") ; functions, macros, generic functions
-               (:file "types") ; tested on SBCL
+               (:file "functions")      ; functions, macros, generic functions
+               (:file "types")          ; tested on SBCL
                (:file "md-file")))
 
 ;;; Why didn't I use docparser or declt?

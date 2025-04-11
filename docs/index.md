@@ -23,12 +23,11 @@ Each of the below libraries (except asdf and quicklisp) can be installed using q
 See [quicklisp - Getting Started](./quicklisp/#getting-started) for instructions on
 installing quicklisp.
 
-Optionally, you may want to use `trivial-package-local-nicknames` for, well, [adding package local nicknames](https://gist.github.com/phoe/2b63f33a2a4727a437403eceb7a6b4a3#actual-worthwhile-content-starts-here).
+You may want to use a local nickname when importing a package, see [adding package local nicknames](https://lispcookbook.github.io/cl-cookbook/packages.html#package-local-nicknames-pln) for details.
 
 ```lisp
-(ql:quickload :trivial-package-local-nicknames)
-(trivial-package-local-nicknames:add-package-local-nickname :a :alexandria)
-; OR
+(uiop:add-package-local-nickname #:a #:alexandria)
+;; OR
 (defpackage my-package
   (:use #:cl)
   (:local-nicknames (#:a #:alexandria)))

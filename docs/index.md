@@ -23,16 +23,16 @@ Each of the below libraries (except asdf and quicklisp) can be installed using q
 See [quicklisp - Getting Started](./quicklisp/#getting-started) for instructions on
 installing quicklisp.
 
-You may want to use a local nickname when importing a package, see [adding package local nicknames](https://lispcookbook.github.io/cl-cookbook/packages.html#package-local-nicknames-pln) for details.
+You may want to use a local nickname when importing a package which is possible in ASDF/UIOP since version 3.3.4.3.
+You can either check `uiop:*uiop-version*` or `(uiop:featurep :package-local-nicknames)`.
+See [adding package local nicknames](https://lispcookbook.github.io/cl-cookbook/packages.html#package-local-nicknames-pln) for details.
 
 ```lisp
 (uiop:add-package-local-nickname #:a #:alexandria)
-;; OR
+; OR
 (defpackage my-package
   (:use #:cl)
   (:local-nicknames (#:a #:alexandria)))
-;;; I'm yet to read up on the naming conventions and the reasons behind those conventions
-;;; in the context of systems and packages; some conventions do exist.
 ```
 
 ### Libraries documented so far

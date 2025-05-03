@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>clpm - Common Lisp Project Manager - common-lisp-libraries</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "clpm - Common Lisp Project Manager";
+        var mkdocs_page_input_path = "clpm-client.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/lisp.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> common-lisp-libraries
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../asdf/">asdf - Build System</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../ltk/">ltk</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../postmodern/">postmodern - PostgreSQL programming interace</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">common-lisp-libraries</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">clpm - Common Lisp Project Manager</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="clpm-common-lisp-project-manager">clpm - Common Lisp Project Manager</h1>
+<p>Version: 0.4.1</p>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="an-overview">An Overview</h3>
+<p>CLPM provides both global as well as project local dependency management. In addition, it comes as an external program <code>clpm</code> along with an optional lisp interface <code>clpm-client</code>. Thus, it can be used to manage dependencies without necessarily being packaged into your project.</p>
+<h3 id="installation">Installation</h3>
+<ol>
+<li>Download the CLPM Signing Key</li>
+</ol>
+<pre><code>gpg --recv-keys 0x10327DE761AB977333B1AD7629932AC49F3044CE
+</code></pre>
+<ol>
+<li>Verify the signature on the digests file:</li>
+</ol>
+<pre><code>gpg --decrypt clpm-0.4.1.DIGESTS.asc
+</code></pre>
+<ol>
+<li>Ensure the sha512 sum for the downloaded file matches the one from the digests file:</li>
+</ol>
+<pre><code>sha512sum clpm-0.4.1-linux-amd64.tar.gz
+</code></pre>
+<ol>
+<li>Unpack the tarball</li>
+</ol>
+<pre><code>Unpack the tarball:
+</code></pre>
+<ol>
+<li>Install CLPM</li>
+</ol>
+<pre><code>cd clpm-0.4.1-linux-amd64 &amp;&amp; sudo sh ./install.sh
+</code></pre>
+<p>Download the latest tarball for your system from <a href="https://files.clpm.dev/clpm/index.html">here</a>. For </p>
+<h3 id="creating-bundles">Creating bundles</h3>
+<p>DOUBT: What is the relation between contexts and clpmfiles?</p>
+<h3 id="scratch">Scratch</h3>
+<p>Terminologies -</p>
+<ul>
+<li>Package: This is typically used in the colloquial sense, meaning some unit of software that is installed. There is an unfortunate collision with Common Lisp's packages, but hopefully what is meant is clear based on context.</li>
+<li>System: An ASDF defined system.</li>
+<li>Project: Primary development unit of code. Typically corresponds to the contents of a single VCS repository. May contain multiple systems.</li>
+<li>Release: A versioned snapshot of a project.</li>
+<li>System release: A snapshot of a system contained within a project's release.</li>
+<li>Source: Typically used to refer to a repository of projects, releases, and metadata, such as Quicklisp.</li>
+<li>Context: A set of requirements and installed releases that satisfy said requirements.</li>
+</ul>
+<p>Global Contexts</p>
+<p>vs</p>
+<p>Bundle/Anonymous Contexts identified by a file named clpmfile.</p>
+<p><code>clpmfile</code> contains sources and top-level requirements.</p>
+<p><code>clpmfile.lock</code> contains the same information, but also includes the set of releases that satisfy the requirements. <code>clpmfile.lock</code> is enough to recreate the context on another machine.</p>
+<p>Contexts (clpmfile) contain sources.
+clpmfile.lock contains releases aka versioned snapshots of a project</p>
+<p>Project local configuration of CLPM (such as overriding git checkouts to use a copy you already have cloned) accomplished using a file .clpm/bundle.conf (relative to clpmfile).</p>
+<p>DOUBT: sources vs requirements</p>
+<p>Requirements</p>
+<ul>
+<li>System requirement</li>
+<li>Project requirement</li>
+<li>VCS project requirement: </li>
+<li>System file requirement: This requirement states that a specified .asd file located on the local filesystem, outside of one of CLPM's directories, is included in the context, as well as any dependencies of the systems defined in it. Can specify:</li>
+</ul>
+<p>Note that with this type of requirement, you may need to occasionally have CLPM reresolve the requirements. For instance if you add a new dependency since the last time you asked CLPM to install things into the context. How to do this is covered in the demos below. (TODO)</p>
+<p>Sources
+- quicklisp
+- CLPI</p>
+<h3 id="what-files-does-clpm-touch">What files does CLPM touch?</h3>
+<ul>
+<li>Linux: /home/$USER/.config/clpm/</li>
+<li>MacOS: /Users/$USER/.config/clpm/</li>
+<li>Windows: %LOCALAPPDATA%\clpm\config\</li>
+</ul>
+<p>CLPM_CONFIG_DIRS can override this.</p>
+<p>When using bundles, CLPM will project specific configuration from the .clpm/bundle.conf file, relative to the clpmfile.</p>
+<p>CLPM does not currently write to config locations, but may in future versions.</p>
+<h3 id="cache">Cache</h3>
+<h3 id="data">Data</h3>
+<ul>
+<li>Context Data</li>
+<li>Unpacked Releases</li>
+<li>Metadata</li>
+</ul>
+<h3 id="additional-features">Additional features</h3>
+<ul>
+<li>asdf-system-groveler</li>
+<li>Groveler sandbox</li>
+<li>CLPI Metadata Generation</li>
+</ul>
+<h2 id="api-reference">API Reference</h2>
+<h3 id="activate-asdf-integration">*activate-asdf-integration*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: T
+</code></pre>
+<p>The default value of <a href="#activate-asdf-integration">:activate-asdf-integration</a> in <a href="#activate-context">activate-context</a>.</p>
+<h3 id="asdf-system-not-found-behavior">*asdf-system-not-found-behavior*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: :ERROR
+</code></pre>
+<p>The behavior if ASDF is unable to find a system and CLPM's ASDF integration
+is active. One of:</p>
+<ul>
+<li>
+<p>:ERROR :: (default) Signal a <a href="#missing-system">missing-system</a> condition. The restarts
+<a href="#install-and-reload-config">install-and-reload-config</a>, <a href="#reresolve-requirements-and-reload-config">reresolve-requirements-and-reload-config</a>,
+<a href="#install-without-dependencies-and-reload-config">install-without-dependencies-and-reload-config</a>, and <a href="#reload-config">reload-config</a> will be
+available.</p>
+</li>
+<li>
+<p><a href="#install">:install</a> :: Install the system and its dependencies without prompting. If the
+active context is a bundle, the system is currently not added to the bundle (you
+will need to either add it to the clpmfile or as a dependency to some other
+included system for this to have any effect).</p>
+</li>
+<li>
+<p>:INSTALL-WITHOUT-DEPS :: Install the system without its dependencies without
+prompting. If the active context is a bundle, the system is currently not added
+to the bundle (you will need to either add it to the clpmfile or as a dependency
+to some other included system for this to have any effect).</p>
+</li>
+<li>
+<p>NIL :: Do nothing.</p>
+</li>
+</ul>
+<h3 id="cleanup-on-dump-p">*cleanup-on-dump-p*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: NIL
+</code></pre>
+<p>If non-NIL, the CLPM client will cleanup after itself if an image is dumped
+in a manner that uses UIOP's image dump hooks. See <a href="#cleanup-clpm-client">cleanup-clpm-client</a> for
+details.</p>
+<h3 id="clpm-dribble">*clpm-dribble*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: NIL
+</code></pre>
+<p>A pathname or stream where input and output to/from CLPM is copied. If a
+pathname, it is appended to.</p>
+<h3 id="clpm-dribble-input-prefix">*clpm-dribble-input-prefix*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: &quot;CLPM-IN&gt;  &quot;
+</code></pre>
+<p>The prefix for lines to <a href="#clpm-dribble">*clpm-dribble*</a> that are sent by this process.</p>
+<h3 id="clpm-dribble-output-prefix">*clpm-dribble-output-prefix*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: &quot;CLPM-OUT&gt; &quot;
+</code></pre>
+<p>The prefix for lines to <a href="#clpm-dribble">*clpm-dribble*</a> that are read by this process.</p>
+<h3 id="clpm-error-dribble">*clpm-error-dribble*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: NIL
+</code></pre>
+<p>A pathname or stream where CLPM's error output is sent. If a pathname, it is
+appended to.</p>
+<h3 id="clpm-error-dribble-prefix">*clpm-error-dribble-prefix*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: &quot;CLPM-ERR&gt; &quot;
+</code></pre>
+<p>The prefix for lines to <a href="#clpm-error-dribble">*clpm-error-dribble*</a>.</p>
+<h3 id="clpm-executable">*clpm-executable*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: NIL
+</code></pre>
+<p>A list of command and arguments needed to run CLPM.
+If the clpm executable is not on your PATH, change this to be an absolute path
+to the executable.</p>
+<h3 id="context-diff-approval-method">*context-diff-approval-method*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: :ERROR
+</code></pre>
+<p>Controls how CLPM prompts the user to approve diffs before acting on
+them. Can be one of:</p>
+<ul>
+<li>
+<p>:ERROR :: A condition of type <a href="#context-diff-needs-approval">context-diff-needs-approval</a> is signaled using
+ERROR. The <a href="#approve-diff">approve-diff</a> and <a href="#reject-diff">reject-diff</a> restarts are made available.</p>
+</li>
+<li>
+<p>:YES-OR-NO-P :: The diff is printed and the user asked to approve or not using
+YES-OR-NO-P.</p>
+</li>
+<li>
+<p>T :: The diff is accepted without prompting.</p>
+</li>
+</ul>
+<h3 id="default-context">*default-context*</h3>
+<pre><code class="language-lisp">Variable
+Default Value: NIL
+</code></pre>
+<p>If non-NIL, the default context to use for most operations. Can either be a
+string (naming a global CLPM context) or a pathname to a clpmfile.</p>
+<h3 id="activate-asdf-integration_1">activate-asdf-integration</h3>
+<pre><code class="language-lisp">Function: (activate-asdf-integration)
+</code></pre>
+<p>Add '<a href="#clpm-system-definition-pre-search">clpm-system-definition-pre-search</a> and '<a href="#clpm-system-definition-search">clpm-system-definition-search</a> to
+ASDF's system definition search functions list.</p>
+<p>Does nothing if <a href="#asdf-integration-active-p">asdf-integration-active-p</a> returns T.</p>
+<h3 id="activate-context">activate-context</h3>
+<pre><code class="language-lisp">Function: (activate-context context &amp;key
+           (activate-asdf-integration *activate-asdf-integration*)
+           (ignore-inherited-source-registry (context-bundle-p context)))
+</code></pre>
+<p>Activate a CLPM context. This clears ASDF's current configuration and
+replaces it with configuration appropriate for <code>context</code>.</p>
+<p><code>context</code> can be either a string (naming a global CLPM context) or a pathname
+pointing to a bundle's clpmfile.</p>
+<p>If <code>ignore-inherited-source-registry</code> is non-NIL, then source registry
+configuration from other sources is ignored. This argument is ignored if <code>context</code>
+is a bundle.</p>
+<p>If <code>activate-asdf-integration</code> is non-NIL, <code>activate-asdf-integration</code> is also
+called.</p>
+<h3 id="active-context">active-context</h3>
+<pre><code class="language-lisp">Function: (active-context)
+</code></pre>
+<p>Returns the currently active context. Is either a string naming a global CLPM
+context or a pathname to a clpmfile. Returns NIL if there is no currently active
+context.</p>
+<h3 id="approve-diff">approve-diff</h3>
+<pre><code class="language-lisp">Function: (approve-diff &amp;optional condition)
+</code></pre>
+<p>Invoke the <code>approve-diff</code> restart or return NIL if no such restart exists.</p>
+<h3 id="asdf-integration-active-p">asdf-integration-active-p</h3>
+<pre><code class="language-lisp">Function: (asdf-integration-active-p)
+</code></pre>
+<p>Returns non-NIL iff '<a href="#clpm-system-definition-search">clpm-system-definition-search</a> is registered with ASDF's
+search functions.</p>
+<h3 id="bundle-init">bundle-init</h3>
+<pre><code class="language-lisp">Function: (bundle-init clpmfile &amp;key asds)
+</code></pre>
+<p>Create a new clpmfile located at <code>clpmfile</code>. Adds all <code>asds</code> (must be relative to
+<code>clpmfile</code>) to the new clpmfile.</p>
+<h3 id="cleanup-clpm-client">cleanup-clpm-client</h3>
+<pre><code class="language-lisp">Function: (cleanup-clpm-client)
+</code></pre>
+<p>Performs the following steps:</p>
+<ol>
+<li>
+<p>Removes :CLPM-CLIENT from <em>FEATURES</em></p>
+</li>
+<li>
+<p>Runs all hooks in <em>CLEANUP-HOOKS</em>.</p>
+</li>
+<li>
+<p>Removes <a href="#maybe-cleanup-clpm-client">maybe-cleanup-clpm-client</a> from UIOP:<em>IMAGE-DUMP-HOOK</em></p>
+</li>
+<li>
+<p>Deletes the CLPM-CLIENT package.</p>
+</li>
+</ol>
+<h3 id="clpm-client-version">clpm-client-version</h3>
+<pre><code class="language-lisp">Function: (clpm-client-version)
+</code></pre>
+<p>The client's version.</p>
+<h3 id="clpm-error">clpm-error</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<h3 id="clpm-error-error-output">clpm-error-error-output</h3>
+<pre><code class="language-lisp">Generic Function: (clpm-error-error-output condition)
+</code></pre>
+<h3 id="clpm-error-wrapped-condition">clpm-error-wrapped-condition</h3>
+<pre><code class="language-lisp">Generic Function: (clpm-error-wrapped-condition condition)
+</code></pre>
+<h3 id="clpm-system-definition-pre-search">clpm-system-definition-pre-search</h3>
+<pre><code class="language-lisp">Function: (clpm-system-definition-pre-search system-name)
+</code></pre>
+<p>When used in conjunction with <a href="#clpm-system-definition-search">clpm-system-definition-search</a>, this creates a
+poor man's :around method for locating systems. This function checks to see if
+it's likely that one of ASDF's built-in search functions would find a system
+that's not installed, but is visible in the the source registry for the active
+context.</p>
+<p>This happens because the smallest granularity availble in ASDF's source registry
+is the directory. So, for instance, someone may install CFFI (defined in
+cffi.asd). Then, some time later, they decide they want to run CFFI's tests,
+defined by the system cffi-tests in cffi-tests.asd <em>in the same directory as
+cffi.asd</em>. The cffi-tests system will be found by ASDF, but its dependencies,
+such as rt, are not. If this function didn't exist, then
+<a href="#clpm-system-definition-search">clpm-system-definition-search</a> would prompt the user to install rt and, if the
+user accepts, it will be recorded in the context that rt is a toplevel
+requirement. However, this is incorrect as cffi-tests should be the new toplevel
+requirement.</p>
+<h3 id="clpm-system-definition-search">clpm-system-definition-search</h3>
+<pre><code class="language-lisp">Function: (clpm-system-definition-search system-name)
+</code></pre>
+<p>A search function for ASDF's <em>SYSTEM-DEFINITION-SEARCH-FUNCTIONS</em> list.
+Does nothing if there is no active context.</p>
+<p>As this only works with an active context, we can assume that if control gets
+here, ASDF was unable to find the system (as activating a context involves
+configuring the source registry to include every system). That means we don't
+even have to search for the system as all config resides in the source registry.</p>
+<p>See <a href="#asdf-system-not-found-behavior">*asdf-system-not-found-behavior*</a> for details on how this function can be
+configured to behave.</p>
+<h3 id="clpm-version">clpm-version</h3>
+<pre><code class="language-lisp">Function: (clpm-version)
+</code></pre>
+<p>The version information for the clpm executable.</p>
+<h3 id="context-diff">context-diff</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>A representation of changes that will be made to a context.</p>
+<h3 id="context-diff-empty-p">context-diff-empty-p</h3>
+<pre><code class="language-lisp">Function: (context-diff-empty-p diff)
+</code></pre>
+<p>Returns non-NIL if <code>diff</code> contains no changes.</p>
+<h3 id="context-diff-needs-approval">context-diff-needs-approval</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>Condition reporting that a CONTEXT-DIFF needs approval.</p>
+<h3 id="context-diff-needs-approval-diff">context-diff-needs-approval-diff</h3>
+<pre><code class="language-lisp">Generic Function: (context-diff-needs-approval-diff condition)
+</code></pre>
+<h3 id="context-diff-release-diffs">context-diff-release-diffs</h3>
+<pre><code class="language-lisp">Generic Function: (context-diff-release-diffs object)
+</code></pre>
+<h3 id="context-source-registry">context-source-registry</h3>
+<pre><code class="language-lisp">Function: (context-source-registry &amp;key (context (default-context))
+           (ignore-inherited (context-bundle-p context)))
+</code></pre>
+<p>Return a source-registry form for the <code>context</code>.</p>
+<h3 id="deactivate-asdf-integration">deactivate-asdf-integration</h3>
+<pre><code class="language-lisp">Function: (deactivate-asdf-integration)
+</code></pre>
+<p>Removes <a href="#clpm-system-definition-search">clpm-system-definition-search</a> from ASDF's search functions.</p>
+<h3 id="default-context_1">default-context</h3>
+<pre><code class="language-lisp">Function: (default-context)
+</code></pre>
+<p>Returns the default context for operations. Defaults to <a href="#default-context">*default-context*</a>,
+then <a href="#active-context">active-context</a>, then "default".</p>
+<h3 id="inside-bundle-exec-p">inside-bundle-exec-p</h3>
+<pre><code class="language-lisp">Function: (inside-bundle-exec-p)
+</code></pre>
+<p>Returns non-NIL iff we were spawned by a <code>clpm bundle exec</code> command.</p>
+<h3 id="install">install</h3>
+<pre><code class="language-lisp">Function: (install &amp;key projects systems asds version ref source
+           (validate (quote context-diff-approved-p)) no-deps
+           (context (default-context))
+           (update-asdf-config (asdf-integration-active-p)) no-resolve)
+</code></pre>
+<p>Install a set of projects and systems. Returns T if the diff was approved.</p>
+<p><code>projects</code> and <code>systems</code> must be lists of dependency specifiers. <code>version</code>, <code>ref</code>, and
+<code>source</code> must be strings and are used as the default constraints on <code>projects</code> and
+<code>systems</code> if such constraints cannot be extracted from the specifiers themselves.</p>
+<p><code>validate</code> must be a function of one argument (a diff) and returns non-NIL if the
+install should proceed.</p>
+<p><code>no-resolve</code> only has an effect if the <code>context</code> is a bundle. If it is non-NIL, then
+the bundle will be installed completely from its lock file, without reresolving
+any requirements.</p>
+<p>If <code>update-asdf-config</code> is non-NIL and <code>context</code> is the active context, then ASDF's
+source registry is updated with the results.</p>
+<h3 id="install-and-reload-config">install-and-reload-config</h3>
+<pre><code class="language-lisp">Function: (install-and-reload-config &amp;optional condition)
+</code></pre>
+<p>Invoke the <code>install-and-reload-config</code> restart or return NIL if the restart
+does not exist.</p>
+<h3 id="install-without-dependencies-and-reload-config">install-without-dependencies-and-reload-config</h3>
+<pre><code class="language-lisp">Function: (install-without-dependencies-and-reload-config &amp;optional condition)
+</code></pre>
+<p>Invoke the <code>install-without-dependencies-and-reload-config</code> restart or return
+NIL if the restart does not exist.</p>
+<h3 id="maybe-cleanup-clpm-client">maybe-cleanup-clpm-client</h3>
+<pre><code class="language-lisp">Function: (maybe-cleanup-clpm-client)
+</code></pre>
+<p>Run <a href="#cleanup-clpm-client">cleanup-clpm-client</a> iff <a href="#cleanup-on-dump-p">*cleanup-on-dump-p*</a> is non-NIL.</p>
+<h3 id="missing-system">missing-system</h3>
+<pre><code class="language-lisp">Condition
+</code></pre>
+<p>A condition signaled when CLPM thinks a system is not installed.</p>
+<h3 id="missing-system-name">missing-system-name</h3>
+<pre><code class="language-lisp">Generic Function: (missing-system-name condition)
+</code></pre>
+<h3 id="print-context-diff-to-stream">print-context-diff-to-stream</h3>
+<pre><code class="language-lisp">Function: (print-context-diff-to-stream diff stream)
+</code></pre>
+<p>Print a human readable description of <code>diff</code> to <code>stream</code>.</p>
+<h3 id="reject-diff">reject-diff</h3>
+<pre><code class="language-lisp">Function: (reject-diff &amp;optional condition)
+</code></pre>
+<p>Invoke the <code>reject-diff</code> restart or return NIL if no such restart exists.</p>
+<h3 id="release-diff">release-diff</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>A representation of a change to a single project.</p>
+<h3 id="release-diff-new-source">release-diff-new-source</h3>
+<pre><code class="language-lisp">Generic Function: (release-diff-new-source object)
+</code></pre>
+<h3 id="release-diff-new-version">release-diff-new-version</h3>
+<pre><code class="language-lisp">Generic Function: (release-diff-new-version object)
+</code></pre>
+<h3 id="release-diff-old-source">release-diff-old-source</h3>
+<pre><code class="language-lisp">Generic Function: (release-diff-old-source object)
+</code></pre>
+<h3 id="release-diff-old-version">release-diff-old-version</h3>
+<pre><code class="language-lisp">Generic Function: (release-diff-old-version object)
+</code></pre>
+<h3 id="release-diff-project-name">release-diff-project-name</h3>
+<pre><code class="language-lisp">Generic Function: (release-diff-project-name object)
+</code></pre>
+<h3 id="reload-config">reload-config</h3>
+<pre><code class="language-lisp">Function: (reload-config &amp;optional condition)
+</code></pre>
+<p>Invoke the <code>reload-config</code> restart or return NIL if the restart does not
+exist.</p>
+<h3 id="reresolve-requirements-and-reload-config">reresolve-requirements-and-reload-config</h3>
+<pre><code class="language-lisp">Function: (reresolve-requirements-and-reload-config &amp;optional condition)
+</code></pre>
+<p>Invoke the <code>reresolve-requirements-and-reload-config</code> restart or return NIL if
+the restart does not exist.</p>
+<h3 id="sync">sync</h3>
+<pre><code class="language-lisp">Function: (sync &amp;key sources)
+</code></pre>
+<p>Sync a set of <code>sources</code>. If no sources are listed, all are synced.</p>
+<h3 id="update">update</h3>
+<pre><code class="language-lisp">Function: (update &amp;key projects systems
+           (validate (quote context-diff-approved-p))
+           (context (default-context))
+           (update-asdf-config (asdf-integration-active-p)))
+</code></pre>
+<p>Update a set of projects and systems. Returns T if the diff was approved.</p>
+<p><code>projects</code> and <code>systems</code> must be lists of strings. If none are specified, every
+project in the <code>context</code> is eligible for upgrading.</p>
+<p><code>validate</code> must be a function of one argument (a diff) and returns non-NIL if the
+install should proceed.</p>
+<p>If <code>update-asdf-config</code> is non-NIL and <code>context</code> is the active context, then ASDF's
+source registry is updated with the results.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(false);
+        });
+    </script>
+
+</body>
+</html>

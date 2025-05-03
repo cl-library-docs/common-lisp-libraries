@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>ltk - common-lisp-libraries</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../extra.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "ltk";
+        var mkdocs_page_input_path = "ltk.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/lisp.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> common-lisp-libraries
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">index</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Defacto libraries</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../asdf/">asdf - Build System</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../alexandria/">alexandria - Commonly Used Utilities</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../bordeaux-threads/">bordeaux-threads - Threading</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cl-ppcre/">cl-ppcre - Regular Expressions</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../cl-who/">cl-who - DSL for Markup</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../fiveam/">fiveam - Regression Testing Framework</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../hunchentoot/">hunchentoot - Web Server</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../iterate/">iterate - Psuedocodic Iteration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../local-time/">local-time - Date and Time Manipulation</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">ltk</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#mb-icons">*mb-icons*</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tk">*tk*</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wish">*wish*</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#add-pane">add-pane</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#add-separator">add-separator</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#after">after</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#after-cancel">after-cancel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#after-idle">after-idle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#append-newline">append-newline</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#append-text">append-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ask-okcancel">ask-okcancel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ask-yesno">ask-yesno</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bbox">bbox</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bell">bell</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bind">bind</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#button">button</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#calc-scroll-region">calc-scroll-region</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#call-with-ltk">call-with-ltk</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas">canvas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-arc">canvas-arc</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-bbox">canvas-bbox</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-image">canvas-image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-item">canvas-item</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-line">canvas-line</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-oval">canvas-oval</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-polygon">canvas-polygon</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-rectangle">canvas-rectangle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-text">canvas-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvas-window">canvas-window</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvasx">canvasx</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#canvasy">canvasy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cget">cget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#check-button">check-button</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#children">children</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#choose-color">choose-color</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#choose-directory">choose-directory</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clear">clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clear-text">clear-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clipboard-append">clipboard-append</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clipboard-clear">clipboard-clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#clipboard-get">clipboard-get</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#column-configure">column-configure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#column-values">column-values</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#combobox">combobox</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#command">command</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#configure">configure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#coords">coords</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-arc">create-arc</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-bitmap">create-bitmap</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-image">create-image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-items">create-items</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-line">create-line</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-line_1">create-line*</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-menu2">create-menu2</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-oval">create-oval</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-polygon">create-polygon</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-rectangle">create-rectangle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-text">create-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-window">create-window</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#cursor-index">cursor-index</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#defargs">defargs</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#defwidget">defwidget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#deiconify">deiconify</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#destroy">destroy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dictionary-plist">dictionary-plist</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#do-execute">do-execute</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#do-msg">do-msg</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#entry">entry</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#entry-select">entry-select</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event">event</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-char">event-char</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-height">event-height</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-keycode">event-keycode</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-mouse-button">event-mouse-button</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-root-x">event-root-x</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-root-y">event-root-y</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-width">event-width</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-x">event-x</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#event-y">event-y</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#exit-wish">exit-wish</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#focus">focus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#font-configure">font-configure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#font-create">font-create</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#font-delete">font-delete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#font-families">font-families</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#font-metrics">font-metrics</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#force-focus">force-focus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#forget-pane">forget-pane</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#format-wish">format-wish</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#frame">frame</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#geometry">geometry</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#get-open-file">get-open-file</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#get-save-file">get-save-file</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grab">grab</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grab-release">grab-release</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grid">grid</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grid-columnconfigure">grid-columnconfigure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grid-configure">grid-configure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grid-forget">grid-forget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grid-rowconfigure">grid-rowconfigure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#handle">handle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hscroll">hscroll</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#iconify">iconify</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#iconwindow">iconwindow</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#image">image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#image-load">image-load</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#image-setpixel">image-setpixel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#input-box">input-box</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#insert-object">insert-object</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#interior">interior</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#itembind">itembind</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#itemconfigure">itemconfigure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#itemdelete">itemdelete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#itemlower">itemlower</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#itemmove">itemmove</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#itemraise">itemraise</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#items">items</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#label">label</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#labelframe">labelframe</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#length">length</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox">listbox</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-append">listbox-append</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-clear">listbox-clear</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-configure">listbox-configure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-delete">listbox-delete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-get-selection">listbox-get-selection</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-insert">listbox-insert</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-nearest">listbox-nearest</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#listbox-select">listbox-select</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#load-text">load-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#lower">lower</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ltktest">ltktest</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#mainloop">mainloop</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-canvas">make-canvas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-image">make-image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-items">make-items</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-line">make-line</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-ltk-connection">make-ltk-connection</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-menu">make-menu</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-menubar">make-menubar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-menubutton">make-menubutton</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-oval">make-oval</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-polygon">make-polygon</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-rectangle">make-rectangle</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-scrollbar">make-scrollbar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-scrolled-canvas">make-scrolled-canvas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-text">make-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#make-toplevel">make-toplevel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#master">master</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#maxsize">maxsize</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#menu">menu</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#menu-delete">menu-delete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#menubar">menubar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#menubutton">menubutton</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#menucheckbutton">menucheckbutton</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#menuradiobutton">menuradiobutton</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#message">message</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#message-box">message-box</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#minsize">minsize</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#move">move</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#move-all">move-all</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#normalize">normalize</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook">notebook</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-add">notebook-add</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-enable-traversal">notebook-enable-traversal</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-events">notebook-events</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-forget">notebook-forget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-hide">notebook-hide</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-identify">notebook-identify</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-index">notebook-index</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-select">notebook-select</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#notebook-tab">notebook-tab</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#on-close">on-close</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#on-focus">on-focus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pack">pack</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pack-forget">pack-forget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pack-forget-all">pack-forget-all</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pack-propagate">pack-propagate</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#pane-configure">pane-configure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#paned-window">paned-window</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#phase">phase</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#photo-image">photo-image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#place">place</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#place-forget">place-forget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#popup">popup</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#postscript">postscript</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#process-events">process-events</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#progressbar">progressbar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#radio-button">radio-button</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#raise">raise</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#read-event">read-event</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reset-scroll">reset-scroll</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#resizable">resizable</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sash-coord">sash-coord</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sash-place">sash-place</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#save-text">save-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scale">scale</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#screen-height">screen-height</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#screen-height-mm">screen-height-mm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#screen-mouse">screen-mouse</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#screen-mouse-x">screen-mouse-x</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#screen-mouse-y">screen-mouse-y</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#screen-width">screen-width</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#screen-width-mm">screen-width-mm</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scroll-to-top">scroll-to-top</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scrollbar">scrollbar</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scrolled-canvas">scrolled-canvas</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scrolled-frame">scrolled-frame</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scrolled-listbox">scrolled-listbox</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scrolled-text">scrolled-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scrolled-treeview">scrolled-treeview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#scrollregion">scrollregion</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#search-all-text">search-all-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#search-next-text">search-next-text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#see">see</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#send-lazy">send-lazy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#send-wish">send-wish</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#separator">separator</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-coords">set-coords</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-coords_1">set-coords*</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-focus-next">set-focus-next</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-geometry">set-geometry</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-geometry-wh">set-geometry-wh</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-geometry-xy">set-geometry-xy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#set-wm-overrideredirect">set-wm-overrideredirect</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#sizegrip">sizegrip</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#spinbox">spinbox</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#start-wish">start-wish</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tag-bind">tag-bind</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tag-configure">tag-configure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tagbind">tagbind</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#text">text</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#textbox">textbox</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#title">title</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#tkobject">tkobject</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#toplevel">toplevel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeitem">treeitem</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview">treeview</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-column">treeview-column</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-delete">treeview-delete</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-exists">treeview-exists</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-focus">treeview-focus</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-get-selection">treeview-get-selection</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-heading">treeview-heading</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-identify-item">treeview-identify-item</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-insert">treeview-insert</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-item">treeview-item</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-move">treeview-move</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#treeview-set-selection">treeview-set-selection</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#value">value</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#vscroll">vscroll</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#widget">widget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#widget-class-name">widget-class-name</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#widget-path">widget-path</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#window-height">window-height</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#window-id">window-id</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#window-transient">window-transient</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#window-width">window-width</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#window-x">window-x</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#window-y">window-y</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wish-stream">wish-stream</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wish-variable">wish-variable</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wish-variables">wish-variables</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-atomic">with-atomic</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-hourglass">with-hourglass</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-ltk">with-ltk</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-modal-toplevel">with-modal-toplevel</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#with-widgets">with-widgets</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#withdraw">withdraw</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wm-forget">wm-forget</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wm-manage">wm-manage</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wm-state">wm-state</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wm-title">wm-title</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../postmodern/">postmodern - PostgreSQL programming interace</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../quicklisp/">quicklisp - Library Manager</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../usocket/">usocket - Universal Socket Library</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../utilities/">utilities - A collection of utility libraries</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Not yet defacto</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../numcl/">numcl - Lispy clone of numpy</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../unix-opts/">unix-opts - cmd line argument parser</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">common-lisp-libraries</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Defacto libraries</li>
+      <li class="breadcrumb-item active">ltk</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="ltk">ltk</h1>
+<h3 id="mb-icons">*mb-icons*</h3>
+<pre><code class="language-lisp">Variable
+</code></pre>
+<p>icon names valid for message-box function</p>
+<h3 id="tk">*tk*</h3>
+<pre><code class="language-lisp">Variable
+</code></pre>
+<p>dummy widget to access the tk root object</p>
+<h3 id="wish">*wish*</h3>
+<pre><code class="language-lisp">Variable
+</code></pre>
+<p>The current connection to an inferior wish.</p>
+<h3 id="add-pane">add-pane</h3>
+<pre><code class="language-lisp">Generic Function: (add-pane window widget &amp;rest options)
+</code></pre>
+<h3 id="add-separator">add-separator</h3>
+<pre><code class="language-lisp">Function: (add-separator menu)
+</code></pre>
+<h3 id="after">after</h3>
+<pre><code class="language-lisp">Function: (after time fun)
+</code></pre>
+<p>after <time> msec call function <fun>, returns the after event id,
+which can be passed to <a href="#after-cancel">after-cancel</a></p>
+<h3 id="after-cancel">after-cancel</h3>
+<pre><code class="language-lisp">Function: (after-cancel id)
+</code></pre>
+<p>cancels a call scheduled with <a href="#after">after</a> or <a href="#after-idle">after-idle</a> by its id</p>
+<h3 id="after-idle">after-idle</h3>
+<pre><code class="language-lisp">Function: (after-idle fun)
+</code></pre>
+<p>call fun when tk becomes idle, returns the after event id, which
+can be passed to <a href="#after-cancel">after-cancel</a></p>
+<h3 id="append-newline">append-newline</h3>
+<pre><code class="language-lisp">Function: (append-newline text)
+</code></pre>
+<h3 id="append-text">append-text</h3>
+<pre><code class="language-lisp">Generic Function: (append-text txt text &amp;rest tags)
+</code></pre>
+<h3 id="ask-okcancel">ask-okcancel</h3>
+<pre><code class="language-lisp">Function: (ask-okcancel message &amp;key (title ) parent)
+</code></pre>
+<h3 id="ask-yesno">ask-yesno</h3>
+<pre><code class="language-lisp">Function: (ask-yesno message &amp;key (title ) parent)
+</code></pre>
+<h3 id="bbox">bbox</h3>
+<pre><code class="language-lisp">Generic Function: (bbox item)
+</code></pre>
+<h3 id="bell">bell</h3>
+<pre><code class="language-lisp">Function: (bell)
+</code></pre>
+<h3 id="bind">bind</h3>
+<pre><code class="language-lisp">Generic Function: (bind w event fun &amp;key append exclusive)
+</code></pre>
+<h3 id="button">button</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="calc-scroll-region">calc-scroll-region</h3>
+<pre><code class="language-lisp">Generic Function: (calc-scroll-region canvas)
+</code></pre>
+<h3 id="call-with-ltk">call-with-ltk</h3>
+<pre><code class="language-lisp">Function: (call-with-ltk thunk &amp;rest keys &amp;key (debug 2) stream serve-event
+           remotep &amp;allow-other-keys)
+</code></pre>
+<p>Functional interface to with-ltk, provided to allow the user the build similar macros.</p>
+<h3 id="canvas">canvas</h3>
+<pre><code class="language-lisp">Generic Function: (canvas w)
+</code></pre>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="canvas-arc">canvas-arc</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvas-bbox">canvas-bbox</h3>
+<pre><code class="language-lisp">Function: (canvas-bbox canvas handle)
+</code></pre>
+<h3 id="canvas-image">canvas-image</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvas-item">canvas-item</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>canvas</strong></p>
+<pre><code class="language-lisp">Initargs: :CANVAS
+Readers: CANVAS
+Writers: (SETF CANVAS)
+</code></pre>
+<p><strong>handle</strong></p>
+<pre><code class="language-lisp">Initargs: :HANDLE
+Readers: HANDLE
+Writers: (SETF HANDLE)
+</code></pre>
+<h3 id="canvas-line">canvas-line</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvas-oval">canvas-oval</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvas-polygon">canvas-polygon</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvas-rectangle">canvas-rectangle</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvas-text">canvas-text</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvas-window">canvas-window</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="canvasx">canvasx</h3>
+<pre><code class="language-lisp">Generic Function: (canvasx canvas screenx)
+</code></pre>
+<h3 id="canvasy">canvasy</h3>
+<pre><code class="language-lisp">Generic Function: (canvasy canvas screeny)
+</code></pre>
+<h3 id="cget">cget</h3>
+<pre><code class="language-lisp">Generic Function: (cget widget option)
+</code></pre>
+<h3 id="check-button">check-button</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="children">children</h3>
+<pre><code class="language-lisp">Generic Function: (children tree item)
+</code></pre>
+<h3 id="choose-color">choose-color</h3>
+<pre><code class="language-lisp">Function: (choose-color &amp;key parent title initialcolor)
+</code></pre>
+<h3 id="choose-directory">choose-directory</h3>
+<pre><code class="language-lisp">Function: (choose-directory &amp;key
+           (initialdir (namestring *default-pathname-defaults*)) parent title
+           mustexist)
+</code></pre>
+<h3 id="clear">clear</h3>
+<pre><code class="language-lisp">Generic Function: (clear widget)
+</code></pre>
+<h3 id="clear-text">clear-text</h3>
+<pre><code class="language-lisp">Generic Function: (clear-text txt)
+</code></pre>
+<h3 id="clipboard-append">clipboard-append</h3>
+<pre><code class="language-lisp">Function: (clipboard-append txt)
+</code></pre>
+<h3 id="clipboard-clear">clipboard-clear</h3>
+<pre><code class="language-lisp">Function: (clipboard-clear)
+</code></pre>
+<h3 id="clipboard-get">clipboard-get</h3>
+<pre><code class="language-lisp">Function: (clipboard-get)
+</code></pre>
+<h3 id="column-configure">column-configure</h3>
+<pre><code class="language-lisp">Generic Function: (column-configure tree column option value &amp;rest rest)
+</code></pre>
+<h3 id="column-values">column-values</h3>
+<pre><code class="language-lisp">Generic Function: (column-values object)
+</code></pre>
+<h3 id="combobox">combobox</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="command">command</h3>
+<pre><code class="language-lisp">Generic Function: (command widget)
+</code></pre>
+<h3 id="configure">configure</h3>
+<pre><code class="language-lisp">Generic Function: (configure widget option value &amp;rest others)
+</code></pre>
+<h3 id="coords">coords</h3>
+<pre><code class="language-lisp">Generic Function: (coords item)
+</code></pre>
+<h3 id="create-arc">create-arc</h3>
+<pre><code class="language-lisp">Function: (create-arc canvas x0 y0 x1 y1 &amp;key (start 0) (extent 180)
+           (style pieslice))
+</code></pre>
+<h3 id="create-bitmap">create-bitmap</h3>
+<pre><code class="language-lisp">Function: (create-bitmap canvas x y &amp;key (bitmap NIL))
+</code></pre>
+<h3 id="create-image">create-image</h3>
+<pre><code class="language-lisp">Function: (create-image canvas x y &amp;key image)
+</code></pre>
+<h3 id="create-items">create-items</h3>
+<pre><code class="language-lisp">Function: (create-items canvas items)
+</code></pre>
+<p>Create canvas items according to the item specs without returning ltk objects for them.
+   This means, they cannot be accessed in any way, but also the creation does not flush
+   the ltk output buffer.</p>
+<h3 id="create-line">create-line</h3>
+<pre><code class="language-lisp">Function: (create-line canvas coords)
+</code></pre>
+<h3 id="create-line_1">create-line*</h3>
+<pre><code class="language-lisp">Function: (create-line* canvas &amp;rest coords)
+</code></pre>
+<h3 id="create-menu2">create-menu2</h3>
+<pre><code class="language-lisp">Function: (create-menu2 menutree)
+</code></pre>
+<h3 id="create-oval">create-oval</h3>
+<pre><code class="language-lisp">Function: (create-oval canvas x0 y0 x1 y1)
+</code></pre>
+<h3 id="create-polygon">create-polygon</h3>
+<pre><code class="language-lisp">Function: (create-polygon canvas coords)
+</code></pre>
+<h3 id="create-rectangle">create-rectangle</h3>
+<pre><code class="language-lisp">Function: (create-rectangle canvas x0 y0 x1 y1)
+</code></pre>
+<h3 id="create-text">create-text</h3>
+<pre><code class="language-lisp">Function: (create-text canvas x y text)
+</code></pre>
+<h3 id="create-window">create-window</h3>
+<pre><code class="language-lisp">Function: (create-window canvas x y widget &amp;key (anchor :nw))
+</code></pre>
+<h3 id="cursor-index">cursor-index</h3>
+<pre><code class="language-lisp">Generic Function: (cursor-index widget)
+</code></pre>
+<p>returns the cursor index in the widget</p>
+<h3 id="defargs">defargs</h3>
+<pre><code class="language-lisp">Macro: (defargs class parents &amp;rest defs)
+</code></pre>
+<h3 id="defwidget">defwidget</h3>
+<pre><code class="language-lisp">Macro: (defwidget namespec parent slots widgetspecs &amp;rest body)
+</code></pre>
+<h3 id="deiconify">deiconify</h3>
+<pre><code class="language-lisp">Generic Function: (deiconify toplevel)
+</code></pre>
+<h3 id="destroy">destroy</h3>
+<pre><code class="language-lisp">Function: (destroy widget)
+</code></pre>
+<h3 id="dictionary-plist">dictionary-plist</h3>
+<pre><code class="language-lisp">Function: (dictionary-plist string)
+</code></pre>
+<p>return a plist representing the TCL dictionary</p>
+<h3 id="do-execute">do-execute</h3>
+<pre><code class="language-lisp">Function: (do-execute program args &amp;optional (wt NIL))
+</code></pre>
+<p>execute program with args a list containing the arguments passed to the program
+   if wt is non-nil, the function will wait for the execution of the program to return.
+   returns a two way stream connected to stdin/stdout of the program</p>
+<h3 id="do-msg">do-msg</h3>
+<pre><code class="language-lisp">Function: (do-msg message &amp;key (title ) parent)
+</code></pre>
+<h3 id="entry">entry</h3>
+<pre><code class="language-lisp">Generic Function: (entry object)
+</code></pre>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="entry-select">entry-select</h3>
+<pre><code class="language-lisp">Function: (entry-select e from to)
+</code></pre>
+<h3 id="event">event</h3>
+<pre><code class="language-lisp">Structure
+</code></pre>
+<h3 id="event-char">event-char</h3>
+<pre><code class="language-lisp">Function: (event-char instance)
+</code></pre>
+<h3 id="event-height">event-height</h3>
+<pre><code class="language-lisp">Function: (event-height instance)
+</code></pre>
+<h3 id="event-keycode">event-keycode</h3>
+<pre><code class="language-lisp">Function: (event-keycode instance)
+</code></pre>
+<h3 id="event-mouse-button">event-mouse-button</h3>
+<pre><code class="language-lisp">Function: (event-mouse-button instance)
+</code></pre>
+<h3 id="event-root-x">event-root-x</h3>
+<pre><code class="language-lisp">Function: (event-root-x instance)
+</code></pre>
+<h3 id="event-root-y">event-root-y</h3>
+<pre><code class="language-lisp">Function: (event-root-y instance)
+</code></pre>
+<h3 id="event-width">event-width</h3>
+<pre><code class="language-lisp">Function: (event-width instance)
+</code></pre>
+<h3 id="event-x">event-x</h3>
+<pre><code class="language-lisp">Function: (event-x instance)
+</code></pre>
+<h3 id="event-y">event-y</h3>
+<pre><code class="language-lisp">Function: (event-y instance)
+</code></pre>
+<h3 id="exit-wish">exit-wish</h3>
+<pre><code class="language-lisp">Function: (exit-wish)
+</code></pre>
+<h3 id="focus">focus</h3>
+<pre><code class="language-lisp">Function: (focus widget)
+</code></pre>
+<h3 id="font-configure">font-configure</h3>
+<pre><code class="language-lisp">Function: (font-configure name &amp;key family size weight slant underline
+           overstrike)
+</code></pre>
+<h3 id="font-create">font-create</h3>
+<pre><code class="language-lisp">Function: (font-create name &amp;key family size weight slant underline overstrike)
+</code></pre>
+<h3 id="font-delete">font-delete</h3>
+<pre><code class="language-lisp">Function: (font-delete &amp;rest names)
+</code></pre>
+<h3 id="font-families">font-families</h3>
+<pre><code class="language-lisp">Function: (font-families)
+</code></pre>
+<h3 id="font-metrics">font-metrics</h3>
+<pre><code class="language-lisp">Function: (font-metrics font)
+</code></pre>
+<h3 id="force-focus">force-focus</h3>
+<pre><code class="language-lisp">Function: (force-focus widget)
+</code></pre>
+<h3 id="forget-pane">forget-pane</h3>
+<pre><code class="language-lisp">Generic Function: (forget-pane window widget)
+</code></pre>
+<h3 id="format-wish">format-wish</h3>
+<pre><code class="language-lisp">Function: (format-wish control &amp;rest args)
+</code></pre>
+<p>format 'args using 'control as control string to wish</p>
+<h3 id="frame">frame</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="geometry">geometry</h3>
+<pre><code class="language-lisp">Generic Function: (geometry toplevel)
+</code></pre>
+<h3 id="get-open-file">get-open-file</h3>
+<pre><code class="language-lisp">Function: (get-open-file &amp;key (filetypes (quote ((all files *))))
+           (initialdir (namestring *default-pathname-defaults*)) multiple
+           parent title)
+</code></pre>
+<h3 id="get-save-file">get-save-file</h3>
+<pre><code class="language-lisp">Function: (get-save-file &amp;key (filetypes (quote ((all files *)))))
+</code></pre>
+<h3 id="grab">grab</h3>
+<pre><code class="language-lisp">Generic Function: (grab toplevel &amp;key global)
+</code></pre>
+<h3 id="grab-release">grab-release</h3>
+<pre><code class="language-lisp">Generic Function: (grab-release toplevel)
+</code></pre>
+<h3 id="grid">grid</h3>
+<pre><code class="language-lisp">Generic Function: (grid widget r c &amp;key columnspan ipadx ipady padx pady ...)
+</code></pre>
+<h3 id="grid-columnconfigure">grid-columnconfigure</h3>
+<pre><code class="language-lisp">Generic Function: (grid-columnconfigure widget c o v)
+</code></pre>
+<h3 id="grid-configure">grid-configure</h3>
+<pre><code class="language-lisp">Generic Function: (grid-configure widget o v)
+</code></pre>
+<h3 id="grid-forget">grid-forget</h3>
+<pre><code class="language-lisp">Generic Function: (grid-forget widget)
+</code></pre>
+<h3 id="grid-rowconfigure">grid-rowconfigure</h3>
+<pre><code class="language-lisp">Generic Function: (grid-rowconfigure widget r o v)
+</code></pre>
+<h3 id="handle">handle</h3>
+<pre><code class="language-lisp">Generic Function: (handle object)
+</code></pre>
+<h3 id="hscroll">hscroll</h3>
+<pre><code class="language-lisp">Generic Function: (hscroll object)
+</code></pre>
+<h3 id="iconify">iconify</h3>
+<pre><code class="language-lisp">Generic Function: (iconify toplevel)
+</code></pre>
+<h3 id="iconwindow">iconwindow</h3>
+<pre><code class="language-lisp">Function: (iconwindow tl wid)
+</code></pre>
+<h3 id="image">image</h3>
+<pre><code class="language-lisp">Generic Function: (image object)
+</code></pre>
+<h3 id="image-load">image-load</h3>
+<pre><code class="language-lisp">Generic Function: (image-load p filename)
+</code></pre>
+<h3 id="image-setpixel">image-setpixel</h3>
+<pre><code class="language-lisp">Function: (image-setpixel image data x y &amp;optional x2 y2)
+</code></pre>
+<h3 id="input-box">input-box</h3>
+<pre><code class="language-lisp">Function: (input-box prompt &amp;key (title input) default)
+</code></pre>
+<h3 id="insert-object">insert-object</h3>
+<pre><code class="language-lisp">Generic Function: (insert-object txt object)
+</code></pre>
+<h3 id="interior">interior</h3>
+<pre><code class="language-lisp">Generic Function: (interior object)
+</code></pre>
+<h3 id="itembind">itembind</h3>
+<pre><code class="language-lisp">Generic Function: (itembind canvas w event fun)
+</code></pre>
+<h3 id="itemconfigure">itemconfigure</h3>
+<pre><code class="language-lisp">Generic Function: (itemconfigure widget item option value)
+</code></pre>
+<h3 id="itemdelete">itemdelete</h3>
+<pre><code class="language-lisp">Generic Function: (itemdelete canvas item)
+</code></pre>
+<h3 id="itemlower">itemlower</h3>
+<pre><code class="language-lisp">Generic Function: (itemlower w i &amp;optional below)
+</code></pre>
+<h3 id="itemmove">itemmove</h3>
+<pre><code class="language-lisp">Generic Function: (itemmove canvas item dx dy)
+</code></pre>
+<h3 id="itemraise">itemraise</h3>
+<pre><code class="language-lisp">Generic Function: (itemraise w i &amp;optional above)
+</code></pre>
+<h3 id="items">items</h3>
+<pre><code class="language-lisp">Generic Function: (items object)
+</code></pre>
+<h3 id="label">label</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="labelframe">labelframe</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="length">length</h3>
+<pre><code class="language-lisp">Function: (length sequence)
+</code></pre>
+<p>Return an integer that is the length of <code>sequence</code>.</p>
+<h3 id="listbox">listbox</h3>
+<pre><code class="language-lisp">Generic Function: (listbox object)
+</code></pre>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="listbox-append">listbox-append</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-append l vals)
+</code></pre>
+<h3 id="listbox-clear">listbox-clear</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-clear l)
+</code></pre>
+<h3 id="listbox-configure">listbox-configure</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-configure l i &amp;rest options)
+</code></pre>
+<h3 id="listbox-delete">listbox-delete</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-delete l start &amp;optional end)
+</code></pre>
+<h3 id="listbox-get-selection">listbox-get-selection</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-get-selection l)
+</code></pre>
+<h3 id="listbox-insert">listbox-insert</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-insert l index values)
+</code></pre>
+<h3 id="listbox-nearest">listbox-nearest</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-nearest listbox y)
+</code></pre>
+<h3 id="listbox-select">listbox-select</h3>
+<pre><code class="language-lisp">Generic Function: (listbox-select l val)
+</code></pre>
+<h3 id="load-text">load-text</h3>
+<pre><code class="language-lisp">Generic Function: (load-text txt filename)
+</code></pre>
+<h3 id="lower">lower</h3>
+<pre><code class="language-lisp">Generic Function: (lower widget &amp;optional other)
+</code></pre>
+<h3 id="ltktest">ltktest</h3>
+<pre><code class="language-lisp">Function: (ltktest)
+</code></pre>
+<h3 id="mainloop">mainloop</h3>
+<pre><code class="language-lisp">Function: (mainloop &amp;key serve-event)
+</code></pre>
+<h3 id="make-canvas">make-canvas</h3>
+<pre><code class="language-lisp">Function: (make-canvas master &amp;key (width NIL) (height NIL) (xscroll NIL)
+           (yscroll NIL))
+</code></pre>
+<h3 id="make-image">make-image</h3>
+<pre><code class="language-lisp">Function: (make-image)
+</code></pre>
+<h3 id="make-items">make-items</h3>
+<pre><code class="language-lisp">Function: (make-items canvas items)
+</code></pre>
+<p>Create canvas items according to the item specs and return a list of canvas-items.</p>
+<h3 id="make-line">make-line</h3>
+<pre><code class="language-lisp">Function: (make-line canvas coords)
+</code></pre>
+<h3 id="make-ltk-connection">make-ltk-connection</h3>
+<pre><code class="language-lisp">Function: (make-ltk-connection &amp;key remotep)
+</code></pre>
+<p>Create a new LTK-CONNECTION object.  This represents a connection to a
+    specific wish.  You can maintain connections to several distinct wish
+    processes by binding <em>WISH</em> to the one you desire to communicate with, and
+    using LTK functions within that dynamic scope.</p>
+<h3 id="make-menu">make-menu</h3>
+<pre><code class="language-lisp">Function: (make-menu menu text &amp;key underline name (tearoff 0))
+</code></pre>
+<h3 id="make-menubar">make-menubar</h3>
+<pre><code class="language-lisp">Function: (make-menubar &amp;optional (master NIL))
+</code></pre>
+<h3 id="make-menubutton">make-menubutton</h3>
+<pre><code class="language-lisp">Function: (make-menubutton menu text command &amp;key underline accelerator state)
+</code></pre>
+<h3 id="make-oval">make-oval</h3>
+<pre><code class="language-lisp">Function: (make-oval canvas x0 y0 x1 y1)
+</code></pre>
+<h3 id="make-polygon">make-polygon</h3>
+<pre><code class="language-lisp">Function: (make-polygon canvas coords)
+</code></pre>
+<h3 id="make-rectangle">make-rectangle</h3>
+<pre><code class="language-lisp">Function: (make-rectangle canvas x0 y0 x1 y1)
+</code></pre>
+<h3 id="make-scrollbar">make-scrollbar</h3>
+<pre><code class="language-lisp">Function: (make-scrollbar master &amp;key (orientation vertical))
+</code></pre>
+<h3 id="make-scrolled-canvas">make-scrolled-canvas</h3>
+<pre><code class="language-lisp">Function: (make-scrolled-canvas master)
+</code></pre>
+<h3 id="make-text">make-text</h3>
+<pre><code class="language-lisp">Function: (make-text master &amp;key (width NIL) (height NIL))
+</code></pre>
+<h3 id="make-toplevel">make-toplevel</h3>
+<pre><code class="language-lisp">Function: (make-toplevel master)
+</code></pre>
+<h3 id="master">master</h3>
+<pre><code class="language-lisp">Generic Function: (master object)
+</code></pre>
+<h3 id="maxsize">maxsize</h3>
+<pre><code class="language-lisp">Generic Function: (maxsize widget x y)
+</code></pre>
+<h3 id="menu">menu</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>text</strong></p>
+<pre><code class="language-lisp">Initargs: :TEXT
+Readers: TEXT
+Writers: (SETF TEXT)
+</code></pre>
+<h3 id="menu-delete">menu-delete</h3>
+<pre><code class="language-lisp">Generic Function: (menu-delete menu index &amp;optional end)
+</code></pre>
+<h3 id="menubar">menubar</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="menubutton">menubutton</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="menucheckbutton">menucheckbutton</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>command</strong></p>
+<pre><code class="language-lisp">Initargs: :COMMAND
+Readers: COMMAND
+Writers: (SETF COMMAND)
+</code></pre>
+<h3 id="menuradiobutton">menuradiobutton</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>command</strong></p>
+<pre><code class="language-lisp">Initargs: :COMMAND
+Readers: COMMAND
+Writers: (SETF COMMAND)
+</code></pre>
+<h3 id="message">message</h3>
+<pre><code class="language-lisp">Generic Function: (message condition)
+</code></pre>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="message-box">message-box</h3>
+<pre><code class="language-lisp">Function: (message-box message title type icon &amp;key parent)
+</code></pre>
+<h3 id="minsize">minsize</h3>
+<pre><code class="language-lisp">Generic Function: (minsize widget x y)
+</code></pre>
+<h3 id="move">move</h3>
+<pre><code class="language-lisp">Generic Function: (move item dx dy)
+</code></pre>
+<h3 id="move-all">move-all</h3>
+<pre><code class="language-lisp">Function: (move-all canvas dx dy)
+</code></pre>
+<h3 id="normalize">normalize</h3>
+<pre><code class="language-lisp">Generic Function: (normalize toplevel)
+</code></pre>
+<h3 id="notebook">notebook</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="notebook-add">notebook-add</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-add nb widget &amp;rest options)
+</code></pre>
+<h3 id="notebook-enable-traversal">notebook-enable-traversal</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-enable-traversal nb)
+</code></pre>
+<h3 id="notebook-events">notebook-events</h3>
+<pre><code class="language-lisp">Function: (notebook-events)
+</code></pre>
+<h3 id="notebook-forget">notebook-forget</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-forget nb widget)
+</code></pre>
+<h3 id="notebook-hide">notebook-hide</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-hide nb tab)
+</code></pre>
+<h3 id="notebook-identify">notebook-identify</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-identify nb x y)
+</code></pre>
+<h3 id="notebook-index">notebook-index</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-index nb tab)
+</code></pre>
+<h3 id="notebook-select">notebook-select</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-select nb tab)
+</code></pre>
+<h3 id="notebook-tab">notebook-tab</h3>
+<pre><code class="language-lisp">Generic Function: (notebook-tab nb widget option value)
+</code></pre>
+<h3 id="on-close">on-close</h3>
+<pre><code class="language-lisp">Generic Function: (on-close toplevel fun)
+</code></pre>
+<h3 id="on-focus">on-focus</h3>
+<pre><code class="language-lisp">Generic Function: (on-focus toplevel fun)
+</code></pre>
+<h3 id="pack">pack</h3>
+<pre><code class="language-lisp">Generic Function: (pack w &amp;key side fill expand after before padx pady ...)
+</code></pre>
+<h3 id="pack-forget">pack-forget</h3>
+<pre><code class="language-lisp">Generic Function: (pack-forget widget)
+</code></pre>
+<h3 id="pack-forget-all">pack-forget-all</h3>
+<pre><code class="language-lisp">Generic Function: (pack-forget-all widget)
+</code></pre>
+<h3 id="pack-propagate">pack-propagate</h3>
+<pre><code class="language-lisp">Generic Function: (pack-propagate widget flag)
+</code></pre>
+<h3 id="pane-configure">pane-configure</h3>
+<pre><code class="language-lisp">Generic Function: (pane-configure l i &amp;rest options)
+</code></pre>
+<h3 id="paned-window">paned-window</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="phase">phase</h3>
+<pre><code class="language-lisp">Function: (phase number)
+</code></pre>
+<p>Return the angle part of the polar representation of a complex number.
+  For complex numbers, this is (atan (imagpart number) (realpart number)).
+  For non-complex positive numbers, this is 0. For non-complex negative
+  numbers this is PI.</p>
+<h3 id="photo-image">photo-image</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<h3 id="place">place</h3>
+<pre><code class="language-lisp">Generic Function: (place widget x y &amp;key anchor bordermode width height in ...)
+</code></pre>
+<h3 id="place-forget">place-forget</h3>
+<pre><code class="language-lisp">Generic Function: (place-forget widget)
+</code></pre>
+<h3 id="popup">popup</h3>
+<pre><code class="language-lisp">Generic Function: (popup menu x y)
+</code></pre>
+<h3 id="postscript">postscript</h3>
+<pre><code class="language-lisp">Function: (postscript canvas filename &amp;key rotate pagewidth pageheight)
+</code></pre>
+<h3 id="process-events">process-events</h3>
+<pre><code class="language-lisp">Function: (process-events)
+</code></pre>
+<p>A function to temporarliy yield control to wish so that pending
+events can be processed, useful in long loops or loops that depend on
+tk input to terminate</p>
+<h3 id="progressbar">progressbar</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="radio-button">radio-button</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="raise">raise</h3>
+<pre><code class="language-lisp">Generic Function: (raise widget &amp;optional above)
+</code></pre>
+<h3 id="read-event">read-event</h3>
+<pre><code class="language-lisp">Function: (read-event &amp;key (blocking t) (no-event-value NIL))
+</code></pre>
+<p>read the next event from wish, return the event or nil, if there is no
+event to read and blocking is set to nil</p>
+<h3 id="reset-scroll">reset-scroll</h3>
+<pre><code class="language-lisp">Generic Function: (reset-scroll sf)
+</code></pre>
+<h3 id="resizable">resizable</h3>
+<pre><code class="language-lisp">Generic Function: (resizable widget x y)
+</code></pre>
+<h3 id="sash-coord">sash-coord</h3>
+<pre><code class="language-lisp">Generic Function: (sash-coord window index)
+</code></pre>
+<h3 id="sash-place">sash-place</h3>
+<pre><code class="language-lisp">Generic Function: (sash-place window index pos)
+</code></pre>
+<h3 id="save-text">save-text</h3>
+<pre><code class="language-lisp">Generic Function: (save-text txt filename)
+</code></pre>
+<h3 id="scale">scale</h3>
+<pre><code class="language-lisp">Generic Function: (scale canvas factor &amp;optional factory)
+</code></pre>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="screen-height">screen-height</h3>
+<pre><code class="language-lisp">Function: (screen-height &amp;optional (w NIL))
+</code></pre>
+<p>give the height of the screen in pixels (if w is given, of the screen the widget w is displayed on)</p>
+<h3 id="screen-height-mm">screen-height-mm</h3>
+<pre><code class="language-lisp">Function: (screen-height-mm &amp;optional (w NIL))
+</code></pre>
+<p>give the height of the screen in mm (if w is given, of the screen the widget w is displayed on)</p>
+<h3 id="screen-mouse">screen-mouse</h3>
+<pre><code class="language-lisp">Function: (screen-mouse &amp;optional (w NIL))
+</code></pre>
+<p>give the position of the mouse on screen as (x y) (if w is given, of the screen the widget w is displayed on)</p>
+<h3 id="screen-mouse-x">screen-mouse-x</h3>
+<pre><code class="language-lisp">Function: (screen-mouse-x &amp;optional (w NIL))
+</code></pre>
+<p>give x position of the mouse on screen (if w is given, of the screen the widget w is displayed on)</p>
+<h3 id="screen-mouse-y">screen-mouse-y</h3>
+<pre><code class="language-lisp">Function: (screen-mouse-y &amp;optional (w NIL))
+</code></pre>
+<p>give y position of the mouse on screen (if w is given, of the screen the widget w is displayed on)</p>
+<h3 id="screen-width">screen-width</h3>
+<pre><code class="language-lisp">Function: (screen-width &amp;optional (w NIL))
+</code></pre>
+<p>give the width of the screen in pixels (if w is given, of the screen the widget w is displayed on)</p>
+<h3 id="screen-width-mm">screen-width-mm</h3>
+<pre><code class="language-lisp">Function: (screen-width-mm &amp;optional (w NIL))
+</code></pre>
+<p>give the width of the screen in mm (if w is given, of the screen the widget w is displayed on)</p>
+<h3 id="scroll-to-top">scroll-to-top</h3>
+<pre><code class="language-lisp">Generic Function: (scroll-to-top sf)
+</code></pre>
+<h3 id="scrollbar">scrollbar</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="scrolled-canvas">scrolled-canvas</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>canvas</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>hscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>vscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="scrolled-frame">scrolled-frame</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>canvas</strong></p>
+<pre><code class="language-lisp">Initargs: :CANVAS
+Readers: CANVAS
+Writers: (SETF CANVAS)
+</code></pre>
+<p><strong>hscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>vscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="scrolled-listbox">scrolled-listbox</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>listbox</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>hscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>vscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="scrolled-text">scrolled-text</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>textbox</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>hscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>vscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="scrolled-treeview">scrolled-treeview</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>treeview</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>hscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>vscroll</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="scrollregion">scrollregion</h3>
+<pre><code class="language-lisp">Generic Function: (scrollregion canvas x0 y0 x1 y1)
+</code></pre>
+<h3 id="search-all-text">search-all-text</h3>
+<pre><code class="language-lisp">Generic Function: (search-all-text text pattern)
+</code></pre>
+<h3 id="search-next-text">search-next-text</h3>
+<pre><code class="language-lisp">Generic Function: (search-next-text text pattern)
+</code></pre>
+<h3 id="see">see</h3>
+<pre><code class="language-lisp">Generic Function: (see txt pos)
+</code></pre>
+<h3 id="send-lazy">send-lazy</h3>
+<pre><code class="language-lisp">Macro: (send-lazy &amp;rest code)
+</code></pre>
+<h3 id="send-wish">send-wish</h3>
+<pre><code class="language-lisp">Function: (send-wish text)
+</code></pre>
+<h3 id="separator">separator</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="set-coords">set-coords</h3>
+<pre><code class="language-lisp">Generic Function: (set-coords canvas item coords)
+</code></pre>
+<h3 id="set-coords_1">set-coords*</h3>
+<pre><code class="language-lisp">Generic Function: (set-coords* canvas item &amp;rest coords)
+</code></pre>
+<h3 id="set-focus-next">set-focus-next</h3>
+<pre><code class="language-lisp">Function: (set-focus-next widget next)
+</code></pre>
+<h3 id="set-geometry">set-geometry</h3>
+<pre><code class="language-lisp">Generic Function: (set-geometry toplevel width height x y)
+</code></pre>
+<h3 id="set-geometry-wh">set-geometry-wh</h3>
+<pre><code class="language-lisp">Generic Function: (set-geometry-wh toplevel width height)
+</code></pre>
+<h3 id="set-geometry-xy">set-geometry-xy</h3>
+<pre><code class="language-lisp">Generic Function: (set-geometry-xy toplevel x y)
+</code></pre>
+<h3 id="set-wm-overrideredirect">set-wm-overrideredirect</h3>
+<pre><code class="language-lisp">Generic Function: (set-wm-overrideredirect widget value)
+</code></pre>
+<h3 id="sizegrip">sizegrip</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="spinbox">spinbox</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="start-wish">start-wish</h3>
+<pre><code class="language-lisp">Function: (start-wish &amp;rest keys &amp;key debugger-class remotep stream debug-tcl)
+</code></pre>
+<h3 id="tag-bind">tag-bind</h3>
+<pre><code class="language-lisp">Generic Function: (tag-bind txt tag event fun)
+</code></pre>
+<h3 id="tag-configure">tag-configure</h3>
+<pre><code class="language-lisp">Generic Function: (tag-configure txt tag option value &amp;rest others)
+</code></pre>
+<h3 id="tagbind">tagbind</h3>
+<pre><code class="language-lisp">Generic Function: (tagbind canvas tag event fun &amp;key exclusive)
+</code></pre>
+<h3 id="text">text</h3>
+<pre><code class="language-lisp">Generic Function: (text widget)
+</code></pre>
+<p>reads the value of the textvariable associated with the widget</p>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<h3 id="textbox">textbox</h3>
+<pre><code class="language-lisp">Generic Function: (textbox object)
+</code></pre>
+<h3 id="title">title</h3>
+<pre><code class="language-lisp">Generic Function: (title object)
+</code></pre>
+<h3 id="tkobject">tkobject</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>Base class for every Tk object</p>
+<h3 id="toplevel">toplevel</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>title</strong></p>
+<pre><code class="language-lisp">Initargs: :TITLE
+Readers: TITLE
+Writers: (SETF TITLE)
+</code></pre>
+<h3 id="treeitem">treeitem</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>text</strong></p>
+<pre><code class="language-lisp">Initargs: :TEXT
+Readers: TEXT
+Writers: (SETF TEXT)
+</code></pre>
+<p><strong>image</strong></p>
+<pre><code class="language-lisp">Initargs: :IMAGE
+Readers: IMAGE
+Writers: (SETF IMAGE)
+</code></pre>
+<p><strong>master</strong></p>
+<pre><code class="language-lisp">Initargs: :MASTER
+Readers: MASTER
+Writers: (SETF MASTER)
+</code></pre>
+<p><strong>column-values</strong></p>
+<pre><code class="language-lisp">Initargs: :COLUMN-VALUES
+Readers: COLUMN-VALUES
+Writers: (SETF COLUMN-VALUES)
+</code></pre>
+<h3 id="treeview">treeview</h3>
+<pre><code class="language-lisp">Generic Function: (treeview object)
+</code></pre>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>widget-class-name</strong></p>
+<pre><code class="language-lisp"></code></pre>
+<p><strong>items</strong></p>
+<pre><code class="language-lisp">Initargs: :ITEMS
+Readers: ITEMS
+Writers: (SETF ITEMS)
+</code></pre>
+<h3 id="treeview-column">treeview-column</h3>
+<pre><code class="language-lisp">Function: (treeview-column tree column &amp;rest options)
+</code></pre>
+<p>Query or modify the options for the specified column.</p>
+<h3 id="treeview-delete">treeview-delete</h3>
+<pre><code class="language-lisp">Generic Function: (treeview-delete tree items)
+</code></pre>
+<h3 id="treeview-exists">treeview-exists</h3>
+<pre><code class="language-lisp">Generic Function: (treeview-exists tree item)
+</code></pre>
+<h3 id="treeview-focus">treeview-focus</h3>
+<pre><code class="language-lisp">Generic Function: (treeview-focus tree)
+</code></pre>
+<h3 id="treeview-get-selection">treeview-get-selection</h3>
+<pre><code class="language-lisp">Generic Function: (treeview-get-selection w)
+</code></pre>
+<h3 id="treeview-heading">treeview-heading</h3>
+<pre><code class="language-lisp">Function: (treeview-heading tree column &amp;rest options &amp;key command
+           &amp;allow-other-keys &amp;aux (path (widget-path tree)))
+</code></pre>
+<p>Query or modify the heading options for the specified column.</p>
+<h3 id="treeview-identify-item">treeview-identify-item</h3>
+<pre><code class="language-lisp">Generic Function: (treeview-identify-item tree x y)
+</code></pre>
+<h3 id="treeview-insert">treeview-insert</h3>
+<pre><code class="language-lisp">Function: (treeview-insert tree &amp;rest options &amp;key (parent {}) (index end)
+           (id (create-name)) &amp;allow-other-keys)
+</code></pre>
+<p>Creates a new item.  Returns its id.  See also the treeitem class.</p>
+<h3 id="treeview-item">treeview-item</h3>
+<pre><code class="language-lisp">Function: (treeview-item tree item &amp;rest options)
+</code></pre>
+<p>Query or modify the options for the specified item.</p>
+<h3 id="treeview-move">treeview-move</h3>
+<pre><code class="language-lisp">Function: (treeview-move tree item &amp;optional parent index)
+</code></pre>
+<p>Moves item to position index in parent's list of children.</p>
+<h3 id="treeview-set-selection">treeview-set-selection</h3>
+<pre><code class="language-lisp">Generic Function: (treeview-set-selection w items)
+</code></pre>
+<h3 id="value">value</h3>
+<pre><code class="language-lisp">Generic Function: (value widget)
+</code></pre>
+<p>reads the value of the variable associated with the widget</p>
+<h3 id="vscroll">vscroll</h3>
+<pre><code class="language-lisp">Generic Function: (vscroll object)
+</code></pre>
+<h3 id="widget">widget</h3>
+<pre><code class="language-lisp">Class
+</code></pre>
+<p>Base class for all widget types</p>
+<p><u><strong>Direct Slots</strong></u></p>
+<p><strong>master</strong></p>
+<pre><code class="language-lisp">Initargs: :MASTER
+Readers: MASTER
+Writers: (SETF MASTER)
+</code></pre>
+<p><strong>widget-path</strong></p>
+<pre><code class="language-lisp">Initargs: :PATH
+Readers: :%WIDGET-PATH
+Writers: (SETF :%WIDGET-PATH)
+</code></pre>
+<h3 id="widget-class-name">widget-class-name</h3>
+<pre><code class="language-lisp">Generic Function: (widget-class-name object)
+</code></pre>
+<h3 id="widget-path">widget-path</h3>
+<pre><code class="language-lisp">Generic Function: (widget-path widget)
+</code></pre>
+<h3 id="window-height">window-height</h3>
+<pre><code class="language-lisp">Function: (window-height tl)
+</code></pre>
+<p>give the height of the toplevel in pixels</p>
+<h3 id="window-id">window-id</h3>
+<pre><code class="language-lisp">Function: (window-id tl)
+</code></pre>
+<p>get the window id of the toplevel</p>
+<h3 id="window-transient">window-transient</h3>
+<pre><code class="language-lisp">Function: (window-transient tl win)
+</code></pre>
+<p>set the transient property of tl to be transient to win or nil</p>
+<h3 id="window-width">window-width</h3>
+<pre><code class="language-lisp">Function: (window-width tl)
+</code></pre>
+<p>give the width of the toplevel in pixels</p>
+<h3 id="window-x">window-x</h3>
+<pre><code class="language-lisp">Function: (window-x tl)
+</code></pre>
+<p>give the x position of the toplevel in pixels</p>
+<h3 id="window-y">window-y</h3>
+<pre><code class="language-lisp">Function: (window-y tl)
+</code></pre>
+<p>give the y position of the toplevel in pixels</p>
+<h3 id="wish-stream">wish-stream</h3>
+<pre><code class="language-lisp">Function: (wish-stream instance)
+</code></pre>
+<h3 id="wish-variable">wish-variable</h3>
+<pre><code class="language-lisp">Generic Function: (wish-variable name wish)
+</code></pre>
+<h3 id="wish-variables">wish-variables</h3>
+<pre><code class="language-lisp">Function: (wish-variables instance)
+</code></pre>
+<h3 id="with-atomic">with-atomic</h3>
+<pre><code class="language-lisp">Macro: (with-atomic &amp;rest code)
+</code></pre>
+<h3 id="with-hourglass">with-hourglass</h3>
+<pre><code class="language-lisp">Macro: (with-hourglass widgets &amp;rest body)
+</code></pre>
+<h3 id="with-ltk">with-ltk</h3>
+<pre><code class="language-lisp">Macro: (with-ltk
+        (&amp;rest keys &amp;key (debug 2) stream serve-event &amp;allow-other-keys) &amp;body
+        body)
+</code></pre>
+<p>Create a new Ltk connection, evaluate <code>body</code>, and enter the main loop.</p>
+<p>:DEBUG indicates the level of debugging support to provide.  It can be a
+  number from 0 to 3, or one of the corresponding keywords:
+  :minimum, :deploy, :develop, or :maximum.</p>
+<p>If :SERVE-EVENT is non-NIL, Ltk will use <code>serve-event</code> handlers instead of a
+  blocking main loop.  This is only supported on SBCL and CMUCL.  Note that
+  using <code>serve-event</code> means that <code>with-ltk</code> will return immediately after evaluating
+  <code>body</code>.</p>
+<p>If :STREAM is non-NIL, it should be a two-way stream connected to a running
+  wish.  This will be used instead of running a new wish.</p>
+<h3 id="with-modal-toplevel">with-modal-toplevel</h3>
+<pre><code class="language-lisp">Macro: (with-modal-toplevel (var &amp;rest toplevel-initargs) &amp;body body)
+</code></pre>
+<h3 id="with-widgets">with-widgets</h3>
+<pre><code class="language-lisp">Macro: (with-widgets layout &amp;rest body)
+</code></pre>
+<h3 id="withdraw">withdraw</h3>
+<pre><code class="language-lisp">Generic Function: (withdraw toplevel)
+</code></pre>
+<h3 id="wm-forget">wm-forget</h3>
+<pre><code class="language-lisp">Generic Function: (wm-forget widget)
+</code></pre>
+<h3 id="wm-manage">wm-manage</h3>
+<pre><code class="language-lisp">Generic Function: (wm-manage widget)
+</code></pre>
+<h3 id="wm-state">wm-state</h3>
+<pre><code class="language-lisp">Generic Function: (wm-state widget)
+</code></pre>
+<h3 id="wm-title">wm-title</h3>
+<pre><code class="language-lisp">Generic Function: (wm-title widget title)
+</code></pre>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../local-time/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../postmodern/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(false);
+        });
+    </script>
+
+</body>
+</html>
